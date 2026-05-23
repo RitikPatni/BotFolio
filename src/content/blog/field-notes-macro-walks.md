@@ -1,7 +1,7 @@
 ---
 title: "Field notes from macro walks"
 description: "Tiny observations that change how I frame details."
-date: 2026-05-23
+date: 2021-06-17
 draft: true
 tags:
   - photography

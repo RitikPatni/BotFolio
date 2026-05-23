@@ -1,19 +1,10 @@
 ---
-title: "Shipping without chaos"
-description: "Notes on balancing speed, quality, and calm delivery in frontend work."
-date: 2026-05-23
-draft: false
+title: "Netlify has dark mode"
+description: "A tiny note from my old TIL logs."
+date: 2021-06-17
+draft: true
 tags:
-  - frontend
-  - workflow
+  - til
 ---
 
-A calm system beats a heroic sprint.
-
-When the process is clear, quality compounds:
-
-- stable defaults
-- small reviewable changes
-- tight feedback loops
-
-That is the baseline this site is being built on.
+Netlify has dark mode.
