@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { readingTimeMinutes } from '../utils/readingTime';
+
+const entries = (await getCollection('newsletter'))
+  .filter((item) => !item.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .map((item) => ({
+    slug: item.slug,
+    title: item.data.title,
+    description: item.data.description,
+    date: item.data.date,
+    readingTime: readingTimeMinutes(item.body ?? '')
+  }));
+---
+
+<BaseLayout title="Newsletter Archive — Ritik Patni" path="/newsletter">
+  <section class="hero">
+    <h1>Newsletter Archive</h1>
+    <p>Complete Buttondown archive mirrored into this site.</p>
+  </section>
+
+  <section class="post-list">
+    {
+      entries.length === 0 ? (
+        <article class="card"><p>No newsletter entries yet.</p></article>
+      ) : (
+        entries.map((item) => (
+          <article class="post-item">
+            <h3 style="margin: 0 0 0.3rem;">
+              <a href={`/newsletter/${item.slug}`}>{item.title}</a>
+            </h3>
+            <p class="post-meta" style="margin: 0 0 0.45rem;">
+              {item.date.toISOString().slice(0, 10)} · {item.readingTime} min read
+            </p>
+            <p style="margin: 0;">{item.description}</p>
+          </article>
+        ))
+      )
+    }
+  </section>
+</BaseLayout>

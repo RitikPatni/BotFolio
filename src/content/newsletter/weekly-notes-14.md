@@ -1,0 +1,42 @@
+---
+title: "Weekly Notes #14"
+description: "Hello everyone, Finally, after an irregular schedule for the past few weeks, I'm back on track, and I'm so excited to share today's stuff with you all. So let's get started. ## 📚 T"
+date: 2022-04-04
+draft: false
+tags:
+  - newsletter
+  - buttondown
+source_url: "https://buttondown.com/ritik/archive/weekly-notes-14/"
+category: "newsletter"
+---
+Hello everyone,
+
+Finally, after an irregular schedule for the past few weeks, I'm back on track, and I'm so excited to share today's stuff with you all. So let's get started.
+
+## 📚 To Read
+
+[My guiding principles after 20 years of programming](https://alexewerlof.medium.com/my-guiding-principles-after-20-years-of-programming-a087dc55596c?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14) These are all spot on tips and things that will help you become good at being a better programmer/engineer.
+
+[#WorstWorkWednesday](https://ericwbailey.design/writing/worstworkwednesday/?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14) Totally love the idea behind this and I wish that this could be normalized in engineering culture because making mistakes is obvious, and these meetings can be a place where you can actually talk about what's not going well at your job directly rather than gossiping about it with other people.
+
+[Employment history doesn't define your value.](https://airbagindustries.com/employment-history-doesn-t-define-your-value/?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14)
+
+Who are you? What defines you? Here’s a hint: It’s not where you work. And it’s most certainly not your career. Anyone who thinks differently is on not on the right path. If you want to sum up who you are, then focus on your values, principles, skills, and outcomes.
+
+[CSS :has](https://davidwalsh.name/css-has?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14) I'm pretty certain that all of us who've been writing CSS have come to a problem where we wanted to style an element based on its child and then for solutions we went to a quirky JS-based solution as this problem was unsolvable in CSS until now. Now CSS has :has selector which can do this for you.
+
+[Carousels: No one likes you](https://jhalabi.com/blog/carousels-no-one-likes-you?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14) I hate so many things about carousels, and that includes making them and using them. And if you love them, then I recommend going through this article and see the issues with it and if you don't, then you can go through this article to find out the arguments you can use the next time you need a carousel.
+
+[Exciting Times for Browsers (and CSS)](https://css-irl.info/exciting-times-for-browsers-and-css/?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14) With so many new features coming live and browsers competing to bring the features live and that too with standard options, it's an exciting time for being a web developer. This one covers up all the new stuff that's on the coming soon list or has recently launched.
+
+[Routing the technical interview](https://lars.hupel.info/articles/routing-the-interview/?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14) Absolutely loved reading every bit of this conversation. Nothing more I can add to this apart from recommending reading this.
+
+[Webmentions](https://www.gyford.com/phil/writing/2022/03/30/webmentions/?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14) I'm in love with this concept and really want to add this to my website(when I stop procrastinating). But will recommend reading this to anyone who is working on their personal blog or want to know whenever anyone anywhere mentions your site.
+
+[Thoughts on managing one's energy](https://tinyletter.com/vaidehi/letters/thoughts-on-managing-one-s-energy?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14) Like always Vaidehi is spot on with her article and if you've been struggling with burnout or have felt overworked then this one is for you.
+
+[Noise cancellation for development](https://christianheilmann.com/2022/03/14/noise-cancellation-for-development/?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-14) I almost missed out on this one, but this is an astonishing read. Highly recommend reading this one, and I'm sure you'll relate to this.
+
+## 😃 Something that made me smile
+
+https://twitter.com/mzbat/status/1509697713218142211?s=20

@@ -1,10 +1,61 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const books = (await getCollection('books'))
+  .filter((item) => !item.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const highlights = (await getCollection('highlights'))
+  .filter((item) => !item.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <BaseLayout title="Library — Ritik Patni" path="/library">
   <section class="hero">
     <h1>Library</h1>
-    <p>Books, articles, and references that shape how I build and think. (First draft placeholder.)</p>
+    <p>Books and notes/highlights synced from Obsidian.</p>
+  </section>
+
+  <section class="post-list">
+    <h2>Books</h2>
+    {
+      books.length === 0 ? (
+        <article class="card"><p>No books yet.</p></article>
+      ) : (
+        books.map((item) => (
+          <article class="post-item">
+            <h3 style="margin: 0 0 0.3rem;">
+              <a href={`/library/books/${item.slug}`}>{item.data.title}</a>
+            </h3>
+            <p class="post-meta" style="margin: 0 0 0.45rem;">
+              {item.data.date.toISOString().slice(0, 10)}
+            </p>
+            <p style="margin: 0;">{item.data.description}</p>
+          </article>
+        ))
+      )
+    }
+  </section>
+
+  <section class="post-list" style="margin-top: 1.25rem;">
+    <h2>Notes / Highlights</h2>
+    {
+      highlights.length === 0 ? (
+        <article class="card"><p>No highlights yet.</p></article>
+      ) : (
+        highlights.map((item) => (
+          <article class="post-item">
+            <h3 style="margin: 0 0 0.3rem;">
+              <a href={`/library/highlights/${item.slug}`}>{item.data.title}</a>
+            </h3>
+            <p class="post-meta" style="margin: 0 0 0.45rem;">
+              {item.data.date.toISOString().slice(0, 10)}
+            </p>
+            <p style="margin: 0;">{item.data.description}</p>
+          </article>
+        ))
+      )
+    }
   </section>
 </BaseLayout>
