@@ -1,11 +1,11 @@
 ---
 title: "TIL: Adding custom scripts with templater"
-description: "I learned how we can create custom scripts in Obsidian with templater and now it opens another set of possible things that I can do with..."
+description: "I learned how we can create custom scripts in Obsidian with templater and now it opens another set of possible things that I can do with ..."
 date: 2021-06-23
 draft: false
 tags:
   - obsidian-import
-  - blog
+  - til
 source_path: "legacy-vault/🖋️ Blog/TIL/Adding custom scripts with templater.md"
 ---
 
@@ -28,7 +28,7 @@ module.exports = humanSnip;
 - **Step 2**: Put this file in some place of your vault except `.obsidian` folder as this folder is not accessible via templater plugin.
 - **Step 3**: Add the folder location in templater script locations
 	
-(Screenshot reference from original Obsidian note omitted in this web import.)
+	(Local Obsidian asset omitted in web import.)(Where to set script in templater)
 - **Step 4**: Use the script as `tp.user.humanSnip(tp)` or whatever the name of your script was
 
 

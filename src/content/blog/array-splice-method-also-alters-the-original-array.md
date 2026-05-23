@@ -5,7 +5,7 @@ date: 2021-07-10
 draft: false
 tags:
   - obsidian-import
-  - blog
+  - til
 source_path: "legacy-vault/🖋️ Blog/TIL/Array Splice Method also alters the original array.md"
 ---
 

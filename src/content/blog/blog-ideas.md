@@ -1,12 +1,10 @@
 ---
 title: "Blog Ideas"
-description: "Backlog ideas imported from Obsidian."
+description: "1. Releases with Commitizen and Sentry"
 date: 2021-05-10
 draft: false
 tags:
   - obsidian-import
-  - blog
-  - ideas
 source_path: "legacy-vault/🖋️ Blog/Ideas.md"
 ---
 

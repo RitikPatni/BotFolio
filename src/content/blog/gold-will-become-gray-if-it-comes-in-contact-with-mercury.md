@@ -5,7 +5,7 @@ date: 2021-06-25
 draft: false
 tags:
   - obsidian-import
-  - blog
+  - til
 source_path: "legacy-vault/🖋️ Blog/TIL/Gold will become gray if it comes in contact with Mercury.md"
 ---
 
