@@ -1,0 +1,17 @@
+---
+title: "EDC-Everyday Carry"
+description: "---"
+date: 2021-01-01
+draft: false
+tags:
+  - obsidian-import
+  - blog
+source_path: "legacy-vault/🖋️ Blog/TIL/EDC - Everyday Cary.md"
+---
+
+---
+---
+
+
+
+Learned that EDC means everyday carry ex. Pens, Knives, Flashlights, etc.
