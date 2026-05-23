@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { readingTimeMinutes } from '../../utils/readingTime';
+
+export async function getStaticPaths() {
+  const items = await getCollection('newsletter', ({ data }) => !data.draft);
+  return items.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+}
+
+const { item } = Astro.props;
+const { Content } = await item.render();
+const reading = readingTimeMinutes(item.body ?? '');
+---
+
+<BaseLayout title={`${item.data.title} — Newsletter`} description={item.data.description} path="/newsletter">
+  <article class="hero" style="padding-bottom: 0.8rem;">
+    <p class="post-meta">{item.data.date.toISOString().slice(0, 10)} · {reading} min read</p>
+    <h1>{item.data.title}</h1>
+    <p>{item.data.description}</p>
+  </article>
+
+  <article class="card">
+    <Content />
+  </article>
+</BaseLayout>
