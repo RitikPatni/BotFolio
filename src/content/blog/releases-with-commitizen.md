@@ -5,7 +5,6 @@ date: 2021-05-10
 draft: false
 tags:
   - obsidian-import
-  - blog
 source_path: "legacy-vault/🖋️ Blog/Drafts/Releases with Commitizen.md"
 ---
 

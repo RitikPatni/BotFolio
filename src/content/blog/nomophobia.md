@@ -5,7 +5,7 @@ date: 2021-07-08
 draft: false
 tags:
   - obsidian-import
-  - blog
+  - til
 source_path: "legacy-vault/🖋️ Blog/TIL/Nomophobia.md"
 ---
 

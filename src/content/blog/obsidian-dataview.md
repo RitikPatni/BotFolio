@@ -5,7 +5,7 @@ date: 2021-06-05
 draft: false
 tags:
   - obsidian-import
-  - blog
+  - til
 source_path: "legacy-vault/🖋️ Blog/TIL/Obsidian Dataview.md"
 ---
 

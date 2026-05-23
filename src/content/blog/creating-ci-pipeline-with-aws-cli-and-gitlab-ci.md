@@ -5,7 +5,6 @@ date: 2021-06-18
 draft: false
 tags:
   - obsidian-import
-  - blog
 source_path: "legacy-vault/🖋️ Blog/Drafts/Creating CI pipeline with AWS CLI and Gitlab CI.md"
 ---
 

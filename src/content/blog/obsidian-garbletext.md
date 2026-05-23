@@ -1,11 +1,11 @@
 ---
 title: "TIL: Obsidian garbleText"
-description: "Learned about obsidian `garbleText` which can hide all the text in the Obsidian Window. This can come in handy when you want to show the..."
+description: "Learned about obsidian `garbleText` which can hide all the text in the Obsidian Window. This can come in handy when you want to show the ..."
 date: 2021-06-22
 draft: false
 tags:
   - obsidian-import
-  - blog
+  - til
 source_path: "legacy-vault/🖋️ Blog/TIL/Obsidian garbleText.md"
 ---
 

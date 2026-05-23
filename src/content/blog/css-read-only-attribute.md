@@ -7,6 +7,7 @@ tags:
   - css
   - html
   - til
+source_path: "legacy-vault/🖋️ Blog/TIL/CSS read-only attribute.md"
 ---
 
 While working on a no-framework HTML page (FTL page), I realized I couldn't use the disabled HTML attribute because disabled fields don't pass value through form submission.

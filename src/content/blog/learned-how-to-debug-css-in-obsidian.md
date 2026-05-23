@@ -1,11 +1,11 @@
 ---
 title: "TIL: Learned about debugging in Obsidian and adding custom CSS"
-description: "Today when I was checking out preview mode for one of my notes I noticed that emojis were taking complete line instead of staying in the..."
+description: "Today when I was checking out preview mode for one of my notes I noticed that emojis were taking complete line instead of staying in the ..."
 date: 2021-06-03
 draft: false
 tags:
   - obsidian-import
-  - blog
+  - til
 source_path: "legacy-vault/🖋️ Blog/TIL/Learned how to debug CSS in Obsidian.md"
 ---
 
