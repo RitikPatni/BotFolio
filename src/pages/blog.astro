@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { readingTimeMinutes } from '../utils/readingTime';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .map((post) => {
+    const words = post.body ?? '';
+    return {
+      slug: post.slug,
+      title: post.data.title,
+      description: post.data.description,
+      date: post.data.date,
+      readingTime: readingTimeMinutes(words)
+    };
+  });
+---
+
+<BaseLayout title="Blog — Ritik Patni" path="/blog">
+  <section class="hero">
+    <h1>Blog</h1>
+    <p>Clean notes on frontend engineering, systems, and photography.</p>
+  </section>
+
+  <section class="post-list">
+    {
+      posts.length === 0 ? (
+        <article class="card"><p>No posts yet.</p></article>
+      ) : (
+        posts.map((post) => (
+          <article class="post-item">
+            <h3 style="margin: 0 0 0.3rem;">
+              <a href={`/blog/${post.slug}`}>{post.title}</a>
+            </h3>
+            <p class="post-meta" style="margin: 0 0 0.45rem;">
+              {post.date.toISOString().slice(0, 10)} · {post.readingTime} min read
+            </p>
+            <p style="margin: 0;">{post.description}</p>
+          </article>
+        ))
+      )
+    }
+  </section>
+</BaseLayout>
