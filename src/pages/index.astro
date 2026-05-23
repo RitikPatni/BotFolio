@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Ritik Patni — Frontend developer & wildlife/macro photographer"
+  description="I build thoughtful web experiences and document nature up close."
+  path="/"
+>
+  <section class="hero">
+    <p class="pill">Frontend × Wildlife/Macro</p>
+    <h1>I build thoughtful web experiences and document nature up close.</h1>
+    <p>
+      Personal brand + blog by Ritik Patni. Photography-first homepage with a clean split between
+      developer work and visual storytelling.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Choose a track</h2>
+    <div class="grid two">
+      <article class="card">
+        <h3>Photography track</h3>
+        <p>Curated work grouped by categories with a simple, fast viewing flow.</p>
+        <div class="pill-row">
+          <span class="pill">Wildlife</span>
+          <span class="pill">Macro</span>
+          <span class="pill">Birds</span>
+          <span class="pill">Travel</span>
+          <span class="pill">Landscape</span>
+        </div>
+        <p><a href="/photography">View photography →</a></p>
+      </article>
+
+      <article class="card">
+        <h3>Developer track</h3>
+        <p>Frontend engineering notes, systems-first workflow thinking, and practical writing.</p>
+        <p><a href="/blog">Read the blog →</a></p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

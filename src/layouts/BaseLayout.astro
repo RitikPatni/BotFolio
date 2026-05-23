@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  path?: string;
+}
+
+const { title, description = 'Ritik Patni — frontend developer and wildlife/macro photographer.', path = '/' } = Astro.props;
+
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/uses', label: 'Uses' },
+  { href: '/library', label: 'Library' },
+  { href: '/photography', label: 'Photography' },
+  { href: '/contact', label: 'Contact' }
+];
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a href="/" aria-label="Go to homepage"><strong>Ritik Patni</strong></a>
+        <nav class="nav-links" aria-label="Main navigation">
+          {nav.map((item) => (
+            <a href={item.href} class={path === item.href ? 'active' : ''}>{item.label}</a>
+          ))}
+          <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle light and dark theme">Theme</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer>
+      <div class="container">© {new Date().getFullYear()} Ritik Patni · Built with Astro.</div>
+    </footer>
+
+    <script is:inline>
+      const root = document.documentElement;
+      const storageKey = 'rp-theme';
+      const apply = (theme) => {
+        root.setAttribute('data-theme', theme);
+      };
+      const saved = localStorage.getItem(storageKey);
+      if (saved === 'light' || saved === 'dark') apply(saved);
+
+      document.getElementById('themeToggle')?.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        const next = current === 'light' ? 'dark' : 'light';
+        apply(next);
+        localStorage.setItem(storageKey, next);
+      });
+    </script>
+  </body>
+</html>

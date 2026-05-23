@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Photography — Ritik Patni" path="/photography">
+  <section class="hero">
+    <h1>Photography</h1>
+    <p>Curated gallery, grouped by category. v1 is intentionally simple: responsive grid + lightbox-ready structure.</p>
+  </section>
+
+  <div class="pill-row" style="margin-bottom: 1rem;">
+    <span class="pill">Wildlife</span>
+    <span class="pill">Macro</span>
+    <span class="pill">Birds</span>
+    <span class="pill">Travel</span>
+    <span class="pill">Landscape</span>
+  </div>
+
+  <section class="grid two">
+    <article class="card"><h3>Wildlife</h3><p>Coming soon.</p></article>
+    <article class="card"><h3>Macro</h3><p>Coming soon.</p></article>
+    <article class="card"><h3>Birds</h3><p>Coming soon.</p></article>
+    <article class="card"><h3>Travel</h3><p>Coming soon.</p></article>
+    <article class="card"><h3>Landscape</h3><p>Coming soon.</p></article>
+  </section>
+</BaseLayout>
