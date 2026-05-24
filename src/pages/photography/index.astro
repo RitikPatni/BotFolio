@@ -2,19 +2,21 @@
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import "./_photography.scss";
 
-import { existsSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import galleryData from "../../data/gallery.json";
+
+type GalleryImage = {
+  filename: string;
+  title: string;
+  category: string;
+  tags: string[];
+  alt: string;
+  date: string;
+};
 
 type PortfolioCategory = {
   id: string;
   label: string;
   description: string;
-};
-
-type PortfolioImage = {
-  src: string;
-  alt: string;
-  categoryId: string;
 };
 
 const CATEGORIES: PortfolioCategory[] = [
@@ -38,50 +40,29 @@ const CATEGORIES: PortfolioCategory[] = [
     label: "Landscape",
     description: "Light, atmosphere, and larger scenes.",
   },
+  {
+    id: "travel",
+    label: "Travel",
+    description: "Places and moments along the way.",
+  },
 ];
 
-const PHOTO_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
-const publicRoot = new URL("../../../public", import.meta.url).pathname;
-
-const formatAltFromFilename = (filename: string): string => {
-  const nameWithoutExtension = filename.replace(/\.[^.]+$/, "");
-  return nameWithoutExtension
-    .replace(/[-_]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-};
+const typedGallery: GalleryImage[] = galleryData as GalleryImage[];
 
 const imagesByCategory = CATEGORIES.map((category) => {
-  const categoryDir = join(publicRoot, "photography", category.id);
-
-  if (!existsSync(categoryDir)) {
-    return {
-      ...category,
-      images: [] as PortfolioImage[],
-    };
-  }
-
-  const images = readdirSync(categoryDir)
-    .filter((file) =>
-      PHOTO_EXTENSIONS.has(file.slice(file.lastIndexOf(".")).toLowerCase()),
-    )
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-    .map((file) => ({
-      src: `/photography/${category.id}/${file}`,
-      alt: formatAltFromFilename(file),
-      categoryId: category.id,
+  const images = typedGallery
+    .filter((img) => img.category === category.id)
+    .map((img) => ({
+      src: `/photography/${category.id}/${img.filename}`,
+      alt: img.alt,
+      title: img.title,
+      tags: img.tags,
     }));
 
-  return {
-    ...category,
-    images,
-  };
+  return { ...category, images };
 });
 
-const totalImages = imagesByCategory.reduce(
-  (sum, category) => sum + category.images.length,
-  0,
-);
+const totalImages = typedGallery.length;
 ---
 
 <BaseLayout title="Photography — Ritik Patni" path="/photography">
@@ -161,7 +142,7 @@ const totalImages = imagesByCategory.reduce(
                   <img
                     class="photography__image"
                     src={image.src}
-                    alt={image.alt || `${category.label} photograph`}
+                    alt={image.alt}
                     loading="lazy"
                     decoding="async"
                   />
