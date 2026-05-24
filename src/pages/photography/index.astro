@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
+import './_photography.scss';
+---
+
+<BaseLayout title="Photography — Ritik Patni" path="/photography">
+  <div class="photography">
+  <section class="photography__hero">
+    <h1 class="photography__title">Photography</h1>
+    <p class="photography__lead">Curated gallery, grouped by category. v1 is intentionally simple: responsive grid + lightbox-ready structure.</p>
+  </section>
+
+  <div class="photography__tags photography__tags--spaced">
+    <span class="photography__tag">Wildlife</span>
+    <span class="photography__tag">Macro</span>
+    <span class="photography__tag">Birds</span>
+    <span class="photography__tag">Travel</span>
+    <span class="photography__tag">Landscape</span>
+  </div>
+
+  <section class="photography__grid photography__grid--two">
+    <article class="photography__card"><h3 class="photography__card-title">Wildlife</h3><p>Coming soon.</p></article>
+    <article class="photography__card"><h3 class="photography__card-title">Macro</h3><p>Coming soon.</p></article>
+    <article class="photography__card"><h3 class="photography__card-title">Birds</h3><p>Coming soon.</p></article>
+    <article class="photography__card"><h3 class="photography__card-title">Travel</h3><p>Coming soon.</p></article>
+    <article class="photography__card"><h3 class="photography__card-title">Landscape</h3><p>Coming soon.</p></article>
+  </section>
+  </div>
+</BaseLayout>

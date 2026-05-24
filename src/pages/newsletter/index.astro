@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { readingTimeMinutes } from '../utils/readingTime';
+import { readingTimeMinutes } from '../../utils/readingTime';
 
 const entries = (await getCollection('newsletter'))
   .filter((item) => !item.data.draft)
@@ -13,31 +13,34 @@ const entries = (await getCollection('newsletter'))
     date: item.data.date,
     readingTime: readingTimeMinutes(item.body ?? '')
   }));
+import './_newsletter.scss';
 ---
 
 <BaseLayout title="Newsletter Archive — Ritik Patni" path="/newsletter">
-  <section class="hero">
-    <h1>Newsletter Archive</h1>
-    <p>Complete Buttondown archive mirrored into this site.</p>
+  <div class="newsletter">
+  <section class="newsletter__hero">
+    <h1 class="newsletter__title">Newsletter Archive</h1>
+    <p class="newsletter__lead">Complete Buttondown archive mirrored into this site.</p>
   </section>
 
-  <section class="post-list">
+  <section class="newsletter__list">
     {
       entries.length === 0 ? (
-        <article class="card"><p>No newsletter entries yet.</p></article>
+        <article class="newsletter__card"><p>No newsletter entries yet.</p></article>
       ) : (
         entries.map((item) => (
-          <article class="post-item">
-            <h3 style="margin: 0 0 0.3rem;">
+          <article class="newsletter__item">
+            <h3 class="newsletter__item-title">
               <a href={`/newsletter/${item.slug}`}>{item.title}</a>
             </h3>
-            <p class="post-meta" style="margin: 0 0 0.45rem;">
+            <p class="newsletter__meta newsletter__meta--spaced">
               {item.date.toISOString().slice(0, 10)} · {item.readingTime} min read
             </p>
-            <p style="margin: 0;">{item.description}</p>
+            <p class="newsletter__description">{item.description}</p>
           </article>
         ))
       )
     }
   </section>
+  </div>
 </BaseLayout>

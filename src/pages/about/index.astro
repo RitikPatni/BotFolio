@@ -1,22 +1,24 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
+import './_about.scss';
 ---
 
 <BaseLayout title="About — Ritik Patni" path="/about">
+  <div class="about">
   <!--
     Content provenance (Obsidian):
     - legacy-vault/🧔 private/Jobs/Cover Letter 1.md
     - legacy-vault/🧔 private/Jobs/Cover Letter 2.md
   -->
-  <section class="hero">
-    <h1>About</h1>
-    <p>
+  <section class="about__hero">
+    <h1 class="about__title">About</h1>
+    <p class="about__lead">
       I’m Ritik Patni — a front-end developer with a strong focus on design, accessibility,
       performance, and reliable user experience.
     </p>
   </section>
 
-  <article class="card">
+  <article class="about__card">
     <p>
       Over the years, I’ve worked across product surfaces from websites to email workflows,
       bootstrapped projects from scratch, and maintained legacy systems while shipping new features.
@@ -27,4 +29,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       together: building thoughtful web experiences and sharing field notes from photography.
     </p>
   </article>
+  </div>
 </BaseLayout>

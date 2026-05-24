@@ -11,7 +11,11 @@
     "check": "astro check"
   },
   "dependencies": {
-    "astro": "^4.16.0"
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
+    "astro": "^4.16.0",
+    "open-props": "^1.7.23",
+    "sass": "^1.100.0"
   },
   "devDependencies": {
     "typescript": "^5.6.3"

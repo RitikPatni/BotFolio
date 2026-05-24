@@ -1,5 +1,6 @@
 ---
-import '../styles/global.css';
+import '../../styles/global.scss';
+import './BaseLayout.scss';
 
 interface Props {
   title: string;
@@ -29,27 +30,37 @@ const nav = [
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="alternate" type="application/rss+xml" title="Ritik Patni RSS Feed" href="/rss.xml" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container nav">
-        <a href="/" aria-label="Go to homepage"><strong>Ritik Patni</strong></a>
-        <nav class="nav-links" aria-label="Main navigation">
+    <div class="base-layout">
+      <a class="base-layout__skip-link" href="#main-content">Skip to content</a>
+      <header class="base-layout__header">
+        <div class="base-layout__container base-layout__nav">
+          <a class="base-layout__brand" href="/" aria-label="Go to homepage"><strong>Ritik Patni</strong></a>
+          <nav class="base-layout__links" aria-label="Main navigation">
           {nav.map((item) => (
-            <a href={item.href} class={path === item.href ? 'active' : ''}>{item.label}</a>
+            <a
+              href={item.href}
+              class={`base-layout__link ${path === item.href ? 'base-layout__link--active' : ''}`}
+              aria-current={path === item.href ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
           ))}
-          <button class="theme-toggle" type="button" id="themeToggle" aria-label="Toggle light and dark theme">Theme</button>
-        </nav>
-      </div>
-    </header>
+            <button class="base-layout__theme-toggle" type="button" id="themeToggle" aria-label="Toggle light and dark theme">Theme</button>
+          </nav>
+        </div>
+      </header>
 
-    <main class="container">
-      <slot />
-    </main>
+      <main id="main-content" class="base-layout__container base-layout__main">
+        <slot />
+      </main>
 
-    <footer>
-      <div class="container">© {new Date().getFullYear()} Ritik Patni · Built with Astro.</div>
-    </footer>
+      <footer class="base-layout__footer">
+        <div class="base-layout__container base-layout__footer-content">© {new Date().getFullYear()} Ritik Patni · Built with Astro.</div>
+      </footer>
+    </div>
 
     <script is:inline>
       const root = document.documentElement;

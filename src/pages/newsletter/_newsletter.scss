@@ -1,0 +1,82 @@
+@use "../../styles/patterns" as *;
+
+
+.newsletter__hero {
+  @extend %page-hero;
+}
+
+.newsletter__hero--compact {
+  @extend %page-hero-compact;
+}
+
+.newsletter__title {
+  @extend %page-title;
+}
+
+.newsletter__lead {
+  @extend %page-lead;
+}
+
+.newsletter__section-title {
+  @extend %section-title;
+}
+
+.newsletter__grid {
+  @extend %content-grid;
+}
+
+.newsletter__grid--two {
+  @extend %content-grid-two;
+}
+
+.newsletter__card {
+  @extend %surface-card;
+}
+
+.newsletter__card-title {
+  @extend %surface-card-title;
+}
+
+.newsletter__card--offset {
+  @extend %surface-card-offset;
+}
+
+.newsletter__tags {
+  @extend %tag-list;
+}
+
+.newsletter__tags--spaced {
+  @extend %tag-list-spaced;
+}
+
+.newsletter__tag {
+  @extend %tag-item;
+}
+
+.newsletter__list {
+  @extend %entry-list;
+}
+
+.newsletter__list--offset {
+  @extend %entry-list-offset;
+}
+
+.newsletter__item {
+  @extend %entry-item;
+}
+
+.newsletter__item-title {
+  @extend %entry-item-title;
+}
+
+.newsletter__meta {
+  @extend %entry-meta;
+}
+
+.newsletter__meta--spaced {
+  @extend %entry-meta-spaced;
+}
+
+.newsletter__description {
+  @extend %entry-description;
+}

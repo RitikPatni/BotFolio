@@ -1,0 +1,82 @@
+@use "../../styles/patterns" as *;
+
+
+.contact__hero {
+  @extend %page-hero;
+}
+
+.contact__hero--compact {
+  @extend %page-hero-compact;
+}
+
+.contact__title {
+  @extend %page-title;
+}
+
+.contact__lead {
+  @extend %page-lead;
+}
+
+.contact__section-title {
+  @extend %section-title;
+}
+
+.contact__grid {
+  @extend %content-grid;
+}
+
+.contact__grid--two {
+  @extend %content-grid-two;
+}
+
+.contact__card {
+  @extend %surface-card;
+}
+
+.contact__card-title {
+  @extend %surface-card-title;
+}
+
+.contact__card--offset {
+  @extend %surface-card-offset;
+}
+
+.contact__tags {
+  @extend %tag-list;
+}
+
+.contact__tags--spaced {
+  @extend %tag-list-spaced;
+}
+
+.contact__tag {
+  @extend %tag-item;
+}
+
+.contact__list {
+  @extend %entry-list;
+}
+
+.contact__list--offset {
+  @extend %entry-list-offset;
+}
+
+.contact__item {
+  @extend %entry-item;
+}
+
+.contact__item-title {
+  @extend %entry-item-title;
+}
+
+.contact__meta {
+  @extend %entry-meta;
+}
+
+.contact__meta--spaced {
+  @extend %entry-meta-spaced;
+}
+
+.contact__description {
+  @extend %entry-description;
+}

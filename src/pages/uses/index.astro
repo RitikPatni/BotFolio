@@ -1,30 +1,32 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
+import './_uses.scss';
 ---
 
 <BaseLayout title="Uses — Ritik Patni" path="/uses">
+  <div class="uses">
   <!--
     Content provenance (Obsidian):
     - legacy-vault/🖋️ Blog/Ideas.md ("Uses page on my blog")
     - Gear/setup details sourced from current canonical context file:
       /root/.hermes/data/ritik-context/website.md
   -->
-  <section class="hero">
-    <h1>Uses</h1>
-    <p>Hardware, software, and tools I use for development and photography.</p>
+  <section class="uses__hero">
+    <h1 class="uses__title">Uses</h1>
+    <p class="uses__lead">Hardware, software, and tools I use for development and photography.</p>
   </section>
 
-  <div class="grid two">
-    <section class="card">
-      <h3>Computers</h3>
+  <div class="uses__grid uses__grid--two">
+    <section class="uses__card">
+      <h3 class="uses__card-title">Computers</h3>
       <ul>
         <li>Personal: MacBook Pro (2021) — Apple M1 Pro, 32GB RAM</li>
         <li>Office: MacBook Pro (2025) — Apple M4 Pro, 24GB RAM</li>
       </ul>
     </section>
 
-    <section class="card">
-      <h3>Software</h3>
+    <section class="uses__card">
+      <h3 class="uses__card-title">Software</h3>
       <ul>
         <li>Adobe Lightroom Classic</li>
         <li>Visual Studio Code</li>
@@ -35,16 +37,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </ul>
     </section>
 
-    <section class="card">
-      <h3>Camera bodies</h3>
+    <section class="uses__card">
+      <h3 class="uses__card-title">Camera bodies</h3>
       <ul>
         <li>Sony A6700</li>
         <li>Fujifilm X-T200</li>
       </ul>
     </section>
 
-    <section class="card">
-      <h3>Lenses</h3>
+    <section class="uses__card">
+      <h3 class="uses__card-title">Lenses</h3>
       <ul>
         <li>Sony FE 200-600mm F5.6-6.3 G OSS</li>
         <li>Tamron 90mm F2.8 Di III MACRO VXD (Model F072, Sony E)</li>
@@ -55,14 +57,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </section>
   </div>
 
-  <section class="card" style="margin-top: 1rem;">
-    <h3>Desk setup</h3>
+  <section class="uses__card uses__card--offset">
+    <h3 class="uses__card-title">Desk setup</h3>
     <ul>
       <li>Tofu65 keyboard</li>
       <li>Stack Overflow “The Key” keyboard</li>
       <li>Maja keyboard</li>
       <li>Logitech MX Master 3 (white)</li>
     </ul>
-    <p class="post-meta">This page will evolve as setup changes.</p>
+    <p class="uses__meta">This page will evolve as setup changes.</p>
   </section>
+  </div>
 </BaseLayout>

@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const books = (await getCollection('books'))
@@ -9,53 +9,56 @@ const books = (await getCollection('books'))
 const highlights = (await getCollection('highlights'))
   .filter((item) => !item.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+import './_library.scss';
 ---
 
 <BaseLayout title="Library — Ritik Patni" path="/library">
-  <section class="hero">
-    <h1>Library</h1>
-    <p>Books and notes/highlights synced from Obsidian.</p>
+  <div class="library">
+  <section class="library__hero">
+    <h1 class="library__title">Library</h1>
+    <p class="library__lead">Books and notes/highlights synced from Obsidian.</p>
   </section>
 
-  <section class="post-list">
+  <section class="library__list">
     <h2>Books</h2>
     {
       books.length === 0 ? (
-        <article class="card"><p>No books yet.</p></article>
+        <article class="library__card"><p>No books yet.</p></article>
       ) : (
         books.map((item) => (
-          <article class="post-item">
-            <h3 style="margin: 0 0 0.3rem;">
+          <article class="library__item">
+            <h3 class="library__item-title">
               <a href={`/library/books/${item.slug}`}>{item.data.title}</a>
             </h3>
-            <p class="post-meta" style="margin: 0 0 0.45rem;">
+            <p class="library__meta library__meta--spaced">
               {item.data.date.toISOString().slice(0, 10)}
             </p>
-            <p style="margin: 0;">{item.data.description}</p>
+            <p class="library__description">{item.data.description}</p>
           </article>
         ))
       )
     }
   </section>
 
-  <section class="post-list" style="margin-top: 1.25rem;">
+  <section class="library__list library__list--offset">
     <h2>Notes / Highlights</h2>
     {
       highlights.length === 0 ? (
-        <article class="card"><p>No highlights yet.</p></article>
+        <article class="library__card"><p>No highlights yet.</p></article>
       ) : (
         highlights.map((item) => (
-          <article class="post-item">
-            <h3 style="margin: 0 0 0.3rem;">
+          <article class="library__item">
+            <h3 class="library__item-title">
               <a href={`/library/highlights/${item.slug}`}>{item.data.title}</a>
             </h3>
-            <p class="post-meta" style="margin: 0 0 0.45rem;">
+            <p class="library__meta library__meta--spaced">
               {item.data.date.toISOString().slice(0, 10)}
             </p>
-            <p style="margin: 0;">{item.data.description}</p>
+            <p class="library__description">{item.data.description}</p>
           </article>
         ))
       )
     }
   </section>
+  </div>
 </BaseLayout>

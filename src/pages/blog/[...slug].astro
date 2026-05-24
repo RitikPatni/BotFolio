@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { readingTimeMinutes } from '../../utils/readingTime';
 
@@ -11,16 +11,19 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 const reading = readingTimeMinutes(post.body ?? '');
+import './_slug.scss';
 ---
 
 <BaseLayout title={`${post.data.title} — Blog`} description={post.data.description} path="/blog">
-  <article class="hero" style="padding-bottom: 0.8rem;">
-    <p class="post-meta">{post.data.date.toISOString().slice(0, 10)} · {reading} min read</p>
-    <h1>{post.data.title}</h1>
-    <p>{post.data.description}</p>
+  <div class="slug">
+  <article class="slug__hero slug__hero--compact">
+    <p class="slug__meta">{post.data.date.toISOString().slice(0, 10)} · {reading} min read</p>
+    <h1 class="slug__title">{post.data.title}</h1>
+    <p class="slug__lead">{post.data.description}</p>
   </article>
 
-  <article class="card">
+  <article class="slug__card">
     <Content />
   </article>
+  </div>
 </BaseLayout>

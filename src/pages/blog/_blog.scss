@@ -1,0 +1,82 @@
+@use "../../styles/patterns" as *;
+
+
+.blog__hero {
+  @extend %page-hero;
+}
+
+.blog__hero--compact {
+  @extend %page-hero-compact;
+}
+
+.blog__title {
+  @extend %page-title;
+}
+
+.blog__lead {
+  @extend %page-lead;
+}
+
+.blog__section-title {
+  @extend %section-title;
+}
+
+.blog__grid {
+  @extend %content-grid;
+}
+
+.blog__grid--two {
+  @extend %content-grid-two;
+}
+
+.blog__card {
+  @extend %surface-card;
+}
+
+.blog__card-title {
+  @extend %surface-card-title;
+}
+
+.blog__card--offset {
+  @extend %surface-card-offset;
+}
+
+.blog__tags {
+  @extend %tag-list;
+}
+
+.blog__tags--spaced {
+  @extend %tag-list-spaced;
+}
+
+.blog__tag {
+  @extend %tag-item;
+}
+
+.blog__list {
+  @extend %entry-list;
+}
+
+.blog__list--offset {
+  @extend %entry-list-offset;
+}
+
+.blog__item {
+  @extend %entry-item;
+}
+
+.blog__item-title {
+  @extend %entry-item-title;
+}
+
+.blog__meta {
+  @extend %entry-meta;
+}
+
+.blog__meta--spaced {
+  @extend %entry-meta-spaced;
+}
+
+.blog__description {
+  @extend %entry-description;
+}

@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { readingTimeMinutes } from '../utils/readingTime';
+import { readingTimeMinutes } from '../../utils/readingTime';
 
 const posts = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
@@ -16,31 +16,34 @@ const posts = (await getCollection('blog'))
       readingTime: readingTimeMinutes(words)
     };
   });
+import './_blog.scss';
 ---
 
 <BaseLayout title="Blog — Ritik Patni" path="/blog">
-  <section class="hero">
-    <h1>Blog</h1>
-    <p>Clean notes on frontend engineering, systems, and photography.</p>
+  <div class="blog">
+  <section class="blog__hero">
+    <h1 class="blog__title">Blog</h1>
+    <p class="blog__lead">Clean notes on frontend engineering, systems, and photography.</p>
   </section>
 
-  <section class="post-list">
+  <section class="blog__list">
     {
       posts.length === 0 ? (
-        <article class="card"><p>No posts yet.</p></article>
+        <article class="blog__card"><p>No posts yet.</p></article>
       ) : (
         posts.map((post) => (
-          <article class="post-item">
-            <h3 style="margin: 0 0 0.3rem;">
+          <article class="blog__item">
+            <h3 class="blog__item-title">
               <a href={`/blog/${post.slug}`}>{post.title}</a>
             </h3>
-            <p class="post-meta" style="margin: 0 0 0.45rem;">
+            <p class="blog__meta blog__meta--spaced">
               {post.date.toISOString().slice(0, 10)} · {post.readingTime} min read
             </p>
-            <p style="margin: 0;">{post.description}</p>
+            <p class="blog__description">{post.description}</p>
           </article>
         ))
       )
     }
   </section>
+  </div>
 </BaseLayout>

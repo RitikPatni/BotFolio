@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
+import './_home.scss';
+---
+
+<BaseLayout
+  title="Ritik Patni — Frontend developer & wildlife/macro photographer"
+  description="I build thoughtful web experiences and document nature up close."
+  path="/"
+>
+  <div class="index">
+  <!--
+    Content provenance (Obsidian):
+    - legacy-vault/🧔 private/Jobs/Cover Letter 1.md
+    - legacy-vault/🧔 private/Jobs/Cover Letter 2.md
+  -->
+  <section class="index__hero">
+    <p class="index__tag">Frontend × Wildlife/Macro</p>
+    <h1 class="index__title">I build thoughtful web experiences and document nature up close.</h1>
+    <p class="index__lead">
+      I’m a front-end developer focused on design, accessibility, and performance — and I use this
+      space to publish what I build, what I learn, and what I capture through wildlife and macro
+      photography.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="index__section-title">Choose a track</h2>
+    <div class="index__grid index__grid--two">
+      <article class="index__card">
+        <h3 class="index__card-title">Photography track</h3>
+        <p>Curated work grouped by categories with a simple, fast viewing flow.</p>
+        <div class="index__tags">
+          <span class="index__tag">Wildlife</span>
+          <span class="index__tag">Macro</span>
+          <span class="index__tag">Birds</span>
+          <span class="index__tag">Travel</span>
+          <span class="index__tag">Landscape</span>
+        </div>
+        <p><a href="/photography">View photography →</a></p>
+      </article>
+
+      <article class="index__card">
+        <h3 class="index__card-title">Developer track</h3>
+        <p>Frontend engineering notes, systems-first workflow thinking, and practical writing.</p>
+        <p><a href="/blog">Read the blog →</a></p>
+      </article>
+    </div>
+  </section>
+  </div>
+</BaseLayout>

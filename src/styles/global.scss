@@ -1,0 +1,44 @@
+@use "open-props/style";
+
+:root {
+  --bg: var(--gray-12);
+  --bg-soft: var(--gray-11);
+  --text: var(--gray-0);
+  --muted: var(--gray-4);
+  --line: var(--gray-8);
+  --accent: var(--cyan-4);
+  --accent-2: var(--violet-4);
+  --layout-max-width: var(--size-content-3);
+  --layout-padding: var(--size-4);
+  --surface-padding: var(--size-4);
+  --surface-radius: var(--radius-3);
+  --surface-border: var(--border-size-1);
+}
+
+:root[data-theme='light'] {
+  --bg: var(--gray-0);
+  --bg-soft: var(--gray-1);
+  --text: var(--gray-12);
+  --muted: var(--gray-7);
+  --line: var(--gray-3);
+  --accent: var(--cyan-8);
+  --accent-2: var(--violet-8);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

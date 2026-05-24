@@ -1,0 +1,82 @@
+@use "../../styles/patterns" as *;
+
+
+.index__hero {
+  @extend %page-hero;
+}
+
+.index__hero--compact {
+  @extend %page-hero-compact;
+}
+
+.index__title {
+  @extend %page-title;
+}
+
+.index__lead {
+  @extend %page-lead;
+}
+
+.index__section-title {
+  @extend %section-title;
+}
+
+.index__grid {
+  @extend %content-grid;
+}
+
+.index__grid--two {
+  @extend %content-grid-two;
+}
+
+.index__card {
+  @extend %surface-card;
+}
+
+.index__card-title {
+  @extend %surface-card-title;
+}
+
+.index__card--offset {
+  @extend %surface-card-offset;
+}
+
+.index__tags {
+  @extend %tag-list;
+}
+
+.index__tags--spaced {
+  @extend %tag-list-spaced;
+}
+
+.index__tag {
+  @extend %tag-item;
+}
+
+.index__list {
+  @extend %entry-list;
+}
+
+.index__list--offset {
+  @extend %entry-list-offset;
+}
+
+.index__item {
+  @extend %entry-item;
+}
+
+.index__item-title {
+  @extend %entry-item-title;
+}
+
+.index__meta {
+  @extend %entry-meta;
+}
+
+.index__meta--spaced {
+  @extend %entry-meta-spaced;
+}
+
+.index__description {
+  @extend %entry-description;
+}
