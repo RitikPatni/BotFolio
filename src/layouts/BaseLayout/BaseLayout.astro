@@ -1,6 +1,8 @@
 ---
 import '../../styles/global.scss';
 import './BaseLayout.scss';
+import { SITE_CONFIG } from '../../config/site';
+import SocialIcon from '../../components/SocialIcon.astro';
 
 interface Props {
   title: string;
@@ -8,7 +10,7 @@ interface Props {
   path?: string;
 }
 
-const { title, description = 'Ritik Patni — frontend developer and wildlife/macro photographer.', path = '/' } = Astro.props;
+const { title, description = SITE_CONFIG.defaultDescription, path = '/' } = Astro.props;
 
 const nav = [
   { href: '/', label: 'Home' },
@@ -20,6 +22,8 @@ const nav = [
   { href: '/photography', label: 'Photography' },
   { href: '/contact', label: 'Contact' }
 ];
+
+const socials = SITE_CONFIG.socials;
 ---
 
 <!doctype html>
@@ -27,28 +31,34 @@ const nav = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-light-32x32.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-dark-32x32.png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-light-16x16.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-dark-16x16.png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/x-icon" href="/favicon-light.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-light.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="alternate" type="application/rss+xml" title="Ritik Patni RSS Feed" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE_CONFIG.rssTitle} href="/rss.xml" />
   </head>
   <body>
     <div class="base-layout">
       <a class="base-layout__skip-link" href="#main-content">Skip to content</a>
       <header class="base-layout__header">
-        <div class="base-layout__container base-layout__nav">
-          <a class="base-layout__brand" href="/" aria-label="Go to homepage"><strong>Ritik Patni</strong></a>
+        <div class="base-layout__container">
+          <div class="base-layout__nav">
+            <a class="base-layout__brand" href="/" aria-label="Go to homepage"><strong>{SITE_CONFIG.personName}</strong></a>
+          </div>
           <nav class="base-layout__links" aria-label="Main navigation">
-          {nav.map((item) => (
-            <a
-              href={item.href}
-              class={`base-layout__link ${path === item.href ? 'base-layout__link--active' : ''}`}
-              aria-current={path === item.href ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          ))}
-            <button class="base-layout__theme-toggle" type="button" id="themeToggle" aria-label="Toggle light and dark theme">Theme</button>
+            {nav.map((item) => (
+              <a
+                href={item.href}
+                class={`base-layout__link ${path === item.href ? 'base-layout__link--active' : ''}`}
+                aria-current={path === item.href ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
         </div>
       </header>
@@ -58,8 +68,28 @@ const nav = [
       </main>
 
       <footer class="base-layout__footer">
-        <div class="base-layout__container base-layout__footer-content">© {new Date().getFullYear()} Ritik Patni · Built with Astro.</div>
+        <div class="base-layout__container base-layout__footer-content">
+          <p class="base-layout__footer-copy">© {new Date().getFullYear()} {SITE_CONFIG.personName} · Built with Astro.</p>
+          <nav class="base-layout__socials" aria-label="Social links">
+            {socials.map((social) => (
+              <a href={social.href} class="base-layout__social-link" target="_blank" rel="noreferrer noopener">
+                <SocialIcon name={social.icon} class="base-layout__social-icon" />
+                {social.label}
+              </a>
+            ))}
+          </nav>
+        </div>
       </footer>
+
+      <button
+        class="base-layout__theme-fab"
+        type="button"
+        id="themeFab"
+        aria-label="Toggle light and dark theme"
+        title="Toggle theme"
+      >
+        <span aria-hidden="true">◐</span>
+      </button>
     </div>
 
     <script is:inline>
@@ -71,7 +101,8 @@ const nav = [
       const saved = localStorage.getItem(storageKey);
       if (saved === 'light' || saved === 'dark') apply(saved);
 
-      document.getElementById('themeToggle')?.addEventListener('click', () => {
+      const toggleButton = document.getElementById('themeFab');
+      toggleButton?.addEventListener('click', () => {
         const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
         const next = current === 'light' ? 'dark' : 'light';
         apply(next);

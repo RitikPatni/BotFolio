@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
+import { SITE_CONFIG } from '../../config/site';
+import SocialIcon from '../../components/SocialIcon.astro';
 import './_contact.scss';
 ---
 
@@ -14,7 +16,15 @@ import './_contact.scss';
   </section>
 
   <section class="contact__card">
-    <p>Add social/contact links in next iteration.</p>
+    <h2 class="contact__card-title">Find me online</h2>
+    <div class="contact__socials" aria-label="Social links">
+      {SITE_CONFIG.socials.map((social) => (
+        <a class="contact__social-link" href={social.href} target="_blank" rel="noreferrer noopener">
+          <SocialIcon name={social.icon} class="contact__social-icon" />
+          {social.label}
+        </a>
+      ))}
+    </div>
   </section>
   </div>
 </BaseLayout>

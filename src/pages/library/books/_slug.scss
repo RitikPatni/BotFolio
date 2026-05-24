@@ -80,3 +80,7 @@
 .slug__description {
   @extend %entry-description;
 }
+
+.slug__content {
+  @extend %prose;
+}

@@ -1,7 +1,7 @@
 @use "open-props/style";
 
 %page-hero {
-  padding-block: var(--size-10) var(--size-7);
+  padding-block: var(--size-6) var(--size-5);
 }
 
 %page-hero-compact {
@@ -13,12 +13,16 @@
   margin-block-end: var(--size-3);
   font-size: var(--font-size-fluid-3);
   line-height: var(--font-lineheight-0);
+  font-family: var(--font-display);
+  letter-spacing: var(--font-letterspacing-1);
 }
 
 %page-lead {
   margin: 0;
   max-inline-size: var(--size-content-3);
   color: var(--muted);
+  font-size: var(--font-size-3);
+  line-height: var(--font-lineheight-3);
 }
 
 %section-title {
@@ -43,6 +47,8 @@
 
 %surface-card-title {
   margin-top: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-5);
 }
 
 %surface-card-offset {
@@ -66,6 +72,7 @@
   padding-inline: var(--size-3);
   color: var(--muted);
   font-size: var(--font-size-0);
+  background: var(--bg-soft);
 }
 
 %entry-list {
@@ -88,6 +95,8 @@
 %entry-item-title {
   margin: 0;
   margin-block-end: var(--size-2);
+  font-family: var(--font-display);
+  font-size: var(--font-size-4);
 }
 
 %entry-meta {
@@ -103,3 +112,115 @@
 %entry-description {
   margin: 0;
 }
+
+%prose {
+  max-inline-size: var(--prose-max-width);
+  margin-inline: auto;
+  font-size: var(--font-size-2);
+  line-height: var(--font-lineheight-4);
+}
+
+%prose > :first-child {
+  margin-block-start: 0;
+}
+
+%prose > :last-child {
+  margin-block-end: 0;
+}
+
+%prose :where(h2, h3, h4) {
+  font-family: var(--font-display);
+  line-height: var(--font-lineheight-1);
+  margin-block: var(--size-7) var(--size-2);
+}
+
+%prose h2 {
+  font-size: var(--font-size-6);
+}
+
+%prose h3 {
+  font-size: var(--font-size-5);
+}
+
+%prose h4 {
+  font-size: var(--font-size-4);
+}
+
+%prose p {
+  margin-block: var(--size-3);
+}
+
+%prose :where(ul, ol) {
+  margin-block: var(--size-3);
+  padding-inline-start: var(--size-6);
+}
+
+%prose li {
+  margin-block: var(--size-1);
+}
+
+%prose a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: var(--size-1);
+}
+
+%prose :where(code, kbd) {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-1);
+  background: var(--bg-soft);
+  border: var(--surface-border) solid var(--line);
+  border-radius: var(--radius-2);
+  padding-inline: var(--size-1);
+}
+
+%prose pre {
+  margin-block: var(--size-4);
+  padding: var(--size-4);
+  background: var(--bg-soft);
+  border: var(--surface-border) solid var(--line);
+  border-radius: var(--radius-2);
+  overflow: auto;
+}
+
+%prose pre code {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+%prose blockquote {
+  margin-block: var(--size-4);
+  margin-inline: 0;
+  padding-inline: var(--size-4);
+  border-inline-start: var(--border-size-2) solid var(--line);
+  color: var(--muted);
+}
+
+%prose hr {
+  border: 0;
+  border-top: var(--surface-border) solid var(--line);
+  margin-block: var(--size-6);
+}
+
+%prose img {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+  margin-block: var(--size-5);
+  border-radius: var(--radius-2);
+}
+
+%prose table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  margin-block: var(--size-4);
+  font-size: var(--font-size-1);
+}
+
+%prose :where(th, td) {
+  border: var(--surface-border) solid var(--line);
+  padding: var(--size-2);
+  text-align: left;
+}
+
