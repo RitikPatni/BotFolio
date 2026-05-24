@@ -1,7 +1,4 @@
-User-agent: *
-Allow: /
-
-# Block common AI crawlers and model-training bots
+# Block AI crawlers and model-training bots
 User-agent: GPTBot
 Disallow: /
 
@@ -40,5 +37,24 @@ Disallow: /
 
 User-agent: Meta-ExternalFetcher
 Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+# Default policy for general crawlers
+User-agent: *
+Allow: /
 
 Sitemap: https://ritikpatni.me/sitemap.xml

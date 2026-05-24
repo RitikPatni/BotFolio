@@ -1,0 +1,33 @@
+/_astro/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai
+
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+/*.css
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai
+
+/*.js
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai
+
+/*.webmanifest
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai
+
+/*.png
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai
+
+/*.jpg
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai
+
+/*.jpeg
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai
+
+/*.webp
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai
+
+/*.svg
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai
+
+/*.ico
+  X-Robots-Tag: noindex, noarchive, nosnippet, noimageindex, noai, noimageai

@@ -1,33 +1,33 @@
 @use "open-props/style";
 
-.ui-stack {
+.primitive-stack {
   display: grid;
   gap: var(--size-3);
 }
 
-.ui-section {
+.primitive-section {
   margin-block: var(--size-6);
 }
 
-.ui-card {
+.primitive-surface {
   border: var(--surface-border) solid var(--line);
   border-radius: var(--surface-radius);
   background: var(--bg-soft);
   padding: var(--surface-padding);
 }
 
-.ui-link {
+.primitive-link {
   color: var(--text);
   text-decoration: underline;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.2em;
 }
 
-.ui-link:hover {
+.primitive-link:hover {
   text-decoration-thickness: 0.12em;
 }
 
-.ui-chip {
+.primitive-chip {
   display: inline-flex;
   align-items: center;
   border: var(--surface-border) solid var(--line);
@@ -38,7 +38,7 @@
   background: var(--bg);
 }
 
-.ui-button {
+.primitive-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -53,12 +53,12 @@
   cursor: pointer;
 }
 
-.ui-button:hover {
+.primitive-button:hover {
   border-color: var(--muted);
   background: var(--bg);
 }
 
-.ui-input {
+.primitive-input {
   inline-size: 100%;
   border: var(--surface-border) solid var(--line);
   border-radius: var(--radius-2);
@@ -67,6 +67,6 @@
   color: var(--text);
 }
 
-.ui-reveal {
+.motion-reveal {
   will-change: transform, opacity;
 }
