@@ -49,6 +49,13 @@
 .base-layout__brand {
   font-size: var(--font-size-2);
   color: var(--text);
+  transition:
+    color var(--duration-fast-1) var(--ease-2),
+    opacity var(--duration-fast-1) var(--ease-2);
+}
+
+.base-layout__brand:hover {
+  opacity: 0.85;
 }
 
 .base-layout__links {
@@ -67,11 +74,15 @@
   padding-block: var(--size-1);
   padding-inline: var(--size-1);
   white-space: nowrap;
+  transition:
+    color var(--duration-fast-1) var(--ease-2),
+    background-color var(--duration-fast-1) var(--ease-2);
 }
 
 .base-layout__link--active,
 .base-layout__link:hover {
   color: var(--text);
+  background: color-mix(in srgb, var(--bg-soft) 72%, transparent);
 }
 
 .base-layout__theme-fab {
@@ -90,12 +101,18 @@
   box-shadow: var(--shadow-1);
   display: grid;
   place-items: center;
-  transition: background-color var(--duration-fast-1) var(--ease-2), border-color var(--duration-fast-1) var(--ease-2);
+  transition:
+    background-color var(--duration-fast-1) var(--ease-2),
+    border-color var(--duration-fast-1) var(--ease-2),
+    transform var(--duration-fast-1) var(--ease-2),
+    box-shadow var(--duration-fast-1) var(--ease-2);
 }
 
 .base-layout__theme-fab:hover {
   border-color: var(--muted);
   background: var(--bg);
+  transform: translateY(calc(var(--size-1) * -0.5));
+  box-shadow: var(--shadow-2);
 }
 
 .base-layout__main {
@@ -135,6 +152,11 @@
   display: inline-flex;
   align-items: center;
   gap: var(--size-1);
+  transition:
+    color var(--duration-fast-1) var(--ease-2),
+    background-color var(--duration-fast-1) var(--ease-2),
+    border-color var(--duration-fast-1) var(--ease-2),
+    transform var(--duration-fast-1) var(--ease-2);
 }
 
 .base-layout__social-icon {
@@ -145,4 +167,14 @@
 .base-layout__social-link:hover,
 .base-layout__social-link:focus-visible {
   color: var(--text);
+  background: color-mix(in srgb, var(--bg-soft) 84%, transparent);
+  border-color: color-mix(in srgb, var(--text) 26%, var(--line));
+  transform: translateY(calc(var(--size-1) * -0.25));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .base-layout__theme-fab:hover,
+  .base-layout__social-link:hover {
+    transform: none;
+  }
 }

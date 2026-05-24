@@ -1,6 +1,5 @@
 @use "../../styles/patterns" as *;
 
-
 .photography__hero {
   @extend %page-hero;
 }
@@ -79,4 +78,58 @@
 
 .photography__description {
   @extend %entry-description;
+}
+
+.photography__category {
+  margin-block-start: var(--size-7);
+}
+
+.photography__category-head {
+  display: grid;
+  gap: var(--size-2);
+  margin-block-end: var(--size-4);
+}
+
+.photography__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-1);
+}
+
+.photography__tag-count {
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--size-5);
+  block-size: var(--size-5);
+  border-radius: var(--radius-round);
+  border: var(--surface-border) solid var(--line);
+  font-size: var(--font-size-0);
+}
+
+.photography__gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--size-3);
+}
+
+.photography__shot {
+  margin: 0;
+  border-radius: var(--radius-3);
+  overflow: hidden;
+  border: var(--surface-border) solid var(--line);
+  background: var(--bg-soft);
+}
+
+.photography__image {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+@media (max-width: 48rem) {
+  .photography__gallery {
+    grid-template-columns: 1fr;
+  }
 }

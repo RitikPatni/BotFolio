@@ -1,30 +1,206 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
-import { SITE_CONFIG } from '../../config/site';
-import SocialIcon from '../../components/SocialIcon.astro';
-import './_contact.scss';
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { SITE_CONFIG } from "../../config/site";
+import SocialIcon from "../../components/SocialIcon.astro";
+import "./_contact.scss";
+
+const CHANNEL_DETAILS: Record<string, { helper: string; intents: string[] }> = {
+  github: {
+    helper: "Frontend engineering notes, code, and experiments.",
+    intents: ["frontend", "general"],
+  },
+  linkedin: {
+    helper: "Professional conversations and collaboration discussions.",
+    intents: ["frontend", "general"],
+  },
+  instagram: {
+    helper: "Wildlife and macro photography conversations.",
+    intents: ["photography", "general"],
+  },
+  code: {
+    helper: "Playful CSS challenges and front-end problem solving.",
+    intents: ["frontend", "css", "general"],
+  },
+};
+
+const INTENTS = [
+  {
+    id: "frontend",
+    label: "Frontend/Product",
+    description: "Product engineering, DX, architecture, and web strategy.",
+  },
+  {
+    id: "photography",
+    label: "Photography",
+    description: "Shoots, collabs, and visual storytelling projects.",
+  },
+  {
+    id: "css",
+    label: "CSS Craft",
+    description: "CSS ideas, creative coding, and visual experiments.",
+  },
+  {
+    id: "general",
+    label: "Say Hi",
+    description: "General conversations and quick hellos.",
+  },
+];
 ---
 
 <BaseLayout title="Contact — Ritik Patni" path="/contact">
-  <div class="contact">
-  <section class="contact__hero">
-    <h1 class="contact__title">Contact</h1>
-    <p class="contact__lead">
-      Open to conversations around frontend/product engineering, design-minded web experiences,
-      and photography collaborations.
-    </p>
-  </section>
+  <div class="contact" data-contact-root>
+    <section class="contact__hero">
+      <p class="contact__eyebrow">Let’s build something thoughtful</p>
+      <h1 class="contact__title">Contact</h1>
+      <p class="contact__lead">
+        Open to conversations around frontend/product engineering, design-minded
+        web experiences, and photography collaborations.
+      </p>
 
-  <section class="contact__card">
-    <h2 class="contact__card-title">Find me online</h2>
-    <div class="contact__socials" aria-label="Social links">
-      {SITE_CONFIG.socials.map((social) => (
-        <a class="contact__social-link" href={social.href} target="_blank" rel="noreferrer noopener">
-          <SocialIcon name={social.icon} class="contact__social-icon" />
-          {social.label}
-        </a>
-      ))}
-    </div>
-  </section>
+      <ul class="contact__chips" aria-label="Availability highlights">
+        <li class="contact__chip">Remote-friendly collaborations</li>
+        <li class="contact__chip">Open to async conversations</li>
+        <li class="contact__chip">Works across product and visual craft</li>
+      </ul>
+    </section>
+
+    <section
+      class="contact__card contact__card--interactive"
+      aria-labelledby="find-online-title"
+    >
+      <div class="contact__card-head">
+        <h2 class="contact__card-title" id="find-online-title">
+          Find me online
+        </h2>
+        <p class="contact__card-lead">
+          Choose a topic to surface the most relevant channels.
+        </p>
+      </div>
+
+      <div
+        class="contact__intent"
+        role="group"
+        aria-label="Conversation intent"
+      >
+        {
+          INTENTS.map((intent, index) => (
+            <button
+              class="contact__intent-button"
+              type="button"
+              data-intent={intent.id}
+              aria-pressed={index === 0 ? "true" : "false"}
+            >
+              {intent.label}
+            </button>
+          ))
+        }
+      </div>
+
+      <p class="contact__intent-description" data-intent-description>
+        {INTENTS[0].description}
+      </p>
+
+      <div class="contact__socials" aria-label="Social links">
+        {
+          SITE_CONFIG.socials.map((social) => {
+            const details = CHANNEL_DETAILS[social.icon] ?? {
+              helper: "Reach out through this channel.",
+              intents: ["general"],
+            };
+
+            return (
+              <a
+                class="contact__social-link"
+                href={social.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                data-channel-intents={details.intents.join(" ")}
+              >
+                <span class="contact__social-row">
+                  <SocialIcon name={social.icon} class="contact__social-icon" />
+                  <span class="contact__social-label">{social.label}</span>
+                </span>
+                <span class="contact__social-helper">{details.helper}</span>
+              </a>
+            );
+          })
+        }
+      </div>
+    </section>
   </div>
+
+  <script>
+    (() => {
+      // @ts-nocheck
+      const root = document.querySelector("[data-contact-root]");
+
+      if (!root) {
+        return;
+      }
+
+      const intentButtons = Array.from(root.querySelectorAll("[data-intent]"));
+      const socialLinks = Array.from(
+        root.querySelectorAll("[data-channel-intents]"),
+      );
+      const intentDescription = root.querySelector("[data-intent-description]");
+
+      if (!intentButtons.length || !socialLinks.length || !intentDescription) {
+        return;
+      }
+
+      const getIntentDescription = (intent) => {
+        if (intent === "frontend")
+          return "Product engineering, DX, architecture, and web strategy.";
+        if (intent === "photography")
+          return "Shoots, collabs, and visual storytelling projects.";
+        if (intent === "css")
+          return "CSS ideas, creative coding, and visual experiments.";
+        return "General conversations and quick hellos.";
+      };
+
+      const normalizeIntent = (intent) => {
+        if (
+          intent === "frontend" ||
+          intent === "photography" ||
+          intent === "css" ||
+          intent === "general"
+        ) {
+          return intent;
+        }
+
+        return "general";
+      };
+
+      const updateIntent = (intent) => {
+        const normalizedIntent = normalizeIntent(intent);
+
+        intentButtons.forEach((button) => {
+          button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.intent === normalizedIntent),
+          );
+        });
+
+        socialLinks.forEach((link) => {
+          const supportedIntents =
+            link.dataset.channelIntents?.split(" ") ?? [];
+          const isMatch = supportedIntents.includes(normalizedIntent);
+
+          link.classList.toggle("contact__social-link--active", isMatch);
+          link.classList.toggle("contact__social-link--dim", !isMatch);
+        });
+
+        intentDescription.textContent = getIntentDescription(normalizedIntent);
+      };
+
+      intentButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const intent = button.dataset.intent;
+          updateIntent(intent ?? "general");
+        });
+      });
+
+      updateIntent("frontend");
+    })();
+  </script>
 </BaseLayout>

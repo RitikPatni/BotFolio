@@ -15,11 +15,14 @@
   --surface-padding: var(--size-4);
   --surface-radius: var(--radius-3);
   --surface-border: var(--border-size-1);
-  --font-body: "Avenir Next", "Segoe UI", "Helvetica Neue", "Noto Sans", sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", "Book Antiqua", serif;
+  --font-body:
+    "Avenir Next", "Segoe UI", "Helvetica Neue", "Noto Sans", sans-serif;
+  --font-display:
+    "Iowan Old Style", "Palatino Linotype", "URW Palladio L", "Book Antiqua",
+    serif;
 }
 
-:root[data-theme='light'] {
+:root[data-theme="light"] {
   --bg: var(--gray-0);
   --bg-soft: var(--gray-1);
   --text: var(--gray-12);
@@ -43,7 +46,24 @@ body {
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 a {

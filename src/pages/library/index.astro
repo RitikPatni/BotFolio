@@ -1,64 +1,196 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { getCollection } from "astro:content";
 
-const books = (await getCollection('books'))
+const books = (await getCollection("books"))
   .filter((item) => !item.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-const highlights = (await getCollection('highlights'))
+const highlights = (await getCollection("highlights"))
   .filter((item) => !item.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-import './_library.scss';
+
+const getBookCategoryMeta = (item: (typeof books)[number]) => {
+  const textPool = `${item.data.description}\n${item.body}`.toLowerCase();
+
+  const isNonFiction =
+    textPool.includes("#genre/non-fiction") ||
+    textPool.includes("#genre/nonfiction");
+  const genre = isNonFiction ? "non-fiction" : "fiction";
+
+  const language = textPool.includes("#language/hindi") ? "hindi" : "english";
+
+  return { genre, language };
+};
+
+const categorizedBooks = books.map((item) => {
+  const meta = getBookCategoryMeta(item);
+  return {
+    ...item,
+    genre: meta.genre,
+    language: meta.language,
+  };
+});
+
+const categoryCounts = {
+  all: categorizedBooks.length,
+  fiction: categorizedBooks.filter((item) => item.genre === "fiction").length,
+  "non-fiction": categorizedBooks.filter((item) => item.genre === "non-fiction")
+    .length,
+  english: categorizedBooks.filter((item) => item.language === "english")
+    .length,
+  hindi: categorizedBooks.filter((item) => item.language === "hindi").length,
+};
+
+const BOOK_CATEGORIES = [
+  { id: "all", label: "All" },
+  { id: "fiction", label: "Fiction" },
+  { id: "non-fiction", label: "Non-fiction" },
+  { id: "english", label: "English" },
+  { id: "hindi", label: "Hindi" },
+] as const;
+import "./_library.scss";
 ---
 
 <BaseLayout title="Library — Ritik Patni" path="/library">
   <div class="library">
-  <section class="library__hero">
-    <h1 class="library__title">Library</h1>
-    <p class="library__lead">Books and notes/highlights synced from Obsidian.</p>
-  </section>
+    <section class="library__hero">
+      <h1 class="library__title">Library</h1>
+      <p class="library__lead">
+        Books and notes/highlights synced from Obsidian.
+      </p>
+    </section>
 
-  <section class="library__list">
-    <h2>Books</h2>
-    {
-      books.length === 0 ? (
-        <article class="library__card"><p>No books yet.</p></article>
-      ) : (
-        books.map((item) => (
-          <article class="library__item">
-            <h3 class="library__item-title">
-              <a href={`/library/books/${item.slug}`}>{item.data.title}</a>
-            </h3>
-            <p class="library__meta library__meta--spaced">
-              {item.data.date.toISOString().slice(0, 10)}
-            </p>
-            <p class="library__description">{item.data.description}</p>
-          </article>
-        ))
-      )
-    }
-  </section>
+    <section class="library__list" data-library-root>
+      <h2>Books</h2>
+      <div
+        class="library__tags library__tags--spaced"
+        role="group"
+        aria-label="Book categories"
+      >
+        {
+          BOOK_CATEGORIES.map((category, index) => (
+            <button
+              type="button"
+              class="library__tag library__tag-button"
+              data-book-filter={category.id}
+              aria-pressed={index === 0 ? "true" : "false"}
+            >
+              {category.label}
+              <span class="library__tag-count">
+                {categoryCounts[category.id]}
+              </span>
+            </button>
+          ))
+        }
+      </div>
 
-  <section class="library__list library__list--offset">
-    <h2>Notes / Highlights</h2>
-    {
-      highlights.length === 0 ? (
-        <article class="library__card"><p>No highlights yet.</p></article>
-      ) : (
-        highlights.map((item) => (
-          <article class="library__item">
-            <h3 class="library__item-title">
-              <a href={`/library/highlights/${item.slug}`}>{item.data.title}</a>
-            </h3>
-            <p class="library__meta library__meta--spaced">
-              {item.data.date.toISOString().slice(0, 10)}
-            </p>
-            <p class="library__description">{item.data.description}</p>
+      {
+        books.length === 0 ? (
+          <article class="library__card">
+            <p>No books yet.</p>
           </article>
-        ))
-      )
-    }
-  </section>
+        ) : (
+          categorizedBooks.map((item) => (
+            <article
+              class="library__item"
+              data-book-item
+              data-book-genre={item.genre}
+              data-book-language={item.language}
+            >
+              <h3 class="library__item-title">
+                <a href={`/library/books/${item.slug}`}>{item.data.title}</a>
+              </h3>
+              <p class="library__meta library__meta--spaced">
+                {item.data.date.toISOString().slice(0, 10)}
+              </p>
+              <p class="library__description">{item.data.description}</p>
+            </article>
+          ))
+        )
+      }
+    </section>
+
+    <section class="library__list library__list--offset">
+      <h2>Notes / Highlights</h2>
+      {
+        highlights.length === 0 ? (
+          <article class="library__card">
+            <p>No highlights yet.</p>
+          </article>
+        ) : (
+          highlights.map((item) => (
+            <article class="library__item">
+              <h3 class="library__item-title">
+                <a href={`/library/highlights/${item.slug}`}>
+                  {item.data.title}
+                </a>
+              </h3>
+              <p class="library__meta library__meta--spaced">
+                {item.data.date.toISOString().slice(0, 10)}
+              </p>
+              <p class="library__description">{item.data.description}</p>
+            </article>
+          ))
+        )
+      }
+    </section>
   </div>
+
+  <script>
+    // @ts-nocheck
+    (() => {
+      const root = document.querySelector("[data-library-root]");
+
+      if (!root) {
+        return;
+      }
+
+      const filters = Array.from(
+        root.querySelectorAll("[data-book-filter]"),
+      ).filter((element) => element instanceof HTMLButtonElement);
+      const items = Array.from(
+        root.querySelectorAll("[data-book-item]"),
+      ).filter((element) => element instanceof HTMLElement);
+
+      if (!filters.length || !items.length) {
+        return;
+      }
+
+      const matchesCategory = (item, category) => {
+        if (category === "all") {
+          return true;
+        }
+
+        if (category === "fiction" || category === "non-fiction") {
+          return item.dataset.bookGenre === category;
+        }
+
+        return item.dataset.bookLanguage === category;
+      };
+
+      const applyFilter = (category) => {
+        filters.forEach((filter) => {
+          filter.setAttribute(
+            "aria-pressed",
+            String(filter.dataset.bookFilter === category),
+          );
+        });
+
+        items.forEach((item) => {
+          const visible = matchesCategory(item, category);
+          item.toggleAttribute("hidden", !visible);
+        });
+      };
+
+      filters.forEach((filter) => {
+        filter.addEventListener("click", () => {
+          const category = filter.dataset.bookFilter || "all";
+          applyFilter(category);
+        });
+      });
+
+      applyFilter("all");
+    })();
+  </script>
 </BaseLayout>

@@ -1,29 +1,176 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
-import './_photography.scss';
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import "./_photography.scss";
+
+import { existsSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+
+type PortfolioCategory = {
+  id: string;
+  label: string;
+  description: string;
+};
+
+type PortfolioImage = {
+  src: string;
+  alt: string;
+  categoryId: string;
+};
+
+const CATEGORIES: PortfolioCategory[] = [
+  {
+    id: "birds",
+    label: "Birds",
+    description: "Flight studies, wetlands, and quiet perches.",
+  },
+  {
+    id: "wildlife",
+    label: "Wildlife",
+    description: "Encounters from safaris and field trails.",
+  },
+  {
+    id: "macro",
+    label: "Macro",
+    description: "Tiny details and textures up close.",
+  },
+  {
+    id: "landscape",
+    label: "Landscape",
+    description: "Light, atmosphere, and larger scenes.",
+  },
+];
+
+const PHOTO_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
+const publicRoot = new URL("../../../public", import.meta.url).pathname;
+
+const formatAltFromFilename = (filename: string): string => {
+  const nameWithoutExtension = filename.replace(/\.[^.]+$/, "");
+  return nameWithoutExtension
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+};
+
+const imagesByCategory = CATEGORIES.map((category) => {
+  const categoryDir = join(publicRoot, "photography", category.id);
+
+  if (!existsSync(categoryDir)) {
+    return {
+      ...category,
+      images: [] as PortfolioImage[],
+    };
+  }
+
+  const images = readdirSync(categoryDir)
+    .filter((file) =>
+      PHOTO_EXTENSIONS.has(file.slice(file.lastIndexOf(".")).toLowerCase()),
+    )
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+    .map((file) => ({
+      src: `/photography/${category.id}/${file}`,
+      alt: formatAltFromFilename(file),
+      categoryId: category.id,
+    }));
+
+  return {
+    ...category,
+    images,
+  };
+});
+
+const totalImages = imagesByCategory.reduce(
+  (sum, category) => sum + category.images.length,
+  0,
+);
 ---
 
 <BaseLayout title="Photography — Ritik Patni" path="/photography">
   <div class="photography">
-  <section class="photography__hero">
-    <h1 class="photography__title">Photography</h1>
-    <p class="photography__lead">Curated gallery, grouped by category. v1 is intentionally simple: responsive grid + lightbox-ready structure.</p>
-  </section>
+    <section class="photography__hero">
+      <h1 class="photography__title">Photography</h1>
+      <p class="photography__lead">
+        Field notes in frames. Wildlife, birds, and macro studies from recent
+        sessions.
+      </p>
+    </section>
 
-  <div class="photography__tags photography__tags--spaced">
-    <span class="photography__tag">Wildlife</span>
-    <span class="photography__tag">Macro</span>
-    <span class="photography__tag">Birds</span>
-    <span class="photography__tag">Travel</span>
-    <span class="photography__tag">Landscape</span>
-  </div>
+    <div class="photography__tags photography__tags--spaced">
+      {
+        imagesByCategory.map((category) => (
+          <a class="photography__tag" href={`#${category.id}`}>
+            {category.label}
+            <span class="photography__tag-count">{category.images.length}</span>
+          </a>
+        ))
+      }
+    </div>
 
-  <section class="photography__grid photography__grid--two">
-    <article class="photography__card"><h3 class="photography__card-title">Wildlife</h3><p>Coming soon.</p></article>
-    <article class="photography__card"><h3 class="photography__card-title">Macro</h3><p>Coming soon.</p></article>
-    <article class="photography__card"><h3 class="photography__card-title">Birds</h3><p>Coming soon.</p></article>
-    <article class="photography__card"><h3 class="photography__card-title">Travel</h3><p>Coming soon.</p></article>
-    <article class="photography__card"><h3 class="photography__card-title">Landscape</h3><p>Coming soon.</p></article>
-  </section>
+    {
+      totalImages === 0 && (
+        <section class="photography__card" aria-label="How to add photos">
+          <h2 class="photography__card-title">Add your first batch</h2>
+          <p class="photography__description">
+            Drop images in category folders under{" "}
+            <code>/public/photography</code>:
+          </p>
+          <ul class="photography__list photography__list--offset">
+            <li class="photography__item">
+              <p class="photography__item-title">Birds</p>
+              <p class="photography__meta">/public/photography/birds</p>
+            </li>
+            <li class="photography__item">
+              <p class="photography__item-title">Wildlife</p>
+              <p class="photography__meta">/public/photography/wildlife</p>
+            </li>
+            <li class="photography__item">
+              <p class="photography__item-title">Macro</p>
+              <p class="photography__meta">/public/photography/macro</p>
+            </li>
+            <li class="photography__item">
+              <p class="photography__item-title">Landscape</p>
+              <p class="photography__meta">/public/photography/landscape</p>
+            </li>
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      imagesByCategory.map((category) => (
+        <section
+          class="photography__category"
+          id={category.id}
+          aria-labelledby={`${category.id}-title`}
+        >
+          <div class="photography__category-head">
+            <h2 class="photography__section-title" id={`${category.id}-title`}>
+              {category.label}
+            </h2>
+            <p class="photography__meta">
+              {category.description}{" "}
+              {category.images.length > 0
+                ? `${category.images.length} photos.`
+                : "No photos yet."}
+            </p>
+          </div>
+
+          {category.images.length > 0 && (
+            <div class="photography__gallery">
+              {category.images.map((image) => (
+                <figure class="photography__shot">
+                  <img
+                    class="photography__image"
+                    src={image.src}
+                    alt={image.alt || `${category.label} photograph`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              ))}
+            </div>
+          )}
+        </section>
+      ))
+    }
   </div>
 </BaseLayout>
