@@ -1,0 +1,314 @@
+[
+  {
+    "filename": "flamingo-flight.jpg",
+    "title": "Flamingo in Flight",
+    "category": "birds",
+    "tags": ["flamingo", "flight", "wildlife", "water", "flock"],
+    "alt": "A flamingo flying over calm water with a blurred flock of pink flamingos in the background",
+    "date": ""
+  },
+  {
+    "filename": "pied-kingfisher-perch.jpg",
+    "title": "Pied Kingfisher on Thorny Perch",
+    "category": "birds",
+    "tags": ["pied-kingfisher", "kingfisher", "wildlife", "thorn", "perch", "spiderweb"],
+    "alt": "A pied kingfisher perched on a thorny bare branch against a soft muted background of water and foliage",
+    "date": ""
+  },
+  {
+    "filename": "bulbul-golden-light.jpg",
+    "title": "Bulbul in Golden Light",
+    "category": "birds",
+    "tags": ["bulbul", "golden-light", "wildlife", "backlit", "bokeh"],
+    "alt": "A bulbul perched on a leafy branch bathed in warm golden rim light against a dark bokeh background",
+    "date": ""
+  },
+  {
+    "filename": "cattle-egret-breeding.jpg",
+    "title": "Cattle Egret in Breeding Plumage",
+    "category": "birds",
+    "tags": ["cattle-egret", "egret", "breeding-plumage", "wildlife", "golden", "portrait"],
+    "alt": "A cattle egret displaying striking golden-orange breeding plumage perched on a branch against a dark blurred background",
+    "date": ""
+  },
+  {
+    "filename": "nest-building-twigs.jpg",
+    "title": "Nest Building",
+    "category": "birds",
+    "tags": ["nest-building", "twig", "behavior", "wildlife", "small-bird", "prinia"],
+    "alt": "A small bird carrying an oversized long twig in its beak while perched on a wire, nest-building behavior",
+    "date": ""
+  },
+  {
+    "filename": "jumping-spider-portrait.jpg",
+    "title": "Jumping Spider Portrait",
+    "category": "macro",
+    "tags": ["jumping-spider", "spider", "macro", "eyes", "portrait", "arachnid"],
+    "alt": "An extreme close-up of a jumping spider showing its large forward-facing eyes and white pedipalps on a teal background",
+    "date": ""
+  },
+  {
+    "filename": "mosquito-macro.jpg",
+    "title": "Mosquito Macro",
+    "category": "macro",
+    "tags": ["mosquito", "macro", "insect", "wings", "close-up"],
+    "alt": "A macro close-up of a mosquito resting on a textured brown surface showing translucent wings and feathery antennae",
+    "date": ""
+  },
+  {
+    "filename": "sunset-silhouette-storks.jpg",
+    "title": "Sunset Silhouette",
+    "category": "wildlife",
+    "tags": ["silhouette", "sunset", "stork", "golden", "water", "reflection", "backlit"],
+    "alt": "Two storks silhouetted against a fiery orange sunset sky while standing in shimmering golden water",
+    "date": ""
+  },
+  {
+    "filename": "flamingo-flock-panorama.jpg",
+    "title": "Flamingo Gathering",
+    "category": "wildlife",
+    "tags": ["flamingo", "flock", "panorama", "water", "flight", "minimal"],
+    "alt": "A vast flock of flamingos flying and wading in calm blue water against a minimalist pale blue sky",
+    "date": ""
+  },
+  {
+    "filename": "stork-flight-with-prey.jpg",
+    "title": "Stork in Flight with Catch",
+    "category": "wildlife",
+    "tags": ["stork", "flight", "prey", "action", "hunting", "wings"],
+    "alt": "A stork flying with wings spread carrying a small catch in its beak against a blurred green background",
+    "date": ""
+  },
+  {
+    "filename": "common-kingfisher-perch.jpg",
+    "title": "Common Kingfisher",
+    "category": "birds",
+    "tags": ["kingfisher", "common-kingfisher", "turquoise", "perch", "thorn", "colorful"],
+    "alt": "A vibrant common kingfisher with turquoise and orange plumage perched on a thorny branch against a soft earthy background",
+    "date": ""
+  },
+  {
+    "filename": "tigress-with-cubs.jpg",
+    "title": "Tigress and Cubs",
+    "category": "wildlife",
+    "tags": ["tiger", "tigress", "cubs", "family", "forest", "dappled-light", "big-cat"],
+    "alt": "A tigress resting with three cubs on a forest floor covered in dry leaves, dappled sunlight filtering through the canopy",
+    "date": ""
+  },
+  {
+    "filename": "raptor-antenna-perch.jpg",
+    "title": "Raptor on Watch",
+    "category": "birds",
+    "tags": ["raptor", "hawk", "amber-eyes", "perch", "bird-of-prey"],
+    "alt": "A small raptor with amber eyes and yellow legs perched on a metal antenna against a blurred green background",
+    "date": ""
+  },
+  {
+    "filename": "bulbul-backlit-perch.jpg",
+    "title": "Bulbul in Warm Light",
+    "category": "birds",
+    "tags": ["bulbul", "backlit", "golden-light", "orange-leaves", "perch", "warm"],
+    "alt": "A bulbul perched on a branch surrounded by glowing translucent orange leaves, bathed in warm golden backlight",
+    "date": ""
+  },
+  {
+    "filename": "tiger-cubs-forest.jpg",
+    "title": "Tiger Cubs in the Forest",
+    "category": "wildlife",
+    "tags": ["tiger", "cubs", "forest", "dappled-light", "camouflage", "big-cat"],
+    "alt": "Two tiger cubs resting among dry leaves on a forest floor, dappled sunlight falling through the canopy",
+    "date": ""
+  },
+  {
+    "filename": "sunrise-silhouette-perch.jpg",
+    "title": "Sunrise Silhouette",
+    "category": "birds",
+    "tags": ["silhouette", "sunrise", "backlit", "golden", "perch", "minimal"],
+    "alt": "A small bird silhouetted against a warm golden-orange sunrise sky, fine feather details visible along the outline",
+    "date": ""
+  },
+  {
+    "filename": "dove-fanned-tail.jpg",
+    "title": "Fanned Tail",
+    "category": "birds",
+    "tags": ["dove", "fanned-tail", "preening", "cable", "feathers"],
+    "alt": "A dove preening with its tail feathers beautifully fanned out showing creamy white outer feathers against a soft green bokeh",
+    "date": ""
+  },
+  {
+    "filename": "shield-bug-yellow-petal.jpg",
+    "title": "Shield Bug on Yellow",
+    "category": "macro",
+    "tags": ["shield-bug", "stink-bug", "macro", "yellow-petal", "camouflage", "contrast"],
+    "alt": "A bark-like camouflaged shield bug on a bright yellow flower petal with pollen grains scattered on the surface",
+    "date": ""
+  },
+  {
+    "filename": "red-headed-vulture-wings.jpg",
+    "title": "Red-Headed Vulture",
+    "category": "wildlife",
+    "tags": ["red-headed-vulture", "vulture", "endangered", "wings-spread", "raptor", "conservation"],
+    "alt": "A critically endangered red-headed vulture standing on sandy ground with wings partially spread, showing its vibrant pink-red head and legs",
+    "date": ""
+  },
+  {
+    "filename": "vultures-feeding.jpg",
+    "title": "Vultures at a Carcass",
+    "category": "wildlife",
+    "tags": ["vulture", "feeding", "scavenging", "carcass", "behavior", "group"],
+    "alt": "Three red-headed vultures gathered around a carcass on a dry forest floor, one actively feeding",
+    "date": ""
+  },
+  {
+    "filename": "tiger-cub-closeup.jpg",
+    "title": "Tiger Cub Portrait",
+    "category": "wildlife",
+    "tags": ["tiger", "cub", "portrait", "close-up", "big-cat", "intimate"],
+    "alt": "An intimate close-up of a tiger cub resting on a forest path with an adult tiger blurred in the foreground",
+    "date": ""
+  },
+  {
+    "filename": "wagtail-thorny-perch.jpg",
+    "title": "Wagtail on Thorns",
+    "category": "birds",
+    "tags": ["wagtail", "thorny-branch", "spiderweb", "perch", "warm-light"],
+    "alt": "A small wagtail perched on a thorny branch with delicate spiderwebs visible, bathed in warm natural light",
+    "date": ""
+  },
+  {
+    "filename": "macaque-tree-peek.jpg",
+    "title": "Curious Macaque",
+    "category": "wildlife",
+    "tags": ["macaque", "monkey", "primate", "tree", "portrait", "peeking"],
+    "alt": "A macaque peeking from behind a textured tree trunk with direct eye contact, set against a backdrop of dry forest leaves",
+    "date": ""
+  },
+  {
+    "filename": "tiger-portrait.jpg",
+    "title": "Tiger Portrait",
+    "category": "wildlife",
+    "tags": ["tiger", "portrait", "big-cat", "eyes", "close-up", "intense"],
+    "alt": "A tight portrait of a tiger with intense golden eyes and mouth slightly open, framed by lush green foliage",
+    "date": ""
+  },
+  {
+    "filename": "shorebirds-flight-reflection.jpg",
+    "title": "Shorebirds in Flight",
+    "category": "wildlife",
+    "tags": ["shorebirds", "avocet", "stilt", "flight", "reflection", "wetland", "flock"],
+    "alt": "A flock of shorebirds with black-and-white wing patterns flying over calm blue water with their reflections mirrored below",
+    "date": ""
+  },
+  {
+    "filename": "hoopoe-thorny-perch.jpg",
+    "title": "Hoopoe on Thorns",
+    "category": "birds",
+    "tags": ["hoopoe", "crest", "black-and-white-wings", "thorny-branch", "spider"],
+    "alt": "A hoopoe perched on a thorny branch with its distinctive crest raised, striking black-and-white wing bars visible, a small spider hanging below",
+    "date": ""
+  },
+  {
+    "filename": "cranes-wetland.jpg",
+    "title": "Cranes at the Wetland",
+    "category": "wildlife",
+    "tags": ["crane", "wetland", "flight", "landing", "shorebirds", "flock", "habitat"],
+    "alt": "Several cranes landing and taking off in a shallow wetland surrounded by smaller shorebirds with a distant line of flamingos on the horizon",
+    "date": ""
+  },
+  {
+    "filename": "nilgai-golden-grass.jpg",
+    "title": "Nilgai in Golden Grass",
+    "category": "wildlife",
+    "tags": ["nilgai", "antelope", "grassland", "golden-hour", "habitat", "camouflage"],
+    "alt": "Two nilgai peeking through tall golden grass with their distinctive white inner ears catching the warm light",
+    "date": ""
+  },
+  {
+    "filename": "starling-flight-material.jpg",
+    "title": "Starling in Flight",
+    "category": "birds",
+    "tags": ["starling", "flight", "nesting", "material", "iridescent", "wings"],
+    "alt": "A starling in mid-flight carrying nesting material in its beak against a soft blurred green and golden background",
+    "date": ""
+  },
+  {
+    "filename": "sparrows-reed-flight.jpg",
+    "title": "Sparrows in the Reeds",
+    "category": "birds",
+    "tags": ["sparrow", "flight", "reeds", "layered", "artistic", "sky"],
+    "alt": "Several sparrows in flight among blurred vertical plant stalks against a soft blue sky, creating a layered artistic composition",
+    "date": ""
+  },
+  {
+    "filename": "kingfisher-golden-perch.jpg",
+    "title": "Kingfisher in Golden Light",
+    "category": "birds",
+    "tags": ["kingfisher", "perched", "golden-hour", "thorny", "bokeh", "warm"],
+    "alt": "A turquoise kingfisher perched on a thorny branch against a soft golden bokeh background of warm grasses",
+    "date": ""
+  },
+  {
+    "filename": "kingfisher-takeoff.jpg",
+    "title": "Kingfisher Takeoff",
+    "category": "birds",
+    "tags": ["kingfisher", "takeoff", "flight", "action", "motion-blur", "dynamic"],
+    "alt": "A turquoise kingfisher launching from a thorny branch with wings spread wide against a warm golden background, wingtip motion blur conveying speed",
+    "date": ""
+  },
+  {
+    "filename": "egret-yellow-eye.jpg",
+    "title": "Egret's Gaze",
+    "category": "birds",
+    "tags": ["egret", "white", "yellow-eye", "minimal", "dark-water", "contrast"],
+    "alt": "A white egret with a striking yellow eye standing among rocks and branches against a deep blue water backdrop",
+    "date": ""
+  },
+  {
+    "filename": "red-wattled-lapwing.jpg",
+    "title": "Red-Wattled Lapwing",
+    "category": "birds",
+    "tags": ["red-wattled-lapwing", "wader", "yellow-legs", "red-wattle", "profile", "blue-water"],
+    "alt": "A red-wattled lapwing in profile standing on rocky ground with its distinctive red wattle and yellow legs against deep blue water",
+    "date": ""
+  },
+  {
+    "filename": "cormorant-wing-drying.jpg",
+    "title": "Wing Drying",
+    "category": "birds",
+    "tags": ["cormorant", "wing-drying", "water", "behavior", "blue", "driftwood"],
+    "alt": "A cormorant spreading its wings to dry perched on driftwood in deep blue water with another cormorant in the background",
+    "date": ""
+  },
+  {
+    "filename": "little-ringed-plover.jpg",
+    "title": "Little Ringed Plover",
+    "category": "birds",
+    "tags": ["little-ringed-plover", "wader", "shorebird", "yellow-eye-ring", "plover", "portrait"],
+    "alt": "A little ringed plover standing on dry ground with its striking yellow eye-rings, white collar, and brown back sharply contrasting against a soft earthy background",
+    "date": ""
+  },
+  {
+    "filename": "storks-dusk-silhouettes.jpg",
+    "title": "Dusk Silhouettes",
+    "category": "wildlife",
+    "tags": ["stork", "silhouette", "dusk", "twilight", "landmass", "moody", "atmospheric"],
+    "alt": "Several storks silhouetted in flight against a dusky blue-grey sky with a dark mountain silhouetted landmass on the left",
+    "date": ""
+  },
+  {
+    "filename": "golden-stilt-silhouette.jpg",
+    "title": "Golden Stilt",
+    "category": "wildlife",
+    "tags": ["stilt", "silhouette", "golden-hour", "wading", "reflection", "minimal", "sunrise"],
+    "alt": "A long-legged stilt wading through shimmering golden water at sunrise, one leg raised mid-step, silhouetted against warm orange light",
+    "date": ""
+  },
+  {
+    "filename": "green-bee-eater-perch.jpg",
+    "title": "Little Green Bee-eater",
+    "category": "birds",
+    "tags": ["green-bee-eater", "bee-eater", "green", "crimson-eye", "perched", "wire-tail"],
+    "alt": "A vibrant Little Green Bee-eater with bright green plumage, crimson eye, and distinctive elongated wire-like tail feathers perched on a rope against a dark bokeh background",
+    "date": ""
+  }
+]
