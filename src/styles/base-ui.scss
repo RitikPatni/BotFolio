@@ -1,0 +1,72 @@
+@use "open-props/style";
+
+.ui-stack {
+  display: grid;
+  gap: var(--size-3);
+}
+
+.ui-section {
+  margin-block: var(--size-6);
+}
+
+.ui-card {
+  border: var(--surface-border) solid var(--line);
+  border-radius: var(--surface-radius);
+  background: var(--bg-soft);
+  padding: var(--surface-padding);
+}
+
+.ui-link {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+}
+
+.ui-link:hover {
+  text-decoration-thickness: 0.12em;
+}
+
+.ui-chip {
+  display: inline-flex;
+  align-items: center;
+  border: var(--surface-border) solid var(--line);
+  border-radius: var(--radius-round);
+  padding: var(--size-1) var(--size-2);
+  font-size: var(--font-size-0);
+  color: var(--muted);
+  background: var(--bg);
+}
+
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-1);
+  border: var(--surface-border) solid var(--line);
+  border-radius: var(--radius-2);
+  padding: var(--size-2) var(--size-3);
+  background: var(--bg-soft);
+  color: var(--text);
+  font-size: var(--font-size-1);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ui-button:hover {
+  border-color: var(--muted);
+  background: var(--bg);
+}
+
+.ui-input {
+  inline-size: 100%;
+  border: var(--surface-border) solid var(--line);
+  border-radius: var(--radius-2);
+  padding: var(--size-2) var(--size-3);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.ui-reveal {
+  will-change: transform, opacity;
+}

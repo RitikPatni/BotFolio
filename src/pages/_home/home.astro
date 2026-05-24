@@ -20,35 +20,35 @@ const posts = (await getCollection('blog'))
   description="I build thoughtful web experiences and document nature up close."
   path="/"
 >
-  <div class="index">
+  <div class="index ui-stack">
   <!--
     Content provenance (Obsidian):
     - legacy-vault/🧔 private/Jobs/Cover Letter 1.md
     - legacy-vault/🧔 private/Jobs/Cover Letter 2.md
   -->
-    <section class="index__hero">
+    <section class="index__hero ui-section ui-reveal">
       <div class="index__hero-content">
-        <p class="index__tag">Frontend × Wildlife/Macro</p>
+        <p class="index__tag ui-chip">Frontend × Wildlife/Macro</p>
         <h1 class="index__title">Thoughtful interfaces. Patient field notes. One place.</h1>
         <p class="index__lead">
           I design and build web experiences with a systems mindset, then switch lenses to document
           wildlife and macro moments. This space blends both disciplines into one evolving archive.
         </p>
-        <p><a class="index__inline-link" href="/blog">Explore engineering notes</a></p>
+        <p><a class="index__inline-link ui-link" href="/blog">Explore engineering notes</a></p>
       </div>
     </section>
 
-    <section>
+    <section class="ui-section ui-reveal">
       <h2 class="index__section-title">Latest blog posts</h2>
       {
         posts.length === 0 ? (
-          <article class="index__card">
+          <article class="index__card ui-card">
             <p>No blog posts yet.</p>
           </article>
         ) : (
           <div class="index__list">
             {posts.map((post) => (
-              <article class="index__item">
+              <article class="index__item ui-card">
                 <h3 class="index__item-title">
                   <a href={`/blog/${post.slug}`}>{post.title}</a>
                 </h3>
@@ -59,7 +59,7 @@ const posts = (await getCollection('blog'))
           </div>
         )
       }
-      <p><a class="index__inline-link" href="/blog">View all blog posts</a></p>
+      <p><a class="index__inline-link ui-link" href="/blog">View all blog posts</a></p>
     </section>
   </div>
 </BaseLayout>

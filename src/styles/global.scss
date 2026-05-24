@@ -1,4 +1,5 @@
 @use "open-props/style";
+@use "./base-ui.scss";
 
 :root {
   --bg: var(--gray-12);
