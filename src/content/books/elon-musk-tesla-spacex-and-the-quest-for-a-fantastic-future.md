@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Elon Musk- Tesla, SpaceX, and
 source_url: ""
 category: "books"
 author: "Worth Books"
+language: "english"
 genres:
   - "non fiction"
 published_year: "2017"

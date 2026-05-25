@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Big Magic.md"
 source_url: ""
 category: "books"
 author: "Elizabeth Gilbert"
+language: "english"
 genres:
   - "non fiction"
 published_year: "2014"

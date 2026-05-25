@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/The Fellowship of the Ring.md"
 source_url: ""
 category: "books"
 author: "J.R.R. Tolkien"
+language: "english"
 genres:
   - "fiction"
 published_year: "1954"

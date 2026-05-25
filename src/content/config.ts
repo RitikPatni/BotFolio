@@ -25,6 +25,7 @@ const books = defineCollection({
   type: 'content',
   schema: baseSchema.extend({
     author: z.string().default(''),
+    language: z.string().default(''),
     genres: z.array(z.string()).default([]),
     published_year: z.string().default(''),
     isbn13: z.string().default(''),

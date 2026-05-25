@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Absent in the Spring.md"
 source_url: ""
 category: "books"
 author: "Agatha Christie"
+language: "english"
 genres:
   - "fiction"
 published_year: "1944"

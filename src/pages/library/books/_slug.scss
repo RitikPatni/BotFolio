@@ -84,3 +84,22 @@
 .slug__content {
   @extend %prose;
 }
+
+.slug__book-meta {
+  margin: var(--size-3) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--size-1);
+  color: var(--muted);
+
+  li {
+    line-height: 1.45;
+  }
+
+  a {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}

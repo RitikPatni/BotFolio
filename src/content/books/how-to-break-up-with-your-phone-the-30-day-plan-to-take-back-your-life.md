@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/How to Break Up with Your Pho
 source_url: ""
 category: "books"
 author: ""
+language: "english"
 genres:
   - "non fiction"
 published_year: ""

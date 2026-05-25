@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2021/Fire & Blood.md"
 source_url: ""
 category: "books"
 author: "George R. R. Martin"
+language: "english"
 genres:
   - "fiction"
 published_year: "2014"

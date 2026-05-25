@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Outliers- The Story of Succes
 source_url: ""
 category: "books"
 author: "BookCaps Study Guides Staff"
+language: "english"
 genres:
   - "non fiction"
 published_year: "2012"

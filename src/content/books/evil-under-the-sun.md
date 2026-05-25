@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/Evil Under the Sun.md"
 source_url: ""
 category: "books"
 author: "Agatha Christie"
+language: "english"
 genres:
   - "fiction"
 published_year: "1941"

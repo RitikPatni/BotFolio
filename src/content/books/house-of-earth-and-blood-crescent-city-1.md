@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/House of Earth and Blood (Cre
 source_url: ""
 category: "books"
 author: ""
+language: "english"
 genres:
   - "fiction"
 published_year: ""

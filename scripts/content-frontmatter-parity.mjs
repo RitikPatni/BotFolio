@@ -22,6 +22,7 @@ const canonicalKeys = {
   ],
   booksExtra: [
     "author",
+    "language",
     "genres",
     "published_year",
     "isbn13",
@@ -189,6 +190,7 @@ function normalizeRecord(data, collectionName, filePath) {
 
   if (collectionName === "books") {
     normalized.author = String(data.author ?? "").trim();
+    normalized.language = String(data.language ?? "").trim().toLowerCase();
     normalized.genres = normalizeList(data.genres);
     normalized.published_year = String(data.published_year ?? "").trim();
     normalized.isbn13 = String(data.isbn13 ?? "").trim();
@@ -201,6 +203,9 @@ function normalizeRecord(data, collectionName, filePath) {
     }
     if (normalized.openlibrary_url && !/^https?:\/\//.test(normalized.openlibrary_url)) {
       issues.push(`${filePath}: openlibrary_url must start with http(s), got '${normalized.openlibrary_url}'`);
+    }
+    if (normalized.language && !["english", "hindi", "other", "unknown"].includes(normalized.language)) {
+      issues.push(`${filePath}: language must be one of english|hindi|other|unknown when present ('${normalized.language}')`);
     }
   }
 
@@ -243,6 +248,7 @@ function serializeFrontmatter(record, collectionName) {
 
   if (collectionName === "books") {
     lines.push(`author: ${yamlEscape(record.author)}`);
+    lines.push(`language: ${yamlEscape(record.language)}`);
     pushYamlList(lines, "genres", record.genres);
     lines.push(`published_year: ${yamlEscape(record.published_year)}`);
     lines.push(`isbn13: ${yamlEscape(record.isbn13)}`);

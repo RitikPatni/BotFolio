@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/The Sign of Four.md"
 source_url: ""
 category: "books"
 author: "Arthur Conan Doyle"
+language: "english"
 genres:
   - "fiction"
 published_year: "1889"

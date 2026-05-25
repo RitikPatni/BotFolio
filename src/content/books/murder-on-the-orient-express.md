@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2019/Murder On the Orient Express.md"
 source_url: ""
 category: "books"
 author: "Agatha Christie"
+language: "hindi"
 genres:
   - "fiction"
 published_year: "1933"

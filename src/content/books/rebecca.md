@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Rebecca.md"
 source_url: ""
 category: "books"
 author: "Daphne du Maurier"
+language: "english"
 genres:
   - "fiction"
 published_year: "1938"

@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/Camino Island.md"
 source_url: ""
 category: "books"
 author: "John Grisham"
+language: "english"
 genres:
   - "fiction"
 published_year: "2017"

@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Why We Sleep- Unlocking the P
 source_url: ""
 category: "books"
 author: "The Mindset Warrior"
+language: "english"
 genres:
   - "non fiction"
 published_year: "2018"

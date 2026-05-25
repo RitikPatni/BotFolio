@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/Humans.md"
 source_url: ""
 category: "books"
 author: ""
+language: "english"
 genres:
   - "non fiction"
 published_year: ""

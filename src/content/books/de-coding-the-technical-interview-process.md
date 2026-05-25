@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2021/De-Coding The Technical Interview Pro
 source_url: ""
 category: "books"
 author: ""
+language: "english"
 genres:
   - "fiction"
 published_year: ""

@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Genghis Khan and the Making o
 source_url: ""
 category: "books"
 author: "Jack Weatherford"
+language: "english"
 genres:
   - "non fiction"
 published_year: "2004"

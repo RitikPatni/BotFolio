@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/Three Act Tragedy.md"
 source_url: ""
 category: "books"
 author: ""
+language: "english"
 genres:
   - "fiction"
 published_year: "1992"

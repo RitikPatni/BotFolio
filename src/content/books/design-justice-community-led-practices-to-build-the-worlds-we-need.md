@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Design Justice- Community-Led
 source_url: ""
 category: "books"
 author: ""
+language: "english"
 genres:
   - "non fiction"
 published_year: ""

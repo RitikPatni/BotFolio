@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/A Fine Balance.md"
 source_url: ""
 category: "books"
 author: "Rohinton Mistry"
+language: "english"
 genres: []
 published_year: "1995"
 isbn13: "9788439701989"

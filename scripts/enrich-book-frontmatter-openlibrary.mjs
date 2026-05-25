@@ -113,6 +113,7 @@ function serializeFrontmatter(record) {
   lines.push(`category: ${yamlEscape(record.category ?? "books")}`);
 
   lines.push(`author: ${yamlEscape(record.author ?? "")}`);
+  lines.push(`language: ${yamlEscape(record.language ?? "")}`);
   pushYamlList(lines, "genres", Array.isArray(record.genres) ? record.genres : []);
   lines.push(`published_year: ${yamlEscape(record.published_year ?? "")}`);
   lines.push(`isbn13: ${yamlEscape(record.isbn13 ?? "")}`);
@@ -173,6 +174,34 @@ function cleanGenre(value) {
     .replace(/\s+/g, " ")
     .replace(/[;:,.]+$/g, "")
     .trim();
+}
+
+const HINDI_TITLE_HINTS = [
+  "raavan",
+  "sita",
+  "ishvaku",
+  "musafir",
+  "kulfi",
+  "chaurasi",
+  "darbar",
+  "baaghi",
+  "ballia",
+];
+
+function inferLanguageFromRecord(title, doc) {
+  const code = Array.isArray(doc?.language) && doc.language.length
+    ? String(doc.language[0]).toLowerCase()
+    : "";
+
+  if (code === "eng") return "english";
+  if (code === "hin") return "hindi";
+
+  const text = normalizeTitle(title);
+  if (HINDI_TITLE_HINTS.some((hint) => text.includes(hint))) {
+    return "hindi";
+  }
+
+  return "english";
 }
 
 function extractGenreFromDescription(description) {
@@ -276,6 +305,7 @@ async function main() {
     const next = { ...data };
 
     const nextAuthor = Array.isArray(best?.author_name) ? best.author_name.slice(0, 3).join(", ") : "";
+    const nextLanguage = inferLanguageFromRecord(title, best);
     const nextGenres = Array.isArray(best?.subject)
       ? best.subject.map(cleanGenre).filter(Boolean).slice(0, 6)
       : extractGenreFromDescription(data.description);
@@ -294,6 +324,7 @@ async function main() {
     }
 
     if (!String(next.author ?? "").trim() && nextAuthor) next.author = nextAuthor;
+    if (!String(next.language ?? "").trim() && nextLanguage) next.language = nextLanguage;
     if ((!Array.isArray(next.genres) || next.genres.length === 0) && nextGenres.length) next.genres = nextGenres;
     if (!String(next.published_year ?? "").trim() && nextPublishedYear) next.published_year = nextPublishedYear;
     if (!String(next.isbn13 ?? "").trim() && nextIsbn13) next.isbn13 = nextIsbn13;
@@ -303,6 +334,7 @@ async function main() {
 
     // Ensure keys exist even if still unknown.
     next.author = String(next.author ?? "").trim();
+    next.language = String(next.language ?? "").trim().toLowerCase();
     next.genres = Array.isArray(next.genres) ? next.genres.map((g) => String(g).trim()).filter(Boolean) : [];
     next.published_year = String(next.published_year ?? "").trim();
     next.isbn13 = String(next.isbn13 ?? "").trim();

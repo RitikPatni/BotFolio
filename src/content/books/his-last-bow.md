@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/His Last Bow.md"
 source_url: ""
 category: "books"
 author: "Arthur Conan Doyle"
+language: "english"
 genres:
   - "fiction"
 published_year: "2018"

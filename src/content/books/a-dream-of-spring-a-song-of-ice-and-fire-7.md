@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/A Dream of Spring (A Song of 
 source_url: ""
 category: "books"
 author: ""
+language: "english"
 genres:
   - "fiction"
 published_year: ""

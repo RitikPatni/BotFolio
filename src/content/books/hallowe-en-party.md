@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/Hallowe'en Party.md"
 source_url: ""
 category: "books"
 author: "Agatha Christie"
+language: "english"
 genres:
   - "fiction"
 published_year: "1969"

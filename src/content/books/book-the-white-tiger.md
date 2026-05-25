@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2018/(Book) The White Tiger.md"
 source_url: ""
 category: "books"
 author: ""
+language: "english"
 genres: []
 published_year: ""
 isbn13: ""

@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2019/October Junction.md"
 source_url: ""
 category: "books"
 author: "Divya Prakash Dubey"
+language: "hindi"
 genres:
   - "fiction"
 published_year: "2019"

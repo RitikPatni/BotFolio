@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Essentialism- The Disciplined
 source_url: ""
 category: "books"
 author: "Greg McKeown"
+language: "english"
 genres:
   - "non fiction"
 published_year: "2014"

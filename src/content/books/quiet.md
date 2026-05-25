@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/Quiet.md"
 source_url: ""
 category: "books"
 author: "Susan Cain"
+language: "english"
 genres:
   - "non fiction"
 published_year: "2012"

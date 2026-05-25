@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2020/The Valley of Fear.md"
 source_url: ""
 category: "books"
 author: "Arthur Conan Doyle"
+language: "english"
 genres:
   - "fiction"
 published_year: "1914"

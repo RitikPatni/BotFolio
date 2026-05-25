@@ -11,16 +11,30 @@ const highlights = (await getCollection("highlights"))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const getBookCategoryMeta = (item: (typeof books)[number]) => {
-  const textPool = `${item.data.description}\n${item.body}`.toLowerCase();
+  const languageRaw = String(item.data.language || "").toLowerCase().trim();
+  const language = languageRaw === "hindi" ? "hindi" : languageRaw === "other" ? "other" : "english";
 
-  const isNonFiction =
+  const hasNonFictionGenre = item.data.genres.some((genre) =>
+    String(genre).toLowerCase().includes("non") && String(genre).toLowerCase().includes("fiction"),
+  );
+
+  const textPool = `${item.data.description}\n${item.body}`.toLowerCase();
+  const hasNonFictionTag =
     textPool.includes("#genre/non-fiction") ||
     textPool.includes("#genre/nonfiction");
-  const genre = isNonFiction ? "non-fiction" : "fiction";
 
-  const language = textPool.includes("#language/hindi") ? "hindi" : "english";
+  const genre = hasNonFictionGenre || hasNonFictionTag ? "non-fiction" : "fiction";
 
-  return { genre, language };
+  const publishedYear = String(item.data.published_year || "").trim();
+  let era: "unknown" | "pre-2000" | "2000-2014" | "2015+" = "unknown";
+  if (/^\d{4}$/.test(publishedYear)) {
+    const y = Number(publishedYear);
+    if (y < 2000) era = "pre-2000";
+    else if (y < 2015) era = "2000-2014";
+    else era = "2015+";
+  }
+
+  return { genre, language, era };
 };
 
 const categorizedBooks = books.map((item) => {
@@ -29,6 +43,7 @@ const categorizedBooks = books.map((item) => {
     ...item,
     genre: meta.genre,
     language: meta.language,
+    era: meta.era,
   };
 });
 
@@ -40,6 +55,9 @@ const categoryCounts = {
   english: categorizedBooks.filter((item) => item.language === "english")
     .length,
   hindi: categorizedBooks.filter((item) => item.language === "hindi").length,
+  "pre-2000": categorizedBooks.filter((item) => item.era === "pre-2000").length,
+  "2000-2014": categorizedBooks.filter((item) => item.era === "2000-2014").length,
+  "2015+": categorizedBooks.filter((item) => item.era === "2015+").length,
 };
 
 const BOOK_CATEGORIES = [
@@ -48,6 +66,9 @@ const BOOK_CATEGORIES = [
   { id: "non-fiction", label: "Non-fiction" },
   { id: "english", label: "English" },
   { id: "hindi", label: "Hindi" },
+  { id: "pre-2000", label: "Pre-2000" },
+  { id: "2000-2014", label: "2000-2014" },
+  { id: "2015+", label: "2015+" },
 ] as const;
 import "./_library.scss";
 ---
@@ -97,12 +118,17 @@ import "./_library.scss";
               data-book-item
               data-book-genre={item.genre}
               data-book-language={item.language}
+              data-book-era={item.era}
+              data-book-author={item.data.author?.toLowerCase() || ""}
             >
               <h3 class="library__item-title">
                 <a href={`/library/books/${item.slug}`}>{item.data.title}</a>
               </h3>
               <p class="library__meta library__meta--spaced">
                 {item.data.date.toISOString().slice(0, 10)}
+                {item.data.author ? ` · ${item.data.author}` : ""}
+                {item.data.language ? ` · ${item.data.language}` : ""}
+                {item.data.published_year ? ` · ${item.data.published_year}` : ""}
               </p>
               <p class="library__description">{item.data.description}</p>
             </article>
@@ -166,7 +192,15 @@ import "./_library.scss";
           return item.dataset.bookGenre === category;
         }
 
-        return item.dataset.bookLanguage === category;
+        if (category === "english" || category === "hindi" || category === "other") {
+          return item.dataset.bookLanguage === category;
+        }
+
+        if (category === "pre-2000" || category === "2000-2014" || category === "2015+") {
+          return item.dataset.bookEra === category;
+        }
+
+        return false;
       };
 
       const applyFilter = (category) => {

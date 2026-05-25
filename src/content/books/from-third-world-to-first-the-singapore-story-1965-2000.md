@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/From Third World to First- Th
 source_url: ""
 category: "books"
 author: "Lee Kuan Yew"
+language: "english"
 genres:
   - "non fiction"
 published_year: "2000"

@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2019/The Hobbit.md"
 source_url: ""
 category: "books"
 author: "J.R.R. Tolkien"
+language: "english"
 genres:
   - "fiction"
 published_year: "1937"

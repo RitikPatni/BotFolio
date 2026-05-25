@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/2019/Delhi Darbar.md"
 source_url: ""
 category: "books"
 author: ""
+language: "hindi"
 genres:
   - "fiction"
 published_year: ""

@@ -10,6 +10,7 @@ source_path: "legacy-vault/📚 Books/Queued Books/Don't Overthink It- Make Easi
 source_url: ""
 category: "books"
 author: ""
+language: "english"
 genres:
   - "non fiction"
 published_year: ""
