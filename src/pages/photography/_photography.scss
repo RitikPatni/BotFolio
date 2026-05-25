@@ -1,4 +1,33 @@
 @use "../../styles/patterns" as *;
+@use "./_photography.lightbox.scss";
+
+.photography {
+  --photography-icon-size: var(--size-3);
+  --photography-gallery-min-column: var(--size-14);
+  --photography-caption-action-size: var(--size-8);
+  --photography-control-size: var(--size-8);
+  --photography-close-size: var(--size-7);
+  --photography-tooltip-gap: var(--size-2);
+  --photography-tooltip-padding-block: var(--size-2);
+  --photography-tooltip-padding-inline: var(--size-3);
+  /* Exception: no single Open Props token maps to this intended max width. */
+  --photography-lightbox-max-inline: calc(
+    var(--size-15) + var(--size-15) + var(--size-13) + var(--size-9) +
+      var(--size-8) + var(--size-7)
+  );
+  /* Exception: no single Open Props token maps to this intended max height. */
+  --photography-image-max-block: calc(
+    var(--size-15) + var(--size-13) + var(--size-10) + var(--size-8) +
+      var(--size-7) + var(--size-3)
+  );
+  --photography-fullscreen-image-offset: var(--size-12);
+  --photography-panel-inline-size: var(--size-14);
+  --photography-related-grid-min: var(--size-10);
+  --photography-related-max-block: var(--size-14);
+  --photography-metadata-mobile-max-block: var(--size-13);
+  --photography-metadata-fullscreen-mobile-max-block: var(--size-15);
+  --photography-related-mobile-max-block: var(--size-13);
+}
 
 .photography__hero {
   @extend %page-hero;
@@ -106,9 +135,19 @@
   font-size: var(--font-size-0);
 }
 
+.photography__inline-icon,
+.photography__nav-icon {
+  inline-size: var(--photography-icon-size);
+  block-size: var(--photography-icon-size);
+  flex: none;
+}
+
 .photography__gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--photography-gallery-min-column)), 1fr)
+  );
   gap: var(--size-3);
 }
 
@@ -120,15 +159,111 @@
   background: var(--bg-soft);
 }
 
+.photography__shot-link {
+  display: block;
+  inline-size: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--surface-1);
+  cursor: zoom-in;
+}
+
 .photography__image {
   display: block;
   inline-size: 100%;
   block-size: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  transition: transform 180ms ease;
+}
+
+.photography__shot-link:hover .photography__image,
+.photography__shot-link:focus-visible .photography__image {
+  transform: scale(1.02);
+}
+
+.photography__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-2);
+  padding: var(--size-3);
+}
+
+.photography__caption-title {
+  font-size: var(--font-size-1);
+  font-weight: var(--font-weight-6);
+}
+
+.photography__caption-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-2);
+  inline-size: var(--photography-caption-action-size);
+  block-size: var(--photography-caption-action-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-round);
+  background: transparent;
+  color: var(--link);
+  font-size: var(--font-size-0);
+  text-underline-offset: var(--size-relative-1);
+  cursor: pointer;
+}
+
+.photography__caption-link[data-tooltip],
+.photography__lightbox-action[data-tooltip],
+.photography__lightbox-close[data-tooltip],
+.photography__lightbox-nav[data-tooltip] {
+  position: relative;
+}
+
+.photography__caption-link[data-tooltip]::after,
+.photography__lightbox-action[data-tooltip]::after,
+.photography__lightbox-close[data-tooltip]::after,
+.photography__lightbox-nav[data-tooltip]::after {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 100%;
+  margin-block-start: var(--photography-tooltip-gap);
+  padding-block: var(--photography-tooltip-padding-block);
+  padding-inline: var(--photography-tooltip-padding-inline);
+  border-radius: var(--radius-2);
+  background: color-mix(in srgb, var(--bg), black 8%);
+  color: var(--text);
+  content: attr(data-tooltip);
+  font-size: var(--font-size-0);
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: var(--shadow-3);
+  opacity: 0;
+  pointer-events: none;
+  /* Exception: negative token offset for tooltip entrance animation. */
+  transform: translate(-50%, calc(var(--size-1) * -1));
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease;
+}
+
+.photography__caption-link[data-tooltip]:hover::after,
+.photography__caption-link[data-tooltip]:focus-visible::after,
+.photography__lightbox-action[data-tooltip]:hover::after,
+.photography__lightbox-action[data-tooltip]:focus-visible::after,
+.photography__lightbox-close[data-tooltip]:hover::after,
+.photography__lightbox-close[data-tooltip]:focus-visible::after,
+.photography__lightbox-nav[data-tooltip]:hover::after,
+.photography__lightbox-nav[data-tooltip]:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 @media (max-width: 48rem) {
+  .photography__caption {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .photography__gallery {
     grid-template-columns: 1fr;
   }

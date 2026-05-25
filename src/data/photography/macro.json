@@ -1,0 +1,70 @@
+[
+  {
+    "filename": "jumping-spider-portrait.jpg",
+    "title": "Jumping Spider Portrait",
+    "category": "macro",
+    "tags": [
+      "jumping-spider",
+      "spider",
+      "macro",
+      "eyes",
+      "portrait",
+      "arachnid"
+    ],
+    "alt": "An extreme close-up of a jumping spider showing its large forward-facing eyes and white pedipalps on a teal background",
+    "date": "2025-10-25",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "TAMRON 90mm F2.8 F072 E",
+      "focalLength": "90mm",
+      "aperture": "f/10",
+      "shutterSpeed": "1/160s",
+      "iso": 100
+    }
+  },
+  {
+    "filename": "mosquito-macro.jpg",
+    "title": "Mosquito Macro",
+    "category": "macro",
+    "tags": [
+      "mosquito",
+      "macro",
+      "insect",
+      "wings",
+      "close-up"
+    ],
+    "alt": "A macro close-up of a mosquito resting on a textured brown surface showing translucent wings and feathery antennae",
+    "date": "2025-10-29",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "TAMRON 90mm F2.8 F072 E",
+      "focalLength": "90mm",
+      "aperture": "f/8",
+      "shutterSpeed": "1/160s",
+      "iso": 400
+    }
+  },
+  {
+    "filename": "shield-bug-yellow-petal.jpg",
+    "title": "Shield Bug on Yellow",
+    "category": "macro",
+    "tags": [
+      "shield-bug",
+      "stink-bug",
+      "macro",
+      "yellow-petal",
+      "camouflage",
+      "contrast"
+    ],
+    "alt": "A bark-like camouflaged shield bug on a bright yellow flower petal with pollen grains scattered on the surface",
+    "date": "2025-10-26",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "TAMRON 90mm F2.8 F072 E",
+      "focalLength": "90mm",
+      "aperture": "f/8",
+      "shutterSpeed": "1/160s",
+      "iso": 100
+    }
+  }
+]

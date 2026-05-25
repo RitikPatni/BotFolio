@@ -12,6 +12,7 @@
 
 .base-layout__skip-link {
   position: absolute;
+  /* Exception: keep skip link off-canvas until focused. */
   inset-block-start: calc(var(--size-2) * -10);
   inset-inline-start: var(--size-2);
   z-index: var(--layer-important);
@@ -88,6 +89,7 @@
 .base-layout__theme-fab {
   position: fixed;
   inset-inline-end: var(--size-4);
+  /* Exception: combine token spacing with iOS safe-area inset. */
   inset-block-end: calc(var(--size-4) + env(safe-area-inset-bottom));
   z-index: var(--layer-4);
   inline-size: var(--size-8);
@@ -111,11 +113,13 @@
 .base-layout__theme-fab:hover {
   border-color: var(--muted);
   background: var(--bg);
+  /* Exception: negative token nudge for hover elevation. */
   transform: translateY(calc(var(--size-1) * -0.5));
   box-shadow: var(--shadow-2);
 }
 
 .base-layout__main {
+  /* Exception: viewport height minus sticky header token. */
   min-block-size: calc(100dvb - var(--size-15));
 }
 
@@ -169,6 +173,7 @@
   color: var(--text);
   background: color-mix(in srgb, var(--bg-soft) 84%, transparent);
   border-color: color-mix(in srgb, var(--text) 26%, var(--line));
+  /* Exception: negative token nudge for hover elevation. */
   transform: translateY(calc(var(--size-1) * -0.25));
 }
 

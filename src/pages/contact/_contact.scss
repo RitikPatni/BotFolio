@@ -24,7 +24,7 @@
   position: relative;
   border: var(--surface-border) solid
     color-mix(in srgb, var(--line) 72%, transparent);
-  border-radius: calc(var(--surface-radius) + var(--size-2));
+  border-radius: var(--radius-4);
   padding-inline: clamp(var(--size-3), 3vw, var(--size-5));
   background: var(--bg-soft);
   backdrop-filter: saturate(120%);
@@ -165,7 +165,10 @@
 
 .contact__socials {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--size-13)), 1fr)
+  );
   gap: var(--size-3);
   margin-block-start: var(--size-4);
 }
@@ -206,6 +209,7 @@
 
 .contact__social-link:hover,
 .contact__social-link:focus-visible {
+  /* Exception: negative token nudge for hover elevation. */
   transform: translateY(calc(var(--size-1) * -1));
   border-color: color-mix(in srgb, var(--text) 28%, var(--line));
   background: color-mix(in srgb, var(--bg-soft) 82%, var(--bg));
@@ -254,6 +258,7 @@
 .contact__intent-button:focus-visible {
   border-color: color-mix(in srgb, var(--text) 28%, var(--line));
   background: color-mix(in srgb, var(--bg) 92%, transparent);
+  /* Exception: negative token nudge for hover elevation. */
   transform: translateY(calc(var(--size-1) * -0.5));
 }
 
@@ -273,7 +278,7 @@
   margin: 0;
   margin-block-start: var(--size-3);
   color: var(--muted);
-  min-block-size: calc(var(--font-size-3) * 1.8);
+  min-block-size: var(--size-8);
 }
 
 @media (max-width: 48rem) {

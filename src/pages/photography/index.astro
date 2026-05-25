@@ -1,72 +1,171 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { Image, getImage } from "astro:assets";
+import UiIcon from "../../components/UiIcon.astro";
+import PhotographyLightbox from "./PhotographyLightbox.astro";
 import "./_photography.scss";
 
-import galleryData from "../../data/gallery.json";
+import {
+  photographyGalleryData,
+  type GalleryImage,
+} from "../../data/photography";
+import { photographyCategories } from "../../data/photography/manifest";
 
-type GalleryImage = {
-  filename: string;
-  title: string;
-  category: string;
-  tags: string[];
-  alt: string;
-  date: string;
+type GalleryAssetModule = {
+  default: ImageMetadata;
 };
 
-type PortfolioCategory = {
+type GalleryLightboxMetadata = {
+  date?: string;
+  location?: string;
+  camera?: string;
+  lens?: string;
+  focalLength?: string;
+  aperture?: string;
+  shutterSpeed?: string;
+  iso?: string;
+  category: string;
+  resolution: string;
+};
+
+type GalleryLightboxItem = {
+  index: number;
+  title: string;
+  alt: string;
+  category: string;
+  date: string;
+  src: string;
+  srcSet: string;
+  thumbSrc: string;
+  width: number;
+  height: number;
+  metadata: GalleryLightboxMetadata;
+  tags: string[];
+};
+
+type CategoryGalleryImage = {
+  asset: ImageMetadata;
+  alt: string;
+  title: string;
+  tags: string[];
+  lightboxIndex: number;
+};
+
+type CategoryGallerySection = {
   id: string;
   label: string;
   description: string;
+  images: CategoryGalleryImage[];
 };
 
-const CATEGORIES: PortfolioCategory[] = [
-  {
-    id: "birds",
-    label: "Birds",
-    description: "Flight studies, wetlands, and quiet perches.",
-  },
-  {
-    id: "wildlife",
-    label: "Wildlife",
-    description: "Encounters from safaris and field trails.",
-  },
-  {
-    id: "macro",
-    label: "Macro",
-    description: "Tiny details and textures up close.",
-  },
-  {
-    id: "landscape",
-    label: "Landscape",
-    description: "Light, atmosphere, and larger scenes.",
-  },
-  {
-    id: "travel",
-    label: "Travel",
-    description: "Places and moments along the way.",
-  },
-];
+const typedGallery: GalleryImage[] = photographyGalleryData;
 
-const typedGallery: GalleryImage[] = galleryData as GalleryImage[];
+const galleryAssetModules = import.meta.glob<GalleryAssetModule>(
+  "../../assets/photography/**/*.{avif,gif,jpeg,jpg,png,webp}",
+  { eager: true },
+);
 
-const imagesByCategory = CATEGORIES.map((category) => {
-  const images = typedGallery
-    .filter((img) => img.category === category.id)
-    .map((img) => ({
-      src: `/photography/${category.id}/${img.filename}`,
-      alt: img.alt,
-      title: img.title,
-      tags: img.tags,
-    }));
+const galleryAssets = new Map(
+  Object.entries(galleryAssetModules).map(([path, module]) => [
+    path.replace("../../assets/photography/", ""),
+    module.default,
+  ]),
+);
 
-  return { ...category, images };
-});
+const createLightboxMetadata = (
+  image: GalleryImage,
+  categoryLabel: string,
+  asset: ImageMetadata,
+) => {
+  return {
+    date: image.date || undefined,
+    location: image.metadata?.location,
+    camera: image.metadata?.camera,
+    lens: image.metadata?.lens,
+    focalLength: image.metadata?.focalLength,
+    aperture: image.metadata?.aperture,
+    shutterSpeed: image.metadata?.shutterSpeed,
+    iso: image.metadata?.iso ? String(image.metadata.iso) : undefined,
+    category: categoryLabel,
+    resolution: `${asset.width} × ${asset.height}`,
+  } satisfies GalleryLightboxMetadata;
+};
 
+let lightboxIndex = 0;
+const imagesByCategory: CategoryGallerySection[] = [];
+const galleryLightboxItems: GalleryLightboxItem[] = [];
+
+for (const category of photographyCategories) {
+  const categoryImages = typedGallery.filter(
+    (img) => img.category === category.id,
+  );
+  const images = [];
+
+  for (const image of categoryImages) {
+    const assetPath = `${category.id}/${image.filename}`;
+    const asset = galleryAssets.get(assetPath);
+
+    if (!asset) {
+      throw new Error(`Missing photography asset: ${assetPath}`);
+    }
+
+    const lightboxImage = await getImage({
+      src: asset,
+      widths: [960, 1440, 1920],
+      sizes: "(max-width: 60rem) 100vw, 75vw",
+      quality: "max",
+    });
+
+    const relatedThumb = await getImage({
+      src: asset,
+      width: 240,
+      quality: "high",
+    });
+
+    const metadataEntries = createLightboxMetadata(
+      image,
+      category.label,
+      asset,
+    );
+    const galleryItem = {
+      index: lightboxIndex,
+      title: image.title,
+      alt: image.alt,
+      category: category.label,
+      date: image.date,
+      src: lightboxImage.src,
+      srcSet: lightboxImage.srcSet.attribute,
+      thumbSrc: relatedThumb.src,
+      width: Number(lightboxImage.attributes.width),
+      height: Number(lightboxImage.attributes.height),
+      metadata: metadataEntries,
+      tags: image.tags,
+    } satisfies GalleryLightboxItem;
+
+    galleryLightboxItems.push(galleryItem);
+    images.push({
+      asset,
+      alt: image.alt,
+      title: image.title,
+      tags: image.tags,
+      lightboxIndex,
+    });
+
+    lightboxIndex += 1;
+  }
+
+  imagesByCategory.push({ ...category, images });
+}
+
+const visibleCategories: CategoryGallerySection[] = imagesByCategory.filter(
+  (category) => category.images.length > 0,
+);
 const totalImages = typedGallery.length;
+const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
 ---
 
 <BaseLayout title="Photography — Ritik Patni" path="/photography">
-  <div class="photography">
+  <div class="photography" data-gallery-root>
     <section class="photography__hero">
       <h1 class="photography__title">Photography</h1>
       <p class="photography__lead">
@@ -77,7 +176,7 @@ const totalImages = typedGallery.length;
 
     <div class="photography__tags photography__tags--spaced">
       {
-        imagesByCategory.map((category) => (
+        visibleCategories.map((category: CategoryGallerySection) => (
           <a class="photography__tag" href={`#${category.id}`}>
             {category.label}
             <span class="photography__tag-count">{category.images.length}</span>
@@ -92,24 +191,24 @@ const totalImages = typedGallery.length;
           <h2 class="photography__card-title">Add your first batch</h2>
           <p class="photography__description">
             Drop images in category folders under{" "}
-            <code>/public/photography</code>:
+            <code>/src/assets/photography</code>:
           </p>
           <ul class="photography__list photography__list--offset">
             <li class="photography__item">
               <p class="photography__item-title">Birds</p>
-              <p class="photography__meta">/public/photography/birds</p>
+              <p class="photography__meta">/src/assets/photography/birds</p>
             </li>
             <li class="photography__item">
               <p class="photography__item-title">Wildlife</p>
-              <p class="photography__meta">/public/photography/wildlife</p>
+              <p class="photography__meta">/src/assets/photography/wildlife</p>
             </li>
             <li class="photography__item">
               <p class="photography__item-title">Macro</p>
-              <p class="photography__meta">/public/photography/macro</p>
+              <p class="photography__meta">/src/assets/photography/macro</p>
             </li>
             <li class="photography__item">
               <p class="photography__item-title">Landscape</p>
-              <p class="photography__meta">/public/photography/landscape</p>
+              <p class="photography__meta">/src/assets/photography/landscape</p>
             </li>
           </ul>
         </section>
@@ -117,41 +216,89 @@ const totalImages = typedGallery.length;
     }
 
     {
-      imagesByCategory.map((category) => (
-        <section
-          class="photography__category"
-          id={category.id}
-          aria-labelledby={`${category.id}-title`}
-        >
-          <div class="photography__category-head">
-            <h2 class="photography__section-title" id={`${category.id}-title`}>
-              {category.label}
-            </h2>
-            <p class="photography__meta">
-              {category.description}{" "}
-              {category.images.length > 0
-                ? `${category.images.length} photos.`
-                : "No photos yet."}
-            </p>
-          </div>
-
-          {category.images.length > 0 && (
-            <div class="photography__gallery">
-              {category.images.map((image) => (
-                <figure class="photography__shot">
-                  <img
-                    class="photography__image"
-                    src={image.src}
-                    alt={image.alt}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
-              ))}
+      visibleCategories.map(
+        (category: CategoryGallerySection, categoryIndex) => (
+          <section
+            class="photography__category"
+            id={category.id}
+            aria-labelledby={`${category.id}-title`}
+          >
+            <div class="photography__category-head">
+              <h2
+                class="photography__section-title"
+                id={`${category.id}-title`}
+              >
+                {category.label}
+              </h2>
+              <p class="photography__meta">
+                {category.description}{" "}
+                {category.images.length > 0
+                  ? `${category.images.length} photos.`
+                  : "No photos yet."}
+              </p>
             </div>
-          )}
-        </section>
-      ))
+
+            {category.images.length > 0 && (
+              <div class="photography__gallery">
+                {category.images.map(
+                  (image: CategoryGalleryImage, imageIndex: number) => (
+                    <figure class="photography__shot">
+                      <button
+                        class="photography__shot-link"
+                        type="button"
+                        data-gallery-trigger
+                        data-gallery-index={String(image.lightboxIndex)}
+                        aria-haspopup="dialog"
+                        aria-label={`Open ${image.title} in gallery view`}
+                      >
+                        <Image
+                          class="photography__image"
+                          src={image.asset}
+                          alt={image.alt}
+                          widths={[480, 720, 1080]}
+                          sizes="(max-width: 48rem) 100vw, (max-width: 80rem) 50vw, 33vw"
+                          quality="high"
+                          loading={
+                            categoryIndex === 0 && imageIndex < 2
+                              ? "eager"
+                              : "lazy"
+                          }
+                          fetchpriority={
+                            categoryIndex === 0 && imageIndex === 0
+                              ? "high"
+                              : "auto"
+                          }
+                        />
+                      </button>
+                      <figcaption class="photography__caption">
+                        <span class="photography__caption-title">
+                          {image.title}
+                        </span>
+                        <button
+                          class="photography__caption-link"
+                          type="button"
+                          data-gallery-trigger
+                          data-gallery-index={String(image.lightboxIndex)}
+                          aria-haspopup="dialog"
+                          aria-label="Open gallery view"
+                          data-tooltip="Open gallery view"
+                        >
+                          <UiIcon
+                            name="image"
+                            class="photography__inline-icon"
+                          />
+                        </button>
+                      </figcaption>
+                    </figure>
+                  ),
+                )}
+              </div>
+            )}
+          </section>
+        ),
+      )
     }
+
+    <PhotographyLightbox galleryLightboxItemsJson={galleryLightboxItemsJson} />
   </div>
 </BaseLayout>

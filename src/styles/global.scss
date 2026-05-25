@@ -15,11 +15,9 @@
   --surface-padding: var(--size-4);
   --surface-radius: var(--radius-3);
   --surface-border: var(--border-size-1);
-  --font-body:
-    "Avenir Next", "Segoe UI", "Helvetica Neue", "Noto Sans", sans-serif;
+  --font-body: "Inter", "Segoe UI", "Helvetica Neue", "Noto Sans", sans-serif;
   --font-display:
-    "Iowan Old Style", "Palatino Linotype", "URW Palladio L", "Book Antiqua",
-    serif;
+    "IBM Plex Serif", "Iowan Old Style", "Palatino Linotype", serif;
 }
 
 :root[data-theme="light"] {

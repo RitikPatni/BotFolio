@@ -19,12 +19,12 @@
 .primitive-link {
   color: var(--text);
   text-decoration: underline;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.2em;
+  text-decoration-thickness: var(--border-size-1);
+  text-underline-offset: var(--size-relative-1);
 }
 
 .primitive-link:hover {
-  text-decoration-thickness: 0.12em;
+  text-decoration-thickness: var(--border-size-2);
 }
 
 .primitive-chip {

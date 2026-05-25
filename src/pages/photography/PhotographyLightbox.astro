@@ -1,0 +1,160 @@
+---
+import UiIcon from "../../components/UiIcon.astro";
+
+interface Props {
+  galleryLightboxItemsJson: string;
+}
+
+const { galleryLightboxItemsJson } = Astro.props;
+---
+
+<dialog
+  class="photography__lightbox"
+  data-gallery-dialog
+  aria-labelledby="galleryDialogTitle"
+>
+  <div
+    class="photography__lightbox-shell"
+    data-gallery-shell
+    data-metadata-visible="false"
+    data-ui-visible="true"
+  >
+    <div class="photography__lightbox-stage">
+      <div class="photography__lightbox-toolbar" data-gallery-chrome>
+        <p class="photography__lightbox-counter" data-gallery-counter></p>
+        <div class="photography__lightbox-actions">
+          <button
+            class="photography__lightbox-action"
+            type="button"
+            data-gallery-fullscreen-toggle
+            aria-pressed="false"
+            aria-label="Full screen"
+            data-tooltip="Full screen"
+          >
+            <UiIcon name="expand" class="photography__inline-icon" />
+          </button>
+          <button
+            class="photography__lightbox-action"
+            type="button"
+            data-gallery-metadata-toggle
+            aria-expanded="false"
+            aria-controls="galleryMetadata"
+            aria-label="Show metadata"
+            data-tooltip="Show metadata"
+          >
+            <UiIcon name="info" class="photography__inline-icon" />
+          </button>
+          <button
+            class="photography__lightbox-close"
+            type="button"
+            data-gallery-close
+            aria-label="Close gallery"
+            data-tooltip="Close gallery"
+          >
+            <UiIcon name="close" class="photography__inline-icon" />
+          </button>
+        </div>
+      </div>
+
+      <div class="photography__lightbox-frame" data-gallery-frame>
+        <button
+          class="photography__lightbox-nav"
+          type="button"
+          data-gallery-prev
+          aria-label="Previous image"
+          data-tooltip="Previous image"
+        >
+          <UiIcon name="chevron-left" class="photography__nav-icon" />
+        </button>
+        <img
+          class="photography__lightbox-image"
+          data-gallery-image
+          alt=""
+          decoding="async"
+        />
+        <button
+          class="photography__lightbox-nav"
+          type="button"
+          data-gallery-next
+          aria-label="Next image"
+          data-tooltip="Next image"
+        >
+          <UiIcon name="chevron-right" class="photography__nav-icon" />
+        </button>
+      </div>
+
+      <div class="photography__lightbox-summary" data-gallery-chrome>
+        <div>
+          <p class="photography__lightbox-category">
+            <UiIcon name="stack" class="photography__inline-icon" />
+            <span data-gallery-category></span>
+          </p>
+          <h2
+            class="photography__lightbox-title"
+            id="galleryDialogTitle"
+            data-gallery-title
+          >
+          </h2>
+        </div>
+        <p class="photography__lightbox-date" data-gallery-date hidden>
+          <UiIcon name="calendar" class="photography__inline-icon" />
+        </p>
+      </div>
+    </div>
+
+    <aside
+      class="photography__metadata"
+      id="galleryMetadata"
+      data-gallery-metadata
+      hidden
+    >
+      <div class="photography__metadata-head">
+        <h3 class="photography__metadata-title">
+          <UiIcon name="info" class="photography__inline-icon" />
+          Metadata
+        </h3>
+        <button
+          class="photography__metadata-close"
+          type="button"
+          data-gallery-metadata-close
+          aria-label="Close metadata"
+        >
+          <UiIcon name="close" class="photography__inline-icon" />
+        </button>
+      </div>
+      <div class="photography__metadata-content">
+        <dl class="photography__metadata-list" data-gallery-metadata-list></dl>
+        <section
+          class="photography__metadata-section"
+          data-gallery-tags-section
+          hidden
+        >
+          <h4 class="photography__metadata-subtitle">Tags</h4>
+          <div class="photography__metadata-tags" data-gallery-tag-list></div>
+        </section>
+        <section
+          class="photography__metadata-section"
+          data-gallery-related
+          hidden
+        >
+          <h4 class="photography__metadata-subtitle" data-gallery-related-title>
+          </h4>
+          <div class="photography__related-grid" data-gallery-related-grid>
+          </div>
+        </section>
+      </div>
+    </aside>
+  </div>
+</dialog>
+
+<script
+  type="application/json"
+  id="photographyGalleryData"
+  set:html={galleryLightboxItemsJson}
+/>
+
+<script>
+  import { initPhotographyLightbox } from "../../utils/photography/photographyLightbox.client";
+
+  initPhotographyLightbox();
+</script>

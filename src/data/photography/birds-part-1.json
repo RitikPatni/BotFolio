@@ -1,0 +1,250 @@
+[
+  {
+    "filename": "flamingo-flight.jpg",
+    "title": "Flamingo in Flight",
+    "category": "birds",
+    "tags": [
+      "flamingo",
+      "flight",
+      "wildlife",
+      "water",
+      "flock"
+    ],
+    "alt": "A flamingo flying over calm water with a blurred flock of pink flamingos in the background",
+    "date": "2026-02-28",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "518mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/2500s",
+      "iso": 250
+    }
+  },
+  {
+    "filename": "pied-kingfisher-perch.jpg",
+    "title": "Pied Kingfisher on Thorny Perch",
+    "category": "birds",
+    "tags": [
+      "pied-kingfisher",
+      "kingfisher",
+      "wildlife",
+      "thorn",
+      "perch",
+      "spiderweb"
+    ],
+    "alt": "A pied kingfisher perched on a thorny bare branch against a soft muted background of water and foliage",
+    "date": "2026-02-21",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/1000s",
+      "iso": 125
+    }
+  },
+  {
+    "filename": "bulbul-golden-light.jpg",
+    "title": "Bulbul in Golden Light",
+    "category": "birds",
+    "tags": [
+      "bulbul",
+      "golden-light",
+      "wildlife",
+      "backlit",
+      "bokeh"
+    ],
+    "alt": "A bulbul perched on a leafy branch bathed in warm golden rim light against a dark bokeh background",
+    "date": "2025-01-04",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/7.1",
+      "shutterSpeed": "1/100s",
+      "iso": 200
+    }
+  },
+  {
+    "filename": "cattle-egret-breeding.jpg",
+    "title": "Cattle Egret in Breeding Plumage",
+    "category": "birds",
+    "tags": [
+      "cattle-egret",
+      "egret",
+      "breeding-plumage",
+      "wildlife",
+      "golden",
+      "portrait"
+    ],
+    "alt": "A cattle egret displaying striking golden-orange breeding plumage perched on a branch against a dark blurred background",
+    "date": "2025-08-30",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/1000s",
+      "iso": 250
+    }
+  },
+  {
+    "filename": "nest-building-twigs.jpg",
+    "title": "Nest Building",
+    "category": "birds",
+    "tags": [
+      "nest-building",
+      "twig",
+      "behavior",
+      "wildlife",
+      "small-bird",
+      "prinia"
+    ],
+    "alt": "A small bird carrying an oversized long twig in its beak while perched on a wire, nest-building behavior",
+    "date": "2025-10-01",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/2500s",
+      "iso": 400
+    }
+  },
+  {
+    "filename": "common-kingfisher-perch.jpg",
+    "title": "Common Kingfisher",
+    "category": "birds",
+    "tags": [
+      "kingfisher",
+      "common-kingfisher",
+      "turquoise",
+      "perch",
+      "thorn",
+      "colorful"
+    ],
+    "alt": "A vibrant common kingfisher with turquoise and orange plumage perched on a thorny branch against a soft earthy background",
+    "date": "2025-12-25",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/2500s",
+      "iso": 1000
+    }
+  },
+  {
+    "filename": "raptor-antenna-perch.jpg",
+    "title": "Raptor on Watch",
+    "category": "birds",
+    "tags": [
+      "raptor",
+      "hawk",
+      "amber-eyes",
+      "perch",
+      "bird-of-prey"
+    ],
+    "alt": "A small raptor with amber eyes and yellow legs perched on a metal antenna against a blurred green background",
+    "date": "2025-06-18",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/2000s",
+      "iso": 3200
+    }
+  },
+  {
+    "filename": "bulbul-backlit-perch.jpg",
+    "title": "Bulbul in Warm Light",
+    "category": "birds",
+    "tags": [
+      "bulbul",
+      "backlit",
+      "golden-light",
+      "orange-leaves",
+      "perch",
+      "warm"
+    ],
+    "alt": "A bulbul perched on a branch surrounded by glowing translucent orange leaves, bathed in warm golden backlight",
+    "date": "2025-01-04",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/320s",
+      "iso": 800
+    }
+  },
+  {
+    "filename": "sunrise-silhouette-perch.jpg",
+    "title": "Sunrise Silhouette",
+    "category": "birds",
+    "tags": [
+      "silhouette",
+      "sunrise",
+      "backlit",
+      "golden",
+      "perch",
+      "minimal"
+    ],
+    "alt": "A small bird silhouetted against a warm golden-orange sunrise sky, fine feather details visible along the outline",
+    "date": "2025-02-08",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/8",
+      "shutterSpeed": "1/2500s",
+      "iso": 800
+    }
+  },
+  {
+    "filename": "dove-fanned-tail.jpg",
+    "title": "Fanned Tail",
+    "category": "birds",
+    "tags": [
+      "dove",
+      "fanned-tail",
+      "preening",
+      "cable",
+      "feathers"
+    ],
+    "alt": "A dove preening with its tail feathers beautifully fanned out showing creamy white outer feathers against a soft green bokeh",
+    "date": "2025-09-19",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/1000s",
+      "iso": 400
+    }
+  },
+  {
+    "filename": "wagtail-thorny-perch.jpg",
+    "title": "Wagtail on Thorns",
+    "category": "birds",
+    "tags": [
+      "wagtail",
+      "thorny-branch",
+      "spiderweb",
+      "perch",
+      "warm-light"
+    ],
+    "alt": "A small wagtail perched on a thorny branch with delicate spiderwebs visible, bathed in warm natural light",
+    "date": "2025-12-07",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/125s",
+      "iso": 200
+    }
+  }
+]

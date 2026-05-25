@@ -1,0 +1,262 @@
+.photography {
+  &__metadata {
+    position: absolute;
+    inset-block-start: var(--size-4);
+    inset-inline-end: var(--size-4);
+    z-index: 3;
+    /* Exception: panel width constrained by available inline space after insets. */
+    inline-size: min(
+      var(--photography-panel-inline-size),
+      calc(100% - 2 * var(--size-4))
+    );
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    min-block-size: 0;
+    /* Exception: panel height constrained by available block space after insets. */
+    max-block-size: calc(100% - 2 * var(--size-4));
+    overflow: hidden;
+    padding: var(--size-4);
+    border: var(--surface-border) solid
+      color-mix(in srgb, var(--line), transparent 48%);
+    border-radius: var(--radius-3);
+    background: rgb(255 255 255 / 0.82);
+    backdrop-filter: blur(var(--size-3)) saturate(1.05);
+    box-shadow: var(--shadow-4);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__metadata-content {
+    min-block-size: 0;
+    overflow: auto;
+    padding-inline-end: var(--size-1);
+  }
+
+  &__lightbox-shell:fullscreen &__metadata {
+    position: absolute;
+    inset-block-start: var(--size-6);
+    inset-inline-end: var(--size-5);
+    z-index: 3;
+    /* Exception: fullscreen panel width constrained by viewport after insets. */
+    inline-size: min(
+      var(--photography-panel-inline-size),
+      calc(100vw - 2 * var(--size-5))
+    );
+    /* Exception: fullscreen panel height constrained by viewport after insets. */
+    max-block-size: calc(100vh - 2 * var(--size-6));
+    border: var(--surface-border) solid
+      color-mix(in srgb, white, transparent 82%);
+    border-radius: var(--radius-3);
+    background: rgb(10 10 10 / 0.68);
+    backdrop-filter: blur(var(--size-3)) saturate(1.05);
+    box-shadow: var(--shadow-5);
+  }
+
+  &__lightbox-shell:fullscreen &__metadata-title,
+  &__lightbox-shell:fullscreen &__metadata-list dt,
+  &__lightbox-shell:fullscreen &__metadata-list dd {
+    color: white;
+  }
+
+  &__lightbox-shell:fullscreen &__metadata-subtitle {
+    color: color-mix(in srgb, white, transparent 30%);
+  }
+
+  &__lightbox-shell:fullscreen &__metadata-tag,
+  &__lightbox-shell:fullscreen &__related-item,
+  &__lightbox-shell:fullscreen &__related-label {
+    color: white;
+  }
+
+  &__lightbox-shell:fullscreen &__metadata-tag {
+    border-color: color-mix(in srgb, white, transparent 42%);
+    background: rgb(255 255 255 / 0.04);
+
+    &:hover,
+    &:focus-visible {
+      border-color: white;
+      background: rgb(255 255 255 / 0.1);
+    }
+
+    &[aria-pressed="true"] {
+      border-color: white;
+      background: white;
+      color: black;
+    }
+  }
+
+  &__metadata-title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-2);
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-8);
+    letter-spacing: normal;
+  }
+
+  &__metadata-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-3);
+    margin-block-end: var(--size-3);
+  }
+
+  &__metadata-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--photography-close-size);
+    block-size: var(--photography-close-size);
+    padding: 0;
+    border: var(--surface-border) solid
+      color-mix(in srgb, var(--line), transparent 42%);
+    border-radius: var(--radius-round);
+    background: rgb(255 255 255 / 0.42);
+    color: inherit;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--accent);
+      background: rgb(255 255 255 / 0.72);
+    }
+  }
+
+  &__lightbox-shell:fullscreen &__metadata-close {
+    border-color: color-mix(in srgb, white, transparent 72%);
+    background: rgb(255 255 255 / 0.08);
+    color: white;
+
+    &:hover,
+    &:focus-visible {
+      border-color: white;
+      background: rgb(255 255 255 / 0.16);
+    }
+  }
+
+  &__metadata-section {
+    margin-block-start: var(--size-4);
+
+    &[hidden] {
+      display: none;
+    }
+
+    &[data-gallery-related] {
+      display: grid;
+      gap: var(--size-2);
+      min-block-size: 0;
+    }
+  }
+
+  &__metadata-subtitle {
+    margin: 0 0 var(--size-2);
+    color: var(--muted);
+    font-size: var(--font-size-0);
+    letter-spacing: var(--font-letterspacing-2);
+    text-transform: uppercase;
+  }
+
+  &__metadata-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--size-1) var(--size-2);
+    margin: 0;
+
+    dt {
+      color: var(--muted);
+      font-size: var(--font-size-0);
+    }
+
+    dd {
+      margin: 0 0 var(--size-2);
+      font-size: var(--font-size-1);
+    }
+  }
+
+  &__metadata-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2);
+  }
+
+  &__metadata-tag {
+    padding-block: var(--size-2);
+    padding-inline: var(--size-3);
+    border: var(--surface-border) solid
+      color-mix(in srgb, var(--line), transparent 30%);
+    border-radius: var(--radius-round);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: var(--font-size-0);
+    cursor: pointer;
+
+    &[aria-pressed="true"] {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--bg-soft), white 6%);
+    }
+  }
+
+  &__related-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(var(--photography-related-grid-min), 1fr)
+    );
+    gap: var(--size-2);
+    max-block-size: min(var(--photography-related-max-block), 40vh);
+    overflow: auto;
+    padding-inline-end: var(--size-1);
+    align-content: start;
+  }
+
+  &__related-item {
+    display: grid;
+    gap: var(--size-1);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  &__related-image {
+    inline-size: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-2);
+    object-fit: cover;
+  }
+
+  &__related-label {
+    font-size: var(--font-size-0);
+    line-height: var(--font-lineheight-2);
+  }
+}
+
+@media (max-width: 48rem) {
+  .photography {
+    &__metadata {
+      inset-block: auto var(--size-3) var(--size-3);
+      inline-size: auto;
+      max-block-size: min(var(--photography-metadata-mobile-max-block), 35dvh);
+    }
+  }
+
+  .photography__lightbox-shell:fullscreen .photography__metadata {
+    inset-block-start: auto;
+    inset-inline: var(--size-3);
+    inset-block-end: var(--size-3);
+    inline-size: auto;
+    max-block-size: min(45vh, var(--photography-panel-inline-size));
+  }
+
+  .photography__related-grid {
+    max-block-size: min(var(--photography-related-mobile-max-block), 30vh);
+  }
+}

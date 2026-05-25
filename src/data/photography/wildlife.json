@@ -1,0 +1,345 @@
+[
+  {
+    "filename": "sunset-silhouette-storks.jpg",
+    "title": "Sunset Silhouette",
+    "category": "wildlife",
+    "tags": [
+      "silhouette",
+      "sunset",
+      "stork",
+      "golden",
+      "water",
+      "reflection",
+      "backlit"
+    ],
+    "alt": "Two storks silhouetted against a fiery orange sunset sky while standing in shimmering golden water",
+    "date": "2025-12-07",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/1000s",
+      "iso": 640
+    }
+  },
+  {
+    "filename": "flamingo-flock-panorama.jpg",
+    "title": "Flamingo Gathering",
+    "category": "wildlife",
+    "tags": [
+      "flamingo",
+      "flock",
+      "panorama",
+      "water",
+      "flight",
+      "minimal"
+    ],
+    "alt": "A vast flock of flamingos flying and wading in calm blue water against a minimalist pale blue sky",
+    "date": "2025-12-14",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/1000s",
+      "iso": 160
+    }
+  },
+  {
+    "filename": "stork-flight-with-prey.jpg",
+    "title": "Stork in Flight with Catch",
+    "category": "wildlife",
+    "tags": [
+      "stork",
+      "flight",
+      "prey",
+      "action",
+      "hunting",
+      "wings"
+    ],
+    "alt": "A stork flying with wings spread carrying a small catch in its beak against a blurred green background",
+    "date": "2025-12-25",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/2500s",
+      "iso": 640
+    }
+  },
+  {
+    "filename": "tigress-with-cubs.jpg",
+    "title": "Tigress and Cubs",
+    "category": "wildlife",
+    "tags": [
+      "tiger",
+      "tigress",
+      "cubs",
+      "family",
+      "forest",
+      "dappled-light",
+      "big-cat"
+    ],
+    "alt": "A tigress resting with three cubs on a forest floor covered in dry leaves, dappled sunlight filtering through the canopy",
+    "date": "2025-04-21",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/640s",
+      "iso": 1000
+    }
+  },
+  {
+    "filename": "tiger-cubs-forest.jpg",
+    "title": "Tiger Cubs in the Forest",
+    "category": "wildlife",
+    "tags": [
+      "tiger",
+      "cubs",
+      "forest",
+      "dappled-light",
+      "camouflage",
+      "big-cat"
+    ],
+    "alt": "Two tiger cubs resting among dry leaves on a forest floor, dappled sunlight falling through the canopy",
+    "date": "2025-04-21",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/640s",
+      "iso": 640
+    }
+  },
+  {
+    "filename": "red-headed-vulture-wings.jpg",
+    "title": "Red-Headed Vulture",
+    "category": "wildlife",
+    "tags": [
+      "red-headed-vulture",
+      "vulture",
+      "endangered",
+      "wings-spread",
+      "raptor",
+      "conservation"
+    ],
+    "alt": "A critically endangered red-headed vulture standing on sandy ground with wings partially spread, showing its vibrant pink-red head and legs",
+    "date": "2025-04-18",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/8",
+      "shutterSpeed": "1/4000s",
+      "iso": 1250
+    }
+  },
+  {
+    "filename": "vultures-feeding.jpg",
+    "title": "Vultures at a Carcass",
+    "category": "wildlife",
+    "tags": [
+      "vulture",
+      "feeding",
+      "scavenging",
+      "carcass",
+      "behavior",
+      "group"
+    ],
+    "alt": "Three red-headed vultures gathered around a carcass on a dry forest floor, one actively feeding",
+    "date": "2025-04-18",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/1000s",
+      "iso": 1250
+    }
+  },
+  {
+    "filename": "tiger-cub-closeup.jpg",
+    "title": "Tiger Cub Portrait",
+    "category": "wildlife",
+    "tags": [
+      "tiger",
+      "cub",
+      "portrait",
+      "close-up",
+      "big-cat",
+      "intimate"
+    ],
+    "alt": "An intimate close-up of a tiger cub resting on a forest path with an adult tiger blurred in the foreground",
+    "date": "2025-04-18",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/160s",
+      "iso": 12800
+    }
+  },
+  {
+    "filename": "macaque-tree-peek.jpg",
+    "title": "Curious Macaque",
+    "category": "wildlife",
+    "tags": [
+      "macaque",
+      "monkey",
+      "primate",
+      "tree",
+      "portrait",
+      "peeking"
+    ],
+    "alt": "A macaque peeking from behind a textured tree trunk with direct eye contact, set against a backdrop of dry forest leaves",
+    "date": "2025-04-19",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "200mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/1000s",
+      "iso": 4000
+    }
+  },
+  {
+    "filename": "tiger-portrait.jpg",
+    "title": "Tiger Portrait",
+    "category": "wildlife",
+    "tags": [
+      "tiger",
+      "portrait",
+      "big-cat",
+      "eyes",
+      "close-up",
+      "intense"
+    ],
+    "alt": "A tight portrait of a tiger with intense golden eyes and mouth slightly open, framed by lush green foliage",
+    "date": "2025-04-19",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/800s",
+      "iso": 1600
+    }
+  },
+  {
+    "filename": "shorebirds-flight-reflection.jpg",
+    "title": "Shorebirds in Flight",
+    "category": "wildlife",
+    "tags": [
+      "shorebirds",
+      "avocet",
+      "stilt",
+      "flight",
+      "reflection",
+      "wetland",
+      "flock"
+    ],
+    "alt": "A flock of shorebirds with black-and-white wing patterns flying over calm blue water with their reflections mirrored below",
+    "date": "2025-12-14",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/2500s",
+      "iso": 320
+    }
+  },
+  {
+    "filename": "cranes-wetland.jpg",
+    "title": "Cranes at the Wetland",
+    "category": "wildlife",
+    "tags": [
+      "crane",
+      "wetland",
+      "flight",
+      "landing",
+      "shorebirds",
+      "flock",
+      "habitat"
+    ],
+    "alt": "Several cranes landing and taking off in a shallow wetland surrounded by smaller shorebirds with a distant line of flamingos on the horizon",
+    "date": "2025-12-14",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/2500s",
+      "iso": 2500
+    }
+  },
+  {
+    "filename": "nilgai-golden-grass.jpg",
+    "title": "Nilgai in Golden Grass",
+    "category": "wildlife",
+    "tags": [
+      "nilgai",
+      "antelope",
+      "grassland",
+      "golden-hour",
+      "habitat",
+      "camouflage"
+    ],
+    "alt": "Two nilgai peeking through tall golden grass with their distinctive white inner ears catching the warm light",
+    "date": "2025-12-24",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/1000s",
+      "iso": 400
+    }
+  },
+  {
+    "filename": "storks-dusk-silhouettes.jpg",
+    "title": "Dusk Silhouettes",
+    "category": "wildlife",
+    "tags": [
+      "stork",
+      "silhouette",
+      "dusk",
+      "twilight",
+      "landmass",
+      "moody",
+      "atmospheric"
+    ],
+    "alt": "Several storks silhouetted in flight against a dusky blue-grey sky with a dark mountain silhouetted landmass on the left",
+    "date": "2025-12-25",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/2500s",
+      "iso": 160
+    }
+  },
+  {
+    "filename": "golden-stilt-silhouette.jpg",
+    "title": "Golden Stilt",
+    "category": "wildlife",
+    "tags": [
+      "stilt",
+      "silhouette",
+      "golden-hour",
+      "wading",
+      "reflection",
+      "minimal",
+      "sunrise"
+    ],
+    "alt": "A long-legged stilt wading through shimmering golden water at sunrise, one leg raised mid-step, silhouetted against warm orange light",
+    "date": "2026-05-25"
+  }
+]
