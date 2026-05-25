@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 4
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/the-tales-of-dunk-and-egg 
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/archive 
-- Platform:: #platform/paperback 
-- Topics:: 
-- Language:: #language/english 
-
-**🖇️ Related Links**
-
-- Creators:: @George R.R. Martin
-- Recommended By:: 
-- Origin:: 
-- POD::

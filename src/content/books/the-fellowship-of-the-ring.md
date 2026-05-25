@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 5
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/the-lord-of-the-rings
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/archive
-- Platform:: #platform/paperback 
-- Topics:: 
-- Language:: #language/english 
-
-**🖇️ Related Links**
-
-- Creators:: 🧔 Private/People/@J.R.R. Tolkien
-- Recommended By:: 
-- Origin:: 
-- POD::

@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/a-song-of-ice-and-fire 
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/queue
-- Platform:: #platform/ 
-- Topics:: 
-- Language:: #language/english 
-
-**🖇️ Related Links**
-
-- Creators:: @George R.R. Martin
-- Recommended By:: 
-- Origin:: 
-- POD::

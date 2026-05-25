@@ -25,26 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/
-- Area:: #area/reading 
-- Team:: #team/personal 
-- Status:: #status/archive 
-- Platform:: #platform/audible  
-- Topics:: #topics/love-story
-- Language:: #language/hindi 
-
-**🖇️ Related Links**
-
-- Creators:: 🧔 Private/Uncategorized Notes/@Ashish Chaudhary
