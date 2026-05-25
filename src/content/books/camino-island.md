@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 5
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/camino-island
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/archive
-- Platform:: #platform/paperback 
-- Topics:: 
-- Language:: #language/english 
-
-**🖇️ Related Links**
-
-- Creators:: @John Grisham
-- Recommended By:: 
-- Origin:: 
-- POD::

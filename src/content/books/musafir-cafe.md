@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 4
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/ 
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/archive 
-- Platform:: #platform/paperback 
-- Topics:: 
-- Language:: #language/hindi 
-
-**🖇️ Related Links**
-
-- Creators:: 🧔 Private/People/@Divya Prakash Dubey
-- Recommended By:: 
-- Origin:: 
-- POD::

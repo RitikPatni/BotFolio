@@ -36,29 +36,3 @@ category: "books"
 >एक वक्त ऐसा आता है जब आपको चुनना होता है कि आप घुटनों पर रहकर धन्य होना चाहते हैं या फिर स्वयंमेव खड़े होकर मिसाल बनते हैं। मैंने अपनी शर्तों पर खड़ा रहना चुना है।
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 5
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/archive 
-- Platform:: #platform/kindle 
-- Topics:: 
-- Language:: #language/hindi 
-
-**🖇️ Related Links**
-
-- Creators:: @Satya Vyas
-- Recommended By:: 
-- Origin:: 
-- POD::

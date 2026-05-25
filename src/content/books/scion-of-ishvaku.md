@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 4
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction
-- Series:: #series/ram-chandra
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/archive
-- Platform:: #platform/paperback 
-- Topics:: 
-- Language:: #language/english 
-
-**🖇️ Related Links**
-
-- Creators:: 🧔 Private/People/@Amish Tripathi
-- Recommended By:: 
-- Origin:: 
-- POD::

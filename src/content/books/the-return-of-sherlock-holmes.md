@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 5
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/sherlock-holmes 
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/archive 
-- Platform:: #platform/audible  
-- Topics:: 
-- Language:: #language/english 
-
-**🖇️ Related Links**
-
-- Creators:: 🧔 Private/People/@Arthur Conan Doyle
-- Recommended By:: 
-- Origin:: 
-- POD::

@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 5
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/archive 
-- Platform:: #platform/audible  
-- Topics:: 
-- Language:: #language/english 
-
-**🖇️ Related Links**
-
-- Creators:: @Emma Bostian
-- Recommended By:: 
-- Origin:: 
-- POD::

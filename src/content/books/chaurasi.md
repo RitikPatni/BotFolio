@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 3
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/ 
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/archive 
-- Platform:: #platform/paperback 
-- Topics:: 
-- Language:: #language/hindi
-
-**🖇️ Related Links**
-
-- Creators:: @Satya Vyas
-- Recommended By:: 
-- Origin:: 
-- POD::

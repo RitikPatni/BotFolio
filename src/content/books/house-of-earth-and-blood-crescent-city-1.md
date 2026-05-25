@@ -27,29 +27,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/fiction 
-- Series:: #series/crescent-city
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/queue
-- Platform:: #platform/ 
-- Topics:: 
-- Language:: #language/english 
-
-**🖇️ Related Links**
-
-- Creators:: 🧔 Private/Uncategorized Notes/Sarah J. Maas
-- Recommended By:: 
-- Origin:: 
-- POD::

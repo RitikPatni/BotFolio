@@ -25,29 +25,3 @@ category: "books"
 
 
 ---
-
-## Additional Metadata
-
-**🧰 Attributes**
-
-- Rating:: 
-- Priority:: 
-
-**🏷 Tags**
-
-- Type:: #type/books
-- Genre:: #genre/non-fiction 
-- Series:: #series/
-- Area:: 
-- Team:: #team/personal 
-- Status:: #status/active 
-- Platform:: #platform/paperback  
-- Topics:: 
-- Language:: #language/english 
-
-**🖇️ Related Links**
-
-- Creators:: 🧔 Private/Uncategorized Notes/@Jack Weatherford
-- Recommended By:: 
-- Origin:: 
-- POD::
