@@ -10,11 +10,10 @@ category: "books"
 author: "Colleen Hoover"
 language: "english"
 genres: []
-published_year: ""
-isbn13: ""
-isbn10: ""
-publisher: ""
-openlibrary_url: ""
+published_year: "2018"
+isbn13: "9789579094993"
+isbn10: "9579094993"
+publisher: "Fang Yan Wen Hua"
+openlibrary_url: "https://openlibrary.org/works/OL20068530W"
 ---
-
-![Verity Cover Art](https://covers.openlibrary.org/b/isbn/9781538724736-L.jpg)
+![Verity Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1634158558i/59344312.jpg)

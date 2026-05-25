@@ -21,9 +21,27 @@ const COVER_BY_SLUG = {
   "man-s-search-for-meaning": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1535419394i/4069.jpg",
   "moonwalking-with-einstein-the-art-and-science-of-remembering-everything": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1630575238i/6346975.jpg",
   "outliers-the-story-of-success": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1344266315i/3228917.jpg",
+  "verity": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1634158558i/59344312.jpg",
   "weapons-of-math-destruction-how-big-data-increases-inequality-and-threatens-democracy": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1456091964i/28186015.jpg",
+  "when-we-believed-in-mermaids": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1560378056i/43717362.jpg",
   "why-we-sleep-unlocking-the-power-of-sleep-and-dreams": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1527506265i/36709369.jpg"
 };
+
+// Books that intentionally use non-Goodreads covers (e.g. Hindi books
+// from Indian publishers that don't have quality covers on Goodreads).
+const NON_GOODREADS_ALLOWLIST = new Set([
+  "10",
+  "aughad",
+  "barricade",
+  "chaurasi",
+  "dehaati-ladke",
+  "delhi-darbar",
+  "masala-chay",
+  "namak-swadanusar",
+  "non-resident-bihari",
+  "sharten-laagoo",
+  "yupi-65"
+]);
 
 function classifyUrl(url) {
   if (!url) return "missing";
@@ -116,8 +134,13 @@ async function main() {
     }
 
     if ((currentState === "missing" || currentState === "non_goodreads") && !mappedUrl) {
-      stats.missingMap += 1;
-      issues.push(`${fileName}: ${currentState} cover and no mapping found in script`);
+      if (NON_GOODREADS_ALLOWLIST.has(slug)) {
+        stats.infos += 1;
+        infos.push(`${fileName}: non-Goodreads cover allowed (on allowlist)`);
+      } else {
+        stats.missingMap += 1;
+        issues.push(`${fileName}: ${currentState} cover and no mapping found in script`);
+      }
     }
 
     const nextFull = `${parsed.envelope}${nextBody.replace(/^\n*/, "")}`;

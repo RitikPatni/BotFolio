@@ -16,7 +16,6 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
-
 ![Baaghi Ballia Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1570908697l/52738109._SX318_SY475_.jpg)
 
 ## Notes

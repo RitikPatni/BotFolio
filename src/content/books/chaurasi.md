@@ -17,5 +17,4 @@ isbn10: "9387464253"
 publisher: ""
 openlibrary_url: "https://openlibrary.org/works/OL24338090W"
 ---
-
 ![Chaurasi Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1538676076l/42179802._SY475_.jpg)

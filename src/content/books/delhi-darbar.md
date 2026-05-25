@@ -17,5 +17,4 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
-
 ![Delhi Darbar Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1482612099l/33559203.jpg)

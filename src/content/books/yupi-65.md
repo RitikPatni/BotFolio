@@ -10,10 +10,10 @@ category: "books"
 author: "Nikhil Sachan"
 language: "hindi"
 genres: []
-published_year: ""
-isbn13: ""
-isbn10: ""
-publisher: ""
-openlibrary_url: ""
+published_year: "2017"
+isbn13: "9789386224965"
+isbn10: "9386224968"
+publisher: "Westland/HindYugm"
+openlibrary_url: "https://openlibrary.org/works/OL24326888W"
 ---
 ![Yupi 65 Cover Art](https://m.media-amazon.com/images/I/51UtWEICf1L._SY160.jpg)

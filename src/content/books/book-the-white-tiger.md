@@ -10,11 +10,10 @@ category: "books"
 author: "Aravind Adiga"
 language: "english"
 genres: []
-published_year: ""
-isbn13: ""
-isbn10: ""
-publisher: ""
-openlibrary_url: ""
+published_year: "2008"
+isbn13: "9781416562597"
+isbn10: "1416562591"
+publisher: "Free Press"
+openlibrary_url: "https://openlibrary.org/works/OL9740815W"
 ---
-
 ![The White Tiger Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1710937569i/1768603.jpg)

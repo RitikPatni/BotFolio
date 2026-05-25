@@ -9,7 +9,6 @@ tags:
 source_url: ""
 category: "readwise-books"
 ---
-
 ![rw-book-cover](https://covers.openlibrary.org/b/id/9876974-L.jpg)
 
 ## Highlights
