@@ -22,12 +22,17 @@ if [ -z "$STAGED" ]; then
   exit 0
 fi
 
-if echo "$STAGED" | grep -E '^(src/content/(blog|newsletter|books|highlights)/.*\.md|src/content/config\.ts|scripts/content-frontmatter-parity\.mjs|package\.json|\.github/workflows/content-frontmatter-parity\.yml)' >/dev/null; then
+if echo "$STAGED" | grep -E '^(src/content/(blog|newsletter|books|highlights)/.*\\.md|src/content/config\\.ts|scripts/content-frontmatter-parity\\.mjs|scripts/goodreads-cover-parity\\.mjs|package\\.json|\\.github/workflows/content-frontmatter-parity\\.yml|\\.github/workflows/goodreads-cover-parity\\.yml)' >/dev/null; then
   echo "[content-hook] Detected content/frontmatter changes. Running parity check..."
   npm run -s content:frontmatter:parity
 fi
 
-if echo "$STAGED" | grep -E '^(src/data/photography/|src/assets/photography/|scripts/validate-gallery\.mjs|package\.json|\.github/workflows/gallery-qa\.yml)' >/dev/null; then
+if echo "$STAGED" | grep -E '^(src/content/books/.*\\.md|scripts/goodreads-cover-parity\\.mjs|package\\.json|\\.github/workflows/goodreads-cover-parity\\.yml)' >/dev/null; then
+  echo "[books-hook] Detected book-cover changes. Running Goodreads cover parity check..."
+  npm run -s books:covers:parity
+fi
+
+if echo "$STAGED" | grep -E '^(src/data/photography/|src/assets/photography/|scripts/validate-gallery\\.mjs|package\\.json|\\.github/workflows/gallery-qa\\.yml)' >/dev/null; then
   echo "[gallery-hook] Detected gallery-related changes. Running strict validator..."
   npm run -s gallery:validate:strict
 else

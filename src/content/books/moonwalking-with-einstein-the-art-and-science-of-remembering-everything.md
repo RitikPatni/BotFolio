@@ -10,6 +10,8 @@ source_path: "legacy-vault/📚 Books/Queued Books/Moonwalking with Einstein- Th
 source_url: ""
 category: "books"
 ---
+![Moonwalking with Einstein- The Art and Science of Remembering Everything Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1630575238i/6346975.jpg)
+
 (Local image omitted in web import: Moonwalking with Einstein- The Art and Science of Remembering Everything Cover Art))
 
 # Moonwalking with Einstein- The Art and Science of Remembering Everything

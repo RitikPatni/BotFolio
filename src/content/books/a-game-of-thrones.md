@@ -10,6 +10,8 @@ source_path: "legacy-vault/📚 Books/2021/A Game of Thrones.md"
 source_url: ""
 category: "books"
 ---
+![A Game of Thrones Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1562726234i/13496.jpg)
+
 (Image reference omitted: A Game of Thrones Cover Art)
 
 # A Game of Thrones
