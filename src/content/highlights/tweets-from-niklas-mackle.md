@@ -1,12 +1,13 @@
 ---
 title: "Tweets From Niklas Mäckle 🏳️‍🌈"
 description: "Author: @knosvoxel on Twitter"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Tweets/Tweets From Niklas Mäckle 🏳️‍🌈.md"
+source_url: ""
 category: "readwise-tweets"
 ---
 # Tweets From Niklas Mäckle 🏳️‍🌈

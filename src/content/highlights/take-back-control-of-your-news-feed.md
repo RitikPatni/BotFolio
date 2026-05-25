@@ -1,12 +1,13 @@
 ---
 title: "Take back control of your news feed"
 description: "Author: 🧔 Private/Uncategorized Notes/inoreader.com"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Take back control of your news feed.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Take back control of your news feed

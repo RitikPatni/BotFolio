@@ -1,12 +1,13 @@
 ---
 title: "Choose Toolkits Over Checklists to Create Effective Processes"
 description: "Full Title: Choose Toolkits Over Checklists to Create Effective Processes"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Choose Toolkits Over Checklists to Create Effective Processes.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Choose Toolkits Over Checklists to Create Effective Processes

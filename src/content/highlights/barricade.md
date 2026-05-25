@@ -1,12 +1,13 @@
 ---
 title: "Barricade"
 description: "Author: 🧔 Private/Uncategorized Notes/Abhishek Singh"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Books/Barricade.md"
+source_url: ""
 category: "readwise-books"
 ---
 # Barricade

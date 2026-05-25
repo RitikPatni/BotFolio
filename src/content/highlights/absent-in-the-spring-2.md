@@ -1,12 +1,13 @@
 ---
 title: "Absent in the Spring"
 description: "Author: Agatha Christie writing as Mary Westmacott"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Books/Absent in the Spring.md"
+source_url: ""
 category: "readwise-books"
 ---
 # Absent in the Spring

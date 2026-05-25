@@ -13,7 +13,6 @@ const hookPath = path.join(hooksDir, "pre-commit");
 const hookScript = `#!/usr/bin/env bash
 set -euo pipefail
 
-# Run gallery QA only when photography manifests/assets (or validator itself) are staged.
 if ! git rev-parse --git-dir >/dev/null 2>&1; then
   exit 0
 fi
@@ -21,6 +20,11 @@ fi
 STAGED=$(git diff --cached --name-only)
 if [ -z "$STAGED" ]; then
   exit 0
+fi
+
+if echo "$STAGED" | grep -E '^(src/content/(blog|newsletter|books|highlights)/.*\.md|src/content/config\.ts|scripts/content-frontmatter-parity\.mjs|package\.json|\.github/workflows/content-frontmatter-parity\.yml)' >/dev/null; then
+  echo "[content-hook] Detected content/frontmatter changes. Running parity check..."
+  npm run -s content:frontmatter:parity
 fi
 
 if echo "$STAGED" | grep -E '^(src/data/photography/|src/assets/photography/|scripts/validate-gallery\.mjs|package\.json|\.github/workflows/gallery-qa\.yml)' >/dev/null; then
@@ -41,11 +45,11 @@ async function main() {
     stdio: "inherit",
   });
 
-  console.log("Installed gallery pre-commit hook at .githooks/pre-commit");
+  console.log("Installed pre-commit hooks at .githooks/pre-commit");
   console.log("Configured git core.hooksPath to .githooks");
 }
 
 main().catch((error) => {
-  console.error("Failed to install gallery hook:", error.message);
+  console.error("Failed to install hooks:", error.message);
   process.exit(1);
 });

@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #2"
 description: "Hello Everyone, This week was good for me. I learned about [POSSE](https://indieweb.org/POSSE), and I’m in love with the concept, and I’m really interested in doing one for myself,"
-date: 2022-01-10
+date: "2022-01-10"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-2/"
 category: "newsletter"
 ---

@@ -1,12 +1,13 @@
 ---
 title: "Why I Hate Frameworks, Benji Smith."
 description: "Author: fredrikholmqvist.com"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Why I Hate Frameworks, Benji Smith..md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Why I Hate Frameworks, Benji Smith.

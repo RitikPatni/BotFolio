@@ -1,11 +1,12 @@
 ---
 title: "Reading List #25"
 description: "Hello Everyone, Another new week and hope you're all doing great. With that, let's start with this week's updates. ## 📚 To Read [The Smallest CSS](https://www.robinrendle.com/notes"
-date: 2022-06-21
+date: "2022-06-21"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-25/"
 category: "newsletter"
 ---

@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #8"
 description: "Hello Everyone, I hope you all had an outstanding week and are excited about the end of winters. ## 📚 To Read [Working Better: Interview with web designer Brad Frost](https://blog."
-date: 2022-02-21
+date: "2022-02-21"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-8/"
 category: "newsletter"
 ---

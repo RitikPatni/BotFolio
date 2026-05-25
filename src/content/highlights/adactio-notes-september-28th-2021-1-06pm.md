@@ -1,12 +1,13 @@
 ---
 title: "Adactio: Notes—September 28th, 2021, 1:06pm"
 description: "Author: Jeremy Keith"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Adactio Notes—September 28th, 2021, 106pm.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Adactio: Notes—September 28th, 2021, 1:06pm

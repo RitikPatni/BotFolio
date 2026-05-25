@@ -1,14 +1,15 @@
 ---
 title: "Multiple Backgrounds with CSS background"
 description: "Using multiple images and gradients in a single CSS background declaration."
-date: 2021-06-30
+date: "2021-06-30"
 draft: false
 tags:
-  - css
-  - til
+  - "css"
+  - "til"
 source_path: "legacy-vault/🖋️ Blog/TIL/Multiple Backgrounds with CSS background.md"
+source_url: ""
+category: "blog"
 ---
-
 Today I discovered a clever trick with CSS background images. It's possible to have multiple images in a single `background-image` declaration, which is unique and can come in handy for many use cases.
 
 ## How to do it

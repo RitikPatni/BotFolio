@@ -1,12 +1,13 @@
 ---
 title: "Tweets From Dinosaur"
 description: "Author: @dino_comics on Twitter"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Tweets/Tweets From Dinosaur.md"
+source_url: ""
 category: "readwise-tweets"
 ---
 # Tweets From Dinosaur

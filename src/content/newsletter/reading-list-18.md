@@ -1,11 +1,12 @@
 ---
 title: "Reading List #18"
 description: "Hello Everyone, I hope you had a pretty awesome weekend and are ready for what the next week brings up. ## 📚 To Read [What’s the Alternative to Firefox?](https://kevq.uk/whats-the-"
-date: 2022-05-02
+date: "2022-05-02"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-18/"
 category: "newsletter"
 ---

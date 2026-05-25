@@ -1,12 +1,13 @@
 ---
 title: "Tweets From Lighthouse"
 description: "Author: @____lighthouse on Twitter"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Tweets/Tweets From Lighthouse.md"
+source_url: ""
 category: "readwise-tweets"
 ---
 # Tweets From Lighthouse

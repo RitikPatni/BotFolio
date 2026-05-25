@@ -1,11 +1,12 @@
 ---
 title: "Reading List #20"
 description: "Hello Everyone, I hope you have been doing great and are keeping yourself hydrated in this extreme summer. ## 📚 To Read [Why did you originally build CSS-Tricks?](https://chriscoyi"
-date: 2022-05-15
+date: "2022-05-15"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-20/"
 category: "newsletter"
 ---

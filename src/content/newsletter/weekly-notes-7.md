@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #7"
 description: "Hello everyone, I hope you all had a fantastic week and are excited about the start of the new week. ## 📚 To Read [The Kobayashi Maru of Comparing Dates with Times](https://zachhol"
-date: 2022-02-14
+date: "2022-02-14"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-7/"
 category: "newsletter"
 ---

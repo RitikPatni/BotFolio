@@ -1,11 +1,12 @@
 ---
 title: "Reading List #30"
 description: "Hello Everyone, Hope everyone is doing great and had a wonderful week. Mine was a quiet one, as I'm still waiting on my hardware to arrive so that I can get started. With that said"
-date: 2022-07-26
+date: "2022-07-26"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-30-1195/"
 category: "newsletter"
 ---

@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #9"
 description: "Hello Everyone, We already are in the ninth week of 2022 which also means that this is the penultimate edition of this newsletter as I promised myself that I'll be doing at least 1"
-date: 2022-02-28
+date: "2022-02-28"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-9/"
 category: "newsletter"
 ---

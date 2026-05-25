@@ -1,12 +1,13 @@
 ---
 title: "A Game of Thrones"
 description: "Genre:: #genre/fiction"
-date: 2021-06-09
+date: "2021-06-09"
 draft: false
 tags:
-  - books
-  - obsidian-import
+  - "books"
+  - "obsidian-import"
 source_path: "legacy-vault/📚 Books/2021/A Game of Thrones.md"
+source_url: ""
 category: "books"
 ---
 (Image reference omitted: A Game of Thrones Cover Art)

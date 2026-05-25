@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #13"
 description: "Hello Everyone, I hope you're all doing great. My week was also great though I'm still trying to get this back to Monday routine and terribly failing at that each week, hopefully n"
-date: 2022-03-31
+date: "2022-03-31"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-13/"
 category: "newsletter"
 ---

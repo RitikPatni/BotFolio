@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #12"
 description: "Hello everyone, Finally, back to writing this one. It took me a long time to stop procrastinating and writing, and feeling tired the whole last week didn't help much. But it's fina"
-date: 2022-03-25
+date: "2022-03-25"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-12/"
 category: "newsletter"
 ---

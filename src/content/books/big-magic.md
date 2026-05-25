@@ -1,12 +1,13 @@
 ---
 title: "Big Magic"
 description: "Genre:: #genre/non-fiction"
-date: 2021-06-20
+date: "2021-06-20"
 draft: false
 tags:
-  - books
-  - obsidian-import
+  - "books"
+  - "obsidian-import"
 source_path: "legacy-vault/📚 Books/Queued Books/Big Magic.md"
+source_url: ""
 category: "books"
 ---
 (Local image omitted in web import: Big Magic Cover Art))

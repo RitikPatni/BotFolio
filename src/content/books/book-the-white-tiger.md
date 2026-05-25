@@ -1,12 +1,13 @@
 ---
 title: "(Book) The White Tiger"
 description: "👀 Next Assessment Date::"
-date: 2021-08-20
+date: "2021-08-20"
 draft: false
 tags:
-  - books
-  - obsidian-import
+  - "books"
+  - "obsidian-import"
 source_path: "legacy-vault/📚 Books/2018/(Book) The White Tiger.md"
+source_url: ""
 category: "books"
 ---
 ![(Book) The White Tiger Cover Art](https://covers.openlibrary.org/b/isbn/1416562591-M.jpg)

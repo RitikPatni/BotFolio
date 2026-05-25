@@ -6,9 +6,9 @@ const baseSchema = z.object({
   date: z.coerce.date(),
   draft: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
-  source_path: z.string().optional(),
-  source_url: z.string().url().optional(),
-  category: z.string().optional()
+  source_path: z.string().default(''),
+  source_url: z.union([z.string().url(), z.literal('')]).default(''),
+  category: z.string().default('')
 });
 
 const blog = defineCollection({

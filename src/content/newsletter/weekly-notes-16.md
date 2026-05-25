@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #16"
 description: "Hello everyone, I hope you all had a wonderful weekend. This week again I'll be trying something new and will provide minimal excerpts for the blogs as I'm still confused on what i"
-date: 2022-04-18
+date: "2022-04-18"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-16/"
 category: "newsletter"
 ---

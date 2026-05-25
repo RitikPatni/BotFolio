@@ -1,12 +1,13 @@
 ---
 title: "Who the Fuck Is Naming T..."
 description: "Author: @Sadcrib on Twitter"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Tweets/Who the Fuck Is Naming T....md"
+source_url: ""
 category: "readwise-tweets"
 ---
 # Who the Fuck Is Naming T...

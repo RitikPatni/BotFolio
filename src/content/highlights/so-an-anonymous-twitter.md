@@ -1,12 +1,13 @@
 ---
 title: "So an Anonymous Twitter..."
 description: "Author: @QuinnyPig on Twitter"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Tweets/So an Anonymous Twitter....md"
+source_url: ""
 category: "readwise-tweets"
 ---
 # So an Anonymous Twitter...

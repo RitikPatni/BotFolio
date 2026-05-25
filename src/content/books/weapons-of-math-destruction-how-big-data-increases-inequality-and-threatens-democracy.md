@@ -1,12 +1,13 @@
 ---
 title: "Weapons of Math Destruction- How Big Data Increases Inequality and Threatens Democracy"
 description: "Genre:: #genre/non-fiction"
-date: 2021-06-19
+date: "2021-06-19"
 draft: false
 tags:
-  - books
-  - obsidian-import
+  - "books"
+  - "obsidian-import"
 source_path: "legacy-vault/📚 Books/Queued Books/Weapons of Math Destruction- How Big Data Increases Inequality and Threatens Democracy.md"
+source_url: ""
 category: "books"
 ---
 (Image reference omitted: Weapons of Math Destruction- How Big Data Increases Inequality and Threatens Democracy Cover Art)

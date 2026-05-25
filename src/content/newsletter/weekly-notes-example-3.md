@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes Example #3"
 description: "### 📚 To Read [Career Fulfillment Matrix](https://www.jason.af/career-fulfillment-matrix)Another great post from Jason on career and what success means to you. [2021 Roundup of Web"
-date: 2022-01-03
+date: "2022-01-03"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-example-3/"
 category: "newsletter"
 ---

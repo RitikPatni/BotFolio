@@ -1,11 +1,12 @@
 ---
 title: "Reading List #21"
-description: "Hello Everyone, I hope you're doing well. Sorry for the delayed mail. I've been travelling for most of the weekend and couldn't keep up with reading stuff, so I'll be keeping this "
-date: 2022-05-23
+description: "Hello Everyone, I hope you're doing well. Sorry for the delayed mail. I've been travelling for most of the weekend and couldn't keep up with reading stuff, so I'll be keeping this"
+date: "2022-05-23"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-21/"
 category: "newsletter"
 ---

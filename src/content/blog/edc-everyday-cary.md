@@ -1,14 +1,15 @@
 ---
 title: "EDC-Everyday Carry"
 description: "---"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - obsidian-import
-  - til
+  - "obsidian-import"
+  - "til"
 source_path: "legacy-vault/🖋️ Blog/TIL/EDC - Everyday Cary.md"
+source_url: ""
+category: "blog"
 ---
-
 ---
 ---
 

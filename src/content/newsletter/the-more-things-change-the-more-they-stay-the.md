@@ -1,11 +1,12 @@
 ---
-title: "\"The more things change, the more they stay the same…\" - Jean-Baptiste Alphonse Karr"
+title: "\\\\\\\\\\\\\\\"The more things change, the more they stay the same…\\\\\\\\\\\\\\\" - Jean-Baptiste Alphonse Karr"
 description: "## 📚 To Read [Re: Selling your extension](https://ericwbailey.website/published/re-selling-your-extension/?utm_source=ritik&utm_medium=email&utm_campaign=the-more-things-change-the"
-date: 2022-09-06
+date: "2022-09-06"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/the-more-things-change-the-more-they-stay-the/"
 category: "newsletter"
 ---

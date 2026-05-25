@@ -1,14 +1,15 @@
 ---
 title: "TIL: Gold will become gray if it comes in contact with Mercury"
 description: "Learned what happens when Gold comes in contact with mercury and a ton of Chemistry and interesting stuff around it."
-date: 2021-06-25
+date: "2021-06-25"
 draft: false
 tags:
-  - obsidian-import
-  - til
+  - "obsidian-import"
+  - "til"
 source_path: "legacy-vault/🖋️ Blog/TIL/Gold will become gray if it comes in contact with Mercury.md"
+source_url: ""
+category: "blog"
 ---
-
 Learned what happens when Gold comes in contact with mercury and a ton of Chemistry and interesting stuff around it.
 
 ## Reference Links

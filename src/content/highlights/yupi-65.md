@@ -1,12 +1,13 @@
 ---
 title: "Yupi 65"
 description: "Author: Nikhil Sachan"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Books/Yupi 65.md"
+source_url: ""
 category: "readwise-books"
 ---
 # Yupi 65

@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #28"
 description: "Hello Everyone, I hope you all had a wonderful week. Mine was also a good one. With this, let's start with this week's reading material… ## 📚 To Read [The Unlocked Possibilities of"
-date: 2022-07-12
+date: "2022-07-12"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-28/"
 category: "newsletter"
 ---

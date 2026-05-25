@@ -1,11 +1,12 @@
 ---
 title: "Reading List #26"
 description: "Hello Everyone, Hope everyone had a nice week. Mine was a quiet one thanks to all the scorching heat, which made doing anything almost impossible. With that, let's hope for nicer t"
-date: 2022-06-27
+date: "2022-06-27"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-26/"
 category: "newsletter"
 ---

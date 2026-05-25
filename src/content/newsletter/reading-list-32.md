@@ -1,11 +1,12 @@
 ---
 title: "Reading List #32"
 description: "## 📚 To Read [Just hit publish](https://marcoheine.com/blog/just-hit-publish/) Just in case you missed the last few reminders, here is another one on why hitting the publish button"
-date: 2022-08-08
+date: "2022-08-08"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-32/"
 category: "newsletter"
 ---

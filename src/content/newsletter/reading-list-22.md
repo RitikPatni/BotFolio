@@ -1,11 +1,12 @@
 ---
 title: "Reading List #22"
 description: "Hello everyone,Finally, back to writing this one. Last week was wonderful and a pretty interesting one. I've been travelling the whole last week through the mountains, and hence th"
-date: 2022-06-01
+date: "2022-06-01"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-22/"
 category: "newsletter"
 ---

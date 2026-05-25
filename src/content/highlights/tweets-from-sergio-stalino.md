@@ -1,12 +1,13 @@
 ---
 title: "Tweets From Sergio Stalino"
 description: "Author: 🧔 Private/Uncategorized Notes/@SergioStalino on Twitter"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Tweets/Tweets From Sergio Stalino.md"
+source_url: ""
 category: "readwise-tweets"
 ---
 # Tweets From Sergio Stalino

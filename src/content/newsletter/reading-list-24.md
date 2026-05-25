@@ -1,11 +1,12 @@
 ---
 title: "Reading List #24"
 description: "Hello Everyone, Thanks to all the new folks who have subscribed and the already existing ones to have stayed this far and kept me going. And with all that, let's start with this we"
-date: 2022-06-13
+date: "2022-06-13"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-24/"
 category: "newsletter"
 ---

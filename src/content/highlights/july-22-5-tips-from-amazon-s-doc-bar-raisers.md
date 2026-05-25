@@ -1,12 +1,13 @@
 ---
 title: "July 22: 5 tips from Amazon’s Doc Bar Raisers"
 description: "Author: 🧔 Private/Uncategorized Notes/Danny Sheridan"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/July 22 5 tips from Amazon’s Doc Bar Raisers.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # July 22: 5 tips from Amazon’s Doc Bar Raisers

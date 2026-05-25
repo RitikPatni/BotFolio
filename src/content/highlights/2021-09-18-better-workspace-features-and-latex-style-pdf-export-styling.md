@@ -1,12 +1,13 @@
 ---
 title: "2021.09.18: Better Workspace Features & LaTeX-style PDF export styling"
 description: "Author: obsidianroundup.org"
-date: 2021-09-18
+date: "2021-09-18"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/2021.09.18 Better Workspace Features & LaTeX-style PDF export styling.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # 2021.09.18: Better Workspace Features & LaTeX-style PDF export styling

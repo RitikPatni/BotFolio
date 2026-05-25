@@ -1,12 +1,13 @@
 ---
 title: "Making world-class docs takes effort"
 description: "Author: Brad Frost"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Making world-class docs takes effort.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Making world-class docs takes effort

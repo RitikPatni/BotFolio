@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #11"
 description: "Hello Folks, I have been on vacation the whole last week and as a result missed publishing the last edition. ## 📚 To Read [My Dev Content Creation Journey and Tips for Starting You"
-date: 2022-03-18
+date: "2022-03-18"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-11/"
 category: "newsletter"
 ---

@@ -1,12 +1,13 @@
 ---
 title: "A Story That Haunts Me A..."
 description: "Author: @LethalityJane on Twitter"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Tweets/A Story That Haunts Me A....md"
+source_url: ""
 category: "readwise-tweets"
 ---
 # A Story That Haunts Me A...

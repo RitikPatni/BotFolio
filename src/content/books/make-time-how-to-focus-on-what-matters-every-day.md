@@ -1,12 +1,13 @@
 ---
 title: "Make Time- How to Focus on What Matters Every Day"
 description: "Genre:: #genre/non-fiction"
-date: 2021-06-19
+date: "2021-06-19"
 draft: false
 tags:
-  - books
-  - obsidian-import
+  - "books"
+  - "obsidian-import"
 source_path: "legacy-vault/📚 Books/Queued Books/Make Time- How to Focus on What Matters Every Day.md"
+source_url: ""
 category: "books"
 ---
 (Local image omitted in web import: Make Time- How to Focus on What Matters Every Day Cover Art))
