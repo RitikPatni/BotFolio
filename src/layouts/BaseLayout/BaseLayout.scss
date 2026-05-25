@@ -33,6 +33,12 @@
   padding: var(--layout-padding);
 }
 
+@media (max-width: 48rem) {
+  .base-layout__container {
+    --layout-padding: var(--size-3);
+  }
+}
+
 .base-layout__header {
   position: sticky;
   top: 0;
@@ -64,6 +70,7 @@
   gap: var(--size-2);
   align-items: center;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
   padding-block-start: var(--size-2);
   scrollbar-width: thin;
 }
@@ -121,6 +128,24 @@
 .base-layout__main {
   /* Exception: viewport height minus sticky header token. */
   min-block-size: calc(100dvb - var(--size-15));
+}
+
+@media (max-width: 48rem) {
+  .base-layout__header {
+    position: static;
+  }
+
+  .base-layout__main {
+    min-block-size: auto;
+  }
+
+  .base-layout__theme-fab {
+    inset-inline-end: var(--size-3);
+    inset-block-end: calc(var(--size-3) + env(safe-area-inset-bottom));
+    inline-size: var(--size-7);
+    block-size: var(--size-7);
+    font-size: var(--font-size-2);
+  }
 }
 
 .base-layout__footer {

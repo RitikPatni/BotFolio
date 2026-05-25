@@ -191,6 +191,7 @@
 }
 
 .photography__caption-title {
+  min-inline-size: 0;
   font-size: var(--font-size-1);
   font-weight: var(--font-weight-6);
 }
@@ -262,6 +263,12 @@
   .photography__caption {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .photography__caption-link {
+    inline-size: auto;
+    min-block-size: var(--photography-caption-action-size);
+    padding-inline: var(--size-3);
   }
 
   .photography__gallery {

@@ -180,6 +180,7 @@
   background: var(--bg-soft);
   border: var(--surface-border) solid var(--line);
   border-radius: var(--radius-2);
+  max-inline-size: 100%;
   overflow: auto;
 }
 
@@ -212,10 +213,12 @@
 }
 
 %prose table {
+  display: block;
   inline-size: 100%;
   border-collapse: collapse;
   margin-block: var(--size-4);
   font-size: var(--font-size-1);
+  overflow-x: auto;
 }
 
 %prose :where(th, td) {
