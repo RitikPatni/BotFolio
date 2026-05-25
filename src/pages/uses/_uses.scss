@@ -79,6 +79,7 @@
   &__card {
     @extend %surface-card;
     display: grid;
+    align-content: start;
     gap: var(--size-3);
 
     &--wide {

@@ -20,17 +20,3 @@ publisher: "Harper"
 openlibrary_url: "https://openlibrary.org/works/OL17093373W"
 ---
 ![From Third World to First- The Singapore Story- 1965-2000 Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1546080459l/144409._SY475_.jpg)
-
-# From Third World to First- The Singapore Story- 1965-2000
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

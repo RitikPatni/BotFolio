@@ -20,17 +20,3 @@ publisher: "ALFAGUARA"
 openlibrary_url: "https://openlibrary.org/works/OL257914W"
 ---
 ![A Storm of Swords Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1571318786l/62291.jpg)
-
-# A Storm of Swords
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

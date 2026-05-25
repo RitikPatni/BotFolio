@@ -20,17 +20,3 @@ publisher: ""
 openlibrary_url: ""
 ---
 ![Leading- Business and leadership skills from the iconic football manager Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1464633324l/30320335._SY475_.jpg)
-
-# Leading- Business and leadership skills from the iconic football manager
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

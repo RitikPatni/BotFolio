@@ -19,18 +19,4 @@ isbn10: "1781688591"
 publisher: "Verso"
 openlibrary_url: "https://openlibrary.org/works/OL20010461W"
 ---
-![Man Tiger Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1478620033l/32924260._SY475_.jpg)	
-
-# Man Tiger
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----
+![Man Tiger Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1478620033l/32924260._SY475_.jpg)

@@ -35,7 +35,10 @@
 }
 
 %content-grid-two {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--size-content-1)), 1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--size-content-1)), 1fr)
+  );
 }
 
 %surface-card {
@@ -66,13 +69,14 @@
 }
 
 %tag-item {
-  border: var(--surface-border) solid var(--line);
-  border-radius: var(--radius-round);
-  padding-block: var(--size-1);
-  padding-inline: var(--size-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-1);
   color: var(--muted);
   font-size: var(--font-size-0);
-  background: var(--bg-soft);
+  font-weight: var(--font-weight-6);
+  letter-spacing: var(--font-letterspacing-2);
+  text-transform: uppercase;
 }
 
 %entry-list {
@@ -226,4 +230,3 @@
   padding: var(--size-2);
   text-align: left;
 }
-

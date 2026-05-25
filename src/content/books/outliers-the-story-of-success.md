@@ -20,19 +20,3 @@ publisher: "CreateSpace Independent Publishing Platform"
 openlibrary_url: "https://openlibrary.org/works/OL39819564W"
 ---
 ![Outliers- The Story of Success Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1344266315i/3228917.jpg)
-
-(Local image omitted in web import: Outliers- The Story of Success Cover Art))
-
-# Outliers- The Story of Success
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

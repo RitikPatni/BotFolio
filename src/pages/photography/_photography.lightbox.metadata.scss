@@ -134,19 +134,17 @@
 
     &:hover,
     &:focus-visible {
-      border-color: white;
-      background: rgb(255 255 255 / 0.16);
+    background: transparent;
     }
   }
 
-  &__metadata-section {
-    margin-block-start: var(--size-4);
+      color: white;
+      text-decoration-color: currentColor;
 
     &[hidden] {
       display: none;
-    }
-
-    &[data-gallery-related] {
+      color: white;
+      text-decoration-color: currentColor;
       display: grid;
       gap: var(--size-2);
       min-block-size: 0;
@@ -185,20 +183,28 @@
   }
 
   &__metadata-tag {
-    padding-block: var(--size-2);
-    padding-inline: var(--size-3);
-    border: var(--surface-border) solid
-      color-mix(in srgb, var(--line), transparent 30%);
-    border-radius: var(--radius-round);
+    padding: 0;
+    border: 0;
     background: transparent;
     color: inherit;
     font: inherit;
     font-size: var(--font-size-0);
+    font-weight: var(--font-weight-6);
+    letter-spacing: var(--font-letterspacing-2);
+    text-transform: uppercase;
     cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: var(--size-relative-1);
+
+    &:hover,
+    &:focus-visible {
+      text-decoration-color: currentColor;
+    }
 
     &[aria-pressed="true"] {
-      border-color: var(--accent);
-      background: color-mix(in srgb, var(--bg-soft), white 6%);
+      color: var(--accent);
+      text-decoration-color: currentColor;
     }
   }
 

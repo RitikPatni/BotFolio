@@ -20,17 +20,3 @@ publisher: "Художественная литература"
 openlibrary_url: "https://openlibrary.org/works/OL262438W"
 ---
 ![The Sign of Four Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1299346921l/608474.jpg)
-
-# The Sign of Four
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

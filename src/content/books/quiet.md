@@ -20,17 +20,3 @@ publisher: "Random House Audio"
 openlibrary_url: "https://openlibrary.org/works/OL16484595W"
 ---
 ![Quiet Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1547203165l/17204619._SY475_.jpg)
-
-# Quiet
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

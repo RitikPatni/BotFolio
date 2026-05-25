@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import './_home.scss';
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import "./_home.scss";
 
-const posts = (await getCollection('blog'))
+const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3)
@@ -11,7 +11,7 @@ const posts = (await getCollection('blog'))
     slug: post.slug,
     title: post.data.title,
     description: post.data.description,
-    date: post.data.date
+    date: post.data.date,
   }));
 ---
 
@@ -21,20 +21,25 @@ const posts = (await getCollection('blog'))
   path="/"
 >
   <div class="index primitive-stack">
-  <!--
+    <!--
     Content provenance (Obsidian):
     - legacy-vault/🧔 private/Jobs/Cover Letter 1.md
     - legacy-vault/🧔 private/Jobs/Cover Letter 2.md
   -->
     <section class="index__hero primitive-section motion-reveal">
       <div class="index__hero-content">
-        <p class="index__tag primitive-chip">Frontend × Wildlife/Macro</p>
-        <h1 class="index__title">Thoughtful interfaces. Patient field notes. One place.</h1>
+        <h1 class="index__title">
+          Thoughtful interfaces. Patient field notes. One place.
+        </h1>
         <p class="index__lead">
-          I design and build web experiences with a systems mindset, then switch lenses to document
-          wildlife and macro moments. This space blends both disciplines into one evolving archive.
+          I design and build web experiences with a systems mindset, then switch
+          lenses to document wildlife and macro moments. This space blends both
+          disciplines into one evolving archive.
         </p>
-        <p><a class="index__inline-link primitive-link" href="/blog">Explore engineering notes</a></p>
+        <p>
+          <a class="index__inline-link primitive-link" href="/blog"
+            >Explore engineering notes</a>
+        </p>
       </div>
     </section>
 
@@ -52,14 +57,19 @@ const posts = (await getCollection('blog'))
                 <h3 class="index__item-title">
                   <a href={`/blog/${post.slug}`}>{post.title}</a>
                 </h3>
-                <p class="index__meta index__meta--spaced">{post.date.toISOString().slice(0, 10)}</p>
+                <p class="index__meta index__meta--spaced">
+                  {post.date.toISOString().slice(0, 10)}
+                </p>
                 <p class="index__description">{post.description}</p>
               </article>
             ))}
           </div>
         )
       }
-      <p><a class="index__inline-link primitive-link" href="/blog">View all blog posts</a></p>
+      <p>
+        <a class="index__inline-link primitive-link" href="/blog"
+          >View all blog posts</a>
+      </p>
     </section>
   </div>
 </BaseLayout>

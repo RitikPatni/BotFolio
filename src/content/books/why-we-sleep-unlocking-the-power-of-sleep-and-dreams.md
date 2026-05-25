@@ -20,19 +20,3 @@ publisher: "CreateSpace Independent Publishing Platform"
 openlibrary_url: "https://openlibrary.org/works/OL41772090W"
 ---
 ![Why We Sleep- Unlocking the Power of Sleep and Dreams Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1527506265i/36709369.jpg)
-
-(Image reference omitted: Why We Sleep- Unlocking the Power of Sleep and Dreams Cover Art)
-
-# Why We Sleep- Unlocking the Power of Sleep and Dreams
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

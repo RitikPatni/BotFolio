@@ -20,17 +20,3 @@ publisher: "Suzeteo Enterprises"
 openlibrary_url: "https://openlibrary.org/works/OL35220621W"
 ---
 ![The Memoirs of Sherlock Holmes Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1529973409l/194373.jpg)
-
-# The Memoirs of Sherlock Holmes
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

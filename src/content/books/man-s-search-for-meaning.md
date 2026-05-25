@@ -20,19 +20,3 @@ publisher: "Independently Published"
 openlibrary_url: "https://openlibrary.org/works/OL25971162W"
 ---
 ![Man's Search for Meaning Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1535419394i/4069.jpg)
-
-(Local image omitted in web import: Man's Search for Meaning Cover Art))
-
-# Man's Search for Meaning
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

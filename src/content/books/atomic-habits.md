@@ -20,17 +20,3 @@ publisher: "Mind Quest Inc"
 openlibrary_url: "https://openlibrary.org/works/OL17930368W"
 ---
 ![Atomic Habits Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1539225511l/33154385._SY475_.jpg)
-
-# Atomic Habits
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

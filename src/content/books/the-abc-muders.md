@@ -20,17 +20,3 @@ publisher: ""
 openlibrary_url: ""
 ---
 ![The ABC Muders Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1389733983l/16322.jpg)
-
-# The ABC Muders
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

@@ -20,17 +20,3 @@ publisher: ""
 openlibrary_url: "https://openlibrary.org/works/OL36776220W"
 ---
 ![Kulfi and Cappuccino Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1481044743l/33280230._SY475_.jpg)
-
-# Kulfi and Cappuccino
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

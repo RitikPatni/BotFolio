@@ -20,17 +20,3 @@ publisher: "Eksmo"
 openlibrary_url: "https://openlibrary.org/works/OL471576W"
 ---
 ![Murder On the Orient Express Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1610704688l/21099828._SY475_.jpg)
-
-# Murder On the Orient Express
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

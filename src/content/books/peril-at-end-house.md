@@ -20,17 +20,3 @@ publisher: "Tan Quang"
 openlibrary_url: "https://openlibrary.org/works/OL472165W"
 ---
 ![Peril at End House Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1327938128l/16424.jpg)
-
-# Peril at End House
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

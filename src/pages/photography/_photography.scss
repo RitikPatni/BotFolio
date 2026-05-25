@@ -33,28 +33,44 @@
 
   &__hero {
     @extend %page-hero;
-    &--compact { @extend %page-hero-compact; }
+    &--compact {
+      @extend %page-hero-compact;
+    }
   }
 
-  &__title   { @extend %page-title; }
-  &__lead    { @extend %page-lead; }
+  &__title {
+    @extend %page-title;
+  }
+  &__lead {
+    @extend %page-lead;
+  }
 
-  &__section-title { @extend %section-title; }
+  &__section-title {
+    @extend %section-title;
+  }
 
   &__grid {
     @extend %content-grid;
-    &--two { @extend %content-grid-two; }
+    &--two {
+      @extend %content-grid-two;
+    }
   }
 
   &__card {
     @extend %surface-card;
-    &-title   { @extend %surface-card-title; }
-    &--offset { @extend %surface-card-offset; }
+    &-title {
+      @extend %surface-card-title;
+    }
+    &--offset {
+      @extend %surface-card-offset;
+    }
   }
 
   &__tags {
     @extend %tag-list;
-    &--spaced { @extend %tag-list-spaced; }
+    &--spaced {
+      @extend %tag-list-spaced;
+    }
   }
 
   &__tag {
@@ -62,34 +78,51 @@
     display: inline-flex;
     align-items: center;
     gap: var(--size-1);
+    color: var(--muted);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: var(--size-relative-1);
+    transition:
+      color 180ms ease,
+      text-decoration-color 180ms ease;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--text);
+      text-decoration-color: currentColor;
+    }
   }
 
   &__tag-count {
-    display: inline-grid;
-    place-items: center;
-    inline-size: var(--size-5);
-    block-size: var(--size-5);
-    border-radius: var(--radius-round);
-    border: var(--surface-border) solid var(--line);
     font-size: var(--font-size-0);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
   }
 
   &__list {
     @extend %entry-list;
-    &--offset { @extend %entry-list-offset; }
+    &--offset {
+      @extend %entry-list-offset;
+    }
   }
 
   &__item {
     @extend %entry-item;
-    &-title { @extend %entry-item-title; }
+    &-title {
+      @extend %entry-item-title;
+    }
   }
 
   &__meta {
     @extend %entry-meta;
-    &--spaced { @extend %entry-meta-spaced; }
+    &--spaced {
+      @extend %entry-meta-spaced;
+    }
   }
 
-  &__description { @extend %entry-description; }
+  &__description {
+    @extend %entry-description;
+  }
 
   /* ─── Photography-specific ──────────────────────────────────── */
 
@@ -119,7 +152,9 @@
     gap: var(--size-3);
 
     @media (max-width: 48rem) {
-      & { grid-template-columns: 1fr; }
+      & {
+        grid-template-columns: 1fr;
+      }
     }
   }
 

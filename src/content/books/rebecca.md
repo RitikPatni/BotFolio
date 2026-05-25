@@ -20,17 +20,3 @@ publisher: "Triangle Books"
 openlibrary_url: "https://openlibrary.org/works/OL36633W"
 ---
 ![Rebecca Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1386605169l/17899948.jpg)
-
-# Rebecca
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

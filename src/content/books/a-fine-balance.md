@@ -19,17 +19,3 @@ publisher: "Random House"
 openlibrary_url: "https://openlibrary.org/works/OL2980902W"
 ---
 ![A Fine Balance Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1551173390l/5211._SY475_.jpg)
-
-# A Fine Balance
-
-## ℹ️ About
-
-Related to emergency in India in 1975
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

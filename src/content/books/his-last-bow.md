@@ -20,17 +20,3 @@ publisher: "CreateSpace Independent Publishing Platform"
 openlibrary_url: "https://openlibrary.org/works/OL41776294W"
 ---
 ![His Last Bow Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1368588782l/754713.jpg)
-
-# His Last Bow
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

@@ -20,17 +20,3 @@ publisher: "מ. מזרחי"
 openlibrary_url: "https://openlibrary.org/works/OL472715W"
 ---
 ![The Mysterious Affair at Styles Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1332070643l/13551266.jpg)
-
-# The Mysterious Affair at Styles
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

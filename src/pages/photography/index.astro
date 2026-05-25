@@ -179,7 +179,9 @@ const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
         visibleCategories.map((category: CategoryGallerySection) => (
           <a class="photography__tag" href={`#${category.id}`}>
             {category.label}
-            <span class="photography__tag-count">{category.images.length}</span>
+            <span class="photography__tag-count">
+              ({category.images.length})
+            </span>
           </a>
         ))
       }

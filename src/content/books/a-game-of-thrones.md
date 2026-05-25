@@ -20,19 +20,3 @@ publisher: "Debutxaca"
 openlibrary_url: "https://openlibrary.org/works/OL257943W"
 ---
 ![A Game of Thrones Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1562726234i/13496.jpg)
-
-(Image reference omitted: A Game of Thrones Cover Art)
-
-# A Game of Thrones
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

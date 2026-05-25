@@ -20,17 +20,3 @@ publisher: "LECTORUM"
 openlibrary_url: "https://openlibrary.org/works/OL471666W"
 ---
 ![Five Little Pigs Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1429422068l/121648.jpg)
-
-# Five Little Pigs
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

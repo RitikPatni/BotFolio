@@ -12,11 +12,20 @@ const highlights = (await getCollection("highlights"))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const getBookCategoryMeta = (item: (typeof books)[number]) => {
-  const languageRaw = String(item.data.language || "").toLowerCase().trim();
-  const language = languageRaw === "hindi" ? "hindi" : languageRaw === "other" ? "other" : "english";
+  const languageRaw = String(item.data.language || "")
+    .toLowerCase()
+    .trim();
+  const language =
+    languageRaw === "hindi"
+      ? "hindi"
+      : languageRaw === "other"
+        ? "other"
+        : "english";
 
-  const hasNonFictionGenre = item.data.genres.some((genre) =>
-    String(genre).toLowerCase().includes("non") && String(genre).toLowerCase().includes("fiction"),
+  const hasNonFictionGenre = item.data.genres.some(
+    (genre) =>
+      String(genre).toLowerCase().includes("non") &&
+      String(genre).toLowerCase().includes("fiction"),
   );
 
   const textPool = `${item.data.description}\n${item.body}`.toLowerCase();
@@ -24,7 +33,8 @@ const getBookCategoryMeta = (item: (typeof books)[number]) => {
     textPool.includes("#genre/non-fiction") ||
     textPool.includes("#genre/nonfiction");
 
-  const genre = hasNonFictionGenre || hasNonFictionTag ? "non-fiction" : "fiction";
+  const genre =
+    hasNonFictionGenre || hasNonFictionTag ? "non-fiction" : "fiction";
 
   const publishedYear = String(item.data.published_year || "").trim();
   let era: "unknown" | "pre-2000" | "2000-2014" | "2015+" = "unknown";
@@ -57,7 +67,8 @@ const categoryCounts: Record<string, number> = {
     .length,
   hindi: categorizedBooks.filter((item) => item.language === "hindi").length,
   "pre-2000": categorizedBooks.filter((item) => item.era === "pre-2000").length,
-  "2000-2014": categorizedBooks.filter((item) => item.era === "2000-2014").length,
+  "2000-2014": categorizedBooks.filter((item) => item.era === "2000-2014")
+    .length,
   "2015+": categorizedBooks.filter((item) => item.era === "2015+").length,
 };
 import "./_library.scss";
@@ -89,7 +100,7 @@ import "./_library.scss";
             >
               {category.label}
               <span class="library__tag-count">
-                {categoryCounts[category.id]}
+                ({categoryCounts[category.id]})
               </span>
             </button>
           ))
@@ -118,7 +129,9 @@ import "./_library.scss";
                 {item.data.date.toISOString().slice(0, 10)}
                 {item.data.author ? ` · ${item.data.author}` : ""}
                 {item.data.language ? ` · ${item.data.language}` : ""}
-                {item.data.published_year ? ` · ${item.data.published_year}` : ""}
+                {item.data.published_year
+                  ? ` · ${item.data.published_year}`
+                  : ""}
               </p>
               <p class="library__description">{item.data.description}</p>
             </article>
@@ -182,11 +195,19 @@ import "./_library.scss";
           return item.dataset.bookGenre === category;
         }
 
-        if (category === "english" || category === "hindi" || category === "other") {
+        if (
+          category === "english" ||
+          category === "hindi" ||
+          category === "other"
+        ) {
           return item.dataset.bookLanguage === category;
         }
 
-        if (category === "pre-2000" || category === "2000-2014" || category === "2015+") {
+        if (
+          category === "pre-2000" ||
+          category === "2000-2014" ||
+          category === "2015+"
+        ) {
           return item.dataset.bookEra === category;
         }
 

@@ -20,17 +20,3 @@ publisher: "Doubleday"
 openlibrary_url: "https://openlibrary.org/works/OL19987302W"
 ---
 ![The Racketeer Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1352531977l/16139704.jpg)
-
-# The Racketeer
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

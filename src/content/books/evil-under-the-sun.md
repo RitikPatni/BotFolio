@@ -20,17 +20,3 @@ publisher: "Proa"
 openlibrary_url: "https://openlibrary.org/works/OL472049W"
 ---
 ![Evil Under the Sun Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1386922974l/16305.jpg)
-
-# Evil Under the Sun
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

@@ -20,17 +20,3 @@ publisher: "Hind Yugm"
 openlibrary_url: "https://openlibrary.org/works/OL24454849W"
 ---
 ![October Junction Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1545797692l/43359324._SY475_.jpg)
-
-# October Junction
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

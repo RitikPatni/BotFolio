@@ -20,17 +20,3 @@ publisher: ""
 openlibrary_url: "https://openlibrary.org/works/OL13331264M"
 ---
 ![Three Act Tragedy Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388695324l/140360.jpg)
-
-# Three Act Tragedy
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

@@ -20,17 +20,3 @@ publisher: "M. Mizraḥi"
 openlibrary_url: "https://openlibrary.org/works/OL471767W"
 ---
 ![Lord Edgware Dies Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1375949065l/215492.jpg)
-
-# Lord Edgware Dies
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

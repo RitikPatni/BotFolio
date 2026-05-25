@@ -20,17 +20,3 @@ publisher: "Dolnoslaskie"
 openlibrary_url: "https://openlibrary.org/works/OL472572W"
 ---
 ![Murder in Mesopotamia Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1308808558l/16360.jpg)
-
-# Murder in Mesopotamia
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

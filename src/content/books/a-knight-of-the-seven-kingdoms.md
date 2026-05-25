@@ -20,17 +20,3 @@ publisher: "Suma"
 openlibrary_url: "https://openlibrary.org/works/OL17553509W"
 ---
 ![A Knight of the Seven Kingdoms Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1499786418l/34835283._SY475_.jpg)
-
-# A Knight of the Seven Kingdoms
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

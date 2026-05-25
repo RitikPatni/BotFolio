@@ -20,17 +20,3 @@ publisher: "Fontamara"
 openlibrary_url: "https://openlibrary.org/works/OL262477W"
 ---
 ![The Return of Sherlock Holmes Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1529973503l/194366.jpg)
-
-# The Return of Sherlock Holmes
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

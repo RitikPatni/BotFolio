@@ -20,17 +20,3 @@ publisher: "Brilliance Audio"
 openlibrary_url: "https://openlibrary.org/works/OL8162628W"
 ---
 ![Genghis Khan and the Making of the Modern World Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1530716694l/40718726._SY475_.jpg)
-
-# Genghis Khan and the Making of the Modern World
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

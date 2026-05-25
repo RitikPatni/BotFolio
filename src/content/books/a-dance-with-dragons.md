@@ -20,17 +20,3 @@ publisher: "Suma"
 openlibrary_url: "https://openlibrary.org/works/OL1955906W"
 ---
 ![A Dance with Dragons Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1581625286l/10664113._SX318_.jpg)
-
-# A Dance with Dragons
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

@@ -20,17 +20,3 @@ publisher: "Отечество"
 openlibrary_url: "https://openlibrary.org/works/OL262454W"
 ---
 ![The Hound of the Baskervilles Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1355929358l/8921.jpg)
-
-# The Hound of the Baskervilles
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

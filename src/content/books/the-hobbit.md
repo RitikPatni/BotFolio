@@ -20,17 +20,3 @@ publisher: "The Random House Publishing Group"
 openlibrary_url: "https://openlibrary.org/works/OL27482W"
 ---
 ![The Hobbit Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1489036137l/27801404._SY475_.jpg)
-
-# The Hobbit
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

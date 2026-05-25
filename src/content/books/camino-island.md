@@ -20,17 +20,3 @@ publisher: "מודן"
 openlibrary_url: "https://openlibrary.org/works/OL17931101W"
 ---
 ![Camino Island Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1494770403l/35131401._SY475_.jpg)
-
-# Camino Island
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

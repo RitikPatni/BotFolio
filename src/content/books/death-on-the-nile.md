@@ -20,17 +20,3 @@ publisher: "Carlsen Comics"
 openlibrary_url: "https://openlibrary.org/works/OL471724W"
 ---
 ![Death on the Nile Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1486837149l/131359._SY475_.jpg)
-
-# Death on the Nile
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

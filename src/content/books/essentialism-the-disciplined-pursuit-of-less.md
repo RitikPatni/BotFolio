@@ -20,17 +20,3 @@ publisher: "Rh Korea/ Tsai Fong Books"
 openlibrary_url: "https://openlibrary.org/works/OL19904904W"
 ---
 ![Essentialism- The Disciplined Pursuit of Less Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403165375l/18077875.jpg)
-
-# Essentialism- The Disciplined Pursuit of Less
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

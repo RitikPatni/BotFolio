@@ -20,17 +20,3 @@ publisher: "Westland"
 openlibrary_url: "https://openlibrary.org/works/OL17752993W"
 ---
 ![Sita Warrior of Mithila Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1493895603l/34680719._SY475_.jpg)
-
-# Sita Warrior of Mithila
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

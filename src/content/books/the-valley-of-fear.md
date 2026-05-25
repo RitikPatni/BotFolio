@@ -20,17 +20,3 @@ publisher: "Liber Novus"
 openlibrary_url: "https://openlibrary.org/works/OL262505W"
 ---
 ![The Valley of Fear Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1390250081l/736131.jpg)
-
-# The Valley of Fear
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

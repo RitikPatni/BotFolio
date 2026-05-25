@@ -20,17 +20,3 @@ publisher: "Liber Novus"
 openlibrary_url: "https://openlibrary.org/works/OL262426W"
 ---
 ![The Case-Book of Sherlock Holmes Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1316863480l/162823.jpg)
-
-# The Case-Book of Sherlock Holmes
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

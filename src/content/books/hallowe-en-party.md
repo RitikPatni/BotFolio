@@ -20,17 +20,3 @@ publisher: "Wydawnictwo Dolnoslaskie"
 openlibrary_url: "https://openlibrary.org/works/OL471832W"
 ---
 ![Hallowe'en Party Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1295673439l/16307.jpg)
-
-# Hallowe'en Party
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

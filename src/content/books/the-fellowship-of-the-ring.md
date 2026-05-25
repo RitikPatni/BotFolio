@@ -20,17 +20,3 @@ publisher: "HarperCollins"
 openlibrary_url: "https://openlibrary.org/works/OL27513W"
 ---
 ![The Fellowship of the Ring Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1307111070l/727798.jpg)
-
-# The Fellowship of the Ring
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

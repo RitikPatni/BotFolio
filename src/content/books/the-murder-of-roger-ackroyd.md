@@ -20,17 +20,3 @@ publisher: "CreateSpace Independent Publishing Platform"
 openlibrary_url: "https://openlibrary.org/works/OL471932W"
 ---
 ![The Murder of Roger Ackroyd Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1389734015l/16328.jpg)
-
-# The Murder of Roger Ackroyd
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

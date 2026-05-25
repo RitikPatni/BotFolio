@@ -20,17 +20,3 @@ publisher: "Worth Books"
 openlibrary_url: "https://openlibrary.org/works/OL29639309W"
 ---
 ![Elon Musk- Tesla, SpaceX, and the Quest for a Fantastic Future Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1518291452l/25541028.jpg)
-
-# Elon Musk- Tesla, SpaceX, and the Quest for a Fantastic Future
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

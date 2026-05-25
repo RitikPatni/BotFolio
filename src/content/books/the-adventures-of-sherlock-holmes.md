@@ -20,17 +20,3 @@ publisher: "Vulkan izdavaštvo"
 openlibrary_url: "https://openlibrary.org/works/OL262421W"
 ---
 ![The Adventures of Sherlock Holmes Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1164045516l/3590.jpg)
-
-# The Adventures of Sherlock Holmes
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

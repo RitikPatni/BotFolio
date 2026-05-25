@@ -20,17 +20,3 @@ publisher: "Bantam Books"
 openlibrary_url: "https://openlibrary.org/works/OL472688W"
 ---
 ![Absent in the Spring Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1396225976l/140345.jpg)
-
-# Absent in the Spring
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

@@ -30,12 +30,11 @@
 .primitive-chip {
   display: inline-flex;
   align-items: center;
-  border: var(--surface-border) solid var(--line);
-  border-radius: var(--radius-round);
-  padding: var(--size-1) var(--size-2);
   font-size: var(--font-size-0);
+  font-weight: var(--font-weight-6);
+  letter-spacing: var(--font-letterspacing-2);
+  text-transform: uppercase;
   color: var(--muted);
-  background: var(--bg);
 }
 
 .primitive-button {

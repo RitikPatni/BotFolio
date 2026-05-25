@@ -20,17 +20,3 @@ publisher: "PYGMALION"
 openlibrary_url: "https://openlibrary.org/works/OL18016709W"
 ---
 ![Fire & Blood Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1532828095l/39943621.jpg)
-
-# Fire & Blood
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

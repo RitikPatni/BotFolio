@@ -20,17 +20,3 @@ publisher: "HODDER & STOUGHTON"
 openlibrary_url: "https://openlibrary.org/works/OL20285172W"
 ---
 ![The Guardians Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1576676592l/43701061._SX318_.jpg)
-
-# The Guardians
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

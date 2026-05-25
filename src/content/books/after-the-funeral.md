@@ -20,17 +20,3 @@ publisher: "M. Mizraḥi"
 openlibrary_url: "https://openlibrary.org/works/OL471943W"
 ---
 ![After The Funeral Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1384881992l/527744.jpg)
-
-# After The Funeral
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

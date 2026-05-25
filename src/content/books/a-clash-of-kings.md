@@ -20,17 +20,3 @@ publisher: "Suma"
 openlibrary_url: "https://openlibrary.org/works/OL257939W"
 ---
 ![A Clash of Kings Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1567840212l/10572.jpg)
-
-# A Clash of Kings
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

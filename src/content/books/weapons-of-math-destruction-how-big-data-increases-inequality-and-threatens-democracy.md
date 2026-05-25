@@ -20,19 +20,3 @@ publisher: ""
 openlibrary_url: ""
 ---
 ![Weapons of Math Destruction- How Big Data Increases Inequality and Threatens Democracy Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1456091964i/28186015.jpg)
-
-(Image reference omitted: Weapons of Math Destruction- How Big Data Increases Inequality and Threatens Democracy Cover Art)
-
-# Weapons of Math Destruction- How Big Data Increases Inequality and Threatens Democracy
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

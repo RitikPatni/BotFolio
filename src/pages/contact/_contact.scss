@@ -16,10 +16,16 @@
   isolation: isolate;
 
   &::before,
-  &::after { content: none; }
+  &::after {
+    content: none;
+  }
 
-  &::before { display: none; }
-  &::after  { display: none; }
+  &::before {
+    display: none;
+  }
+  &::after {
+    display: none;
+  }
 
   @media (prefers-reduced-motion: reduce) {
     & * {
@@ -40,14 +46,20 @@
     background: var(--bg-soft);
     backdrop-filter: saturate(120%);
 
-    &--compact { @extend %page-hero-compact; }
+    &--compact {
+      @extend %page-hero-compact;
+    }
 
     @media (max-width: 48rem) {
-      & { padding-inline: var(--size-3); }
+      & {
+        padding-inline: var(--size-3);
+      }
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      & { animation: contact-fade-up 450ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+      & {
+        animation: contact-fade-up 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
     }
   }
 
@@ -65,10 +77,16 @@
     background: color-mix(in srgb, var(--bg-soft) 86%, transparent);
   }
 
-  &__title   { @extend %page-title; }
-  &__lead    { @extend %page-lead; }
+  &__title {
+    @extend %page-title;
+  }
+  &__lead {
+    @extend %page-lead;
+  }
 
-  &__section-title { @extend %section-title; }
+  &__section-title {
+    @extend %section-title;
+  }
 
   &__chips {
     @extend %tag-list;
@@ -81,15 +99,15 @@
   &__chip {
     @extend %tag-item;
     color: var(--text);
-    border-color: color-mix(in srgb, var(--line) 70%, transparent);
-    background: color-mix(in srgb, var(--bg) 90%, transparent);
   }
 
   /* ─── Grid / Card ───────────────────────────────────────────── */
 
   &__grid {
     @extend %content-grid;
-    &--two { @extend %content-grid-two; }
+    &--two {
+      @extend %content-grid-two;
+    }
   }
 
   &__card {
@@ -118,10 +136,14 @@
       position: relative;
       overflow: hidden;
 
-      &::after { content: none; }
+      &::after {
+        content: none;
+      }
     }
 
-    &--offset { @extend %surface-card-offset; }
+    &--offset {
+      @extend %surface-card-offset;
+    }
 
     @media (prefers-reduced-motion: no-preference) {
       & {
@@ -135,27 +157,39 @@
 
   &__tags {
     @extend %tag-list;
-    &--spaced { @extend %tag-list-spaced; }
+    &--spaced {
+      @extend %tag-list-spaced;
+    }
   }
 
-  &__tag { @extend %tag-item; }
+  &__tag {
+    @extend %tag-item;
+  }
 
   &__list {
     @extend %entry-list;
-    &--offset { @extend %entry-list-offset; }
+    &--offset {
+      @extend %entry-list-offset;
+    }
   }
 
   &__item {
     @extend %entry-item;
-    &-title { @extend %entry-item-title; }
+    &-title {
+      @extend %entry-item-title;
+    }
   }
 
   &__meta {
     @extend %entry-meta;
-    &--spaced { @extend %entry-meta-spaced; }
+    &--spaced {
+      @extend %entry-meta-spaced;
+    }
   }
 
-  &__description { @extend %entry-description; }
+  &__description {
+    @extend %entry-description;
+  }
 
   /* ─── Socials ───────────────────────────────────────────────── */
 
@@ -169,7 +203,9 @@
     margin-block-start: var(--size-4);
 
     @media (max-width: 48rem) {
-      & { grid-template-columns: 1fr; }
+      & {
+        grid-template-columns: 1fr;
+      }
     }
   }
 
@@ -210,11 +246,15 @@
       background: color-mix(in srgb, var(--bg-soft) 90%, var(--bg));
     }
 
-    &--dim { opacity: 0.55; }
+    &--dim {
+      opacity: 0.55;
+    }
 
     @media (prefers-reduced-motion: reduce) {
       &:hover,
-      &:focus-visible { transform: none; }
+      &:focus-visible {
+        transform: none;
+      }
     }
   }
 
@@ -279,7 +319,9 @@
 
     @media (prefers-reduced-motion: reduce) {
       &:hover,
-      &:focus-visible { transform: none; }
+      &:focus-visible {
+        transform: none;
+      }
     }
   }
 

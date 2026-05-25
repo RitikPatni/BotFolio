@@ -20,19 +20,3 @@ publisher: "Dom Wydawniczy Rebis"
 openlibrary_url: "https://openlibrary.org/works/OL17356845W"
 ---
 ![Big Magic Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1451446242i/24453082.jpg)
-
-(Local image omitted in web import: Big Magic Cover Art))
-
-# Big Magic
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

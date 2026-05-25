@@ -20,17 +20,3 @@ publisher: "HarperCollins Brasil"
 openlibrary_url: "https://openlibrary.org/works/OL262496W"
 ---
 ![A Study in Scarlet Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1519031842l/102868._SX318_.jpg)
-
-# A Study in Scarlet
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

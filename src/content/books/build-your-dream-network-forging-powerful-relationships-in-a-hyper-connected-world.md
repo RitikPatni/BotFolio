@@ -20,17 +20,3 @@ publisher: ""
 openlibrary_url: ""
 ---
 ![Build Your Dream Network- Forging Powerful Relationships in a Hyper-Connected World Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1498858642l/34927426.jpg)
-
-# Build Your Dream Network- Forging Powerful Relationships in a Hyper-Connected World
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----

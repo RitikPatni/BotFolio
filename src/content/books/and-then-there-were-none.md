@@ -20,17 +20,3 @@ publisher: "Booket"
 openlibrary_url: "https://openlibrary.org/works/OL471565W"
 ---
 ![And Then There Were None Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1449488704l/28116072._SY475_.jpg)
-
-# And Then There Were None
-
-## ℹ️ About
-
-
-
-
-## 📋 Table of Contents
-
-- 
-
-
----
