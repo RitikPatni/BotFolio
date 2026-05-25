@@ -17,5 +17,4 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
-
 ![Musafir Cafe Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1470592109l/31367693._SX318_.jpg)

@@ -10,11 +10,10 @@ category: "books"
 author: "Barbara O'Neal"
 language: "english"
 genres: []
-published_year: ""
-isbn13: ""
-isbn10: ""
-publisher: ""
-openlibrary_url: ""
+published_year: "2019"
+isbn13: "9781978670020"
+isbn10: "1978670028"
+publisher: "Brilliance Audio"
+openlibrary_url: "https://openlibrary.org/works/OL20778954W"
 ---
-
-![When We Believed in Mermaids Cover Art](https://covers.openlibrary.org/b/id/9876974-L.jpg)
+![When We Believed in Mermaids Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1560378056i/43717362.jpg)

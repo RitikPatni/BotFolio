@@ -9,7 +9,6 @@ tags:
 source_url: ""
 category: "readwise-books"
 ---
-
 ![rw-book-cover](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1570908697l/52738109._SX318_SY475_.jpg)
 
 ## Highlights

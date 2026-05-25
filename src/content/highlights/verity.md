@@ -9,7 +9,6 @@ tags:
 source_url: ""
 category: "readwise-books"
 ---
-
 ![rw-book-cover](https://covers.openlibrary.org/b/isbn/9781538724736-L.jpg)
 
 ## Highlights

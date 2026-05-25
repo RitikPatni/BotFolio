@@ -10,10 +10,10 @@ category: "books"
 author: "Abhishek Singh"
 language: "hindi"
 genres: []
-published_year: ""
-isbn13: ""
-isbn10: ""
-publisher: ""
-openlibrary_url: ""
+published_year: "2014"
+isbn13: "9780575117808"
+isbn10: "057511813X"
+publisher: "Orion Publishing Group, Limited"
+openlibrary_url: "https://openlibrary.org/works/OL19349638W"
 ---
 ![Barricade Cover Art](https://m.media-amazon.com/images/I/81tNBo4z61L._SY160.jpg)

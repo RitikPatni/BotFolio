@@ -17,5 +17,4 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
-
 ![Don't Overthink It- Make Easier Decisions, Stop Second-Guessing, and Bring More Joy to Your Life Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1561384132l/46161166.jpg)
