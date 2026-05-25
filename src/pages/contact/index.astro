@@ -1,50 +1,11 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { SITE_CONFIG } from "../../config/site";
+import { CONTACT_INTENTS, CONTACT_CHANNELS } from "../../data/contact";
 import SocialIcon from "../../components/SocialIcon.astro";
 import "./_contact.scss";
 
-const CHANNEL_DETAILS: Record<string, { helper: string; intents: string[] }> = {
-  github: {
-    helper: "Frontend engineering notes, code, and experiments.",
-    intents: ["frontend", "general"],
-  },
-  linkedin: {
-    helper: "Professional conversations and collaboration discussions.",
-    intents: ["frontend", "general"],
-  },
-  instagram: {
-    helper: "Wildlife and macro photography conversations.",
-    intents: ["photography", "general"],
-  },
-  code: {
-    helper: "Playful CSS challenges and front-end problem solving.",
-    intents: ["frontend", "css", "general"],
-  },
-};
-
-const INTENTS = [
-  {
-    id: "frontend",
-    label: "Frontend/Product",
-    description: "Product engineering, DX, architecture, and web strategy.",
-  },
-  {
-    id: "photography",
-    label: "Photography",
-    description: "Shoots, collabs, and visual storytelling projects.",
-  },
-  {
-    id: "css",
-    label: "CSS Craft",
-    description: "CSS ideas, creative coding, and visual experiments.",
-  },
-  {
-    id: "general",
-    label: "Say Hi",
-    description: "General conversations and quick hellos.",
-  },
-];
+const channelMap = Object.fromEntries(CONTACT_CHANNELS.map((c) => [c.icon, c]));
 ---
 
 <BaseLayout title="Contact — Ritik Patni" path="/contact">
@@ -83,11 +44,12 @@ const INTENTS = [
         aria-label="Conversation intent"
       >
         {
-          INTENTS.map((intent, index) => (
+          CONTACT_INTENTS.map((intent, index) => (
             <button
               class="contact__intent-button"
               type="button"
               data-intent={intent.id}
+              data-description={intent.description}
               aria-pressed={index === 0 ? "true" : "false"}
             >
               {intent.label}
@@ -97,110 +59,109 @@ const INTENTS = [
       </div>
 
       <p class="contact__intent-description" data-intent-description>
-        {INTENTS[0].description}
+        {CONTACT_INTENTS[0].description}
+
+        <div class="contact__socials" aria-label="Social links">
+          {
+            SITE_CONFIG.socials.map((social) => {
+              const details = channelMap[social.icon] ?? {
+                helper: "Reach out through this channel.",
+                intents: ["general"],
+              };
+
+              return (
+                <a
+                  class="contact__social-link"
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  data-channel-intents={details.intents.join(" ")}
+                >
+                  <span class="contact__social-row">
+                    <SocialIcon
+                      name={social.icon}
+                      class="contact__social-icon"
+                    />
+                    <span class="contact__social-label">{social.label}</span>
+                  </span>
+                  <span class="contact__social-helper">{details.helper}</span>
+                </a>
+              );
+            })
+          }
+        </div>
       </p>
-
-      <div class="contact__socials" aria-label="Social links">
-        {
-          SITE_CONFIG.socials.map((social) => {
-            const details = CHANNEL_DETAILS[social.icon] ?? {
-              helper: "Reach out through this channel.",
-              intents: ["general"],
-            };
-
-            return (
-              <a
-                class="contact__social-link"
-                href={social.href}
-                target="_blank"
-                rel="noreferrer noopener"
-                data-channel-intents={details.intents.join(" ")}
-              >
-                <span class="contact__social-row">
-                  <SocialIcon name={social.icon} class="contact__social-icon" />
-                  <span class="contact__social-label">{social.label}</span>
-                </span>
-                <span class="contact__social-helper">{details.helper}</span>
-              </a>
-            );
-          })
-        }
-      </div>
     </section>
-  </div>
 
-  <script>
-    (() => {
-      // @ts-nocheck
-      const root = document.querySelector("[data-contact-root]");
+    <script>
+      (() => {
+        // @ts-nocheck
+        const root = document.querySelector("[data-contact-root]");
 
-      if (!root) {
-        return;
-      }
-
-      const intentButtons = Array.from(root.querySelectorAll("[data-intent]"));
-      const socialLinks = Array.from(
-        root.querySelectorAll("[data-channel-intents]"),
-      );
-      const intentDescription = root.querySelector("[data-intent-description]");
-
-      if (!intentButtons.length || !socialLinks.length || !intentDescription) {
-        return;
-      }
-
-      const getIntentDescription = (intent) => {
-        if (intent === "frontend")
-          return "Product engineering, DX, architecture, and web strategy.";
-        if (intent === "photography")
-          return "Shoots, collabs, and visual storytelling projects.";
-        if (intent === "css")
-          return "CSS ideas, creative coding, and visual experiments.";
-        return "General conversations and quick hellos.";
-      };
-
-      const normalizeIntent = (intent) => {
-        if (
-          intent === "frontend" ||
-          intent === "photography" ||
-          intent === "css" ||
-          intent === "general"
-        ) {
-          return intent;
+        if (!root) {
+          return;
         }
 
-        return "general";
-      };
+        const intentButtons = Array.from(
+          root.querySelectorAll("[data-intent]"),
+        );
+        const socialLinks = Array.from(
+          root.querySelectorAll("[data-channel-intents]"),
+        );
+        const intentDescription = root.querySelector(
+          "[data-intent-description]",
+        );
 
-      const updateIntent = (intent) => {
-        const normalizedIntent = normalizeIntent(intent);
+        if (
+          !intentButtons.length ||
+          !socialLinks.length ||
+          !intentDescription
+        ) {
+          return;
+        }
+
+        const validIntents = new Set(
+          intentButtons.map((b) => b.dataset.intent).filter(Boolean),
+        );
+
+        const normalizeIntent = (intent) =>
+          validIntents.has(intent) ? intent : "general";
+
+        const updateIntent = (intent) => {
+          const normalizedIntent = normalizeIntent(intent);
+
+          intentButtons.forEach((button) => {
+            button.setAttribute(
+              "aria-pressed",
+              String(button.dataset.intent === normalizedIntent),
+            );
+          });
+
+          socialLinks.forEach((link) => {
+            const supportedIntents =
+              link.dataset.channelIntents?.split(" ") ?? [];
+            const isMatch = supportedIntents.includes(normalizedIntent);
+
+            link.classList.toggle("contact__social-link--active", isMatch);
+            link.classList.toggle("contact__social-link--dim", !isMatch);
+          });
+
+          const activeButton = intentButtons.find(
+            (button) => button.dataset.intent === normalizedIntent,
+          );
+          intentDescription.textContent =
+            activeButton?.dataset.description ?? "";
+        };
 
         intentButtons.forEach((button) => {
-          button.setAttribute(
-            "aria-pressed",
-            String(button.dataset.intent === normalizedIntent),
-          );
+          button.addEventListener("click", () => {
+            const intent = button.dataset.intent;
+            updateIntent(intent ?? "general");
+          });
         });
 
-        socialLinks.forEach((link) => {
-          const supportedIntents =
-            link.dataset.channelIntents?.split(" ") ?? [];
-          const isMatch = supportedIntents.includes(normalizedIntent);
-
-          link.classList.toggle("contact__social-link--active", isMatch);
-          link.classList.toggle("contact__social-link--dim", !isMatch);
-        });
-
-        intentDescription.textContent = getIntentDescription(normalizedIntent);
-      };
-
-      intentButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          const intent = button.dataset.intent;
-          updateIntent(intent ?? "general");
-        });
-      });
-
-      updateIntent("frontend");
-    })();
-  </script>
+        updateIntent("frontend");
+      })();
+    </script>
+  </div>
 </BaseLayout>

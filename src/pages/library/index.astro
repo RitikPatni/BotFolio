@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { BOOK_CATEGORIES } from "../../data/library";
 
 const books = (await getCollection("books"))
   .filter((item) => !item.data.draft)
@@ -47,7 +48,7 @@ const categorizedBooks = books.map((item) => {
   };
 });
 
-const categoryCounts = {
+const categoryCounts: Record<string, number> = {
   all: categorizedBooks.length,
   fiction: categorizedBooks.filter((item) => item.genre === "fiction").length,
   "non-fiction": categorizedBooks.filter((item) => item.genre === "non-fiction")
@@ -59,17 +60,6 @@ const categoryCounts = {
   "2000-2014": categorizedBooks.filter((item) => item.era === "2000-2014").length,
   "2015+": categorizedBooks.filter((item) => item.era === "2015+").length,
 };
-
-const BOOK_CATEGORIES = [
-  { id: "all", label: "All" },
-  { id: "fiction", label: "Fiction" },
-  { id: "non-fiction", label: "Non-fiction" },
-  { id: "english", label: "English" },
-  { id: "hindi", label: "Hindi" },
-  { id: "pre-2000", label: "Pre-2000" },
-  { id: "2000-2014", label: "2000-2014" },
-  { id: "2015+", label: "2015+" },
-] as const;
 import "./_library.scss";
 ---
 

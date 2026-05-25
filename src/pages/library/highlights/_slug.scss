@@ -1,86 +1,78 @@
 @use "../../../styles/patterns" as *;
 
+.slug {
+  &__hero {
+    @extend %page-hero;
+    &--compact {
+      @extend %page-hero-compact;
+    }
+  }
 
-.slug__hero {
-  @extend %page-hero;
-}
+  &__title {
+    @extend %page-title;
+  }
+  &__lead {
+    @extend %page-lead;
+  }
 
-.slug__hero--compact {
-  @extend %page-hero-compact;
-}
+  &__section-title {
+    @extend %section-title;
+  }
 
-.slug__title {
-  @extend %page-title;
-}
+  &__grid {
+    @extend %content-grid;
+    &--two {
+      @extend %content-grid-two;
+    }
+  }
 
-.slug__lead {
-  @extend %page-lead;
-}
+  &__card {
+    @extend %surface-card;
+    &-title {
+      @extend %surface-card-title;
+    }
+    &--offset {
+      @extend %surface-card-offset;
+    }
+  }
 
-.slug__section-title {
-  @extend %section-title;
-}
+  &__tags {
+    @extend %tag-list;
+    &--spaced {
+      @extend %tag-list-spaced;
+    }
+  }
 
-.slug__grid {
-  @extend %content-grid;
-}
+  &__tag {
+    @extend %tag-item;
+  }
 
-.slug__grid--two {
-  @extend %content-grid-two;
-}
+  &__list {
+    @extend %entry-list;
+    &--offset {
+      @extend %entry-list-offset;
+    }
+  }
 
-.slug__card {
-  @extend %surface-card;
-}
+  &__item {
+    @extend %entry-item;
+    &-title {
+      @extend %entry-item-title;
+    }
+  }
 
-.slug__card-title {
-  @extend %surface-card-title;
-}
+  &__meta {
+    @extend %entry-meta;
+    &--spaced {
+      @extend %entry-meta-spaced;
+    }
+  }
 
-.slug__card--offset {
-  @extend %surface-card-offset;
-}
+  &__description {
+    @extend %entry-description;
+  }
 
-.slug__tags {
-  @extend %tag-list;
-}
-
-.slug__tags--spaced {
-  @extend %tag-list-spaced;
-}
-
-.slug__tag {
-  @extend %tag-item;
-}
-
-.slug__list {
-  @extend %entry-list;
-}
-
-.slug__list--offset {
-  @extend %entry-list-offset;
-}
-
-.slug__item {
-  @extend %entry-item;
-}
-
-.slug__item-title {
-  @extend %entry-item-title;
-}
-
-.slug__meta {
-  @extend %entry-meta;
-}
-
-.slug__meta--spaced {
-  @extend %entry-meta-spaced;
-}
-
-.slug__description {
-  @extend %entry-description;
-}
-
-.slug__content {
-  @extend %prose;
+  &__content {
+    @extend %prose;
+  }
 }

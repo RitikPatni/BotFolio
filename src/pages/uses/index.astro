@@ -1,71 +1,44 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
+import { USES_SECTIONS } from '../../data/uses';
 import './_uses.scss';
 ---
 
 <BaseLayout title="Uses — Ritik Patni" path="/uses">
   <div class="uses">
-  <!--
-    Content provenance (Obsidian):
-    - legacy-vault/🖋️ Blog/Ideas.md ("Uses page on my blog")
-    - Gear/setup details sourced from current canonical context file:
-      /root/.hermes/data/ritik-context/website.md
-  -->
-  <section class="uses__hero">
-    <h1 class="uses__title">Uses</h1>
-    <p class="uses__lead">Hardware, software, and tools I use for development and photography.</p>
-  </section>
-
-  <div class="uses__grid uses__grid--two">
-    <section class="uses__card">
-      <h3 class="uses__card-title">Computers</h3>
-      <ul>
-        <li>Personal: MacBook Pro (2021) — Apple M1 Pro, 32GB RAM</li>
-        <li>Office: MacBook Pro (2025) — Apple M4 Pro, 24GB RAM</li>
-      </ul>
+    <section class="uses__hero motion-reveal">
+      <span class="uses__eyebrow">Gear &amp; Tools</span>
+      <h1 class="uses__title">Uses</h1>
+      <p class="uses__lead">Hardware, software, and tools I use for development and photography.</p>
     </section>
 
-    <section class="uses__card">
-      <h3 class="uses__card-title">Software</h3>
-      <ul>
-        <li>Adobe Lightroom Classic</li>
-        <li>Visual Studio Code</li>
-        <li>Cursor</li>
-        <li>Hermes Agent</li>
-        <li>Hyper</li>
-        <li>MonoLisa</li>
-      </ul>
-    </section>
+    <div class="uses__body">
+      {USES_SECTIONS.map((section) => (
+        <div class="uses__section motion-reveal">
+          <h2 class="uses__section-label">
+            <span class="uses__section-icon" aria-hidden="true">&#9633;</span>
+            {section.label}
+          </h2>
+          <div class="uses__grid uses__grid--two">
+            {section.cards.map((card) => (
+              <section class:list={['uses__card', card.wide && 'uses__card--wide']}>
+                <span class="uses__badge">{card.badge}</span>
+                <h3 class="uses__card-title">{card.title}</h3>
+                <ul class:list={['uses__list', card.columns && 'uses__list--columns']}>
+                  {card.items.map((item) => (
+                    <li class="uses__list-item">
+                      {item.label && <span class="uses__list-label">{item.label}</span>}
+                      {item.text}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </div>
+      ))}
 
-    <section class="uses__card">
-      <h3 class="uses__card-title">Camera bodies</h3>
-      <ul>
-        <li>Sony A6700</li>
-        <li>Fujifilm X-T200</li>
-      </ul>
-    </section>
-
-    <section class="uses__card">
-      <h3 class="uses__card-title">Lenses</h3>
-      <ul>
-        <li>Sony FE 200-600mm F5.6-6.3 G OSS</li>
-        <li>Tamron 90mm F2.8 Di III MACRO VXD (Model F072, Sony E)</li>
-        <li>Sigma 30mm F1.4 DC DN | Contemporary (Sony E)</li>
-        <li>Fujinon XF 70-300mm F4-5.6 R LM OIS WR</li>
-        <li>Viltrox AF 56mm F1.4 XF</li>
-      </ul>
-    </section>
-  </div>
-
-  <section class="uses__card uses__card--offset">
-    <h3 class="uses__card-title">Desk setup</h3>
-    <ul>
-      <li>Tofu65 keyboard</li>
-      <li>Stack Overflow “The Key” keyboard</li>
-      <li>Maja keyboard</li>
-      <li>Logitech MX Master 3 (white)</li>
-    </ul>
-    <p class="uses__meta">This page will evolve as setup changes.</p>
-  </section>
+      <p class="uses__footnote motion-reveal">This page evolves as my setup changes.</p>
+    </div>
   </div>
 </BaseLayout>

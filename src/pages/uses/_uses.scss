@@ -1,82 +1,163 @@
 @use "../../styles/patterns" as *;
 
+.uses {
+  padding-block-end: var(--size-9);
 
-.uses__hero {
-  @extend %page-hero;
-}
+  /* ─── Body ──────────────────────────────────────────────────── */
 
-.uses__hero--compact {
-  @extend %page-hero-compact;
-}
+  &__body {
+    display: grid;
+    gap: var(--size-9);
+  }
 
-.uses__title {
-  @extend %page-title;
-}
+  /* ─── Hero ──────────────────────────────────────────────────── */
 
-.uses__lead {
-  @extend %page-lead;
-}
+  &__hero {
+    @extend %page-hero;
+    padding-block-start: var(--size-8);
+  }
 
-.uses__section-title {
-  @extend %section-title;
-}
+  &__eyebrow {
+    display: block;
+    margin-block-end: var(--size-2);
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-7);
+    letter-spacing: var(--font-letterspacing-4);
+    text-transform: uppercase;
+    color: var(--muted);
+  }
 
-.uses__grid {
-  @extend %content-grid;
-}
+  &__title {
+    @extend %page-title;
+    margin-block-end: var(--size-4);
+  }
 
-.uses__grid--two {
-  @extend %content-grid-two;
-}
+  &__lead {
+    @extend %page-lead;
+  }
 
-.uses__card {
-  @extend %surface-card;
-}
+  /* ─── Section ───────────────────────────────────────────────── */
 
-.uses__card-title {
-  @extend %surface-card-title;
-}
+  &__section {
+    display: grid;
+    gap: var(--size-4);
 
-.uses__card--offset {
-  @extend %surface-card-offset;
-}
+    &-label {
+      display: flex;
+      align-items: center;
+      gap: var(--size-2);
+      margin: 0;
+      font-size: var(--font-size-1);
+      font-weight: var(--font-weight-7);
+      letter-spacing: var(--font-letterspacing-4);
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-block-end: var(--size-3);
+      border-block-end: var(--border-size-1) solid var(--line);
+    }
 
-.uses__tags {
-  @extend %tag-list;
-}
+    &-icon {
+      font-size: var(--font-size-0);
+      line-height: 1;
+      color: var(--muted);
+      opacity: 0.6;
+    }
+  }
 
-.uses__tags--spaced {
-  @extend %tag-list-spaced;
-}
+  /* ─── Grid ──────────────────────────────────────────────────── */
 
-.uses__tag {
-  @extend %tag-item;
-}
+  &__grid {
+    @extend %content-grid;
 
-.uses__list {
-  @extend %entry-list;
-}
+    &--two {
+      @extend %content-grid-two;
+    }
+  }
 
-.uses__list--offset {
-  @extend %entry-list-offset;
-}
+  /* ─── Card ──────────────────────────────────────────────────── */
 
-.uses__item {
-  @extend %entry-item;
-}
+  &__card {
+    @extend %surface-card;
+    display: grid;
+    gap: var(--size-3);
 
-.uses__item-title {
-  @extend %entry-item-title;
-}
+    &--wide {
+      grid-column: 1 / -1;
+    }
 
-.uses__meta {
-  @extend %entry-meta;
-}
+    &-title {
+      @extend %surface-card-title;
+      margin: 0;
+      font-size: var(--font-size-4);
+    }
+  }
 
-.uses__meta--spaced {
-  @extend %entry-meta-spaced;
-}
+  &__badge {
+    display: inline-flex;
+    align-self: start;
+    justify-self: start;
+    border: var(--border-size-1) solid var(--line);
+    border-radius: var(--radius-round);
+    padding-block: var(--size-1);
+    padding-inline: var(--size-3);
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-6);
+    letter-spacing: var(--font-letterspacing-3);
+    text-transform: uppercase;
+    color: var(--muted);
+    background: transparent;
+  }
 
-.uses__description {
-  @extend %entry-description;
+  /* ─── List ──────────────────────────────────────────────────── */
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0;
+
+    &--columns {
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    }
+
+    &-item {
+      display: flex;
+      align-items: baseline;
+      gap: var(--size-2);
+      padding-block: var(--size-2);
+      border-block-end: var(--border-size-1) solid var(--line);
+      font-size: var(--font-size-2);
+      color: var(--text);
+
+      &:last-child {
+        border-block-end: none;
+        padding-block-end: 0;
+      }
+
+      &:first-child {
+        padding-block-start: 0;
+      }
+    }
+
+    &-label {
+      flex-shrink: 0;
+      font-size: var(--font-size-0);
+      font-weight: var(--font-weight-6);
+      letter-spacing: var(--font-letterspacing-2);
+      text-transform: uppercase;
+      color: var(--muted);
+      min-inline-size: 4.5rem;
+    }
+  }
+
+  /* ─── Footnote ──────────────────────────────────────────────── */
+
+  &__footnote {
+    margin: 0;
+    font-size: var(--font-size-1);
+    color: var(--muted);
+    text-align: center;
+    padding-block-start: var(--size-3);
+  }
 }

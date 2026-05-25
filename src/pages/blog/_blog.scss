@@ -1,82 +1,48 @@
 @use "../../styles/patterns" as *;
 
+.blog {
+  &__hero {
+    @extend %page-hero;
+    &--compact { @extend %page-hero-compact; }
+  }
 
-.blog__hero {
-  @extend %page-hero;
-}
+  &__title   { @extend %page-title; }
+  &__lead    { @extend %page-lead; }
 
-.blog__hero--compact {
-  @extend %page-hero-compact;
-}
+  &__section-title { @extend %section-title; }
 
-.blog__title {
-  @extend %page-title;
-}
+  &__grid {
+    @extend %content-grid;
+    &--two { @extend %content-grid-two; }
+  }
 
-.blog__lead {
-  @extend %page-lead;
-}
+  &__card {
+    @extend %surface-card;
+    &-title   { @extend %surface-card-title; }
+    &--offset { @extend %surface-card-offset; }
+  }
 
-.blog__section-title {
-  @extend %section-title;
-}
+  &__tags {
+    @extend %tag-list;
+    &--spaced { @extend %tag-list-spaced; }
+  }
 
-.blog__grid {
-  @extend %content-grid;
-}
+  &__tag { @extend %tag-item; }
 
-.blog__grid--two {
-  @extend %content-grid-two;
-}
+  &__list {
+    @extend %entry-list;
+    &--offset { @extend %entry-list-offset; }
+  }
 
-.blog__card {
-  @extend %surface-card;
-}
+  &__item {
+    @extend %entry-item;
+    &-title { @extend %entry-item-title; }
+  }
 
-.blog__card-title {
-  @extend %surface-card-title;
-}
+  &__meta {
+    @extend %entry-meta;
+    &--spaced { @extend %entry-meta-spaced; }
+  }
 
-.blog__card--offset {
-  @extend %surface-card-offset;
-}
-
-.blog__tags {
-  @extend %tag-list;
-}
-
-.blog__tags--spaced {
-  @extend %tag-list-spaced;
-}
-
-.blog__tag {
-  @extend %tag-item;
-}
-
-.blog__list {
-  @extend %entry-list;
-}
-
-.blog__list--offset {
-  @extend %entry-list-offset;
-}
-
-.blog__item {
-  @extend %entry-item;
-}
-
-.blog__item-title {
-  @extend %entry-item-title;
-}
-
-.blog__meta {
-  @extend %entry-meta;
-}
-
-.blog__meta--spaced {
-  @extend %entry-meta-spaced;
-}
-
-.blog__description {
-  @extend %entry-description;
+  &__description { @extend %entry-description; }
 }

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
+import { ABOUT_HERO, ABOUT_BIO } from '../../data/about';
 import './_about.scss';
 ---
 
@@ -12,22 +13,11 @@ import './_about.scss';
   -->
   <section class="about__hero">
     <h1 class="about__title">About</h1>
-    <p class="about__lead">
-      I’m Ritik Patni — a front-end developer with a strong focus on design, accessibility,
-      performance, and reliable user experience.
-    </p>
+    <p class="about__lead">{ABOUT_HERO.lead}</p>
   </section>
 
   <article class="about__card">
-    <p>
-      Over the years, I’ve worked across product surfaces from websites to email workflows,
-      bootstrapped projects from scratch, and maintained legacy systems while shipping new features.
-      I also enjoy improving developer workflows through tooling and automation.
-    </p>
-    <p>
-      Outside code, I spend time documenting wildlife and macro moments. This site brings both sides
-      together: building thoughtful web experiences and sharing field notes from photography.
-    </p>
+    {ABOUT_BIO.map((paragraph) => <p>{paragraph}</p>)}
   </article>
   </div>
 </BaseLayout>

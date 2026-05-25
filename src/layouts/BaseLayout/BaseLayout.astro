@@ -1,7 +1,7 @@
 ---
 import "../../styles/global.scss";
 import "./BaseLayout.scss";
-import { SITE_CONFIG } from "../../config/site";
+import { SITE_CONFIG, NAV_LINKS } from "../../config/site";
 import SocialIcon from "../../components/SocialIcon.astro";
 
 interface Props {
@@ -15,17 +15,6 @@ const {
   description = SITE_CONFIG.defaultDescription,
   path = "/",
 } = Astro.props;
-
-const nav = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "/newsletter", label: "Newsletter" },
-  { href: "/uses", label: "Uses" },
-  { href: "/library", label: "Library" },
-  { href: "/photography", label: "Photography" },
-  { href: "/contact", label: "Contact" },
-];
 
 const socials = SITE_CONFIG.socials;
 ---
@@ -96,7 +85,7 @@ const socials = SITE_CONFIG.socials;
           </div>
           <nav class="base-layout__links" aria-label="Main navigation">
             {
-              nav.map((item) => (
+              NAV_LINKS.map((item) => (
                 <a
                   href={item.href}
                   class={`base-layout__link ${path === item.href ? "base-layout__link--active" : ""}`}
@@ -190,6 +179,22 @@ const socials = SITE_CONFIG.socials;
 
         localStorage.setItem(storageKey, next);
       });
+
+      if (allowMotion) {
+        import("lenis").then(({ default: Lenis }) => {
+          const lenis = new Lenis({
+            duration: 0.75,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+          });
+
+          const raf = (time) => {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+          };
+          requestAnimationFrame(raf);
+        });
+      }
 
       const revealTargets = document.querySelectorAll(".motion-reveal");
 

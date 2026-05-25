@@ -1,121 +1,89 @@
 @use "../../styles/patterns" as *;
 
-.library__hero {
-  @extend %page-hero;
-}
+.library {
+  &__hero {
+    @extend %page-hero;
+    &--compact { @extend %page-hero-compact; }
+  }
 
-.library__hero--compact {
-  @extend %page-hero-compact;
-}
+  &__title   { @extend %page-title; }
+  &__lead    { @extend %page-lead; }
 
-.library__title {
-  @extend %page-title;
-}
+  &__section-title { @extend %section-title; }
 
-.library__lead {
-  @extend %page-lead;
-}
+  &__grid {
+    @extend %content-grid;
+    &--two { @extend %content-grid-two; }
+  }
 
-.library__section-title {
-  @extend %section-title;
-}
+  &__card {
+    @extend %surface-card;
+    &-title   { @extend %surface-card-title; }
+    &--offset { @extend %surface-card-offset; }
+  }
 
-.library__grid {
-  @extend %content-grid;
-}
+  &__tags {
+    @extend %tag-list;
+    &--spaced { @extend %tag-list-spaced; }
+  }
 
-.library__grid--two {
-  @extend %content-grid-two;
-}
+  &__tag {
+    @extend %tag-item;
 
-.library__card {
-  @extend %surface-card;
-}
+    &-button {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--size-1);
+      color: var(--text);
+      background: var(--bg-soft);
+      cursor: pointer;
+      transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        transform 180ms ease;
 
-.library__card-title {
-  @extend %surface-card-title;
-}
+      &:hover,
+      &:focus-visible {
+        border-color: color-mix(in srgb, var(--text) 26%, var(--line));
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
+      }
 
-.library__card--offset {
-  @extend %surface-card-offset;
-}
+      &[aria-pressed="true"] {
+        border-color: color-mix(in srgb, var(--text) 30%, var(--line));
+        background: color-mix(in srgb, var(--bg-soft) 72%, var(--bg));
+      }
+    }
 
-.library__tags {
-  @extend %tag-list;
-}
+    &-count {
+      display: inline-grid;
+      place-items: center;
+      min-inline-size: var(--size-5);
+      block-size: var(--size-5);
+      border-radius: var(--radius-round);
+      border: var(--surface-border) solid var(--line);
+      font-size: var(--font-size-0);
+      line-height: 1;
+      padding-inline: var(--size-1);
+    }
+  }
 
-.library__tags--spaced {
-  @extend %tag-list-spaced;
-}
+  &__list {
+    @extend %entry-list;
+    &--offset { @extend %entry-list-offset; }
+  }
 
-.library__tag {
-  @extend %tag-item;
-}
+  &__item {
+    @extend %entry-item;
 
-.library__tag-button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--size-1);
-  color: var(--text);
-  background: var(--bg-soft);
-  cursor: pointer;
-  transition:
-    border-color 180ms ease,
-    background-color 180ms ease,
-    transform 180ms ease;
-}
+    &[hidden] { display: none; }
 
-.library__tag-button:hover,
-.library__tag-button:focus-visible {
-  border-color: color-mix(in srgb, var(--text) 26%, var(--line));
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-}
+    &-title { @extend %entry-item-title; }
+  }
 
-.library__tag-button[aria-pressed="true"] {
-  border-color: color-mix(in srgb, var(--text) 30%, var(--line));
-  background: color-mix(in srgb, var(--bg-soft) 72%, var(--bg));
-}
+  &__meta {
+    @extend %entry-meta;
+    &--spaced { @extend %entry-meta-spaced; }
+  }
 
-.library__tag-count {
-  display: inline-grid;
-  place-items: center;
-  min-inline-size: var(--size-5);
-  block-size: var(--size-5);
-  border-radius: var(--radius-round);
-  border: var(--surface-border) solid var(--line);
-  font-size: var(--font-size-0);
-  line-height: 1;
-  padding-inline: var(--size-1);
-}
-
-.library__list {
-  @extend %entry-list;
-}
-
-.library__list--offset {
-  @extend %entry-list-offset;
-}
-
-.library__item {
-  @extend %entry-item;
-}
-
-.library__item[hidden] {
-  display: none;
-}
-
-.library__item-title {
-  @extend %entry-item-title;
-}
-
-.library__meta {
-  @extend %entry-meta;
-}
-
-.library__meta--spaced {
-  @extend %entry-meta-spaced;
-}
-
-.library__description {
-  @extend %entry-description;
+  &__description { @extend %entry-description; }
 }

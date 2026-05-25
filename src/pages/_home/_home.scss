@@ -1,96 +1,88 @@
 @use "../../styles/patterns" as *;
 
+.index {
+  &__hero {
+    @extend %page-hero;
+    &--compact {
+      @extend %page-hero-compact;
+    }
+  }
 
-.index__hero {
-  @extend %page-hero;
-}
+  &__title {
+    @extend %page-title;
+  }
+  &__lead {
+    @extend %page-lead;
+  }
 
-.index__hero--compact {
-  @extend %page-hero-compact;
-}
+  &__section-title {
+    @extend %section-title;
+  }
 
-.index__title {
-  @extend %page-title;
-}
+  &__grid {
+    @extend %content-grid;
+    &--two {
+      @extend %content-grid-two;
+    }
+  }
 
-.index__lead {
-  @extend %page-lead;
-}
+  &__card {
+    @extend %surface-card;
+    &-title {
+      @extend %surface-card-title;
+    }
+    &--offset {
+      @extend %surface-card-offset;
+    }
+  }
 
-.index__section-title {
-  @extend %section-title;
-}
+  &__tags {
+    @extend %tag-list;
+    &--spaced {
+      @extend %tag-list-spaced;
+    }
+  }
 
-.index__grid {
-  @extend %content-grid;
-}
+  &__tag {
+    @extend %tag-item;
+    display: inline-flex;
+    inline-size: fit-content;
+    align-items: center;
+  }
 
-.index__grid--two {
-  @extend %content-grid-two;
-}
+  &__hero-content {
+    display: grid;
+    gap: var(--size-3);
+  }
 
-.index__card {
-  @extend %surface-card;
-}
+  &__inline-link {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: var(--size-1);
+  }
 
-.index__card-title {
-  @extend %surface-card-title;
-}
+  &__list {
+    @extend %entry-list;
+    &--offset {
+      @extend %entry-list-offset;
+    }
+  }
 
-.index__card--offset {
-  @extend %surface-card-offset;
-}
+  &__item {
+    @extend %entry-item;
+    &-title {
+      @extend %entry-item-title;
+    }
+  }
 
-.index__tags {
-  @extend %tag-list;
-}
+  &__meta {
+    @extend %entry-meta;
+    &--spaced {
+      @extend %entry-meta-spaced;
+    }
+  }
 
-.index__tags--spaced {
-  @extend %tag-list-spaced;
-}
-
-.index__tag {
-  @extend %tag-item;
-  display: inline-flex;
-  inline-size: fit-content;
-  align-items: center;
-}
-
-.index__hero-content {
-  display: grid;
-  gap: var(--size-3);
-}
-
-.index__inline-link {
-  color: var(--text);
-  text-decoration: underline;
-  text-underline-offset: var(--size-1);
-}
-
-.index__list {
-  @extend %entry-list;
-}
-
-.index__list--offset {
-  @extend %entry-list-offset;
-}
-
-.index__item {
-  @extend %entry-item;
-}
-
-.index__item-title {
-  @extend %entry-item-title;
-}
-
-.index__meta {
-  @extend %entry-meta;
-}
-
-.index__meta--spaced {
-  @extend %entry-meta-spaced;
-}
-
-.index__description {
-  @extend %entry-description;
+  &__description {
+    @extend %entry-description;
+  }
 }

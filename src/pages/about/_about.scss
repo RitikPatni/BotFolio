@@ -1,82 +1,49 @@
 @use "../../styles/patterns" as *;
 
+.about {
+  &__hero {
+    @extend %page-hero;
 
-.about__hero {
-  @extend %page-hero;
-}
+    &--compact { @extend %page-hero-compact; }
+  }
 
-.about__hero--compact {
-  @extend %page-hero-compact;
-}
+  &__title   { @extend %page-title; }
+  &__lead    { @extend %page-lead; }
 
-.about__title {
-  @extend %page-title;
-}
+  &__section-title { @extend %section-title; }
 
-.about__lead {
-  @extend %page-lead;
-}
+  &__grid {
+    @extend %content-grid;
+    &--two { @extend %content-grid-two; }
+  }
 
-.about__section-title {
-  @extend %section-title;
-}
+  &__card {
+    @extend %surface-card;
+    &-title  { @extend %surface-card-title; }
+    &--offset { @extend %surface-card-offset; }
+  }
 
-.about__grid {
-  @extend %content-grid;
-}
+  &__tags {
+    @extend %tag-list;
+    &--spaced { @extend %tag-list-spaced; }
+  }
 
-.about__grid--two {
-  @extend %content-grid-two;
-}
+  &__tag { @extend %tag-item; }
 
-.about__card {
-  @extend %surface-card;
-}
+  &__list {
+    @extend %entry-list;
+    &--offset { @extend %entry-list-offset; }
+  }
 
-.about__card-title {
-  @extend %surface-card-title;
-}
+  &__item {
+    @extend %entry-item;
+    &-title { @extend %entry-item-title; }
+  }
 
-.about__card--offset {
-  @extend %surface-card-offset;
-}
+  &__meta {
+    @extend %entry-meta;
+    &--spaced { @extend %entry-meta-spaced; }
+  }
 
-.about__tags {
-  @extend %tag-list;
-}
-
-.about__tags--spaced {
-  @extend %tag-list-spaced;
-}
-
-.about__tag {
-  @extend %tag-item;
-}
-
-.about__list {
-  @extend %entry-list;
-}
-
-.about__list--offset {
-  @extend %entry-list-offset;
-}
-
-.about__item {
-  @extend %entry-item;
-}
-
-.about__item-title {
-  @extend %entry-item-title;
-}
-
-.about__meta {
-  @extend %entry-meta;
-}
-
-.about__meta--spaced {
-  @extend %entry-meta-spaced;
-}
-
-.about__description {
-  @extend %entry-description;
+  &__description { @extend %entry-description; }
 }
