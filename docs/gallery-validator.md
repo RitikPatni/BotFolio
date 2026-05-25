@@ -51,6 +51,22 @@ or directly:
 node scripts/validate-gallery.mjs --ci
 ```
 
+## Automatic local enforcement (no manual copy-paste)
+
+A Git pre-commit hook is installed automatically via `prepare` (runs on `npm install`/`npm ci` in local clones):
+
+- Hook file: `.githooks/pre-commit`
+- Installer: `scripts/install-gallery-hook.mjs`
+- Hook behavior:
+  - if staged files include photography data/assets, runs `npm run gallery:validate:strict`
+  - otherwise skips quickly
+
+You can also install/reinstall manually:
+
+```bash
+npm run gallery:hook:install
+```
+
 ## Exit behavior
 
 - Standard mode:

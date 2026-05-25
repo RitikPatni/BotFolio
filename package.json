@@ -11,7 +11,9 @@
     "check": "astro check",
     "gallery:validate": "node scripts/validate-gallery.mjs",
     "gallery:validate:strict": "node scripts/validate-gallery.mjs --strict",
-    "gallery:validate:ci": "node scripts/validate-gallery.mjs --ci"
+    "gallery:validate:ci": "node scripts/validate-gallery.mjs --ci",
+    "gallery:hook:install": "node scripts/install-gallery-hook.mjs",
+    "prepare": "node scripts/install-gallery-hook.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
