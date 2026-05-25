@@ -10,6 +10,8 @@ source_path: "legacy-vault/📚 Books/Queued Books/Why We Sleep- Unlocking the P
 source_url: ""
 category: "books"
 ---
+![Why We Sleep- Unlocking the Power of Sleep and Dreams Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1527506265i/36709369.jpg)
+
 (Image reference omitted: Why We Sleep- Unlocking the Power of Sleep and Dreams Cover Art)
 
 # Why We Sleep- Unlocking the Power of Sleep and Dreams

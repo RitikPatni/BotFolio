@@ -10,6 +10,8 @@ source_path: "legacy-vault/📚 Books/Queued Books/Make Time- How to Focus on Wh
 source_url: ""
 category: "books"
 ---
+![Make Time- How to Focus on What Matters Every Day Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1524067121i/37880811.jpg)
+
 (Local image omitted in web import: Make Time- How to Focus on What Matters Every Day Cover Art))
 
 # Make Time- How to Focus on What Matters Every Day

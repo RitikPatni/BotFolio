@@ -10,7 +10,7 @@ source_path: "legacy-vault/📚 Books/2018/(Book) The White Tiger.md"
 source_url: ""
 category: "books"
 ---
-![(Book) The White Tiger Cover Art](https://covers.openlibrary.org/b/isbn/1416562591-M.jpg)
+![(Book) The White Tiger Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1710937569i/1768603.jpg)
 
 # (Book) The White Tiger
 
