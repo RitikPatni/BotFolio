@@ -9,6 +9,15 @@ tags:
 source_path: "legacy-vault/📚 Books/2020/Camino Island.md"
 source_url: ""
 category: "books"
+author: "John Grisham"
+language: "english"
+genres:
+  - "fiction"
+published_year: "2017"
+isbn13: "9780385543026"
+isbn10: "1473663733"
+publisher: "מודן"
+openlibrary_url: "https://openlibrary.org/works/OL17931101W"
 ---
 ![Camino Island Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1494770403l/35131401._SY475_.jpg)
 

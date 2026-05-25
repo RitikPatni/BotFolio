@@ -9,16 +9,28 @@ const repoRoot = path.resolve(__dirname, "..");
 const contentRoot = path.join(repoRoot, "src", "content");
 
 const collections = ["blog", "newsletter", "books", "highlights"];
-const canonicalKeys = [
-  "title",
-  "description",
-  "date",
-  "draft",
-  "tags",
-  "source_path",
-  "source_url",
-  "category",
-];
+const canonicalKeys = {
+  base: [
+    "title",
+    "description",
+    "date",
+    "draft",
+    "tags",
+    "source_path",
+    "source_url",
+    "category",
+  ],
+  booksExtra: [
+    "author",
+    "language",
+    "genres",
+    "published_year",
+    "isbn13",
+    "isbn10",
+    "publisher",
+    "openlibrary_url",
+  ],
+};
 
 const args = new Set(process.argv.slice(2));
 const writeMode = args.has("--write") || args.has("--fix");
@@ -83,27 +95,27 @@ function parseFrontmatter(raw) {
     const key = keyMatch[1];
     const rawValue = keyMatch[2];
 
-    if (key === "tags") {
+    if (key === "tags" || key === "genres") {
       if (!rawValue || rawValue.trim() === "") {
-        const tags = [];
+        const values = [];
         i += 1;
         while (i < lines.length) {
-          const tagLine = lines[i];
-          const tagMatch = tagLine.match(/^\s*-\s*(.*)$/);
-          if (!tagMatch) break;
-          tags.push(unquote(tagMatch[1]));
+          const listLine = lines[i];
+          const listMatch = listLine.match(/^\s*-\s*(.*)$/);
+          if (!listMatch) break;
+          values.push(unquote(listMatch[1]));
           i += 1;
         }
-        data.tags = tags;
+        data[key] = values;
         continue;
       }
 
       const inline = rawValue.trim();
       if (inline === "[]") {
-        data.tags = [];
+        data[key] = [];
       } else if (inline.startsWith("[") && inline.endsWith("]")) {
         const inner = inline.slice(1, -1).trim();
-        data.tags = inner
+        data[key] = inner
           ? inner
               .split(",")
               .map((v) => unquote(v))
@@ -111,7 +123,7 @@ function parseFrontmatter(raw) {
               .filter(Boolean)
           : [];
       } else {
-        data.tags = [unquote(inline)];
+        data[key] = [unquote(inline)];
       }
 
       i += 1;
@@ -148,6 +160,11 @@ function normalizeDate(value) {
   return text;
 }
 
+function normalizeList(value) {
+  if (!Array.isArray(value)) return [];
+  return value.map((t) => String(t).trim()).filter(Boolean);
+}
+
 function normalizeRecord(data, collectionName, filePath) {
   const missingRequired = [];
   for (const key of ["title", "description", "date"]) {
@@ -165,13 +182,32 @@ function normalizeRecord(data, collectionName, filePath) {
     description: String(data.description ?? "").trim(),
     date: normalizeDate(data.date ?? ""),
     draft: Boolean(data.draft ?? false),
-    tags: Array.isArray(data.tags)
-      ? data.tags.map((t) => String(t).trim()).filter(Boolean)
-      : [],
+    tags: normalizeList(data.tags),
     source_path: String(data.source_path ?? "").trim(),
     source_url: String(data.source_url ?? "").trim(),
     category: String(data.category ?? collectionName).trim() || collectionName,
   };
+
+  if (collectionName === "books") {
+    normalized.author = String(data.author ?? "").trim();
+    normalized.language = String(data.language ?? "").trim().toLowerCase();
+    normalized.genres = normalizeList(data.genres);
+    normalized.published_year = String(data.published_year ?? "").trim();
+    normalized.isbn13 = String(data.isbn13 ?? "").trim();
+    normalized.isbn10 = String(data.isbn10 ?? "").trim();
+    normalized.publisher = String(data.publisher ?? "").trim();
+    normalized.openlibrary_url = String(data.openlibrary_url ?? "").trim();
+
+    if (normalized.published_year && !/^\d{4}$/.test(normalized.published_year)) {
+      issues.push(`${filePath}: published_year must be YYYY when present ('${normalized.published_year}')`);
+    }
+    if (normalized.openlibrary_url && !/^https?:\/\//.test(normalized.openlibrary_url)) {
+      issues.push(`${filePath}: openlibrary_url must start with http(s), got '${normalized.openlibrary_url}'`);
+    }
+    if (normalized.language && !["english", "hindi", "other", "unknown"].includes(normalized.language)) {
+      issues.push(`${filePath}: language must be one of english|hindi|other|unknown when present ('${normalized.language}')`);
+    }
+  }
 
   if (normalized.source_url && !/^https?:\/\//.test(normalized.source_url)) {
     issues.push(`${filePath}: source_url must start with http(s), got '${normalized.source_url}'`);
@@ -184,7 +220,18 @@ function normalizeRecord(data, collectionName, filePath) {
   return normalized;
 }
 
-function serializeFrontmatter(record) {
+function pushYamlList(lines, key, values) {
+  if (!values || values.length === 0) {
+    lines.push(`${key}: []`);
+    return;
+  }
+  lines.push(`${key}:`);
+  for (const value of values) {
+    lines.push(`  - ${yamlEscape(value)}`);
+  }
+}
+
+function serializeFrontmatter(record, collectionName) {
   const lines = [
     "---",
     `title: ${yamlEscape(record.title)}`,
@@ -193,18 +240,23 @@ function serializeFrontmatter(record) {
     `draft: ${record.draft ? "true" : "false"}`,
   ];
 
-  if (record.tags.length === 0) {
-    lines.push("tags: []");
-  } else {
-    lines.push("tags:");
-    for (const tag of record.tags) {
-      lines.push(`  - ${yamlEscape(tag)}`);
-    }
-  }
+  pushYamlList(lines, "tags", record.tags);
 
   lines.push(`source_path: ${yamlEscape(record.source_path)}`);
   lines.push(`source_url: ${yamlEscape(record.source_url)}`);
   lines.push(`category: ${yamlEscape(record.category)}`);
+
+  if (collectionName === "books") {
+    lines.push(`author: ${yamlEscape(record.author)}`);
+    lines.push(`language: ${yamlEscape(record.language)}`);
+    pushYamlList(lines, "genres", record.genres);
+    lines.push(`published_year: ${yamlEscape(record.published_year)}`);
+    lines.push(`isbn13: ${yamlEscape(record.isbn13)}`);
+    lines.push(`isbn10: ${yamlEscape(record.isbn10)}`);
+    lines.push(`publisher: ${yamlEscape(record.publisher)}`);
+    lines.push(`openlibrary_url: ${yamlEscape(record.openlibrary_url)}`);
+  }
+
   lines.push("---");
   lines.push("");
 
@@ -233,7 +285,7 @@ async function processFile(filePath, collectionName) {
   }
 
   const normalized = normalizeRecord(parsed, collectionName, filePath);
-  const normalizedFrontmatter = serializeFrontmatter(normalized);
+  const normalizedFrontmatter = serializeFrontmatter(normalized, collectionName);
   const normalizedContent = `${normalizedFrontmatter}${extracted.body.replace(/^\n*/, "")}`;
 
   if (normalizedContent !== original) {

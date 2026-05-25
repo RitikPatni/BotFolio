@@ -23,7 +23,16 @@ const newsletter = defineCollection({
 
 const books = defineCollection({
   type: 'content',
-  schema: baseSchema
+  schema: baseSchema.extend({
+    author: z.string().default(''),
+    language: z.string().default(''),
+    genres: z.array(z.string()).default([]),
+    published_year: z.string().default(''),
+    isbn13: z.string().default(''),
+    isbn10: z.string().default(''),
+    publisher: z.string().default(''),
+    openlibrary_url: z.union([z.string().url(), z.literal('')]).default('')
+  })
 });
 
 const highlights = defineCollection({
