@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Rebecca.md"
-source_url: ""
 category: "books"
 author: "Daphne du Maurier"
 language: "english"

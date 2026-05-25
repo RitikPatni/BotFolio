@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/weekly-notes-6/"
 category: "newsletter"
 ---
 Hello Everyone,I hope you all had a great week. Mine certainly wasn't an excellent one as Covid finally caught us, and it was terrible but thanks to vaccines it was terrible only for a couple of days. And with this, let's start the coming week on a good note.

@@ -134,21 +134,22 @@
 
     &:hover,
     &:focus-visible {
-    background: transparent;
+      background: transparent;
     }
   }
 
-      color: white;
-      text-decoration-color: currentColor;
+  &__metadata-section {
+    display: grid;
+    gap: var(--size-2);
+    min-block-size: 0;
 
     &[hidden] {
       display: none;
-      color: white;
-      text-decoration-color: currentColor;
-      display: grid;
-      gap: var(--size-2);
-      min-block-size: 0;
     }
+  }
+
+  &__lightbox-shell:fullscreen &__metadata-content {
+    color: white;
   }
 
   &__metadata-subtitle {

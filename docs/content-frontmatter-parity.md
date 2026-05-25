@@ -16,9 +16,11 @@ Every file is normalized to this exact key order:
 3. `date` (strict `YYYY-MM-DD` string)
 4. `draft` (boolean)
 5. `tags` (YAML array; `[]` allowed)
-6. `source_path` (string; empty allowed)
-7. `source_url` (string; empty or valid `http(s)` URL)
-8. `category` (string)
+6. `category` (string)
+
+Collection-specific additions:
+
+- `highlights`: adds `source_url` (string; empty or valid `http(s)` URL) between `tags` and `category`
 
 ## Commands
 

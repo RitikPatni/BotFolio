@@ -6,10 +6,8 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2019/Delhi Darbar.md"
-source_url: ""
 category: "books"
-author: ""
+author: "Satya Vyas"
 language: "hindi"
 genres:
   - "fiction"
@@ -19,4 +17,5 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
+
 ![Delhi Darbar Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1482612099l/33559203.jpg)

@@ -1,9 +1,10 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { readingTimeMinutes } from '../../utils/readingTime';
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { readingTimeMinutes } from "../../utils/readingTime";
+import { formatDisplayDate } from "../../utils/date";
 
-const entries = (await getCollection('newsletter'))
+const entries = (await getCollection("newsletter"))
   .filter((item) => !item.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .map((item) => ({
@@ -11,36 +12,40 @@ const entries = (await getCollection('newsletter'))
     title: item.data.title,
     description: item.data.description,
     date: item.data.date,
-    readingTime: readingTimeMinutes(item.body ?? '')
+    readingTime: readingTimeMinutes(item.body ?? ""),
   }));
-import './_newsletter.scss';
+import "./_newsletter.scss";
 ---
 
 <BaseLayout title="Newsletter Archive — Ritik Patni" path="/newsletter">
   <div class="newsletter">
-  <section class="newsletter__hero">
-    <h1 class="newsletter__title">Newsletter Archive</h1>
-    <p class="newsletter__lead">Complete Buttondown archive mirrored into this site.</p>
-  </section>
+    <section class="newsletter__hero">
+      <h1 class="newsletter__title">Newsletter Archive</h1>
+      <p class="newsletter__lead">
+        Complete Buttondown archive mirrored into this site.
+      </p>
+    </section>
 
-  <section class="newsletter__list">
-    {
-      entries.length === 0 ? (
-        <article class="newsletter__card"><p>No newsletter entries yet.</p></article>
-      ) : (
-        entries.map((item) => (
-          <article class="newsletter__item">
-            <h3 class="newsletter__item-title">
-              <a href={`/newsletter/${item.slug}`}>{item.title}</a>
-            </h3>
-            <p class="newsletter__meta newsletter__meta--spaced">
-              {item.date.toISOString().slice(0, 10)} · {item.readingTime} min read
-            </p>
-            <p class="newsletter__description">{item.description}</p>
+    <section class="newsletter__list">
+      {
+        entries.length === 0 ? (
+          <article class="newsletter__card">
+            <p>No newsletter entries yet.</p>
           </article>
-        ))
-      )
-    }
-  </section>
+        ) : (
+          entries.map((item) => (
+            <article class="newsletter__item">
+              <h3 class="newsletter__item-title">
+                <a href={`/newsletter/${item.slug}`}>{item.title}</a>
+              </h3>
+              <p class="newsletter__meta newsletter__meta--spaced">
+                {formatDisplayDate(item.date)} · {item.readingTime} min read
+              </p>
+              <p class="newsletter__description">{item.description}</p>
+            </article>
+          ))
+        )
+      }
+    </section>
   </div>
 </BaseLayout>

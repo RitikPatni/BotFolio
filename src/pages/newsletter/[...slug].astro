@@ -1,31 +1,41 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { readingTimeMinutes } from '../../utils/readingTime';
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { readingTimeMinutes } from "../../utils/readingTime";
+import { formatDisplayDate } from "../../utils/date";
 
 export async function getStaticPaths() {
-  const items = await getCollection('newsletter', ({ data }) => !data.draft);
-  return items.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+  const items = await getCollection("newsletter", ({ data }) => !data.draft);
+  return items.map((item) => ({
+    params: { slug: item.slug },
+    props: { item },
+  }));
 }
 
 const { item } = Astro.props;
 const { Content } = await item.render();
-const reading = readingTimeMinutes(item.body ?? '');
-import './_slug.scss';
+const reading = readingTimeMinutes(item.body ?? "");
+import "./_slug.scss";
 ---
 
-<BaseLayout title={`${item.data.title} — Newsletter`} description={item.data.description} path="/newsletter">
+<BaseLayout
+  title={`${item.data.title} — Newsletter`}
+  description={item.data.description}
+  path="/newsletter"
+>
   <div class="slug">
-  <article class="slug__hero slug__hero--compact">
-    <p class="slug__meta">{item.data.date.toISOString().slice(0, 10)} · {reading} min read</p>
-    <h1 class="slug__title">{item.data.title}</h1>
-    <p class="slug__lead">{item.data.description}</p>
-  </article>
+    <article class="slug__hero slug__hero--compact">
+      <p class="slug__meta">
+        {formatDisplayDate(item.data.date)} · {reading} min read
+      </p>
+      <h1 class="slug__title">{item.data.title}</h1>
+      <p class="slug__lead">{item.data.description}</p>
+    </article>
 
-  <article class="slug__card">
-    <div class="slug__content">
-      <Content />
-    </div>
-  </article>
+    <article class="slug__card">
+      <div class="slug__content">
+        <Content />
+      </div>
+    </article>
   </div>
 </BaseLayout>

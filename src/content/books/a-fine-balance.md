@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/A Fine Balance.md"
-source_url: ""
 category: "books"
 author: "Rohinton Mistry"
 language: "english"

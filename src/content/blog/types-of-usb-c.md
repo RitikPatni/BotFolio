@@ -5,8 +5,6 @@ date: "2021-07-18"
 draft: false
 tags:
   - "obsidian-import"
-source_path: "legacy-vault/🧔 private/Uncategorized Notes/Types of USB C.md"
-source_url: ""
 category: "blog"
 ---
 There are 8 types of USB C's that exist right now.

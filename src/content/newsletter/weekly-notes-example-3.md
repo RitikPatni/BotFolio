@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/weekly-notes-example-3/"
 category: "newsletter"
 ---
 ### 📚 To Read

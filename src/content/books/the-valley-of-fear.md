@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2020/The Valley of Fear.md"
-source_url: ""
 category: "books"
 author: "Arthur Conan Doyle"
 language: "english"

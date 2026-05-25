@@ -5,8 +5,6 @@ date: "2021-05-10"
 draft: false
 tags:
   - "obsidian-import"
-source_path: "legacy-vault/🖋️ Blog/Drafts/Releases with Commitizen.md"
-source_url: ""
 category: "blog"
 ---
 - Part 1: Husky

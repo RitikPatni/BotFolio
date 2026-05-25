@@ -6,22 +6,15 @@ draft: false
 tags:
   - "highlights"
   - "obsidian-import"
-source_path: "legacy-vault/📝 Readwise/Articles/2021.09.18 Better Workspace Features & LaTeX-style PDF export styling.md"
 source_url: ""
 category: "readwise-articles"
 ---
-# 2021.09.18: Better Workspace Features & LaTeX-style PDF export styling
-
 ![rw-book-cover](https://readwise-assets.s3.amazonaws.com/static/images/article4.6bc1851654a0.png)
 
-## Metadata
-- Author: obsidianroundup.org
-- Full Title: 2021.09.18: Better Workspace Features & LaTeX-style PDF export styling
-- Category: #type/articles
-- URL: https://obsidianroundup.org/2021-09-18/
-
 ## Highlights
+
 - Image in Editor can render mermaid diagrams in transclusions in the editor. Which should give you an idea of the complexities WYSIWYG mode faces — and by the way, WYSIWYG mode has been moved to the "In Progress" section of the Obsidian Roadmap.
+
 - Obsidian Updates
   v0.12.16 is out for Insiders!
   You can now undo closing a pane.

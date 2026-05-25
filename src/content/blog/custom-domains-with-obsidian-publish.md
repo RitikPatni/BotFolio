@@ -5,8 +5,6 @@ date: "2021-09-21"
 draft: false
 tags:
   - "obsidian-import"
-source_path: "legacy-vault/🌳Trees/Custom Domains with Obsidian Publish.md"
-source_url: ""
 category: "blog"
 ---
 ## Custom Domains with Obsidian Publish and Netlify

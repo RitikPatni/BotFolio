@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { formatDisplayDate } from "../../utils/date";
 import "./_home.scss";
 
 const posts = (await getCollection("blog"))
@@ -38,7 +39,8 @@ const posts = (await getCollection("blog"))
         </p>
         <p>
           <a class="index__inline-link primitive-link" href="/blog"
-            >Explore engineering notes</a>
+            >Explore engineering notes</a
+          >
         </p>
       </div>
     </section>
@@ -58,7 +60,7 @@ const posts = (await getCollection("blog"))
                   <a href={`/blog/${post.slug}`}>{post.title}</a>
                 </h3>
                 <p class="index__meta index__meta--spaced">
-                  {post.date.toISOString().slice(0, 10)}
+                  {formatDisplayDate(post.date)}
                 </p>
                 <p class="index__description">{post.description}</p>
               </article>
@@ -68,7 +70,8 @@ const posts = (await getCollection("blog"))
       }
       <p>
         <a class="index__inline-link primitive-link" href="/blog"
-          >View all blog posts</a>
+          >View all blog posts</a
+        >
       </p>
     </section>
   </div>

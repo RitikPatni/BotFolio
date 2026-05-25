@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/reading-list-22/"
 category: "newsletter"
 ---
 Hello everyone,Finally, back to writing this one. Last week was wonderful and a pretty interesting one. I've been travelling the whole last week through the mountains, and hence this issue got delayed. So without wasting much time, let's get started with last week's exciting stuff.

@@ -56,4 +56,9 @@ export const CONTACT_CHANNELS: ContactChannel[] = [
     helper: "Playful CSS challenges and front-end problem solving.",
     intents: ["frontend", "css", "general"],
   },
+  {
+    icon: "goodreads",
+    helper: "Reading list, highlights, and book notes.",
+    intents: ["general"],
+  },
 ];

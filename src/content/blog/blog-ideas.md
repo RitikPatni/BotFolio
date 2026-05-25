@@ -5,8 +5,6 @@ date: "2021-05-10"
 draft: false
 tags:
   - "obsidian-import"
-source_path: "legacy-vault/🖋️ Blog/Ideas.md"
-source_url: ""
 category: "blog"
 ---
 1. Releases with Commitizen and Sentry

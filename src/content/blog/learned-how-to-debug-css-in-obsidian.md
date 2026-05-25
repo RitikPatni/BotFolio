@@ -6,8 +6,6 @@ draft: false
 tags:
   - "obsidian-import"
   - "til"
-source_path: "legacy-vault/🖋️ Blog/TIL/Learned how to debug CSS in Obsidian.md"
-source_url: ""
 category: "blog"
 ---
 Today when I was checking out preview mode for one of my notes I noticed that emojis were taking complete line instead of staying in the same line which annoyed me because it was looking really weird. After a bit of googling I figured out that it was because the emojis in Obsidian are rendered as `<image>` tags as it was currently taking `display: block`.

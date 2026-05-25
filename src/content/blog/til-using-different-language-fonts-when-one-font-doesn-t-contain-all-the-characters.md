@@ -5,8 +5,6 @@ date: "2021-09-20"
 draft: false
 tags:
   - "obsidian-import"
-source_path: "legacy-vault/🧔 private/Uncategorized Notes/TIL Using different language fonts when one font doesn't contain all the characters.md"
-source_url: ""
 category: "blog"
 ---
 You can use different font files for different languages in the following way

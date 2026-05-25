@@ -6,8 +6,6 @@ draft: false
 tags:
   - "obsidian-import"
   - "til"
-source_path: "legacy-vault/🖋️ Blog/TIL/EDC - Everyday Cary.md"
-source_url: ""
 category: "blog"
 ---
 ---

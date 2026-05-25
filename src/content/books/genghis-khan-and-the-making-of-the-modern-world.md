@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Genghis Khan and the Making of the Modern World.md"
-source_url: ""
 category: "books"
 author: "Jack Weatherford"
 language: "english"

@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/From Third World to First- The Singapore Story- 1965-2000.md"
-source_url: ""
 category: "books"
 author: "Lee Kuan Yew"
 language: "english"

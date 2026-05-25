@@ -6,10 +6,8 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Make Time- How to Focus on What Matters Every Day.md"
-source_url: ""
 category: "books"
-author: ""
+author: "Jake Knapp, John Zeratsky"
 language: "english"
 genres:
   - "non fiction"
@@ -19,4 +17,5 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
+
 ![Make Time- How to Focus on What Matters Every Day Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1524067121i/37880811.jpg)

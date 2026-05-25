@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2019/Sita Warrior of Mithila.md"
-source_url: ""
 category: "books"
 author: "Amish Tripathi"
 language: "hindi"

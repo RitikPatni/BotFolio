@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Why We Sleep- Unlocking the Power of Sleep and Dreams.md"
-source_url: ""
 category: "books"
 author: "The Mindset Warrior"
 language: "english"

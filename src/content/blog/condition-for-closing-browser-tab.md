@@ -6,8 +6,6 @@ draft: false
 tags:
   - "obsidian-import"
   - "til"
-source_path: "legacy-vault/🖋️ Blog/TIL/Condition for closing browser tab.md"
-source_url: ""
 category: "blog"
 ---
 The below excerpt is from official [w3 spec reference](https://www.w3.org/TR/html51/browsers.html#script-closable)

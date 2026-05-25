@@ -5,8 +5,6 @@ date: "2021-06-12"
 draft: false
 tags:
   - "obsidian-import"
-source_path: "legacy-vault/🧔 private/Notes/Little Wins.md"
-source_url: ""
 category: "blog"
 ---
 ## Joined Brainplay as a front-end developer

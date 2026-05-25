@@ -6,10 +6,8 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/A Dream of Spring (A Song of Ice and Fire, 7).md"
-source_url: ""
 category: "books"
-author: ""
+author: "George R.R. Martin"
 language: "english"
 genres:
   - "fiction"
@@ -19,4 +17,5 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
+
 ![A Dream of Spring (A Song of Ice and Fire, 7) Cover Art](https://s.gr-assets.com/assets/nophoto/book/blank-133x176-8b769f39ba6687a82d2eef30bdf46977.jpg)

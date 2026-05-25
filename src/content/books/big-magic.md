@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Big Magic.md"
-source_url: ""
 category: "books"
 author: "Elizabeth Gilbert"
 language: "english"

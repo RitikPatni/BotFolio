@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2019/The Hobbit.md"
-source_url: ""
 category: "books"
 author: "J.R.R. Tolkien"
 language: "english"

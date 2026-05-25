@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/weekly-notes-13/"
 category: "newsletter"
 ---
 Hello Everyone,

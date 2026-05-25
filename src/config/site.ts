@@ -51,5 +51,11 @@ export const SITE_CONFIG = {
       icon: "code",
       iconSource: "iconsvg.xyz",
     },
+    {
+      label: "Goodreads",
+      href: "https://www.goodreads.com/user/show/87703289-ritik-patni",
+      icon: "goodreads",
+      iconSource: "iconsvg.xyz",
+    },
   ] as SocialProfile[],
 };

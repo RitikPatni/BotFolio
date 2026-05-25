@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Man's Search for Meaning.md"
-source_url: ""
 category: "books"
 author: "Kelvin CALEB"
 language: "english"

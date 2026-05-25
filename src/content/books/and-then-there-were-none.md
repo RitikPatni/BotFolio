@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2019/And Then There Were None.md"
-source_url: ""
 category: "books"
 author: "Agatha Christie"
 language: "english"

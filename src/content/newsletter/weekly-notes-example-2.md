@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/weekly-notes-example-2/"
 category: "newsletter"
 ---
 Another week and here we go[Writing Non Advice](https://danluu.com/writing-non-advice/)

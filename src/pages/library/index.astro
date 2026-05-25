@@ -2,6 +2,12 @@
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { BOOK_CATEGORIES } from "../../data/library";
+import {
+  extractCoverImage,
+  getHighlightMeta,
+  normalizeBookDescription,
+} from "../../utils/library";
+import { formatDisplayDate } from "../../utils/date";
 
 const books = (await getCollection("books"))
   .filter((item) => !item.data.draft)
@@ -15,12 +21,7 @@ const getBookCategoryMeta = (item: (typeof books)[number]) => {
   const languageRaw = String(item.data.language || "")
     .toLowerCase()
     .trim();
-  const language =
-    languageRaw === "hindi"
-      ? "hindi"
-      : languageRaw === "other"
-        ? "other"
-        : "english";
+  const language = languageRaw === "hindi" ? "hindi" : "english";
 
   const hasNonFictionGenre = item.data.genres.some(
     (genre) =>
@@ -36,41 +37,98 @@ const getBookCategoryMeta = (item: (typeof books)[number]) => {
   const genre =
     hasNonFictionGenre || hasNonFictionTag ? "non-fiction" : "fiction";
 
-  const publishedYear = String(item.data.published_year || "").trim();
-  let era: "unknown" | "pre-2000" | "2000-2014" | "2015+" = "unknown";
-  if (/^\d{4}$/.test(publishedYear)) {
-    const y = Number(publishedYear);
-    if (y < 2000) era = "pre-2000";
-    else if (y < 2015) era = "2000-2014";
-    else era = "2015+";
-  }
-
-  return { genre, language, era };
+  return { genre, language };
 };
 
-const categorizedBooks = books.map((item) => {
-  const meta = getBookCategoryMeta(item);
+const normalizeTitleKey = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/^\(book\)\s*/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim();
+
+const stripBookPrefix = (value: string) =>
+  value.replace(/^\(book\)\s*/i, "").trim();
+
+const parsedHighlights = highlights.map((item) => ({
+  ...item,
+  meta: getHighlightMeta(item),
+}));
+
+const bookHighlights = parsedHighlights.filter(
+  (item) => item.meta.sourceType === "readwise-books",
+);
+
+const nonBookHighlights = parsedHighlights.filter(
+  (item) => item.meta.sourceType !== "readwise-books",
+);
+
+const recentHighlights = nonBookHighlights.slice(0, 24);
+
+const bookHighlightByTitle = new Map<string, (typeof bookHighlights)[number]>();
+for (const item of bookHighlights) {
+  const key = normalizeTitleKey(item.data.title);
+  if (!key || bookHighlightByTitle.has(key)) {
+    continue;
+  }
+  bookHighlightByTitle.set(key, item);
+}
+
+const usedBookHighlightSlugs = new Set<string>();
+
+const booksWithNotes = books.map((item) => {
+  const bookKey = normalizeTitleKey(item.data.title);
+  let linkedHighlight = bookHighlightByTitle.get(bookKey) || null;
+
+  if (!linkedHighlight && bookKey) {
+    linkedHighlight =
+      bookHighlights.find((candidate) => {
+        if (usedBookHighlightSlugs.has(candidate.slug)) {
+          return false;
+        }
+
+        const candidateKey = normalizeTitleKey(candidate.data.title);
+        if (!candidateKey) {
+          return false;
+        }
+
+        return candidateKey.includes(bookKey) || bookKey.includes(candidateKey);
+      }) || null;
+  }
+
+  if (linkedHighlight) {
+    usedBookHighlightSlugs.add(linkedHighlight.slug);
+  }
+
   return {
     ...item,
-    genre: meta.genre,
-    language: meta.language,
-    era: meta.era,
+    ...getBookCategoryMeta(item),
+    normalizedDescription: normalizeBookDescription(item.data.description),
+    coverImage: extractCoverImage(item.body),
+    displayTitle: stripBookPrefix(item.data.title),
+    linkedHighlight,
   };
 });
 
 const categoryCounts: Record<string, number> = {
-  all: categorizedBooks.length,
-  fiction: categorizedBooks.filter((item) => item.genre === "fiction").length,
-  "non-fiction": categorizedBooks.filter((item) => item.genre === "non-fiction")
+  all: booksWithNotes.length,
+  fiction: booksWithNotes.filter((item) => item.genre === "fiction").length,
+  "non-fiction": booksWithNotes.filter((item) => item.genre === "non-fiction")
     .length,
-  english: categorizedBooks.filter((item) => item.language === "english")
+  english: booksWithNotes.filter((item) => item.language === "english").length,
+  hindi: booksWithNotes.filter((item) => item.language === "hindi").length,
+  "with-notes": booksWithNotes.filter((item) => Boolean(item.linkedHighlight))
     .length,
-  hindi: categorizedBooks.filter((item) => item.language === "hindi").length,
-  "pre-2000": categorizedBooks.filter((item) => item.era === "pre-2000").length,
-  "2000-2014": categorizedBooks.filter((item) => item.era === "2000-2014")
-    .length,
-  "2015+": categorizedBooks.filter((item) => item.era === "2015+").length,
 };
+
+const bookFilterCategories = [
+  ...BOOK_CATEGORIES,
+  { id: "with-notes", label: "With notes" },
+] as const;
+
+const defaultBookFilter =
+  categoryCounts["with-notes"] > 0 ? "with-notes" : "all";
+
 import "./_library.scss";
 ---
 
@@ -78,164 +136,232 @@ import "./_library.scss";
   <div class="library">
     <section class="library__hero">
       <h1 class="library__title">Library</h1>
-      <p class="library__lead">
-        Books and notes/highlights synced from Obsidian.
-      </p>
+      <p class="library__lead">Books and notes from the reading log.</p>
     </section>
 
-    <section class="library__list" data-library-root>
-      <h2>Books</h2>
-      <div
-        class="library__tags library__tags--spaced"
-        role="group"
-        aria-label="Book categories"
-      >
+    <div
+      class="library__views"
+      data-library-root
+      data-default-book-filter={defaultBookFilter}
+    >
+      <section class="library__panel">
+        <h2 class="library__section-title">Books</h2>
+
+        <div
+          class="library__tags library__tags--spaced"
+          role="group"
+          aria-label="Book categories"
+        >
+          {
+            bookFilterCategories.map((category) => (
+              <button
+                type="button"
+                class="library__tag library__tag-button"
+                data-book-filter={category.id}
+                aria-pressed={
+                  category.id === defaultBookFilter ? "true" : "false"
+                }
+              >
+                {category.label}
+                <span class="library__tag-count">
+                  ({categoryCounts[category.id]})
+                </span>
+              </button>
+            ))
+          }
+        </div>
+
         {
-          BOOK_CATEGORIES.map((category, index) => (
-            <button
-              type="button"
-              class="library__tag library__tag-button"
-              data-book-filter={category.id}
-              aria-pressed={index === 0 ? "true" : "false"}
-            >
-              {category.label}
-              <span class="library__tag-count">
-                ({categoryCounts[category.id]})
-              </span>
-            </button>
-          ))
+          books.length === 0 ? (
+            <article class="library__card">
+              <p>No books yet.</p>
+            </article>
+          ) : (
+            <div class="library__books-grid">
+              {booksWithNotes.map((item) => (
+                <article
+                  class="library__item"
+                  data-book-item
+                  data-book-genre={item.genre}
+                  data-book-language={item.language}
+                  data-book-has-notes={item.linkedHighlight ? "true" : "false"}
+                >
+                  {item.coverImage ? (
+                    <a
+                      class="library__book-cover-link"
+                      href={`/library/books/${item.slug}`}
+                    >
+                      <img
+                        class="library__book-cover"
+                        src={item.coverImage}
+                        alt={`${item.displayTitle} cover`}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </a>
+                  ) : null}
+
+                  <h3 class="library__item-title">
+                    <a href={`/library/books/${item.slug}`}>
+                      {item.displayTitle}
+                    </a>
+                  </h3>
+                  <div class="library__item-meta-block">
+                    <p class="library__item-meta-primary">
+                      {item.data.author || "Unknown author"}
+                      {item.data.language ? ` · ${item.data.language}` : ""}
+                    </p>
+                    <p class="library__item-meta-secondary">
+                      {formatDisplayDate(item.data.date)}
+                      {item.data.published_year
+                        ? ` · Published ${item.data.published_year}`
+                        : ""}
+                    </p>
+                  </div>
+                  {item.normalizedDescription ? (
+                    <p class="library__description">
+                      {item.normalizedDescription}
+                    </p>
+                  ) : null}
+
+                  {item.linkedHighlight ? (
+                    <p class="library__book-note">
+                      <a
+                        href={`/library/highlights/${item.linkedHighlight.slug}`}
+                      >
+                        Book notes
+                      </a>
+                    </p>
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          )
         }
-      </div>
+      </section>
 
-      {
-        books.length === 0 ? (
-          <article class="library__card">
-            <p>No books yet.</p>
-          </article>
-        ) : (
-          categorizedBooks.map((item) => (
-            <article
-              class="library__item"
-              data-book-item
-              data-book-genre={item.genre}
-              data-book-language={item.language}
-              data-book-era={item.era}
-              data-book-author={item.data.author?.toLowerCase() || ""}
-            >
-              <h3 class="library__item-title">
-                <a href={`/library/books/${item.slug}`}>{item.data.title}</a>
-              </h3>
-              <p class="library__meta library__meta--spaced">
-                {item.data.date.toISOString().slice(0, 10)}
-                {item.data.author ? ` · ${item.data.author}` : ""}
-                {item.data.language ? ` · ${item.data.language}` : ""}
-                {item.data.published_year
-                  ? ` · ${item.data.published_year}`
-                  : ""}
-              </p>
-              <p class="library__description">{item.data.description}</p>
-            </article>
-          ))
-        )
-      }
-    </section>
-
-    <section class="library__list library__list--offset">
-      <h2>Notes / Highlights</h2>
-      {
-        highlights.length === 0 ? (
-          <article class="library__card">
-            <p>No highlights yet.</p>
-          </article>
-        ) : (
-          highlights.map((item) => (
-            <article class="library__item">
-              <h3 class="library__item-title">
-                <a href={`/library/highlights/${item.slug}`}>
-                  {item.data.title}
-                </a>
-              </h3>
-              <p class="library__meta library__meta--spaced">
-                {item.data.date.toISOString().slice(0, 10)}
-              </p>
-              <p class="library__description">{item.data.description}</p>
-            </article>
-          ))
-        )
-      }
-    </section>
+      <section class="library__panel">
+        <h2 class="library__section-title">Notes</h2>
+        <div class="library__notes-list">
+          {
+            nonBookHighlights.length === 0 ? (
+              <article class="library__card">
+                <p>No highlights yet.</p>
+              </article>
+            ) : (
+              recentHighlights.map((item) => (
+                <article class="library__note-item">
+                  <h3 class="library__note-title">
+                    <a href={`/library/highlights/${item.slug}`}>
+                      {item.data.title}
+                    </a>
+                  </h3>
+                  <p class="library__meta library__meta--spaced">
+                    {formatDisplayDate(item.data.date)}
+                    {" · "}
+                    {item.meta.sourceLabel} ({item.meta.highlightCount})
+                  </p>
+                  <p class="library__note-meta">
+                    {item.meta.author}
+                    {item.meta.language === "hindi" ? " · Hindi" : " · English"}
+                  </p>
+                  {item.meta.preview ? (
+                    <p class="library__note-preview">{item.meta.preview}</p>
+                  ) : null}
+                  {item.meta.sourceUrl ? (
+                    <p class="library__note-linkline">
+                      <a
+                        href={item.meta.sourceUrl}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Open source
+                      </a>
+                    </p>
+                  ) : null}
+                </article>
+              ))
+            )
+          }
+        </div>
+      </section>
+    </div>
   </div>
 
   <script>
     // @ts-nocheck
-    (() => {
-      const root = document.querySelector("[data-library-root]");
+    const initBookFilters = () => {
+      const roots = document.querySelectorAll("[data-library-root]");
 
-      if (!root) {
-        return;
-      }
+      roots.forEach((root) => {
+        if (root.dataset.bookFiltersBound === "true") {
+          return;
+        }
+        root.dataset.bookFiltersBound = "true";
 
-      const filters = Array.from(
-        root.querySelectorAll("[data-book-filter]"),
-      ).filter((element) => element instanceof HTMLButtonElement);
-      const items = Array.from(
-        root.querySelectorAll("[data-book-item]"),
-      ).filter((element) => element instanceof HTMLElement);
+        const filterButtons = Array.from(
+          root.querySelectorAll("[data-book-filter]"),
+        );
+        const bookItems = Array.from(root.querySelectorAll("[data-book-item]"));
 
-      if (!filters.length || !items.length) {
-        return;
-      }
+        if (!filterButtons.length || !bookItems.length) {
+          return;
+        }
 
-      const matchesCategory = (item, category) => {
-        if (category === "all") {
+        const matchesCategory = (item, category) => {
+          if (category === "all") {
+            return true;
+          }
+
+          if (category === "fiction" || category === "non-fiction") {
+            return item.dataset.bookGenre === category;
+          }
+
+          if (category === "english" || category === "hindi") {
+            return item.dataset.bookLanguage === category;
+          }
+
+          if (category === "with-notes") {
+            return item.dataset.bookHasNotes === "true";
+          }
+
           return true;
-        }
+        };
 
-        if (category === "fiction" || category === "non-fiction") {
-          return item.dataset.bookGenre === category;
-        }
+        const applyFilter = (category) => {
+          filterButtons.forEach((button) => {
+            button.setAttribute(
+              "aria-pressed",
+              String(button.dataset.bookFilter === category),
+            );
+          });
 
-        if (
-          category === "english" ||
-          category === "hindi" ||
-          category === "other"
-        ) {
-          return item.dataset.bookLanguage === category;
-        }
+          bookItems.forEach((item) => {
+            const visible = matchesCategory(item, category);
+            item.toggleAttribute("hidden", !visible);
+          });
+        };
 
-        if (
-          category === "pre-2000" ||
-          category === "2000-2014" ||
-          category === "2015+"
-        ) {
-          return item.dataset.bookEra === category;
-        }
+        root.addEventListener("click", (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) {
+            return;
+          }
 
-        return false;
-      };
+          const filterButton = target.closest("[data-book-filter]");
+          if (!filterButton || !root.contains(filterButton)) {
+            return;
+          }
 
-      const applyFilter = (category) => {
-        filters.forEach((filter) => {
-          filter.setAttribute(
-            "aria-pressed",
-            String(filter.dataset.bookFilter === category),
-          );
+          applyFilter(filterButton.dataset.bookFilter || "all");
         });
 
-        items.forEach((item) => {
-          const visible = matchesCategory(item, category);
-          item.toggleAttribute("hidden", !visible);
-        });
-      };
-
-      filters.forEach((filter) => {
-        filter.addEventListener("click", () => {
-          const category = filter.dataset.bookFilter || "all";
-          applyFilter(category);
-        });
+        applyFilter(root.dataset.defaultBookFilter || "all");
       });
+    };
 
-      applyFilter("all");
-    })();
+    initBookFilters();
+    document.addEventListener("DOMContentLoaded", initBookFilters);
+    document.addEventListener("astro:page-load", initBookFilters);
   </script>
 </BaseLayout>

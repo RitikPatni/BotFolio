@@ -6,10 +6,8 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Build Your Dream Network- Forging Powerful Relationships in a Hyper-Connected World.md"
-source_url: ""
 category: "books"
-author: ""
+author: "J. Kelly Hoey"
 language: "english"
 genres:
   - "non fiction"
@@ -19,4 +17,5 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
+
 ![Build Your Dream Network- Forging Powerful Relationships in a Hyper-Connected World Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1498858642l/34927426.jpg)

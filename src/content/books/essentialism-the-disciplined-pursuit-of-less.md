@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Essentialism- The Disciplined Pursuit of Less.md"
-source_url: ""
 category: "books"
 author: "Greg McKeown"
 language: "english"

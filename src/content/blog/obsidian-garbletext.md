@@ -6,8 +6,6 @@ draft: false
 tags:
   - "obsidian-import"
   - "til"
-source_path: "legacy-vault/🖋️ Blog/TIL/Obsidian garbleText.md"
-source_url: ""
 category: "blog"
 ---
 Learned about obsidian `garbleText` which can hide all the text in the Obsidian Window. This can come in handy when you want to show the overview of your obsidian but are not sure but also want to make sure to not show content.

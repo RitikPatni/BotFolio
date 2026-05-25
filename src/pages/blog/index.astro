@@ -1,49 +1,54 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { readingTimeMinutes } from '../../utils/readingTime';
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { readingTimeMinutes } from "../../utils/readingTime";
+import { formatDisplayDate } from "../../utils/date";
 
-const posts = (await getCollection('blog'))
+const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .map((post) => {
-    const words = post.body ?? '';
+    const words = post.body ?? "";
     return {
       slug: post.slug,
       title: post.data.title,
       description: post.data.description,
       date: post.data.date,
-      readingTime: readingTimeMinutes(words)
+      readingTime: readingTimeMinutes(words),
     };
   });
-import './_blog.scss';
+import "./_blog.scss";
 ---
 
 <BaseLayout title="Blog — Ritik Patni" path="/blog">
   <div class="blog">
-  <section class="blog__hero">
-    <h1 class="blog__title">Blog</h1>
-    <p class="blog__lead">Clean notes on frontend engineering, systems, and photography.</p>
-  </section>
+    <section class="blog__hero">
+      <h1 class="blog__title">Blog</h1>
+      <p class="blog__lead">
+        Clean notes on frontend engineering, systems, and photography.
+      </p>
+    </section>
 
-  <section class="blog__list">
-    {
-      posts.length === 0 ? (
-        <article class="blog__card"><p>No posts yet.</p></article>
-      ) : (
-        posts.map((post) => (
-          <article class="blog__item">
-            <h3 class="blog__item-title">
-              <a href={`/blog/${post.slug}`}>{post.title}</a>
-            </h3>
-            <p class="blog__meta blog__meta--spaced">
-              {post.date.toISOString().slice(0, 10)} · {post.readingTime} min read
-            </p>
-            <p class="blog__description">{post.description}</p>
+    <section class="blog__list">
+      {
+        posts.length === 0 ? (
+          <article class="blog__card">
+            <p>No posts yet.</p>
           </article>
-        ))
-      )
-    }
-  </section>
+        ) : (
+          posts.map((post) => (
+            <article class="blog__item">
+              <h3 class="blog__item-title">
+                <a href={`/blog/${post.slug}`}>{post.title}</a>
+              </h3>
+              <p class="blog__meta blog__meta--spaced">
+                {formatDisplayDate(post.date)} · {post.readingTime} min read
+              </p>
+              <p class="blog__description">{post.description}</p>
+            </article>
+          ))
+        )
+      }
+    </section>
   </div>
 </BaseLayout>

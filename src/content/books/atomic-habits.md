@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2020/Atomic Habits.md"
-source_url: ""
 category: "books"
 author: "James Clear"
 language: "english"

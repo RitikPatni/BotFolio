@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2020/The Fellowship of the Ring.md"
-source_url: ""
 category: "books"
 author: "J.R.R. Tolkien"
 language: "english"

@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2021/A Dance with Dragons.md"
-source_url: ""
 category: "books"
 author: "George R. R. Martin"
 language: "english"

@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/not-every-problem-needs-to-be-overcome-just-the/"
 category: "newsletter"
 ---
 ## 📚 To Read

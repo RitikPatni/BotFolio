@@ -1,44 +1,102 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import BaseLayout from "../../../layouts/BaseLayout/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { formatDisplayDate } from "../../../utils/date";
 
 export async function getStaticPaths() {
-  const items = await getCollection('books', ({ data }) => !data.draft);
-  return items.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+  const items = await getCollection("books", ({ data }) => !data.draft);
+  return items.map((item) => ({
+    params: { slug: item.slug },
+    props: { item },
+  }));
 }
 
 const { item } = Astro.props;
 const { Content } = await item.render();
-import './_slug.scss';
+import "./_slug.scss";
 ---
 
-<BaseLayout title={`${item.data.title} — Library`} description={item.data.description} path="/library">
+<BaseLayout
+  title={`${item.data.title} — Library`}
+  description={item.data.description}
+  path="/library"
+>
   <div class="slug">
-  <article class="slug__hero slug__hero--compact">
-    <p class="slug__meta">{item.data.date.toISOString().slice(0, 10)}</p>
-    <h1 class="slug__title">{item.data.title}</h1>
-    <p class="slug__lead">{item.data.description}</p>
-    <ul class="slug__book-meta" aria-label="Book metadata">
-      {item.data.author ? <li><strong>Author:</strong> {item.data.author}</li> : null}
-      {item.data.language ? <li><strong>Language:</strong> {item.data.language}</li> : null}
-      {item.data.genres?.length ? <li><strong>Genres:</strong> {item.data.genres.join(", ")}</li> : null}
-      {item.data.published_year ? <li><strong>Published:</strong> {item.data.published_year}</li> : null}
-      {item.data.publisher ? <li><strong>Publisher:</strong> {item.data.publisher}</li> : null}
-      {item.data.isbn13 ? <li><strong>ISBN-13:</strong> {item.data.isbn13}</li> : null}
-      {item.data.isbn10 ? <li><strong>ISBN-10:</strong> {item.data.isbn10}</li> : null}
-      {item.data.openlibrary_url ? (
-        <li>
-          <strong>OpenLibrary:</strong>{" "}
-          <a href={item.data.openlibrary_url} rel="noopener noreferrer" target="_blank">View record</a>
-        </li>
-      ) : null}
-    </ul>
-  </article>
+    <article class="slug__hero slug__hero--compact">
+      <p class="slug__meta">{formatDisplayDate(item.data.date)}</p>
+      <h1 class="slug__title">{item.data.title}</h1>
+      <p class="slug__lead">{item.data.description}</p>
+      <ul class="slug__book-meta" aria-label="Book metadata">
+        {
+          item.data.author ? (
+            <li>
+              <strong>Author:</strong> {item.data.author}
+            </li>
+          ) : null
+        }
+        {
+          item.data.language ? (
+            <li>
+              <strong>Language:</strong> {item.data.language}
+            </li>
+          ) : null
+        }
+        {
+          item.data.genres?.length ? (
+            <li>
+              <strong>Genres:</strong> {item.data.genres.join(", ")}
+            </li>
+          ) : null
+        }
+        {
+          item.data.published_year ? (
+            <li>
+              <strong>Published:</strong> {item.data.published_year}
+            </li>
+          ) : null
+        }
+        {
+          item.data.publisher ? (
+            <li>
+              <strong>Publisher:</strong> {item.data.publisher}
+            </li>
+          ) : null
+        }
+        {
+          item.data.isbn13 ? (
+            <li>
+              <strong>ISBN-13:</strong> {item.data.isbn13}
+            </li>
+          ) : null
+        }
+        {
+          item.data.isbn10 ? (
+            <li>
+              <strong>ISBN-10:</strong> {item.data.isbn10}
+            </li>
+          ) : null
+        }
+        {
+          item.data.openlibrary_url ? (
+            <li>
+              <strong>OpenLibrary:</strong>{" "}
+              <a
+                href={item.data.openlibrary_url}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                View record
+              </a>
+            </li>
+          ) : null
+        }
+      </ul>
+    </article>
 
-  <article class="slug__card">
-    <div class="slug__content">
-      <Content />
-    </div>
-  </article>
+    <article class="slug__card">
+      <div class="slug__content">
+        <Content />
+      </div>
+    </article>
   </div>
 </BaseLayout>

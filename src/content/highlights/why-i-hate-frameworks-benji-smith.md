@@ -6,21 +6,13 @@ draft: false
 tags:
   - "highlights"
   - "obsidian-import"
-source_path: "legacy-vault/📝 Readwise/Articles/Why I Hate Frameworks, Benji Smith..md"
 source_url: ""
 category: "readwise-articles"
 ---
-# Why I Hate Frameworks, Benji Smith.
-
 ![rw-book-cover](https://readwise-assets.s3.amazonaws.com/static/images/article1.be68295a7e40.png)
 
-## Metadata
-- Author: fredrikholmqvist.com
-- Full Title: Why I Hate Frameworks, Benji Smith.
-- Category: #type/articles
-- URL: https://www.fredrikholmqvist.com/pages/why-i-hate-frameworks.html
-
 ## Highlights
+
 - Why I Hate Frameworks, Benji Smith.
   I’m currently in the planning stages of building a hosted Java web application (yes, it has to be Java, for a variety of reasons that I don’t feel like going into right now). In the process, I’m evaluating a bunch of J2EE portlet-enabled JSR-compliant MVC role-based CMS web service application container frameworks.
   And after spending dozens of hours reading through feature lists and documentation, I’m ready to gouge out my eyes.

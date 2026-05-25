@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/coming-soon-7996/"
 category: "newsletter"
 ---
 This is Weekly Notes, a newsletter about Tech, Websites, Mechanical Keyboards and random stuff.

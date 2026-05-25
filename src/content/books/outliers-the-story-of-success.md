@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Outliers- The Story of Success.md"
-source_url: ""
 category: "books"
 author: "BookCaps Study Guides Staff"
 language: "english"

@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+
+import { fileURLToPath } from "node:url";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -108,7 +109,6 @@ function serializeFrontmatter(record) {
 
   pushYamlList(lines, "tags", Array.isArray(record.tags) ? record.tags : []);
 
-  lines.push(`source_path: ${yamlEscape(record.source_path ?? "")}`);
   lines.push(`source_url: ${yamlEscape(record.source_url ?? "")}`);
   lines.push(`category: ${yamlEscape(record.category ?? "books")}`);
 

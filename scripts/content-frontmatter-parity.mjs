@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+
+import { fileURLToPath } from "node:url";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,10 +17,9 @@ const canonicalKeys = {
     "date",
     "draft",
     "tags",
-    "source_path",
-    "source_url",
     "category",
   ],
+  highlightsExtra: ["source_url"],
   booksExtra: [
     "author",
     "language",
@@ -117,10 +117,10 @@ function parseFrontmatter(raw) {
         const inner = inline.slice(1, -1).trim();
         data[key] = inner
           ? inner
-              .split(",")
-              .map((v) => unquote(v))
-              .map((v) => v.trim())
-              .filter(Boolean)
+            .split(",")
+            .map((v) => unquote(v))
+            .map((v) => v.trim())
+            .filter(Boolean)
           : [];
       } else {
         data[key] = [unquote(inline)];
@@ -183,10 +183,12 @@ function normalizeRecord(data, collectionName, filePath) {
     date: normalizeDate(data.date ?? ""),
     draft: Boolean(data.draft ?? false),
     tags: normalizeList(data.tags),
-    source_path: String(data.source_path ?? "").trim(),
-    source_url: String(data.source_url ?? "").trim(),
     category: String(data.category ?? collectionName).trim() || collectionName,
   };
+
+  if (collectionName === "highlights") {
+    normalized.source_url = String(data.source_url ?? "").trim();
+  }
 
   if (collectionName === "books") {
     normalized.author = String(data.author ?? "").trim();
@@ -209,7 +211,7 @@ function normalizeRecord(data, collectionName, filePath) {
     }
   }
 
-  if (normalized.source_url && !/^https?:\/\//.test(normalized.source_url)) {
+  if (collectionName === "highlights" && normalized.source_url && !/^https?:\/\//.test(normalized.source_url)) {
     issues.push(`${filePath}: source_url must start with http(s), got '${normalized.source_url}'`);
   }
 
@@ -242,8 +244,9 @@ function serializeFrontmatter(record, collectionName) {
 
   pushYamlList(lines, "tags", record.tags);
 
-  lines.push(`source_path: ${yamlEscape(record.source_path)}`);
-  lines.push(`source_url: ${yamlEscape(record.source_url)}`);
+  if (collectionName === "highlights") {
+    lines.push(`source_url: ${yamlEscape(record.source_url)}`);
+  }
   lines.push(`category: ${yamlEscape(record.category)}`);
 
   if (collectionName === "books") {

@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/everyone-deep-in-their-hearts-is-waiting-for-the-1689/"
 category: "newsletter"
 ---
 Hello All,

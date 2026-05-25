@@ -6,10 +6,8 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2020/The Murder on the Links.md"
-source_url: ""
 category: "books"
-author: ""
+author: "Agatha Christie"
 language: "english"
 genres:
   - "fiction"
@@ -19,4 +17,5 @@ isbn10: ""
 publisher: "Page Publications"
 openlibrary_url: "https://openlibrary.org/works/OL45094506W"
 ---
+
 ![The Murder on the Links Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1384562979l/639787.jpg)

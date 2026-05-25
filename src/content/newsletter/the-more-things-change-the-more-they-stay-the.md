@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/the-more-things-change-the-more-they-stay-the/"
 category: "newsletter"
 ---
 ## 📚 To Read

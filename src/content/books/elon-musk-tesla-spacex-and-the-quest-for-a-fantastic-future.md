@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Elon Musk- Tesla, SpaceX, and the Quest for a Fantastic Future.md"
-source_url: ""
 category: "books"
 author: "Worth Books"
 language: "english"

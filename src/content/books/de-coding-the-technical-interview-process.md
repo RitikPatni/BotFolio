@@ -6,10 +6,8 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2021/De-Coding The Technical Interview Process.md"
-source_url: ""
 category: "books"
-author: ""
+author: "Emma Bostian"
 language: "english"
 genres:
   - "fiction"
@@ -19,4 +17,5 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
+
 ![De-Coding The Technical Interview Process Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1588871057l/53345580._SX318_.jpg)

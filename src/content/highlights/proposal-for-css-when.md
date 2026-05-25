@@ -6,21 +6,13 @@ draft: false
 tags:
   - "highlights"
   - "obsidian-import"
-source_path: "legacy-vault/📝 Readwise/Articles/Proposal for CSS @when.md"
 source_url: ""
 category: "readwise-articles"
 ---
-# Proposal for CSS @when
-
 ![rw-book-cover](https://readwise-assets.s3.amazonaws.com/static/images/article2.74d541386bbf.png)
 
-## Metadata
-- Author: Chris Coyier
-- Full Title: Proposal for CSS @when
-- Category: #type/articles
-- URL: https://css-tricks.com/proposal-for-css-when/
-
 ## Highlights
+
 - CSS is on a tear lately. Again, I’ve heard of a brand new thing I’ve never seen before, and again it’s via Miriam: CSS Conditionals.
   🎉 CSSWG just resolved to adopt @tabatkins when/else proposal into the next level of CSS Conditionals. Here's the proposal:https://t.co/IXEOK7xKcL
   — Miriam (But Terrible) (@TerribleMia) September 15, 2021
@@ -30,17 +22,17 @@ category: "readwise-articles"
   }
   And if you want to have styles that are mutually exclusive to the above, you’d write two media queries:
   @media (min-width: 600px) {
-  /* ... */ 
+  /* ... */
   }
   @media (max-width: 599px) {
   /* ... */
   }
   That’s a little… fidgety. The syntax is much cleaner in this new proposal:
   @when media(min-width: 600px) {
-  /* ... */ 
+  /* ... */
   }
   @else {
-  /* ... */ 
+  /* ... */
   }
   Looks like you can do multiple conditions via and, have a waterfall logic stack with multiple @else statements, and not just use @media, but @supports as well.
   @when media(width >= 400px) and media(pointer: fine) and supports(display: flex) {

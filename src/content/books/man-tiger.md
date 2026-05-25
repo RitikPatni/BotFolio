@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2019/Man Tiger.md"
-source_url: ""
 category: "books"
 author: "Eka Kurniawan"
 language: "english"

@@ -6,10 +6,8 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/Queued Books/Weapons of Math Destruction- How Big Data Increases Inequality and Threatens Democracy.md"
-source_url: ""
 category: "books"
-author: ""
+author: "Cathy O'Neil"
 language: "english"
 genres:
   - "non fiction"
@@ -19,4 +17,5 @@ isbn10: ""
 publisher: ""
 openlibrary_url: ""
 ---
+
 ![Weapons of Math Destruction- How Big Data Increases Inequality and Threatens Democracy Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1456091964i/28186015.jpg)

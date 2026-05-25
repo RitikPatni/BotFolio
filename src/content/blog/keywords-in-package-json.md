@@ -6,8 +6,6 @@ draft: false
 tags:
   - "obsidian-import"
   - "til"
-source_path: "legacy-vault/🖋️ Blog/TIL/Keywords in package . json.md"
-source_url: ""
 category: "blog"
 ---
 Here's the definition from 

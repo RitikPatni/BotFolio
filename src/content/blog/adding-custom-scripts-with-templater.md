@@ -6,8 +6,6 @@ draft: false
 tags:
   - "obsidian-import"
   - "til"
-source_path: "legacy-vault/🖋️ Blog/TIL/Adding custom scripts with templater.md"
-source_url: ""
 category: "blog"
 ---
 I learned how we can create custom scripts in Obsidian with templater and now it opens another set of possible things that I can do with obsidian.

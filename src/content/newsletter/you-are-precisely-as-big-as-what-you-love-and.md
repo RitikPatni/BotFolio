@@ -6,8 +6,6 @@ draft: false
 tags:
   - "newsletter"
   - "buttondown"
-source_path: ""
-source_url: "https://buttondown.com/ritik/archive/you-are-precisely-as-big-as-what-you-love-and/"
 category: "newsletter"
 ---
 ## 📚 To Read

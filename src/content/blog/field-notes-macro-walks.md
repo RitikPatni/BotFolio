@@ -6,8 +6,6 @@ draft: true
 tags:
   - "photography"
   - "macro"
-source_path: ""
-source_url: ""
 category: "blog"
 ---
 Draft note. This should stay hidden from the live blog listing.

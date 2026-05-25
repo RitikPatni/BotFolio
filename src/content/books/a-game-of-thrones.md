@@ -6,8 +6,6 @@ draft: false
 tags:
   - "books"
   - "obsidian-import"
-source_path: "legacy-vault/📚 Books/2021/A Game of Thrones.md"
-source_url: ""
 category: "books"
 author: "George R. R. Martin"
 language: "english"
