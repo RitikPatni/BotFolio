@@ -1,0 +1,39 @@
+name: Gallery QA
+
+on:
+  pull_request:
+    paths:
+      - "src/data/photography/**"
+      - "src/assets/photography/**"
+      - "scripts/validate-gallery.mjs"
+      - "package.json"
+      - ".github/workflows/gallery-qa.yml"
+  push:
+    branches: [main]
+    paths:
+      - "src/data/photography/**"
+      - "src/assets/photography/**"
+      - "scripts/validate-gallery.mjs"
+      - "package.json"
+      - ".github/workflows/gallery-qa.yml"
+
+jobs:
+  validate-gallery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run gallery QA (CI JSON)
+        run: npm run gallery:validate:ci
