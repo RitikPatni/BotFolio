@@ -1,11 +1,12 @@
 ---
 title: "Reading List #17"
 description: "Hello Everyone, Hope all of you are doing great. Last week I got a new keyboard(again) and spent the weekend building and playing with it, and as a result got late for this. Now fo"
-date: 2022-04-25
+date: "2022-04-25"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-17/"
 category: "newsletter"
 ---

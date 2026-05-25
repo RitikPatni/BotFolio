@@ -1,12 +1,13 @@
 ---
 title: "Baaghi Ballia"
 description: ">पत्थर तो हजारों ने मारे थे मुझे लेकिन जो दिल पे लगी आकर इक दोस्त ने मारा है।"
-date: 2021-08-01
+date: "2021-08-01"
 draft: false
 tags:
-  - books
-  - obsidian-import
+  - "books"
+  - "obsidian-import"
 source_path: "legacy-vault/📚 Books/2021/Baaghi Ballia.md"
+source_url: ""
 category: "books"
 ---
 ![Baaghi Ballia Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1570908697l/52738109._SX318_SY475_.jpg)

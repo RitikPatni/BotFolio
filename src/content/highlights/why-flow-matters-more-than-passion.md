@@ -1,12 +1,13 @@
 ---
 title: "Why flow matters more than passion"
 description: "Author: leaddev.com"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Why flow matters more than passion.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Why flow matters more than passion

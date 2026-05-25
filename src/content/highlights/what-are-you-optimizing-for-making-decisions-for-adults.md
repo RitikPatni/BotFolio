@@ -1,12 +1,13 @@
 ---
 title: "What are you optimizing for? Making decisions for adults."
 description: "Full Title: What are you optimizing for? Making decisions for adults."
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/What are you optimizing for Making decisions for adults..md"
+source_url: ""
 category: "readwise-articles"
 ---
 # What are you optimizing for? Making decisions for adults.

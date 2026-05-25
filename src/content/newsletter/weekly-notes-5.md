@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #5"
-description: "Hello Everyone, Hope you all had an outstanding week. This week I built my first mechanical keyboard for myself and I love absolutely everything about it. And we have also reached "
-date: 2022-01-31
+description: "Hello Everyone, Hope you all had an outstanding week. This week I built my first mechanical keyboard for myself and I love absolutely everything about it. And we have also reached"
+date: "2022-01-31"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-5/"
 category: "newsletter"
 ---

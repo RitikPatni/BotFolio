@@ -1,11 +1,12 @@
 ---
 title: "Reading List #26"
 description: "Hello Everyone, I hope you all had a wonderful week. Mine was also a good one. With this, let's start with this week's reading material… ## 📚 To Read [SPAs: theory versus practice]"
-date: 2022-07-05
+date: "2022-07-05"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-26-3416/"
 category: "newsletter"
 ---

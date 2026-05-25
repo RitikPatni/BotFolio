@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #6"
 description: "Hello Everyone,I hope you all had a great week. Mine certainly wasn't an excellent one as Covid finally caught us, and it was terrible but thanks to vaccines it was terrible only f"
-date: 2022-02-07
+date: "2022-02-07"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-6/"
 category: "newsletter"
 ---

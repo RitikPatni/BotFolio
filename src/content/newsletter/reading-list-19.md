@@ -1,11 +1,12 @@
 ---
 title: "Reading List #19"
 description: "Hello Everyone, Another interesting week for me. This week I've been reading up on [IndieWeb](https://indieweb.org) and have been experimenting with this. This seems extremely exci"
-date: 2022-05-08
+date: "2022-05-08"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-19/"
 category: "newsletter"
 ---

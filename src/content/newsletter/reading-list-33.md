@@ -1,11 +1,12 @@
 ---
 title: "Reading List #33"
 description: "## 📚 To Read [Media Query Ranges](https://www.robinrendle.com/notes/media-query-ranges/?utm_source=ritik&utm_medium=email&utm_campaign=reading-list-33) This is a really useful synt"
-date: 2022-08-15
+date: "2022-08-15"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-33/"
 category: "newsletter"
 ---

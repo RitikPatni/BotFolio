@@ -1,11 +1,12 @@
 ---
 title: "Reading List #31"
 description: "## 📚 To Read [Simultaneous Translation in HTML](https://shkspr.mobi/blog/2022/07/simultaneous-translation-in-html/?utm_source=ritik&utm_medium=email&utm_campaign=reading-list-31-41"
-date: 2022-08-02
+date: "2022-08-02"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-31-4156/"
 category: "newsletter"
 ---

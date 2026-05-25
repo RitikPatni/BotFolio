@@ -1,11 +1,12 @@
 ---
-title: "\"Not every problem needs to be overcome, just the ones stopping you from getting where you want to be.\" - Ann Hill"
+title: "\\\\\\\\\\\\\\\"Not every problem needs to be overcome, just the ones stopping you from getting where you want to be.\\\\\\\\\\\\\\\" - Ann Hill"
 description: "## 📚 To Read [Some ways to get better at debugging](https://jvns.ca/blog/2022/08/30/a-way-to-categorize-debugging-skills/) Some good tips from [Julia Evans](https://twitter.com/b0r"
-date: 2022-09-13
+date: "2022-09-13"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/not-every-problem-needs-to-be-overcome-just-the/"
 category: "newsletter"
 ---

@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #1"
 description: "Hello everyone, Happy 2022 to everyone who has made this so far. Hopefully, you'll be doing great and are committed to your new year resolutions so far. I, am also trying to do som"
-date: 2022-01-03
+date: "2022-01-03"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-1/"
 category: "newsletter"
 ---

@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #15"
 description: "Hello Everyone, I hope you all had a pretty amazing weekend, mine certainly was a very busy one this time. Now back to the interesting stuff. I'm trying some new things with this o"
-date: 2022-04-11
+date: "2022-04-11"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-15/"
 category: "newsletter"
 ---

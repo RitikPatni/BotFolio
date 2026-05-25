@@ -1,12 +1,13 @@
 ---
 title: "Software developers have stopped caring about reliability"
 description: "Author: drewdevault.com"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Software developers have stopped caring about reliability.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Software developers have stopped caring about reliability

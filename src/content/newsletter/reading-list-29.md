@@ -1,11 +1,12 @@
 ---
 title: "Reading List #29"
 description: "Hello Everyone, Hope everyone had an outstanding week. Mine was filled with interviews as I left my old job and transitioned into a new one. With that update, let's start with this"
-date: 2022-07-18
+date: "2022-07-18"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-29/"
 category: "newsletter"
 ---

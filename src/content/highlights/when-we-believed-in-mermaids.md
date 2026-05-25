@@ -1,12 +1,13 @@
 ---
 title: "When We Believed in Mermaids"
 description: "Author: Barbara O'Neal"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Books/When We Believed in Mermaids.md"
+source_url: ""
 category: "readwise-books"
 ---
 # When We Believed in Mermaids

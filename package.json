@@ -9,6 +9,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "content:frontmatter:parity": "node scripts/content-frontmatter-parity.mjs",
+    "content:frontmatter:fix": "node scripts/content-frontmatter-parity.mjs --write",
+    "content:frontmatter:ci": "node scripts/content-frontmatter-parity.mjs --ci",
     "gallery:validate": "node scripts/validate-gallery.mjs",
     "gallery:validate:strict": "node scripts/validate-gallery.mjs --strict",
     "gallery:validate:ci": "node scripts/validate-gallery.mjs --ci",
@@ -24,6 +27,7 @@
     "sass": "^1.100.0"
   },
   "devDependencies": {
-    "typescript": "^5.6.3"
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^5.9.3"
   }
 }

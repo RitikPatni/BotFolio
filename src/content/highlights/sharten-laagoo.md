@@ -1,12 +1,13 @@
 ---
 title: "Sharten Laagoo"
 description: "Author: 🧔 Private/Uncategorized Notes/Divya Prakash Dubey"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Books/Sharten Laagoo.md"
+source_url: ""
 category: "readwise-books"
 ---
 # Sharten Laagoo

@@ -1,14 +1,15 @@
 ---
 title: "Condition for closing browser tab"
 description: "The below excerpt is from official [w3 spec reference](https://www.w3.org/TR/html51/browsers.html#script-closable)"
-date: 2021-07-08
+date: "2021-07-08"
 draft: false
 tags:
-  - obsidian-import
-  - til
+  - "obsidian-import"
+  - "til"
 source_path: "legacy-vault/🖋️ Blog/TIL/Condition for closing browser tab.md"
+source_url: ""
+category: "blog"
 ---
-
 The below excerpt is from official [w3 spec reference](https://www.w3.org/TR/html51/browsers.html#script-closable)
 > A [browsing context](https://www.w3.org/TR/html51/browsers.html#browsing-context) is script-closable if it is an [auxiliary browsing context](https://www.w3.org/TR/html51/browsers.html#auxiliary-browsing-contexts) that was created by a script (as opposed to by an action of the user), or if it is a [top-level browsing context](https://www.w3.org/TR/html51/browsers.html#top-level-browsing-context) whose [session history](https://www.w3.org/TR/html51/browsers.html#session-history) contains only one `[Document](https://html.spec.whatwg.org/multipage/dom.html#document)`.
 

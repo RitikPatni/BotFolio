@@ -1,12 +1,13 @@
 ---
 title: "Tweets From Telmo Goncalves"
 description: "Author: @telmo on Twitter"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Tweets/Tweets From Telmo Goncalves.md"
+source_url: ""
 category: "readwise-tweets"
 ---
 # Tweets From Telmo Goncalves

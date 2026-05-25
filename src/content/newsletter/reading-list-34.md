@@ -1,11 +1,12 @@
 ---
 title: "Reading List #34"
 description: "## 📚 To Read [outline is your friend](https://www.matuzo.at/blog/2022/focus-outline/?utm_source=ritik&utm_medium=email&utm_campaign=reading-list-34) Outline is a very helpful and u"
-date: 2022-08-23
+date: "2022-08-23"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-34/"
 category: "newsletter"
 ---

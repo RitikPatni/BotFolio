@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #10"
 description: "Hello Everyone, Welcome to the 10th edition of this newsletter which, I thought, was going to be the last one, but I've decided to continue it as I like sharing this stuff with you"
-date: 2022-03-07
+date: "2022-03-07"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-10/"
 category: "newsletter"
 ---

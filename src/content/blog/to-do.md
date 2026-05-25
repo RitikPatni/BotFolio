@@ -1,13 +1,14 @@
 ---
 title: "To-Do"
 description: "- [ ] Blog"
-date: 2021-06-13
+date: "2021-06-13"
 draft: false
 tags:
-  - obsidian-import
+  - "obsidian-import"
 source_path: "legacy-vault/🧔 private/Notes/To-Do.md"
+source_url: ""
+category: "blog"
 ---
-
 - [ ] Blog
 	- [ ] Add 
 		- [ ] TIL Section 

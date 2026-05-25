@@ -1,12 +1,13 @@
 ---
 title: "How do you know when you’re REALLY successful?"
 description: "Full Title: How do you know when you’re REALLY successful?"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/How do you know when you’re REALLY successful.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # How do you know when you’re REALLY successful?

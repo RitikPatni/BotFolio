@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes Example #2"
 description: "Another week and here we go[Writing Non Advice](https://danluu.com/writing-non-advice/) Here, Dan Luu explains why every writing style can be different and yet, it can be fine. The"
-date: 2022-01-03
+date: "2022-01-03"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-example-2/"
 category: "newsletter"
 ---

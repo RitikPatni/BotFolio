@@ -1,11 +1,12 @@
 ---
 title: "“Everyone, deep in their hearts, is waiting for the end of the world to come.” - Haruki Murakami, 1Q84"
-description: "Hello All, Please excuse the link dump, but this is what I had to do as I procrastinated on for so many weeks. I'll try to do it regularly now to keep the content in control. With "
-date: 2022-11-01
+description: "Hello All, Please excuse the link dump, but this is what I had to do as I procrastinated on for so many weeks. I'll try to do it regularly now to keep the content in control. With"
+date: "2022-11-01"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/everyone-deep-in-their-hearts-is-waiting-for-the-1689/"
 category: "newsletter"
 ---

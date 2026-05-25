@@ -1,13 +1,14 @@
 ---
 title: "Custom Domains with Obsidian Publish"
 description: "In order to set a custom domain you need to create a `netlify.toml` file in your root directory and add the following"
-date: 2021-09-21
+date: "2021-09-21"
 draft: false
 tags:
-  - obsidian-import
+  - "obsidian-import"
 source_path: "legacy-vault/🌳Trees/Custom Domains with Obsidian Publish.md"
+source_url: ""
+category: "blog"
 ---
-
 ## Custom Domains with Obsidian Publish and Netlify
 
 

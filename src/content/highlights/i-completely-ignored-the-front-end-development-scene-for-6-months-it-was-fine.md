@@ -1,12 +1,13 @@
 ---
 title: "I completely ignored the front end development scene for 6 months. It was fine"
 description: "Author: rachsmith.com"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/I completely ignored the front end development scene for 6 months. It was fine.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # I completely ignored the front end development scene for 6 months. It was fine

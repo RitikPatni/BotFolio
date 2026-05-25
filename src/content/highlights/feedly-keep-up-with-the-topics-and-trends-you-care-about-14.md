@@ -1,12 +1,13 @@
 ---
 title: "Feedly – Keep up with the topics and trends you care about"
 description: "Author: feedly.com"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Feedly – Keep up with the topics and trends you care about-9.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Feedly – Keep up with the topics and trends you care about

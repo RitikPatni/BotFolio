@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #4"
 description: "Hello Everyone, I hope you all had a wonderful last week. I started working on my new personal website again and managed to reach a mini milestone of 400+ days streak of learning S"
-date: 2022-01-24
+date: "2022-01-24"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-4/"
 category: "newsletter"
 ---

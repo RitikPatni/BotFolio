@@ -1,11 +1,12 @@
 ---
 title: "Reading List #23"
 description: "Hello everyone, Here's this week's stuff. I hope you'll love reading it all. ## 📚 To Read [The apps I use to read and write for this blog](https://interconnected.org/home/2022/05/2"
-date: 2022-06-08
+date: "2022-06-08"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/reading-list-23/"
 category: "newsletter"
 ---

@@ -1,12 +1,13 @@
 ---
 title: "Things Learned Blogging"
 description: "Author: blog.jim-nielsen.com"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Things Learned Blogging.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Things Learned Blogging

@@ -1,12 +1,13 @@
 ---
 title: "Planning vs. Execution: How much planning is too much?"
 description: "Full Title: Planning vs. Execution: How much planning is too much?"
-date: 2021-01-01
+date: "2021-01-01"
 draft: false
 tags:
-  - highlights
-  - obsidian-import
+  - "highlights"
+  - "obsidian-import"
 source_path: "legacy-vault/📝 Readwise/Articles/Planning vs. Execution How much planning is too much.md"
+source_url: ""
 category: "readwise-articles"
 ---
 # Planning vs. Execution: How much planning is too much?

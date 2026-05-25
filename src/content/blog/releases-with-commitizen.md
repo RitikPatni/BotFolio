@@ -1,13 +1,14 @@
 ---
 title: "Managing your CI pipeline with GitLab S3, Commitizen and Husky"
 description: "- Part 1: Husky"
-date: 2021-05-10
+date: "2021-05-10"
 draft: false
 tags:
-  - obsidian-import
+  - "obsidian-import"
 source_path: "legacy-vault/🖋️ Blog/Drafts/Releases with Commitizen.md"
+source_url: ""
+category: "blog"
 ---
-
 - Part 1: Husky
 - Part 2: S3
 - Part 3: Commitizen

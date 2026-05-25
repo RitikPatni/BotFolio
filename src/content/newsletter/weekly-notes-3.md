@@ -1,11 +1,12 @@
 ---
 title: "Weekly Notes #3"
 description: "Hello everyone, I hope you had a great and warm week! I'm done with all the cold 🥶 and hopefully next week will have some sun ☀️. Moreover, I tried a fun experiment of using Twitte"
-date: 2022-01-17
+date: "2022-01-17"
 draft: false
 tags:
-  - newsletter
-  - buttondown
+  - "newsletter"
+  - "buttondown"
+source_path: ""
 source_url: "https://buttondown.com/ritik/archive/weekly-notes-3/"
 category: "newsletter"
 ---

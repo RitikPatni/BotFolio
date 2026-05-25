@@ -1,13 +1,14 @@
 ---
 title: "Little Wins"
 description: "- Worked with Angular for the first time"
-date: 2021-06-12
+date: "2021-06-12"
 draft: false
 tags:
-  - obsidian-import
+  - "obsidian-import"
 source_path: "legacy-vault/🧔 private/Notes/Little Wins.md"
+source_url: ""
+category: "blog"
 ---
-
 ## Joined Brainplay as a front-end developer
 
 - Worked with Angular for the first time
