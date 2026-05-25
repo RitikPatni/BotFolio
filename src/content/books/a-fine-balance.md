@@ -9,6 +9,13 @@ tags:
 source_path: "legacy-vault/📚 Books/Queued Books/A Fine Balance.md"
 source_url: ""
 category: "books"
+author: "Rohinton Mistry"
+genres: []
+published_year: "1995"
+isbn13: "9788439701989"
+isbn10: "8439701985"
+publisher: "Random House"
+openlibrary_url: "https://openlibrary.org/works/OL2980902W"
 ---
 ![A Fine Balance Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1551173390l/5211._SY475_.jpg)
 

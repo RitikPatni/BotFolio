@@ -9,6 +9,14 @@ tags:
 source_path: "legacy-vault/📚 Books/2021/A Game of Thrones.md"
 source_url: ""
 category: "books"
+author: "George R. R. Martin"
+genres:
+  - "fiction"
+published_year: "1996"
+isbn13: "9788418196508"
+isbn10: "8556510787"
+publisher: "Debutxaca"
+openlibrary_url: "https://openlibrary.org/works/OL257943W"
 ---
 ![A Game of Thrones Cover Art](https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1562726234i/13496.jpg)
 

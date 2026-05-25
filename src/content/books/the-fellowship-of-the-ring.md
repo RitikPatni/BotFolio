@@ -9,6 +9,14 @@ tags:
 source_path: "legacy-vault/📚 Books/2020/The Fellowship of the Ring.md"
 source_url: ""
 category: "books"
+author: "J.R.R. Tolkien"
+genres:
+  - "fiction"
+published_year: "1954"
+isbn13: "9789897773921"
+isbn10: "9897773924"
+publisher: "HarperCollins"
+openlibrary_url: "https://openlibrary.org/works/OL27513W"
 ---
 ![The Fellowship of the Ring Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1307111070l/727798.jpg)
 

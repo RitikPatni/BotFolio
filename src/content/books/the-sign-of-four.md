@@ -9,6 +9,14 @@ tags:
 source_path: "legacy-vault/📚 Books/2020/The Sign of Four.md"
 source_url: ""
 category: "books"
+author: "Arthur Conan Doyle"
+genres:
+  - "fiction"
+published_year: "1889"
+isbn13: "9788651703303"
+isbn10: "8417079394"
+publisher: "Художественная литература"
+openlibrary_url: "https://openlibrary.org/works/OL262438W"
 ---
 ![The Sign of Four Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1299346921l/608474.jpg)
 

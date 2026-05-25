@@ -9,6 +9,13 @@ tags:
 source_path: "legacy-vault/📚 Books/2021/Baaghi Ballia.md"
 source_url: ""
 category: "books"
+author: ""
+genres: []
+published_year: ""
+isbn13: ""
+isbn10: ""
+publisher: ""
+openlibrary_url: ""
 ---
 ![Baaghi Ballia Cover Art](https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1570908697l/52738109._SX318_SY475_.jpg)
 
