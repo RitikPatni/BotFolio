@@ -1,9 +1,3 @@
-declare global {
-  interface Window {
-    __rpLenisInitialized?: boolean;
-  }
-}
-
 const storageKey = "rp-theme";
 const personaStorageKey = "rp-persona";
 const personaTransitionStorageKey = "rp-persona-transition";
@@ -264,33 +258,6 @@ const bindPersonaToggle = () => {
   });
 };
 
-const initLenis = () => {
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  );
-
-  if (prefersReducedMotion.matches || window.__rpLenisInitialized) {
-    return;
-  }
-
-  window.__rpLenisInitialized = true;
-
-  import("lenis").then(({ default: Lenis }) => {
-    const lenis = new Lenis({
-      duration: 0.75,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    const raf = (time: number) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-
-    requestAnimationFrame(raf);
-  });
-};
-
 const animateReveals = () => {
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
@@ -338,7 +305,6 @@ export function initBaseLayoutClient(options: BaseLayoutInitOptions = {}) {
   applyStoredPersona();
   bindThemeToggle();
   bindPersonaToggle();
-  initLenis();
 
   if (shouldAnimateReveals) {
     animateReveals();
