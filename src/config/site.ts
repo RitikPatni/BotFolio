@@ -3,6 +3,8 @@ export type NavLink = {
   label: string;
 };
 
+export type PersonaMode = "studio" | "field";
+
 export type SocialProfile = {
   label: string;
   href: string;
@@ -10,16 +12,18 @@ export type SocialProfile = {
   iconSource: "iconsvg.xyz";
 };
 
-export const NAV_LINKS: NavLink[] = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "/newsletter", label: "Newsletter" },
-  { href: "/uses", label: "Uses" },
-  { href: "/library", label: "Library" },
-  { href: "/photography", label: "Photography" },
-  { href: "/contact", label: "Contact" },
-];
+export const NAV_LINKS_BY_PERSONA: Record<PersonaMode, NavLink[]> = {
+  studio: [
+    { href: "/coding", label: "Journal" },
+    { href: "/blog", label: "Notes" },
+    { href: "/about", label: "About" },
+  ],
+  field: [
+    { href: "/photography", label: "Gallery" },
+    { href: "/library", label: "Archive" },
+    { href: "/about", label: "About" },
+  ],
+};
 
 export const SITE_CONFIG = {
   personName: "Ritik Patni",

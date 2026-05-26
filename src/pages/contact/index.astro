@@ -1,111 +1,22 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
-import { SITE_CONFIG } from "../../config/site";
-import { CONTACT_INTENTS, CONTACT_CHANNELS } from "../../data/contact";
-import SocialIcon from "../../components/SocialIcon.astro";
-import "./_contact.scss";
-
-const channelMap = Object.fromEntries(CONTACT_CHANNELS.map((c) => [c.icon, c]));
-const defaultIntentId = CONTACT_INTENTS.some(
-  (intent) => intent.id === "frontend",
-)
-  ? "frontend"
-  : (CONTACT_INTENTS[0]?.id ?? "general");
-const defaultIntentDescription =
-  CONTACT_INTENTS.find((intent) => intent.id === defaultIntentId)
-    ?.description ??
-  CONTACT_INTENTS[0]?.description ??
-  "";
+import "../about/_about.scss";
 ---
 
-<BaseLayout title="Contact — Ritik Patni" path="/contact">
-  <div class="contact" data-contact-root>
-    <section class="contact__hero">
-      <p class="contact__eyebrow">Let’s build something thoughtful</p>
-      <h1 class="contact__title">Contact</h1>
-      <p class="contact__lead">
-        Open to conversations around frontend/product engineering, design-minded
-        web experiences, and photography collaborations.
+<BaseLayout title="Contact moved — Ritik Patni" path="/about">
+  <section class="about">
+    <div class="about__hero about__hero--compact">
+      <h1 class="about__title">Contact moved</h1>
+      <p class="about__lead">
+        Contact is now merged with About for a single, cleaner profile page.
       </p>
-
-      <ul class="contact__chips" aria-label="Availability highlights">
-        <li class="contact__chip">Remote-friendly collaborations</li>
-        <li class="contact__chip">Open to async conversations</li>
-        <li class="contact__chip">Works across product and visual craft</li>
-      </ul>
-    </section>
-
-    <section
-      class="contact__card contact__card--interactive"
-      aria-labelledby="find-online-title"
-    >
-      <div class="contact__card-head">
-        <h2 class="contact__card-title" id="find-online-title">
-          Find me online
-        </h2>
-        <p class="contact__card-lead">
-          Choose a topic to surface the most relevant channels.
-        </p>
-      </div>
-
-      <div
-        class="contact__intent"
-        role="group"
-        aria-label="Conversation intent"
-      >
-        {
-          CONTACT_INTENTS.map((intent) => (
-            <button
-              class="contact__intent-button"
-              type="button"
-              data-intent={intent.id}
-              data-description={intent.description}
-              aria-pressed={intent.id === defaultIntentId ? "true" : "false"}
-            >
-              {intent.label}
-            </button>
-          ))
-        }
-      </div>
-
-      <p class="contact__intent-description" data-intent-description>
-        {defaultIntentDescription}
+      <p>
+        <a href="/about/#connect">Go to About + Contact</a>
       </p>
+    </div>
+  </section>
 
-      <div class="contact__socials" aria-label="Social links">
-        {
-          SITE_CONFIG.socials.map((social) => {
-            const details = channelMap[social.icon] ?? {
-              helper: "Reach out through this channel.",
-              intents: ["general"],
-            };
-
-            return (
-              <a
-                class="contact__social-link"
-                href={social.href}
-                target="_blank"
-                rel="noreferrer noopener"
-                data-channel-intents={details.intents.join(" ")}
-              >
-                <span class="contact__social-row">
-                  <SocialIcon name={social.icon} class="contact__social-icon" />
-                  <span class="contact__social-label">{social.label}</span>
-                </span>
-                <span class="contact__social-helper">{details.helper}</span>
-              </a>
-            );
-          })
-        }
-      </div>
-    </section>
-
-    <script>
-      import { initContactIntentClient } from "../../utils/contact/contactIntent.client";
-
-      initContactIntentClient();
-      document.addEventListener("DOMContentLoaded", initContactIntentClient);
-      document.addEventListener("astro:page-load", initContactIntentClient);
-    </script>
-  </div>
+  <script is:inline>
+    window.location.replace("/about/#connect");
+  </script>
 </BaseLayout>

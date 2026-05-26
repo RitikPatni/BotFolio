@@ -1,7 +1,7 @@
 ---
 import "../../styles/global.scss";
 import "./BaseLayout.scss";
-import { SITE_CONFIG, NAV_LINKS } from "../../config/site";
+import { SITE_CONFIG, NAV_LINKS_BY_PERSONA } from "../../config/site";
 import { ViewTransitions } from "astro:transitions";
 import SocialIcon from "../../components/SocialIcon.astro";
 
@@ -18,12 +18,14 @@ const {
 } = Astro.props;
 
 const socials = SITE_CONFIG.socials;
+const navSets = NAV_LINKS_BY_PERSONA;
 ---
 
 <!doctype html>
 <html
   lang="en"
   data-theme="dark"
+  data-persona="studio"
   transition:name="page-root"
   transition:animate="none"
 >
@@ -33,6 +35,7 @@ const socials = SITE_CONFIG.socials;
     <script is:inline>
       (() => {
         const THEME_STORAGE_KEY = "rp-theme";
+        const PERSONA_STORAGE_KEY = "rp-persona";
 
         const applySavedTheme = () => {
           try {
@@ -46,10 +49,30 @@ const socials = SITE_CONFIG.socials;
           }
         };
 
+        const applySavedPersona = () => {
+          try {
+            const savedPersona = localStorage.getItem(PERSONA_STORAGE_KEY);
+            const persona = savedPersona === "field" ? "field" : "studio";
+            document.documentElement.setAttribute("data-persona", persona);
+          } catch {
+            document.documentElement.setAttribute("data-persona", "studio");
+          }
+        };
+
         applySavedTheme();
+        applySavedPersona();
+
+        try {
+          if (sessionStorage.getItem("rp-persona-transition") === "1") {
+            document.documentElement.classList.add("is-persona-entering");
+          }
+        } catch {
+          // Ignore storage access errors; entry animation is optional.
+        }
 
         if (!window.__rpThemeSwapHookBound) {
           document.addEventListener("astro:after-swap", applySavedTheme);
+          document.addEventListener("astro:after-swap", applySavedPersona);
           window.__rpThemeSwapHookBound = true;
         }
       })();
@@ -120,24 +143,79 @@ const socials = SITE_CONFIG.socials;
       <a class="base-layout__skip-link" href="#main-content">Skip to content</a>
       <header class="base-layout__header">
         <div class="base-layout__container">
-          <div class="base-layout__nav">
-            <a class="base-layout__brand" href="/" aria-label="Go to homepage"
-              ><strong>{SITE_CONFIG.personName}</strong></a
+          <div class="base-layout__topbar">
+            <div class="base-layout__nav">
+              <a
+                class="base-layout__brand"
+                href="/coding"
+                aria-label="Go to profile home"
+                data-persona-brand
+              >
+                <strong>{SITE_CONFIG.personName}</strong>
+              </a>
+            </div>
+            <button
+              class="base-layout__persona-toggle"
+              type="button"
+              data-persona-toggle
+              aria-label="Switch profile lens"
+              title="Switch profile lens"
+              aria-pressed="false"
             >
-          </div>
-          <nav class="base-layout__links" aria-label="Main navigation">
-            {
-              NAV_LINKS.map((item) => (
-                <a
-                  href={item.href}
-                  class={`base-layout__link ${path === item.href ? "base-layout__link--active" : ""}`}
-                  aria-current={path === item.href ? "page" : undefined}
+              <span
+                class="base-layout__persona-toggle-track"
+                aria-hidden="true"
+              >
+                <span
+                  class="base-layout__persona-toggle-state base-layout__persona-toggle-state--studio"
+                  >⌨</span
                 >
-                  {item.label}
-                </a>
-              ))
-            }
-          </nav>
+                <span
+                  class="base-layout__persona-toggle-state base-layout__persona-toggle-state--field"
+                  >📷</span
+                >
+                <span class="base-layout__persona-toggle-thumb">
+                  <span class="base-layout__persona-toggle-thumb-icon">⌨</span>
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="base-layout__menu-row">
+            <nav
+              class="base-layout__links"
+              aria-label="Main navigation"
+              data-persona-nav="studio"
+            >
+              {
+                navSets.studio.map((item) => (
+                  <a
+                    href={item.href}
+                    class={`base-layout__link ${path === item.href ? "base-layout__link--active" : ""}`}
+                    aria-current={path === item.href ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                ))
+              }
+            </nav>
+            <nav
+              class="base-layout__links"
+              aria-label="Main navigation"
+              data-persona-nav="field"
+            >
+              {
+                navSets.field.map((item) => (
+                  <a
+                    href={item.href}
+                    class={`base-layout__link ${path === item.href ? "base-layout__link--active" : ""}`}
+                    aria-current={path === item.href ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                ))
+              }
+            </nav>
+          </div>
         </div>
       </header>
 

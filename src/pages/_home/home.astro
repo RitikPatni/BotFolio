@@ -22,30 +22,35 @@ const posts = (await getCollection("blog"))
   path="/"
 >
   <div class="index primitive-stack">
-    <!--
-    Content provenance (Obsidian):
-    - legacy-vault/🧔 private/Jobs/Cover Letter 1.md
-    - legacy-vault/🧔 private/Jobs/Cover Letter 2.md
-  -->
     <section class="index__hero primitive-section motion-reveal">
       <div class="index__hero-content">
-        <h1 class="index__title">
-          Thoughtful interfaces. Patient field notes. One place.
-        </h1>
-        <p class="index__lead">
-          I design and build web experiences with a systems mindset, then switch
-          lenses to document wildlife and macro moments. This space blends both
-          disciplines into one evolving archive.
+        <h1 class="index__title">Ritik Patni</h1>
+        <p class="index__lead" data-persona-slot="studio">
+          Building thoughtful product surfaces, systems, and shipping notes.
         </p>
-        <p>
-          <a class="index__inline-link primitive-link" href="/blog"
-            >Explore engineering notes</a
-          >
+        <p class="index__lead" data-persona-slot="field">
+          Quiet visual studies, patient observation, and curated field logs.
         </p>
       </div>
     </section>
 
-    <section class="primitive-section motion-reveal">
+    <section class="primitive-section motion-reveal" data-persona-slot="studio">
+      <p>
+        <a class="index__inline-link primitive-link" href="/coding"
+          >Open profile index</a
+        >
+      </p>
+    </section>
+
+    <section class="primitive-section motion-reveal" data-persona-slot="field">
+      <p>
+        <a class="index__inline-link primitive-link" href="/photography"
+          >Open profile index</a
+        >
+      </p>
+    </section>
+
+    <section class="primitive-section motion-reveal" data-persona-slot="studio">
       <h2 class="index__section-title">Latest blog posts</h2>
       {
         posts.length === 0 ? (
@@ -73,6 +78,24 @@ const posts = (await getCollection("blog"))
           >View all blog posts</a
         >
       </p>
+    </section>
+
+    <section class="primitive-section motion-reveal" data-persona-slot="field">
+      <h2 class="index__section-title">Recent additions</h2>
+      <div class="index__list">
+        <article class="index__item primitive-surface">
+          <h3 class="index__item-title"><a href="/photography">Gallery</a></h3>
+          <p class="index__description">
+            Recent image sets and category collections.
+          </p>
+        </article>
+        <article class="index__item primitive-surface">
+          <h3 class="index__item-title"><a href="/library">Archive</a></h3>
+          <p class="index__description">
+            Reading notes and long-form references.
+          </p>
+        </article>
+      </div>
     </section>
   </div>
 </BaseLayout>

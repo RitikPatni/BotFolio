@@ -1,0 +1,77 @@
+@use "../../styles/patterns" as *;
+
+.coding {
+  display: grid;
+  gap: var(--size-5);
+
+  &__hero {
+    @extend %page-hero;
+  }
+
+  &__flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--size-4);
+    align-items: start;
+  }
+
+  &__title {
+    @extend %page-title;
+  }
+
+  &__lead {
+    @extend %page-lead;
+  }
+
+  &__grid {
+    @extend %content-grid;
+
+    &--two {
+      @extend %content-grid-two;
+    }
+  }
+
+  &__card {
+    @extend %surface-card;
+
+    block-size: 100%;
+
+    &-title {
+      @extend %surface-card-title;
+    }
+
+    &--offset {
+      @extend %surface-card-offset;
+    }
+  }
+
+  &__list {
+    @extend %entry-list;
+
+    &--offset {
+      @extend %entry-list-offset;
+    }
+  }
+
+  &__item {
+    @extend %entry-item;
+
+    block-size: 100%;
+
+    &-title {
+      @extend %entry-item-title;
+    }
+  }
+
+  &__meta {
+    @extend %entry-meta;
+
+    &--spaced {
+      @extend %entry-meta-spaced;
+    }
+  }
+
+  &__description {
+    @extend %entry-description;
+  }
+}

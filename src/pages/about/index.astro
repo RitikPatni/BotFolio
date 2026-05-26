@@ -1,23 +1,72 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout/BaseLayout.astro';
-import { ABOUT_HERO, ABOUT_BIO } from '../../data/about';
-import './_about.scss';
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { ABOUT_HERO, ABOUT_BIO } from "../../data/about";
+import { SITE_CONFIG } from "../../config/site";
+import SocialIcon from "../../components/SocialIcon.astro";
+import "./_about.scss";
 ---
 
 <BaseLayout title="About — Ritik Patni" path="/about">
   <div class="about">
-  <!--
-    Content provenance (Obsidian):
-    - legacy-vault/🧔 private/Jobs/Cover Letter 1.md
-    - legacy-vault/🧔 private/Jobs/Cover Letter 2.md
-  -->
-  <section class="about__hero">
-    <h1 class="about__title">About</h1>
-    <p class="about__lead">{ABOUT_HERO.lead}</p>
-  </section>
+    <section class="about__hero">
+      <h1 class="about__title">About</h1>
+      <p class="about__lead">{ABOUT_HERO.lead}</p>
+    </section>
 
-  <article class="about__card">
-    {ABOUT_BIO.map((paragraph) => <p>{paragraph}</p>)}
-  </article>
+    <article class="about__card">
+      {ABOUT_BIO.map((paragraph) => <p>{paragraph}</p>)}
+    </article>
+
+    <section class="about__card about__card--offset" data-persona-slot="studio">
+      <h2 class="about__card-title">Current lens</h2>
+      <p class="about__description">
+        Most days are spent shaping product experience, system consistency, and
+        delivery quality.
+      </p>
+    </section>
+
+    <section class="about__card about__card--offset" data-persona-slot="field">
+      <h2 class="about__card-title">Current lens</h2>
+      <p class="about__description">
+        The same attention is applied to patient observation, framing, and
+        visual sequencing.
+      </p>
+    </section>
+
+    <section class="about__card about__card--offset" id="connect">
+      <h2 class="about__card-title">About + Contact</h2>
+      <p class="about__description">
+        For product conversations, visual projects, or general collaboration,
+        reach out through the channel that fits best.
+      </p>
+
+      <ul
+        class="about__tags about__tags--spaced"
+        aria-label="Conversation topics"
+      >
+        <li class="about__tag">Product work</li>
+        <li class="about__tag">Visual work</li>
+        <li class="about__tag">CSS Craft</li>
+        <li class="about__tag">General</li>
+      </ul>
+
+      <div class="about__socials" aria-label="Social links">
+        {
+          SITE_CONFIG.socials.map((social) => (
+            <a
+              class="about__social-link"
+              href={social.href}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <span class="about__social-row">
+                <SocialIcon name={social.icon} class="about__social-icon" />
+                <span class="about__social-label">{social.label}</span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
   </div>
 </BaseLayout>

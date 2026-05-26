@@ -1,0 +1,116 @@
+---
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { formatDisplayDate } from "../../utils/date";
+import "./_coding.scss";
+
+const latestPosts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 4)
+  .map((post) => ({
+    slug: post.slug,
+    title: post.data.title,
+    description: post.data.description,
+    date: post.data.date,
+  }));
+
+const latestNewsletter = (await getCollection("newsletter"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3)
+  .map((entry) => ({
+    slug: entry.slug,
+    title: entry.data.title,
+    description: entry.data.description,
+    date: entry.data.date,
+  }));
+---
+
+<BaseLayout title="Developer — Ritik Patni" path="/coding">
+  <div class="coding">
+    <section class="coding__hero">
+      <h1 class="coding__title">Developer</h1>
+      <p class="coding__lead">
+        Product-minded frontend engineering, design systems, and practical notes
+        from shipping and maintaining web products.
+      </p>
+    </section>
+
+    <section class="coding__flow" aria-label="Coding sections">
+      <article class="coding__card">
+        <h2 class="coding__card-title">Primary areas</h2>
+        <div class="coding__grid coding__grid--two">
+          <article class="coding__item">
+            <h3 class="coding__item-title"><a href="/blog">Writing</a></h3>
+            <p class="coding__description">
+              Long-form notes on frontend architecture and product delivery.
+            </p>
+          </article>
+          <article class="coding__item">
+            <h3 class="coding__item-title">
+              <a href="/newsletter">Dispatches</a>
+            </h3>
+            <p class="coding__description">
+              Shorter updates, learnings, and workflow observations.
+            </p>
+          </article>
+        </div>
+      </article>
+
+      <article class="coding__card">
+        <h2 class="coding__card-title">Recent notes</h2>
+        <ul class="coding__list coding__list--offset">
+          {
+            latestPosts.length === 0 ? (
+              <li class="coding__item">
+                <p class="coding__description">No blog posts yet.</p>
+              </li>
+            ) : (
+              latestPosts.map((post) => (
+                <li class="coding__item">
+                  <h3 class="coding__item-title">
+                    <a href={`/blog/${post.slug}`}>{post.title}</a>
+                  </h3>
+                  <p class="coding__meta coding__meta--spaced">
+                    {formatDisplayDate(post.date)}
+                  </p>
+                  <p class="coding__description">{post.description}</p>
+                </li>
+              ))
+            )
+          }
+        </ul>
+      </article>
+
+      <article class="coding__card">
+        <h2 class="coding__card-title">Recent dispatches</h2>
+        <ul class="coding__list coding__list--offset">
+          {
+            latestNewsletter.length === 0 ? (
+              <li class="coding__item">
+                <p class="coding__description">No newsletter issues yet.</p>
+              </li>
+            ) : (
+              latestNewsletter.map((entry) => (
+                <li class="coding__item">
+                  <h3 class="coding__item-title">
+                    <a href={`/newsletter/${entry.slug}`}>{entry.title}</a>
+                  </h3>
+                  <p class="coding__meta coding__meta--spaced">
+                    {formatDisplayDate(entry.date)}
+                  </p>
+                  <p class="coding__description">{entry.description}</p>
+                </li>
+              ))
+            )
+          }
+        </ul>
+      </article>
+    </section>
+
+    <p>
+      <a class="coding__description" href="/uses">View current tooling setup</a>
+    </p>
+  </div>
+</BaseLayout>
