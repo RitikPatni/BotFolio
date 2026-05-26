@@ -4,7 +4,6 @@ interface Props {
   class?: string;
 }
 
-import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import FallbackCodeIcon from "./icons/social/FallbackCodeIcon.astro";
 import GithubIcon from "./icons/social/GithubIcon.astro";
 import GoodreadsIcon from "./icons/social/GoodreadsIcon.astro";
@@ -13,14 +12,17 @@ import LinkedinIcon from "./icons/social/LinkedinIcon.astro";
 
 const { name, class: className } = Astro.props;
 
-const ICON_COMPONENTS: Record<string, AstroComponentFactory> = {
+const ICON_COMPONENTS = {
   github: GithubIcon,
   linkedin: LinkedinIcon,
   instagram: InstagramIcon,
   goodreads: GoodreadsIcon,
 };
 
-const Icon = ICON_COMPONENTS[name] ?? FallbackCodeIcon;
+const isKnownIcon = (value: string): value is keyof typeof ICON_COMPONENTS =>
+  Object.prototype.hasOwnProperty.call(ICON_COMPONENTS, value);
+
+const Icon = isKnownIcon(name) ? ICON_COMPONENTS[name] : FallbackCodeIcon;
 ---
 
 <Icon class={className} />

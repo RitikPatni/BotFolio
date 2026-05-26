@@ -290,12 +290,20 @@
 
   &__intent-button {
     @extend %tag-item;
+    appearance: none;
+    border: var(--surface-border) solid
+      color-mix(in srgb, var(--line) 76%, transparent);
+    border-radius: var(--radius-2);
+    padding-block: var(--size-2);
+    padding-inline: var(--size-3);
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
     color: var(--text);
     cursor: pointer;
     transition:
       border-color 180ms ease,
       background-color 180ms ease,
-      transform 180ms ease;
+      transform 180ms ease,
+      box-shadow 180ms ease;
 
     &:hover,
     &:focus-visible {
@@ -303,12 +311,19 @@
       background: color-mix(in srgb, var(--bg) 92%, transparent);
       /* Exception: negative token nudge for hover elevation. */
       transform: translateY(calc(var(--size-1) * -0.5));
+      box-shadow: var(--shadow-1);
     }
 
     &[aria-pressed="true"] {
       border-color: color-mix(in srgb, var(--text) 34%, var(--line));
       color: var(--text);
       background: color-mix(in srgb, var(--bg-soft) 84%, var(--bg));
+      box-shadow: var(--shadow-1);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: none;
     }
 
     &:focus-visible {

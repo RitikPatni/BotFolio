@@ -54,3 +54,10 @@ Each image entry should follow this shape:
 - Keep source code and data files under 400 lines.
 - Prefer splitting large category datasets instead of growing a monolithic file.
 - Keep category IDs aligned across assets folder, manifest entry, and JSON `category` field.
+
+## Workflow Docs
+
+- [Icon workflow](docs/icon-workflow.md)
+- [Content frontmatter parity](docs/content-frontmatter-parity.md)
+- [Gallery validator](docs/gallery-validator.md)
+- [Goodreads cover parity](docs/goodreads-cover-parity.md)

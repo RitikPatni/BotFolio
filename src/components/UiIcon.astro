@@ -22,24 +22,22 @@ interface Props {
 }
 
 const { name, class: className } = Astro.props;
+
+const ICON_COMPONENTS = {
+  expand: ExpandIcon,
+  info: InfoIcon,
+  close: CloseIcon,
+  "chevron-left": ChevronLeftIcon,
+  "chevron-right": ChevronRightIcon,
+  image: ImageIcon,
+  calendar: CalendarIcon,
+  stack: StackIcon,
+};
+
+const isKnownIcon = (value: string): value is keyof typeof ICON_COMPONENTS =>
+  Object.prototype.hasOwnProperty.call(ICON_COMPONENTS, value);
+
+const Icon = isKnownIcon(name) ? ICON_COMPONENTS[name] : ImageIcon;
 ---
 
-{
-  name === "expand" ? (
-    <ExpandIcon class={className} />
-  ) : name === "info" ? (
-    <InfoIcon class={className} />
-  ) : name === "close" ? (
-    <CloseIcon class={className} />
-  ) : name === "chevron-left" ? (
-    <ChevronLeftIcon class={className} />
-  ) : name === "chevron-right" ? (
-    <ChevronRightIcon class={className} />
-  ) : name === "calendar" ? (
-    <CalendarIcon class={className} />
-  ) : name === "stack" ? (
-    <StackIcon class={className} />
-  ) : (
-    <ImageIcon class={className} />
-  )
-}
+<Icon class={className} />

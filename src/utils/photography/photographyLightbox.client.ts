@@ -1,5 +1,8 @@
 import { createLightboxRenderer } from "./photographyLightbox.render";
-import { resolveElements, type GalleryDialogImage } from "./photographyLightbox.types";
+import {
+  resolveElements,
+  type GalleryDialogImage,
+} from "./photographyLightbox.types";
 
 export function initPhotographyLightbox() {
   const root = document.querySelector<HTMLElement>("[data-gallery-root]");
@@ -9,7 +12,9 @@ export function initPhotographyLightbox() {
     return;
   }
 
-  const images = JSON.parse(dataElement.textContent || "[]") as GalleryDialogImage[];
+  const images = JSON.parse(
+    dataElement.textContent || "[]",
+  ) as GalleryDialogImage[];
 
   if (images.length === 0) {
     return;
@@ -25,18 +30,7 @@ export function initPhotographyLightbox() {
     dialog,
     lightboxShell,
     triggers,
-    imageElement,
-    counterElement,
-    categoryElement,
-    titleElement,
-    dateElement,
     metadataElement,
-    metadataListElement,
-    tagsSectionElement,
-    tagListElement,
-    relatedSectionElement,
-    relatedTitleElement,
-    relatedGridElement,
     metadataToggle,
     metadataCloseButton,
     fullscreenToggle,
@@ -119,7 +113,8 @@ export function initPhotographyLightbox() {
   };
 
   const move = (direction: number) => {
-    const nextIndex = (state.activeIndex + direction + images.length) % images.length;
+    const nextIndex =
+      (state.activeIndex + direction + images.length) % images.length;
     renderImage(nextIndex);
   };
 

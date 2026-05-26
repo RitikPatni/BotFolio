@@ -1,9 +1,15 @@
 {
-  "mcpServers": {
+  "servers": {
     "astro-docs": {
       "type": "http",
-      "url": "https://mcp.docs.astro.build/mcp",
-      "tools": ["mcp__astro-docs__search_astro_docs"]
+      "url": "https://mcp.docs.astro.build/mcp"
+    },
+    "motion": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "https://api.motion.dev/registry.tgz?package=motion-studio-mcp&version=latest"
+      ]
     }
   }
 }

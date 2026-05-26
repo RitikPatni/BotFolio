@@ -10,27 +10,6 @@ const repoRoot = path.resolve(__dirname, "..");
 const contentRoot = path.join(repoRoot, "src", "content");
 
 const collections = ["blog", "newsletter", "books", "highlights"];
-const canonicalKeys = {
-  base: [
-    "title",
-    "description",
-    "date",
-    "draft",
-    "tags",
-    "category",
-  ],
-  highlightsExtra: ["source_url"],
-  booksExtra: [
-    "author",
-    "language",
-    "genres",
-    "published_year",
-    "isbn13",
-    "isbn10",
-    "publisher",
-    "openlibrary_url",
-  ],
-};
 
 const args = new Set(process.argv.slice(2));
 const writeMode = args.has("--write") || args.has("--fix");

@@ -6,6 +6,16 @@ import SocialIcon from "../../components/SocialIcon.astro";
 import "./_contact.scss";
 
 const channelMap = Object.fromEntries(CONTACT_CHANNELS.map((c) => [c.icon, c]));
+const defaultIntentId = CONTACT_INTENTS.some(
+  (intent) => intent.id === "frontend",
+)
+  ? "frontend"
+  : (CONTACT_INTENTS[0]?.id ?? "general");
+const defaultIntentDescription =
+  CONTACT_INTENTS.find((intent) => intent.id === defaultIntentId)
+    ?.description ??
+  CONTACT_INTENTS[0]?.description ??
+  "";
 ---
 
 <BaseLayout title="Contact — Ritik Patni" path="/contact">
@@ -44,13 +54,13 @@ const channelMap = Object.fromEntries(CONTACT_CHANNELS.map((c) => [c.icon, c]));
         aria-label="Conversation intent"
       >
         {
-          CONTACT_INTENTS.map((intent, index) => (
+          CONTACT_INTENTS.map((intent) => (
             <button
               class="contact__intent-button"
               type="button"
               data-intent={intent.id}
               data-description={intent.description}
-              aria-pressed={index === 0 ? "true" : "false"}
+              aria-pressed={intent.id === defaultIntentId ? "true" : "false"}
             >
               {intent.label}
             </button>
@@ -59,109 +69,43 @@ const channelMap = Object.fromEntries(CONTACT_CHANNELS.map((c) => [c.icon, c]));
       </div>
 
       <p class="contact__intent-description" data-intent-description>
-        {CONTACT_INTENTS[0].description}
-
-        <div class="contact__socials" aria-label="Social links">
-          {
-            SITE_CONFIG.socials.map((social) => {
-              const details = channelMap[social.icon] ?? {
-                helper: "Reach out through this channel.",
-                intents: ["general"],
-              };
-
-              return (
-                <a
-                  class="contact__social-link"
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  data-channel-intents={details.intents.join(" ")}
-                >
-                  <span class="contact__social-row">
-                    <SocialIcon
-                      name={social.icon}
-                      class="contact__social-icon"
-                    />
-                    <span class="contact__social-label">{social.label}</span>
-                  </span>
-                  <span class="contact__social-helper">{details.helper}</span>
-                </a>
-              );
-            })
-          }
-        </div>
+        {defaultIntentDescription}
       </p>
+
+      <div class="contact__socials" aria-label="Social links">
+        {
+          SITE_CONFIG.socials.map((social) => {
+            const details = channelMap[social.icon] ?? {
+              helper: "Reach out through this channel.",
+              intents: ["general"],
+            };
+
+            return (
+              <a
+                class="contact__social-link"
+                href={social.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                data-channel-intents={details.intents.join(" ")}
+              >
+                <span class="contact__social-row">
+                  <SocialIcon name={social.icon} class="contact__social-icon" />
+                  <span class="contact__social-label">{social.label}</span>
+                </span>
+                <span class="contact__social-helper">{details.helper}</span>
+              </a>
+            );
+          })
+        }
+      </div>
     </section>
 
     <script>
-      (() => {
-        // @ts-nocheck
-        const root = document.querySelector("[data-contact-root]");
+      import { initContactIntentClient } from "../../utils/contact/contactIntent.client";
 
-        if (!root) {
-          return;
-        }
-
-        const intentButtons = Array.from(
-          root.querySelectorAll("[data-intent]"),
-        );
-        const socialLinks = Array.from(
-          root.querySelectorAll("[data-channel-intents]"),
-        );
-        const intentDescription = root.querySelector(
-          "[data-intent-description]",
-        );
-
-        if (
-          !intentButtons.length ||
-          !socialLinks.length ||
-          !intentDescription
-        ) {
-          return;
-        }
-
-        const validIntents = new Set(
-          intentButtons.map((b) => b.dataset.intent).filter(Boolean),
-        );
-
-        const normalizeIntent = (intent) =>
-          validIntents.has(intent) ? intent : "general";
-
-        const updateIntent = (intent) => {
-          const normalizedIntent = normalizeIntent(intent);
-
-          intentButtons.forEach((button) => {
-            button.setAttribute(
-              "aria-pressed",
-              String(button.dataset.intent === normalizedIntent),
-            );
-          });
-
-          socialLinks.forEach((link) => {
-            const supportedIntents =
-              link.dataset.channelIntents?.split(" ") ?? [];
-            const isMatch = supportedIntents.includes(normalizedIntent);
-
-            link.classList.toggle("contact__social-link--active", isMatch);
-            link.classList.toggle("contact__social-link--dim", !isMatch);
-          });
-
-          const activeButton = intentButtons.find(
-            (button) => button.dataset.intent === normalizedIntent,
-          );
-          intentDescription.textContent =
-            activeButton?.dataset.description ?? "";
-        };
-
-        intentButtons.forEach((button) => {
-          button.addEventListener("click", () => {
-            const intent = button.dataset.intent;
-            updateIntent(intent ?? "general");
-          });
-        });
-
-        updateIntent("frontend");
-      })();
+      initContactIntentClient();
+      document.addEventListener("DOMContentLoaded", initContactIntentClient);
+      document.addEventListener("astro:page-load", initContactIntentClient);
     </script>
   </div>
 </BaseLayout>
