@@ -15,7 +15,22 @@ const highlightsSchema = baseSchema.extend({
 
 const blog = defineCollection({
   type: "content",
-  schema: baseSchema,
+  schema: baseSchema.extend({
+    source_url: z.string().default(""),
+    source_type: z.string().default(""),
+    source_title: z.string().default(""),
+    source_author: z.string().default(""),
+    reading_status: z.string().default(""),
+    reading_start_date: z.string().default(""),
+    reading_end_date: z.string().default(""),
+    language: z.string().default(""),
+    genres: z.array(z.string()).default([]),
+    published_year: z.string().default(""),
+    isbn13: z.string().default(""),
+    isbn10: z.string().default(""),
+    publisher: z.string().default(""),
+    openlibrary_url: z.string().default(""),
+  }),
 });
 
 const newsletter = defineCollection({
