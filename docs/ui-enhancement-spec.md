@@ -2,12 +2,52 @@
 
 ## Overview
 
-Two independent workstreams:
+Three independent workstreams:
 
-| # | Workstream | Scope | Files touched |
-|---|---|---|---|
-| 1 | Code blocks | Night Owl syntax highlighting + Fira Code ligatures | 5 |
-| 2 | Field persona | Complete visual transformation (wide, sans, immersive) | 9 |
+| # | Workstream | Scope | Files touched | Status |
+|---|---|---|---|---|
+| 1 | Code blocks | Night Owl syntax highlighting + Fira Code ligatures | 6 | ✅ Merged |
+| 2 | SEO + Social | OG tags, Twitter cards, canonical URLs, og-image | 4 | ✅ Implemented |
+| 3 | Field persona | Complete visual transformation (wide, sans, immersive) | 9 | ⏳ Awaiting Q-decisions |
+
+---
+
+## Workstream 2: SEO + Social Sharing (PHASE COMPLETE)
+
+### Problem
+DuckDuckGo and other search engines showed poor descriptions for BotFolio pages. No Open Graph tags, no Twitter cards, no canonical URLs, no social preview image. The `<head>` only had `<title>` and `<meta name="description">`.
+
+### Solution
+
+**File additions:**
+
+**`src/layouts/BaseLayout/BaseLayout.astro`** — new props + meta tags:
+- Added `image` prop (default: `/og-image.png`) and `ogType` prop (default: `website`)
+- Computes `canonicalUrl` and `imageUrl` from `Astro.site`
+- Renders: `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `og:site_name`
+- Renders: `twitter:card` (summary_large_image), `twitter:title`, `twitter:description`, `twitter:image`
+- Adds: `<link rel="canonical">`, `<meta name="robots" content="index, follow">`
+
+**`src/pages/blog/[...slug].astro`** — per-post SEO:
+- Path changed from `/blog` to `/blog/${post.slug}` for correct canonical URL
+- `ogType="article"` for blog posts
+
+**`public/og-image.png`** — 1200×630 social preview:
+- Dark background (#111111) matching site theme
+- "Ritik Patni" in Inter Bold (64px, white)
+- Tagline "Frontend developer & wildlife/macro photographer" (28px, muted gray)
+- URL "ritikpatni.me" (28px, dimmed gray)
+
+### Verification
+- `npm run build`: 240 pages, 0 errors
+- All pages have: og:title, og:description, og:image, og:url, og:type, og:site_name
+- All pages have: twitter:card, twitter:title, twitter:description, twitter:image
+- All pages have: canonical URL, robots meta
+- Blog posts use `ogType="article"` with post-specific path
+
+---
+
+## Workstream 3: Field Persona Transformation
 
 Each workstream split into numbered phases with exact diffs. Phases are ordered for safe incremental delivery — each phase produces a working build.
 
