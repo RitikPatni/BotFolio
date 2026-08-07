@@ -9,16 +9,22 @@ interface Props {
   title: string;
   description?: string;
   path?: string;
+  image?: string;
+  ogType?: string;
 }
 
 const {
   title,
   description = SITE_CONFIG.defaultDescription,
   path = "/",
+  image = "/og-image.png",
+  ogType = "website",
 } = Astro.props;
 
 const socials = SITE_CONFIG.socials;
 const navSets = NAV_LINKS_BY_PERSONA;
+const canonicalUrl = new URL(path, Astro.site).toString();
+const imageUrl = new URL(image, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -119,6 +125,18 @@ const navSets = NAV_LINKS_BY_PERSONA;
     />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE_CONFIG.personName} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="robots" content="index, follow" />
     <meta name="color-scheme" content="dark light" />
     <meta
       name="theme-color"

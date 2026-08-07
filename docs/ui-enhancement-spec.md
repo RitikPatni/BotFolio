@@ -2,12 +2,52 @@
 
 ## Overview
 
-Two independent workstreams:
+Three independent workstreams:
 
-| # | Workstream | Scope | Files touched |
-|---|---|---|---|
-| 1 | Code blocks | Night Owl syntax highlighting + Fira Code ligatures | 5 |
-| 2 | Field persona | Complete visual transformation (wide, sans, immersive) | 9 |
+| # | Workstream | Scope | Files touched | Status |
+|---|---|---|---|---|
+| 1 | Code blocks | Night Owl syntax highlighting + Fira Code ligatures | 6 | ✅ Merged |
+| 2 | SEO + Social | OG tags, Twitter cards, canonical URLs, og-image | 4 | ✅ Implemented |
+| 3 | Field persona | Complete visual transformation (wide, sans, immersive) | 9 | ⏳ Awaiting Q-decisions |
+
+---
+
+## Workstream 2: SEO + Social Sharing (PHASE COMPLETE)
+
+### Problem
+DuckDuckGo and other search engines showed poor descriptions for BotFolio pages. No Open Graph tags, no Twitter cards, no canonical URLs, no social preview image. The `<head>` only had `<title>` and `<meta name="description">`.
+
+### Solution
+
+**File additions:**
+
+**`src/layouts/BaseLayout/BaseLayout.astro`** — new props + meta tags:
+- Added `image` prop (default: `/og-image.png`) and `ogType` prop (default: `website`)
+- Computes `canonicalUrl` and `imageUrl` from `Astro.site`
+- Renders: `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `og:site_name`
+- Renders: `twitter:card` (summary_large_image), `twitter:title`, `twitter:description`, `twitter:image`
+- Adds: `<link rel="canonical">`, `<meta name="robots" content="index, follow">`
+
+**`src/pages/blog/[...slug].astro`** — per-post SEO:
+- Path changed from `/blog` to `/blog/${post.slug}` for correct canonical URL
+- `ogType="article"` for blog posts
+
+**`public/og-image.png`** — 1200×630 social preview:
+- Dark background (#111111) matching site theme
+- "Ritik Patni" in Inter Bold (64px, white)
+- Tagline "Frontend developer & wildlife/macro photographer" (28px, muted gray)
+- URL "ritikpatni.me" (28px, dimmed gray)
+
+### Verification
+- `npm run build`: 240 pages, 0 errors
+- All pages have: og:title, og:description, og:image, og:url, og:type, og:site_name
+- All pages have: twitter:card, twitter:title, twitter:description, twitter:image
+- All pages have: canonical URL, robots meta
+- Blog posts use `ogType="article"` with post-specific path
+
+---
+
+## Workstream 3: Field Persona Transformation
 
 Each workstream split into numbered phases with exact diffs. Phases are ordered for safe incremental delivery — each phase produces a working build.
 
@@ -213,7 +253,121 @@ New:
 
 ---
 
-## Workstream 2: Field Persona Transformation
+## Phase 2 Open Questions (Design Decisions Before Implementation)
+
+These must be resolved before any Phase 2 code is written. Each question has one recommended default.
+
+### Q1: Field Persona Font Stack
+
+Field persona currently specified as Inter-only (sans). Should we:
+
+| Option | Font pairing | Feel |
+|---|---|---|
+| **A (recommended)** | Inter (body + headings) — single typeface, varied weights | Clean, modern, Swiss-design inspired |
+| B | Inter (body) + DM Serif Display (headings) | Editorial, magazine-like contrast |
+| C | Space Grotesk (body + headings) | Geometric, slightly retro, distinctive |
+| D | Inter (body) + Playfair Display (headings) | High contrast, dramatic, art-gallery feel |
+
+Option A is recommended because it creates maximum differentiation from studio (which uses IBM Plex Serif for headings) while keeping the type system simple. Field mode becomes "pure sans" — no serifs anywhere — making the toggle between personas a clear typeface shift.
+
+**Your call:** A, B, C, D, or propose your own?
+
+---
+
+### Q2: Field Color Palette — Keep or Deviate?
+
+Both personas currently share the same `--gray-*` Open Props palette. Options:
+
+| Option | Approach | Risk |
+|---|---|---|
+| **A (recommended)** | Same palette, different application. Gradients, transparency, softer borders. Gray-12 dark / gray-0 light. Zero palette drift. | Low — same tokens, different usage |
+| B | Warm-tinted palette for field (sepia/brown undertones vs. studio's neutral gray). Would need new CSS custom properties. | Medium — palette divergence risk |
+| C | Higher contrast field palette (purer blacks/whites, fewer gray steps). Cinematic feel. | Medium — could clash with photo content |
+
+Option A is recommended because photography already brings its own color via images. Let the photos do the heavy lifting; the UI should recede.
+
+**Your call:** A, B, C?
+
+---
+
+### Q3: Field Nav — Card Grid vs. Mega Menu
+
+Currently spec'd as a card grid below the header. Alternative:
+
+| Option | Pattern | Best for |
+|---|---|---|
+| **A — Card Grid (recommended)** | 2-3 cards side by side with icon + title + description | 3 nav items (Gallery, Archive, About). Clean, spacious. |
+| B — Horizontal Pills | Large pill buttons with icons, single row | Compact, less immersive |
+| C — Vertical Sidebar | Left-aligned sidebar with icons, stays fixed | More app-like, desktop-only feel |
+
+Option A is recommended because it matches the "wide, immersive" brief and scales to 3 items naturally.
+
+**Your call:** A, B, C?
+
+---
+
+### Q4: Photography Gallery — Edge Bleed vs. Contained
+
+| Option | Approach | Risk |
+|---|---|---|
+| **A — Edge bleed (recommended)** | Images span viewport edges via negative margins. Gap: `var(--size-2)`. | Needs responsive guard on mobile |
+| B — Contained-wide | Container full-width but images inside it with generous gap | Less dramatic |
+| C — Masonry | JS-driven masonry layout, varied heights | JS dependency, CLS risk |
+
+Option A is recommended — pure CSS, zero JS, maximum impact.
+
+**Your call:** A, B, C?
+
+---
+
+### Q5: Multi-Model Approval Gate for Phase 2
+
+Phase 2 has 6 sub-phases (2.1–2.6). Before implementing, we should run the spec through our own reviewer loop to catch design issues early.
+
+Proposed flow:
+
+```
+SPEC (this document)
+    │
+    ▼
+┌─────────────────────────────┐
+│ ① REVIEWER — V4 Pro          │  ← Read full spec
+│    → design coherence check  │  → Does field persona feel intentional or bolted-on?
+│    → accessibility check     │  → Does sans-only hurt readability at scale?
+│    → mobile-first check      │  → Does wide layout collapse cleanly?
+│    → performance check       │  → Any layout thrash on persona toggle?
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│ ② QUALITY GATE — Kimi K2.7   │  ← Fresh perspective
+│    → APPROVED / NEEDS WORK   │  → Different model, different training
+│    → critique + suggestions  │  → Final go/no-go per phase
+└──────────────────────────────┘
+```
+
+**Gate criteria:**
+- Kimi returns `APPROVED` → implement Phase 2.1
+- Kimi returns `NEEDS WORK` → incorporate feedback, re-gate
+- Max 2 review cycles
+
+Run this tomorrow before any code. The reviewer finds design smell; Kimi confirms or rejects.
+
+**Your call:** Run the gate tomorrow before implementation?
+
+---
+
+### Q6: Scope — All Pages or Photography-First?
+
+| Option | Approach | Effort |
+|---|---|---|
+| **A — Photography-first (recommended)** | Implement field persona ONLY on photography + library pages first. Home and About get minimal treatment. Land, verify, then expand. | Lower risk |
+| B — All pages at once | Full 6-phase rollout across all field persona pages | Higher risk of regressions |
+
+Option A is recommended — photography is the hero page for field persona. Get it right there, then propagate patterns to library, home, about.
+
+**Your call:** A or B?
+
 
 ### Architecture Decision
 

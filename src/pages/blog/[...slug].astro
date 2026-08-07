@@ -21,7 +21,8 @@ import "./_slug.scss";
 <BaseLayout
   title={`${post.data.title} — Blog`}
   description={post.data.description}
-  path="/blog"
+  path={`/blog/${post.slug}`}
+  ogType="article"
 >
   <div class="slug">
     <article class="slug__hero slug__hero--compact">
