@@ -45,7 +45,7 @@ export const SITE_CONFIG = {
     },
     {
       label: "Instagram",
-      href: "https://www.instagram.com/ritikpatni/",
+      href: "https://www.instagram.com/ritik_patni/",
       icon: "instagram",
       iconSource: "iconsvg.xyz",
     },
