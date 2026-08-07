@@ -178,17 +178,31 @@
   padding-inline: var(--size-1);
 }
 
+// Shiki code blocks: let theme handle colors, add ligatures
+%prose :global(.astro-code),
+%prose :global(.astro-code) code {
+  font-family: var(--font-mono);
+  font-variant-ligatures: contextual;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
 %prose pre {
   margin-block: var(--size-4);
-  padding: var(--size-4);
-  background: var(--bg-soft);
-  border: var(--surface-border) solid var(--line);
   border-radius: var(--radius-2);
   max-inline-size: 100%;
   overflow: auto;
 }
 
+%prose :global(.astro-code) {
+  padding: var(--size-4);
+}
+
 %prose pre code {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-1);
+  font-variant-ligatures: contextual;
   border: 0;
   padding: 0;
   background: transparent;

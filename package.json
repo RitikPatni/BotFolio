@@ -27,6 +27,7 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
+    "@shikijs/themes": "^4.4.2",
     "astro": "^4.16.0",
     "motion": "^12.40.0",
     "open-props": "^1.7.23",
