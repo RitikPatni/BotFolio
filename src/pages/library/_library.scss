@@ -481,3 +481,39 @@
     }
   }
 }
+
+/* ─── Field persona ───────────────────────────────────────────── */
+
+[data-persona="field"] .library {
+  &__hero {
+    padding-block: var(--size-10) var(--size-8);
+    text-align: center;
+  }
+
+  &__title {
+    font-weight: 700;
+    letter-spacing: var(--font-letterspacing-1);
+  }
+
+  /* Books grid: larger columns */
+  &__books-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-13)), 1fr));
+    gap: var(--size-4);
+
+    @media (min-width: 60rem) {
+      grid-template-columns: repeat(auto-fill, minmax(var(--size-13), 1fr));
+    }
+  }
+
+  &__item {
+    padding: var(--size-3);
+    border-radius: var(--radius-3);
+    background: transparent;          /* Decision C: field cards transparent */
+    border: var(--surface-border) solid
+      color-mix(in srgb, var(--line) 50%, transparent);
+  }
+
+  &__book-cover-link, &__book-cover {
+    border-radius: var(--radius-3);
+  }
+}
