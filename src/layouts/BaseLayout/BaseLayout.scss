@@ -530,3 +530,82 @@ html.is-theme-switching
     transition: none;
   }
 }
+
+/* ═════════════════════════════════════════════════════════════════
+   V2 Navigation — Stripe-inspired gradient underline
+   ═════════════════════════════════════════════════════════════════ */
+
+.base-layout__header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-links {
+  display: flex;
+  gap: 0;
+}
+
+.nav-link {
+  position: relative;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 200ms ease;
+
+  &:hover {
+    color: var(--text);
+  }
+
+  &.active {
+    color: var(--text);
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 2px;
+      border-radius: 1px;
+      background: var(--gradient-underline);
+    }
+  }
+}
+
+/* Persona toggle pill buttons */
+.nav-persona-toggle {
+  display: flex;
+  gap: 0;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-round);
+}
+
+.nav-persona-btn {
+  padding: 0.35rem 0.75rem;
+  border: none;
+  border-radius: var(--radius-round);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 200ms ease;
+
+  &:hover {
+    color: var(--text);
+  }
+
+  &.active {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--accent-start) 20%, transparent);
+  }
+}
