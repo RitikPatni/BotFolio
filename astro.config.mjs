@@ -10,6 +10,9 @@ export default defineConfig({
     },
   },
   vite: {
+    resolve: {
+      extensions: ['.tsx', '.ts', '.astro', '.mjs', '.js', '.json'],
+    },
     css: {
       preprocessorOptions: {
         scss: {
