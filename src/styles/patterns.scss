@@ -11,10 +11,9 @@
 %page-title {
   margin: 0;
   margin-block-end: var(--size-3);
-  font-size: var(--font-size-fluid-3);
+  font-size: var(--fs-heading);
   line-height: var(--font-lineheight-0);
   font-family: var(--font-display);
-  letter-spacing: var(--font-letterspacing-1);
 }
 
 %page-lead {
@@ -51,7 +50,7 @@
 %surface-card-title {
   margin-top: 0;
   font-family: var(--font-display);
-  font-size: var(--font-size-5);
+  font-size: var(--fs-subheading);
 }
 
 %surface-card-offset {
@@ -120,7 +119,7 @@
 %prose {
   max-inline-size: var(--prose-max-width);
   margin-inline: auto;
-  font-size: var(--font-size-2);
+  font-size: var(--fs-content);
   line-height: var(--font-lineheight-4);
 }
 
@@ -139,11 +138,11 @@
 }
 
 %prose h2 {
-  font-size: var(--font-size-6);
+  font-size: var(--fs-heading);
 }
 
 %prose h3 {
-  font-size: var(--font-size-5);
+  font-size: var(--fs-subheading);
 }
 
 %prose h4 {
@@ -171,7 +170,7 @@
 
 %prose :where(code, kbd) {
   font-family: var(--font-mono);
-  font-size: var(--font-size-1);
+  font-size: var(--fs-code);
   background: var(--bg-soft);
   border: var(--surface-border) solid var(--line);
   border-radius: var(--radius-2);
@@ -201,7 +200,7 @@
 
 %prose pre code {
   font-family: var(--font-mono);
-  font-size: var(--font-size-1);
+  font-size: var(--fs-code);
   font-variant-ligatures: contextual;
   border: 0;
   padding: 0;
