@@ -19,25 +19,25 @@ import "./_slug.scss";
 ---
 
 <BaseLayout
-  title={`${post.data.title} — Blog`}
+  title={`${post.data.title} — Writing`}
   description={post.data.description}
   path={`/blog/${post.slug}`}
   image={`/og/blog/${post.slug}.png`}
   ogType="article"
 >
-  <div class="slug">
-    <article class="slug__hero slug__hero--compact">
-      <p class="slug__meta">
+  <!-- Gradient hero -->
+  <section class="slug-hero">
+    <div class="slug-hero-content">
+      <p class="slug-hero-meta">
         {formatDisplayDate(post.data.date)} · {reading} min read
       </p>
-      <h1 class="slug__title">{post.data.title}</h1>
-      <p class="slug__lead">{post.data.description}</p>
-    </article>
+      <h1 class="slug-hero-title">{post.data.title}</h1>
+      <p class="slug-hero-lead">{post.data.description}</p>
+    </div>
+  </section>
 
-    <article class="slug__card">
-      <div class="slug__content">
-        <Content />
-      </div>
-    </article>
-  </div>
+  <!-- Prose content — wider column -->
+  <article class="slug-prose">
+    <Content />
+  </article>
 </BaseLayout>

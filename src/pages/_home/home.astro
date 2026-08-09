@@ -17,85 +17,39 @@ const posts = (await getCollection("blog"))
 ---
 
 <BaseLayout
-  title="Ritik Patni — Frontend developer & wildlife/macro photographer"
+  title="Ritik Patni — Frontend developer &amp; wildlife/macro photographer"
   description="I build thoughtful web experiences and document nature up close."
   path="/"
 >
-  <div class="index primitive-stack">
-    <section class="index__hero primitive-section motion-reveal">
-      <div class="index__hero-content">
-        <h1 class="index__title">Ritik Patni</h1>
-        <p class="index__lead" data-persona-slot="studio">
-          Building thoughtful product surfaces, systems, and shipping notes.
-        </p>
-        <p class="index__lead" data-persona-slot="field">
-          Quiet visual studies, patient observation, and curated field logs.
-        </p>
-      </div>
-    </section>
+  <!-- Gradient hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-name">Ritik <span class="fw-500">Patni</span></h1>
+      <p class="hero-tagline">Building thoughtful product surfaces, systems, and shipping notes.</p>
+      <span class="hero-accent">Frontend Developer</span>
+    </div>
+  </section>
 
-    <section class="primitive-section motion-reveal" data-persona-slot="studio">
-      <p>
-        <a class="index__inline-link primitive-link" href="/coding"
-          >Open profile index</a
-        >
-      </p>
-    </section>
-
-    <section class="primitive-section motion-reveal" data-persona-slot="field">
-      <p>
-        <a class="index__inline-link primitive-link" href="/photography"
-          >Open profile index</a
-        >
-      </p>
-    </section>
-
-    <section class="primitive-section motion-reveal" data-persona-slot="studio">
-      <h2 class="index__section-title">Latest blog posts</h2>
-      {
-        posts.length === 0 ? (
-          <article class="index__card primitive-surface">
-            <p>No blog posts yet.</p>
-          </article>
-        ) : (
-          <div class="index__list">
-            {posts.map((post) => (
-              <article class="index__item primitive-surface">
-                <h3 class="index__item-title">
-                  <a href={`/blog/${post.slug}`}>{post.title}</a>
-                </h3>
-                <p class="index__meta index__meta--spaced">
-                  {formatDisplayDate(post.date)}
-                </p>
-                <p class="index__description">{post.description}</p>
-              </article>
-            ))}
-          </div>
-        )
-      }
-      <p>
-        <a class="index__inline-link primitive-link" href="/blog"
-          >View all blog posts</a
-        >
-      </p>
-    </section>
-
-    <section class="primitive-section motion-reveal" data-persona-slot="field">
-      <h2 class="index__section-title">Recent additions</h2>
-      <div class="index__list">
-        <article class="index__item primitive-surface">
-          <h3 class="index__item-title"><a href="/photography">Gallery</a></h3>
-          <p class="index__description">
-            Recent image sets and category collections.
-          </p>
-        </article>
-        <article class="index__item primitive-surface">
-          <h3 class="index__item-title"><a href="/library">Archive</a></h3>
-          <p class="index__description">
-            Reading notes and long-form references.
-          </p>
-        </article>
-      </div>
-    </section>
-  </div>
+  <!-- Blog list -->
+  <section class="posts">
+    <h2 class="section-title">Latest posts</h2>
+    {
+      posts.length === 0 ? (
+        <p class="text-muted">No posts yet.</p>
+      ) : (
+        <div class="post-grid">
+          {posts.map((post, i) => (
+            <article class={i === 0 ? "post-card post-card--featured" : "post-card"}>
+              <div class="post-card-date">{formatDisplayDate(post.date)}</div>
+              <h3 class="post-card-title"><a href={`/blog/${post.slug}`}>{post.title}</a></h3>
+              <p class="post-card-desc">{post.description}</p>
+            </article>
+          ))}
+        </div>
+      )
+    }
+    <p class="mt-2">
+      <a class="view-all" href="/blog">View all posts →</a>
+    </p>
+  </section>
 </BaseLayout>

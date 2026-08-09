@@ -1,0 +1,55 @@
+/* ═════════════════════════════════════════════════════════════════
+   V2 Transitions — Micro-interactions + reduced motion
+   ═════════════════════════════════════════════════════════════════ */
+
+/* ViewTransitions: fade between pages */
+::view-transition-old(page-content),
+::view-transition-new(page-content) {
+  animation-duration: 200ms;
+}
+
+/* Persona toggle: smooth accent transition */
+.nav-persona-btn,
+.nav-link,
+.hero::before,
+.blog-hero::before,
+.slug-hero::before,
+.hero-accent,
+.blog-card,
+.post-card,
+.nav-link::after {
+  transition: all 200ms ease;
+}
+
+/* Card hover: border + color transitions */
+.blog-card:hover,
+.post-card:hover {
+  border-color: color-mix(in srgb, var(--accent-start) 25%, var(--line));
+}
+
+/* Nav: underline animated on page change */
+.nav-link::after {
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 200ms ease;
+}
+
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* Image hover micro-scale */
+.photo-strip img:hover {
+  transform: scale(1.03);
+}
+
+/* Reduced motion: disable all */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -5,40 +5,28 @@ import './_uses.scss';
 ---
 
 <BaseLayout title="Uses — Ritik Patni" path="/uses">
-  <div class="uses">
-    <section class="uses__hero motion-reveal">
-      <span class="uses__eyebrow">Gear &amp; Tools</span>
-      <h1 class="uses__title">Uses</h1>
-      <p class="uses__lead">Hardware, software, and tools I use for development and photography.</p>
-    </section>
+  <div class="uses-v2">
+    <h1 class="uses-title">Uses</h1>
+    <p class="uses-lead">Hardware, software, and tools I use for development and photography.</p>
 
-    <div class="uses__body">
+    <div class="uses-body">
       {USES_SECTIONS.map((section) => (
-        <div class="uses__section motion-reveal">
-          <h2 class="uses__section-label">
-            <span class="uses__section-icon" aria-hidden="true">&#9633;</span>
-            {section.label}
-          </h2>
-          <div class="uses__grid uses__grid--two">
-            {section.cards.map((card) => (
-              <section class:list={['uses__card', card.wide && 'uses__card--wide']}>
-                <span class="uses__badge">{card.badge}</span>
-                <h3 class="uses__card-title">{card.title}</h3>
-                <ul class:list={['uses__list', card.columns && 'uses__list--columns']}>
-                  {card.items.map((item) => (
-                    <li class="uses__list-item">
-                      {item.label && <span class="uses__list-label">{item.label}</span>}
-                      {item.text}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
-        </div>
+        <section class="uses-section">
+          <h2 class="uses-section-title">{section.label}</h2>
+          <ul class="uses-list">
+            {section.cards.flatMap((card) =>
+              card.items.map((item) => (
+                <li class="uses-item">
+                  {item.label && <span class="uses-item-label">{item.label}</span>}
+                  {item.text}
+                </li>
+              ))
+            )}
+          </ul>
+        </section>
       ))}
-
-      <p class="uses__footnote motion-reveal">This page evolves as my setup changes.</p>
     </div>
+
+    <p class="uses-footnote">This page evolves as my setup changes.</p>
   </div>
 </BaseLayout>
