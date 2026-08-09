@@ -1,0 +1,50 @@
+/* ==========================================================================
+   V2 Design Tokens — Stripe-inspired
+   Shared across both personas. Accent swaps via data-persona.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --bg: #0a0a0b;
+  --bg-soft: #121214;
+  --text: #fafafa;
+  --text-muted: #888896;
+  --text-dim: #5c5c6e;
+  --line: rgba(255, 255, 255, 0.06);
+
+  /* Persona accents */
+  --studio-start: #82aaff;
+  --studio-end: #c792ea;
+  --field-start: #F59E0B;
+  --field-end: #EF4444;
+
+  /* Active accent (swapped by persona) */
+  --accent-start: var(--studio-start);
+  --accent-end: var(--studio-end);
+
+  /* Gradient assets */
+  --gradient-underline: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, var(--accent-start) 0%, transparent 70%);
+  --gradient-border: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-round: 100px;
+}
+
+/* Field persona: swap to amber-red-orange */
+[data-persona="field"] {
+  --accent-start: var(--field-start);
+  --accent-end: var(--field-end);
+}
+
+/* Light theme */
+:root[data-theme="light"] {
+  --bg: #fafafa;
+  --bg-soft: #f0f0f3;
+  --text: #0a0a0b;
+  --text-muted: #5c5c6e;
+  --text-dim: #888896;
+  --line: rgba(0, 0, 0, 0.08);
+}
