@@ -37,7 +37,7 @@ const imageUrl = new URL(image, Astro.site).toString();
 >
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script is:inline>
       (() => {
         const THEME_STORAGE_KEY = "rp-theme";
@@ -145,7 +145,7 @@ const imageUrl = new URL(image, Astro.site).toString();
     />
     <meta
       name="theme-color"
-      content="#111111"
+      content="#030507"
       media="(prefers-color-scheme: dark)"
     />
     <ViewTransitions />
@@ -201,7 +201,7 @@ const imageUrl = new URL(image, Astro.site).toString();
           <div class="base-layout__menu-row">
             <nav
               class="base-layout__links"
-              aria-label="Main navigation"
+              aria-label="Studio navigation"
               data-persona-nav="studio"
             >
               {
@@ -218,7 +218,7 @@ const imageUrl = new URL(image, Astro.site).toString();
             </nav>
             <nav
               class="base-layout__links"
-              aria-label="Main navigation"
+              aria-label="Field navigation"
               data-persona-nav="field"
             >
               {
