@@ -494,3 +494,127 @@ Spec lock → Phase 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.6 → 1.7 → 1.8 
 ```
 
 Phases 1.1-1.9 ship studio persona. Phases 2.1-2.7 ship field persona. Each phase checkpoint must pass before proceeding.
+
+---
+
+## Multi-Model Handoff — Binding Orchestration Plan
+
+Every phase goes through the full 4-stage pipeline. No phase ships without gate approval. The planner (me) cannot also be the auditor or reviewer — each role runs independently.
+
+### Stage Flow
+
+```
+PHASE PLAN (V4 Pro — me)
+    │  Pre-research files, build exact old_string/new_string patches
+    │  Produce HANDOFF PACKET
+    ▼
+EXECUTOR (V4 Flash — delegate_task subagent)
+    │  Apply patches in exact order, build + verify
+    │  Return results
+    ▼
+AUDITOR (V4 Pro — me, SEPARATE from planning)
+    │  Read output files fresh — do NOT trust executor claims
+    │  Run build + grep verification myself
+    │  Compare against plan steps
+    │  Produce audit report: PASS / NEEDS WORK
+    ▼
+REVIEWER (Kimi K2.7 — hermes chat --quiet)
+    │  Independent verification of all 3 stages
+    │  Returns: APPROVED / NEEDS WORK
+    │
+    ├── APPROVED → commit + push + next phase
+    └── NEEDS WORK → IMPROVEMENT PACKET → back to Executor (max 3 loops)
+```
+
+### Gate Rules (NON-NEGOTIABLE)
+
+1. **Every phase gates.** No skipping. No "this one is simple enough."
+2. **Auditor must run fresh evidence.** Cannot cite executor's output. Must run `npm run build` + grep checks themselves this turn.
+3. **Kimi runs via `hermes chat --quiet`.** Prompt file written to `/tmp/kimi-v2-p{P}-prompt.txt`. Background process with `notify_on_complete=true`, timeout=300s.
+4. **Max 3 review loops per phase.** If Kimi rejects 3 times, the phase is structurally broken — redesign the plan for that phase.
+5. **No code changes during gate.** If Kimi says NEEDS WORK, the executor applies fixes — not me, not during audit.
+6. **Phase commits are atomic.** No mixing phases. Each phase = one commit on the branch.
+
+### Model Assignments
+
+| Role | Model | How |
+|---|---|---|
+| Planner | V4 Pro | Me — pre-research, exact patches, HANDOFF PACKET |
+| Executor | V4 Flash | `delegate_task` subagent — applies patches, builds |
+| Auditor | V4 Pro | Me — independent verification, fresh build + grep |
+| Reviewer | Kimi K2.7 | `hermes chat --provider opencode-go -m kimi-k2.7-code -q "$(cat /tmp/prompt.txt)" --quiet` |
+
+### Audit Evidence (minimum per phase)
+
+The auditor must produce FRESH (this turn, not cached) evidence for:
+- [ ] `npm run build` passes (exit 0, no errors)
+- [ ] Each file modified = verified via grep or read_file
+- [ ] No regressions in untouched files (diff check)
+- [ ] Executor followed all constraints from HANDOFF PACKET
+
+**Iron law: no verification claim without fresh output this turn.**
+
+### Kimi Prompt Template
+
+Every Kimi gate prompt follows this structure:
+
+```
+Verify Phase {N}.{M}: {description}. Read these files:
+{FILE_PATHS}
+
+Check:
+1. {criterion}
+2. {criterion}
+...
+Build: cd /root/BotFolio && npm run build - exit 0
+
+Return: APPROVED or NEEDS WORK
+```
+
+### Failure Recovery
+
+If Kimi returns NEEDS WORK:
+1. Extract the IMPROVEMENT PACKET from Kimi's output
+2. Prepend it to the HANDOFF PACKET as "REVISION CONTEXT"
+3. Re-dispatch executor with the updated context
+4. Auditor verifies the revision
+5. Kimi re-gates
+6. Max 3 loops — if still failing, escalate to user for plan redesign
+
+### Phase Orchestration Schedule
+
+```
+Phase 1.1 (Tokens)   → Executor → Auditor → Kimi → APPROVED → commit
+Phase 1.2 (Nav)      → Executor → Auditor → Kimi → APPROVED → commit
+Phase 1.3 (Home)     → Executor → Auditor → Kimi → APPROVED → commit
+Phase 1.4 (Blog list)→ Executor → Auditor → Kimi → APPROVED → commit
+Phase 1.5 (Blog post)→ Executor → Auditor → Kimi → APPROVED → commit
+Phase 1.6 (Uses)     → Executor → Auditor → Kimi → APPROVED → commit
+Phase 1.7 (Content)  → Executor → Auditor → Kimi → APPROVED → commit
+Phase 1.8 (Trans.)   → Executor → Auditor → Kimi → APPROVED → commit
+Phase 1.9 (OG)       → Executor → Auditor → Kimi → APPROVED → commit
+                               ↓
+                        Studio PR + merge
+                               ↓
+Phase 2.1 (Photos)   → Executor → Auditor → Kimi → APPROVED → commit
+Phase 2.2 (Lightbox) → Executor → Auditor → Kimi → APPROVED → commit
+Phase 2.3 (Library)  → Executor → Auditor → Kimi → APPROVED → commit
+Phase 2.4 (Fld Home) → Executor → Auditor → Kimi → APPROVED → commit
+Phase 2.5 (Fld About)→ Executor → Auditor → Kimi → APPROVED → commit
+Phase 2.6 (Fld Trans)→ Executor → Auditor → Kimi → APPROVED → commit
+Phase 2.7 (Fld OG)   → Executor → Auditor → Kimi → APPROVED → commit
+                               ↓
+                         Field PR + merge
+```
+
+**Total gates: 16 phases × 4 stages per phase = 64 stage-gate checkpoints.**
+
+### What "DONE" means for each phase
+
+A phase is NOT done until:
+1. Build passes (fresh evidence from this turn)
+2. Kimi has returned APPROVED
+3. Changes are committed to the branch with a semantic commit message
+4. Branch is pushed to fork
+
+The V1 workflow where executor output was accepted without independent verification, and Kimi gates were skipped or timed out, is explicitly prohibited in V2.
