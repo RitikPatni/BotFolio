@@ -1,269 +1,100 @@
-.photography {
-  &__metadata {
-    position: absolute;
-    inset-block-start: var(--size-4);
-    inset-inline-end: var(--size-4);
-    z-index: 3;
-    /* Exception: panel width constrained by available inline space after insets. */
-    inline-size: min(
-      var(--photography-panel-inline-size),
-      calc(100% - 2 * var(--size-4))
-    );
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    min-block-size: 0;
-    /* Exception: panel height constrained by available block space after insets. */
-    max-block-size: calc(100% - 2 * var(--size-4));
-    overflow: hidden;
-    padding: var(--size-4);
-    border: var(--surface-border) solid
-      color-mix(in srgb, var(--line), transparent 48%);
-    border-radius: var(--radius-3);
-    background: rgb(255 255 255 / 0.82);
-    backdrop-filter: blur(var(--size-3)) saturate(1.05);
-    box-shadow: var(--shadow-4);
+/* ═════════════════════════════════════════════════════════════════
+   V2 Lightbox Metadata — Minimal slide-in panel
+   ═════════════════════════════════════════════════════════════════ */
 
-    &[hidden] {
-      display: none;
-    }
-  }
+.photography__metadata {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  background: var(--bg-soft);
+  border-left: 1px solid var(--line);
+  padding: 1.5rem;
+  overflow-y: auto;
+  z-index: 20;
+  transform: translateX(100%);
+  transition: transform 200ms ease;
 
-  &__metadata-content {
-    min-block-size: 0;
-    overflow: auto;
-    padding-inline-end: var(--size-1);
-  }
-
-  &__lightbox-shell:fullscreen &__metadata {
-    position: absolute;
-    inset-block-start: var(--size-6);
-    inset-inline-end: var(--size-5);
-    z-index: 3;
-    /* Exception: fullscreen panel width constrained by viewport after insets. */
-    inline-size: min(
-      var(--photography-panel-inline-size),
-      calc(100vw - 2 * var(--size-5))
-    );
-    /* Exception: fullscreen panel height constrained by viewport after insets. */
-    max-block-size: calc(100vh - 2 * var(--size-6));
-    border: var(--surface-border) solid
-      color-mix(in srgb, white, transparent 82%);
-    border-radius: var(--radius-3);
-    background: rgb(10 10 10 / 0.68);
-    backdrop-filter: blur(var(--size-3)) saturate(1.05);
-    box-shadow: var(--shadow-5);
-  }
-
-  &__lightbox-shell:fullscreen &__metadata-title,
-  &__lightbox-shell:fullscreen &__metadata-list dt,
-  &__lightbox-shell:fullscreen &__metadata-list dd {
-    color: white;
-  }
-
-  &__lightbox-shell:fullscreen &__metadata-subtitle {
-    color: color-mix(in srgb, white, transparent 30%);
-  }
-
-  &__lightbox-shell:fullscreen &__metadata-tag,
-  &__lightbox-shell:fullscreen &__related-item,
-  &__lightbox-shell:fullscreen &__related-label {
-    color: white;
-  }
-
-  &__lightbox-shell:fullscreen &__metadata-tag {
-    border-color: color-mix(in srgb, white, transparent 42%);
-    background: rgb(255 255 255 / 0.04);
-
-    &:hover,
-    &:focus-visible {
-      border-color: white;
-      background: rgb(255 255 255 / 0.1);
-    }
-
-    &[aria-pressed="true"] {
-      border-color: white;
-      background: white;
-      color: black;
-    }
-  }
-
-  &__metadata-title {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--size-2);
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--font-size-3);
-    font-weight: var(--font-weight-8);
-    letter-spacing: normal;
-  }
-
-  &__metadata-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--size-3);
-    margin-block-end: var(--size-3);
-  }
-
-  &__metadata-close {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    inline-size: var(--photography-close-size);
-    block-size: var(--photography-close-size);
-    padding: 0;
-    border: var(--surface-border) solid
-      color-mix(in srgb, var(--line), transparent 42%);
-    border-radius: var(--radius-round);
-    background: rgb(255 255 255 / 0.42);
-    color: inherit;
-    cursor: pointer;
-
-    &:hover,
-    &:focus-visible {
-      border-color: var(--accent);
-      background: rgb(255 255 255 / 0.72);
-    }
-  }
-
-  &__lightbox-shell:fullscreen &__metadata-close {
-    border-color: color-mix(in srgb, white, transparent 72%);
-    background: rgb(255 255 255 / 0.08);
-    color: white;
-
-    &:hover,
-    &:focus-visible {
-      background: transparent;
-    }
-  }
-
-  &__metadata-section {
-    display: grid;
-    gap: var(--size-2);
-    min-block-size: 0;
-
-    &[hidden] {
-      display: none;
-    }
-  }
-
-  &__lightbox-shell:fullscreen &__metadata-content {
-    color: white;
-  }
-
-  &__metadata-subtitle {
-    margin: 0 0 var(--size-2);
-    color: var(--muted);
-    font-size: var(--font-size-0);
-    letter-spacing: var(--font-letterspacing-2);
-    text-transform: uppercase;
-  }
-
-  &__metadata-list {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--size-1) var(--size-2);
-    margin: 0;
-
-    dt {
-      color: var(--muted);
-      font-size: var(--font-size-0);
-    }
-
-    dd {
-      margin: 0 0 var(--size-2);
-      font-size: var(--font-size-1);
-    }
-  }
-
-  &__metadata-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--size-2);
-  }
-
-  &__metadata-tag {
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: inherit;
-    font: inherit;
-    font-size: var(--font-size-0);
-    font-weight: var(--font-weight-6);
-    letter-spacing: var(--font-letterspacing-2);
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: underline;
-    text-decoration-color: transparent;
-    text-underline-offset: var(--size-relative-1);
-
-    &:hover,
-    &:focus-visible {
-      text-decoration-color: currentColor;
-    }
-
-    &[aria-pressed="true"] {
-      color: var(--accent);
-      text-decoration-color: currentColor;
-    }
-  }
-
-  &__related-grid {
-    display: grid;
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(var(--photography-related-grid-min), 1fr)
-    );
-    gap: var(--size-2);
-    max-block-size: min(var(--photography-related-max-block), 40vh);
-    overflow: auto;
-    padding-inline-end: var(--size-1);
-    align-content: start;
-  }
-
-  &__related-item {
-    display: grid;
-    gap: var(--size-1);
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: inherit;
-    text-align: left;
-    cursor: pointer;
-  }
-
-  &__related-image {
-    inline-size: 100%;
-    aspect-ratio: 4 / 3;
-    border-radius: var(--radius-2);
-    object-fit: cover;
-  }
-
-  &__related-label {
-    font-size: var(--font-size-0);
-    line-height: var(--font-lineheight-2);
+  &[data-visible="true"],
+  html:has(&[open]) & {
+    transform: translateX(0);
   }
 }
 
-@media (max-width: 48rem) {
-  .photography {
-    &__metadata {
-      inset-block: auto var(--size-3) var(--size-3);
-      inline-size: auto;
-      max-block-size: min(var(--photography-metadata-mobile-max-block), 35dvh);
+.photography__metadata-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.photography__metadata-title {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.photography__metadata-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.photography__metadata-list {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+
+  dt {
+    font-weight: 500;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  dd {
+    font-weight: 300;
+    margin: 0;
+  }
+}
+
+.photography__metadata-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.photography__metadata-section {
+  margin-top: 1.5rem;
+}
+
+.photography__metadata-subtitle {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+}
+
+.photography__related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.5rem;
+
+  img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    transition: border-color 200ms;
+
+    &:hover {
+      border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
     }
-  }
-
-  .photography__lightbox-shell:fullscreen .photography__metadata {
-    inset-block-start: auto;
-    inset-inline: var(--size-3);
-    inset-block-end: var(--size-3);
-    inline-size: auto;
-    max-block-size: min(45vh, var(--photography-panel-inline-size));
-  }
-
-  .photography__related-grid {
-    max-block-size: min(var(--photography-related-mobile-max-block), 30vh);
   }
 }
