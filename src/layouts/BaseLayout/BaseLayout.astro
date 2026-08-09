@@ -217,7 +217,7 @@ const imageUrl = new URL(image, Astro.site).toString();
               }
             </nav>
             <nav
-              class="base-layout__links"
+              class="base-layout__links base-layout__links--field"
               aria-label="Field navigation"
               data-persona-nav="field"
             >
@@ -225,7 +225,7 @@ const imageUrl = new URL(image, Astro.site).toString();
                 navSets.field.map((item) => (
                   <a
                     href={item.href}
-                    class={`base-layout__link ${path === item.href ? "base-layout__link--active" : ""}`}
+                    class={`base-layout__pill ${path === item.href ? "base-layout__pill--active" : ""}`}
                     aria-current={path === item.href ? "page" : undefined}
                   >
                     {item.label}
