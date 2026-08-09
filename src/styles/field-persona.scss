@@ -28,3 +28,32 @@
     font-weight: 500;
   }
 }
+
+/* ─── Responsive: collapse field persona on mobile ────────────── */
+
+@media (max-width: 48rem) {
+  [data-persona="field"] {
+    --layout-max-width: 100%;
+    --layout-padding: var(--size-3);
+    --surface-padding: var(--size-4);
+  }
+}
+
+/* ─── Smooth persona transition ───────────────────────────────── */
+
+[data-persona="field"] .base-layout__container {
+  transition: max-width 400ms var(--ease-2);
+}
+
+[data-persona="field"] {
+  h1, h2, h3, h4, h5, h6 {
+    transition: font-family 300ms var(--ease-1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-persona="field"] .base-layout__container,
+  [data-persona="field"] h1, h2, h3, h4, h5, h6 {
+    transition: none;
+  }
+}
