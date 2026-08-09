@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BotFolio V2 — Stripe-Style Design Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0b;
+  --bg-soft: #121214;
+  --text: #fafafa;
+  --text-muted: #888896;
+  --text-dim: #5c5c6e;
+  --accent-studio-start: #7c5cfc;
+  --accent-studio-end: #3b82f6;
+  --accent-field-start: #f59e0b;
+  --accent-field-end: #ef4444;
+  --gradient-studio: linear-gradient(135deg, var(--accent-studio-start), var(--accent-field));
+  --radius: 12px;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+  font-size: 16px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; background: var(--bg); color: var(--text); font-family: var(--font-body); }
+body { min-height: 100vh; }
+.section { padding: var(--space-xl) var(--space-md); max-width: 1200px; margin: 0 auto; }
+.section-title { font-size: 1.5rem; font-weight: 300; color: var(--text); margin-bottom: var(--space-md); letter-spacing: -0.02em; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--text-dim), transparent); margin: var(--space-lg) 0; }
+
+/* Nav */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(10,10,11,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: var(--space-sm) var(--space-md); display: flex; align-items: center; gap: var(--space-md); }
+.nav-brand { font-weight: 500; font-size: 0.95rem; letter-spacing: -0.01em; }
+.nav-links { display: flex; gap: 0; margin-left: auto; }
+.nav-link { padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 400; color: var(--text-muted); text-decoration: none; position: relative; transition: color 200ms; }
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--text); }
+.nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 1rem; right: 1rem; height: 2px; border-radius: 1px; }
+.nav-link.active.studio::after { background: linear-gradient(90deg, var(--accent-studio-start), var(--accent-studio-end)); }
+.nav-link.active.field::after { background: linear-gradient(90deg, var(--accent-field-start), var(--accent-field-end)); }
+.nav-toggle { display: flex; gap: 0.25rem; padding: 0.25rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; margin-left: var(--space-sm); }
+.nav-toggle-btn { padding: 0.35rem 0.75rem; border-radius: 100px; font-size: 0.8rem; font-weight: 400; border: none; cursor: pointer; background: transparent; color: var(--text-muted); display: flex; align-items: center; gap: 0.35rem; transition: all 200ms; }
+.nav-toggle-btn.active { background: rgba(255,255,255,0.06); color: var(--text); }
+.nav-toggle-btn.active.studio { box-shadow: 0 0 12px rgba(124,92,252,0.2); }
+.nav-toggle-btn.active.field { box-shadow: 0 0 12px rgba(245,158,11,0.2); }
+
+/* Hero */
+.hero { padding: var(--space-xl) var(--space-md); text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; opacity: 0.15; }
+.hero.studio::before { background: radial-gradient(ellipse at 50% 0%, var(--accent-studio-start) 0%, transparent 70%); }
+.hero.field::before { background: radial-gradient(ellipse at 50% 0%, var(--accent-field-start) 0%, transparent 70%); }
+.hero-content { position: relative; z-index: 1; }
+.hero-name { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: var(--space-sm); }
+.hero-name span { font-weight: 500; }
+.hero-tagline { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 300; color: var(--text-muted); max-width: 600px; margin: 0 auto var(--space-md); line-height: 1.5; }
+.hero-accent { display: inline-block; padding: 0.15em 0.5em; border-radius: 6px; font-weight: 400; }
+.hero-accent.studio { background: color-mix(in srgb, var(--accent-studio-start) 15%, transparent); color: color-mix(in srgb, var(--accent-studio-start) 90%, white); }
+.hero-accent.field { background: color-mix(in srgb, var(--accent-field-start) 15%, transparent); color: color-mix(in srgb, var(--accent-field-start) 90%, white); }
+
+/* Photo strip */
+.photo-strip { display: flex; gap: 0.5rem; overflow-x: auto; padding: var(--space-sm) 0; mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); margin: var(--space-lg) 0; }
+.photo-strip img { height: 160px; border-radius: var(--radius); object-fit: cover; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.04); transition: transform 200ms; }
+.photo-strip img:hover { transform: scale(1.03); }
+
+/* Blog cards */
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: var(--space-md); }
+.blog-card { padding: var(--space-md); border-bottom: 1px solid rgba(255,255,255,0.04); transition: border-color 200ms; cursor: pointer; }
+.blog-card:hover { border-color: rgba(255,255,255,0.1); }
+.blog-card-date { font-size: 0.8rem; font-weight: 400; color: var(--text-dim); margin-bottom: var(--space-xs); }
+.blog-card-title { font-size: 1.25rem; font-weight: 300; line-height: 1.3; margin-bottom: var(--space-xs); letter-spacing: -0.01em; }
+.blog-card-title a { color: inherit; text-decoration: none; }
+.blog-card-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+.blog-card-meta { font-size: 0.8rem; color: var(--text-dim); margin-top: var(--space-xs); }
+.blog-featured { grid-column: 1 / -1; background: rgba(124,92,252,0.04); border: 1px solid rgba(124,92,252,0.1); border-radius: var(--radius); padding: var(--space-lg); }
+.blog-featured .blog-card-title { font-size: 1.75rem; }
+
+/* Footer */
+.footer { padding: var(--space-lg) var(--space-md); text-align: center; border-top: 1px solid rgba(255,255,255,0.04); }
+.footer-links { display: flex; justify-content: center; gap: var(--space-md); margin-bottom: var(--space-sm); }
+.footer-link { font-size: 0.85rem; color: var(--text-dim); text-decoration: none; transition: color 200ms; }
+.footer-link:hover { color: var(--text); }
+.footer-copy { font-size: 0.8rem; color: var(--text-dim); }
+
+/* Comparison labels */
+.label { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.75rem; border-radius: 100px; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-sm); }
+.label.now { background: rgba(239,68,68,0.1); color: #ef4444; }
+.label.v2 { background: rgba(124,92,252,0.1); color: var(--accent-studio-start); }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-md); }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- STUDIO PERSONA — Stripe V2 -->
+<!-- ============================================================ -->
+<section class="section">
+  <span class="label v2">V2 — Studio Persona</span>
+  <h2 class="section-title">Navigation — gradient underline</h2>
+</section>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Ritik Patni</div>
+    <div class="nav-links">
+      <a href="#" class="nav-link active studio">Journal</a>
+      <a href="#" class="nav-link">Notes</a>
+      <a href="#" class="nav-link">About</a>
+    </div>
+    <div class="nav-toggle">
+      <button class="nav-toggle-btn active studio">⌨ Studio</button>
+      <button class="nav-toggle-btn">📷 Field</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero studio">
+  <div class="hero-content">
+    <h1 class="hero-name">Ritik <span>Patni</span></h1>
+    <p class="hero-tagline">Building thoughtful product surfaces, systems, and shipping notes.</p>
+    <span class="hero-accent studio">Frontend Developer</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="photo-strip">
+    <img src="https://ritikpatni.me/assets/shield-bug-yellow-petal.jpg" alt="" loading="lazy">
+    <img src="https://ritikpatni.me/assets/kingfisher-golden-light.jpg" alt="" loading="lazy">
+    <img src="https://ritikpatni.me/assets/flamingo-flight.jpg" alt="" loading="lazy">
+    <img src="https://ritikpatni.me/assets/sunset-silhouette.jpg" alt="" loading="lazy">
+    <img src="https://ritikpatni.me/assets/bulbul-warm-light.jpg" alt="" loading="lazy">
+    <img src="https://ritikpatni.me/assets/egret-breeding.jpg" alt="" loading="lazy">
+    <img src="https://ritikpatni.me/assets/raptor-watch.jpg" alt="" loading="lazy">
+    <img src="https://ritikpatni.me/assets/nest-building.jpg" alt="" loading="lazy">
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">Latest posts</h2>
+  <div class="blog-grid">
+    <article class="blog-card blog-featured">
+      <div class="blog-card-date">07 Aug 2026</div>
+      <h3 class="blog-card-title"><a href="#">Building Quality-Gated AI Code Review Loops</a></h3>
+      <p class="blog-card-desc">How to implement auditor-reviewer and planner-executor patterns for consistent, high-quality AI outputs.</p>
+      <p class="blog-card-meta">7 min read</p>
+    </article>
+    <article class="blog-card">
+      <div class="blog-card-date">15 Jul 2026</div>
+      <h3 class="blog-card-title"><a href="#">Custom Domains with Obsidian Publish</a></h3>
+      <p class="blog-card-desc">Setting up a custom domain for your Obsidian knowledge base with Cloudflare.</p>
+      <p class="blog-card-meta">4 min read</p>
+    </article>
+    <article class="blog-card">
+      <div class="blog-card-date">02 Jul 2026</div>
+      <h3 class="blog-card-title"><a href="#">TIL: Multi-language font fallbacks</a></h3>
+      <p class="blog-card-desc">When one font doesn't contain all the characters, here's how to handle it gracefully.</p>
+      <p class="blog-card-meta">3 min read</p>
+    </article>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- FIELD PERSONA — Stripe V2 -->
+<!-- ============================================================ -->
+<section class="section">
+  <span class="label v2">V2 — Field Persona</span>
+  <h2 class="section-title">Photography persona — amber-gold accent</h2>
+</section>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Ritik Patni</div>
+    <div class="nav-links">
+      <a href="#" class="nav-link active field">Gallery</a>
+      <a href="#" class="nav-link">Archive</a>
+      <a href="#" class="nav-link">About</a>
+    </div>
+    <div class="nav-toggle">
+      <button class="nav-toggle-btn">⌨ Studio</button>
+      <button class="nav-toggle-btn active field">📷 Field</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero field">
+  <div class="hero-content">
+    <h1 class="hero-name">Photography</h1>
+    <p class="hero-tagline">Quiet visual studies. Wildlife, birds, and macro frames from the field.</p>
+    <span class="hero-accent field">39 Photos</span>
+  </div>
+</section>
+
+<section class="section" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:1rem;">
+  <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(245,158,11,0.15);transition:all 200ms;">
+    <img src="https://ritikpatni.me/assets/kingfisher-golden-light.jpg" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;" alt="Kingfisher in Golden Light">
+    <p style="padding:0.75rem;font-size:0.85rem;color:var(--text-muted);">Kingfisher in Golden Light</p>
+  </div>
+  <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(245,158,11,0.15);transition:all 200ms;">
+    <img src="https://ritikpatni.me/assets/flamingo-flight.jpg" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;" alt="Flamingo in Flight">
+    <p style="padding:0.75rem;font-size:0.85rem;color:var(--text-muted);">Flamingo in Flight</p>
+  </div>
+  <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(245,158,11,0.15);transition:all 200ms;aspect-ratio:3/4;">
+    <img src="https://ritikpatni.me/assets/sunset-silhouette.jpg" style="width:100%;height:100%;object-fit:cover;" alt="Sunset Silhouette">
+    
+  </div>
+  <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(245,158,11,0.15);transition:all 200ms;">
+    <img src="https://ritikpatni.me/assets/bulbul-warm-light.jpg" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;" alt="Bulbul in Warm Light">
+    <p style="padding:0.75rem;font-size:0.85rem;color:var(--text-muted);">Bulbul in Warm Light</p>
+  </div>
+  <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(245,158,11,0.15);transition:all 200ms;">
+    <img src="https://ritikpatni.me/assets/egret-breeding.jpg" style="width:100%;display:block;aspect-ratio:4/3;object-fit:cover;" alt="Cattle Egret in Breeding Plumage">
+    <p style="padding:0.75rem;font-size:0.85rem;color:var(--text-muted);">Cattle Egret in Breeding Plumage</p>
+  </div>
+  <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(245,158,11,0.15);transition:all 200ms;aspect-ratio:3/4;">
+    <img src="https://ritikpatni.me/assets/raptor-watch.jpg" style="width:100%;height:100%;object-fit:cover;" alt="Raptor on Watch">
+    
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- BLOG POST -->
+<!-- ============================================================ -->
+<section class="section">
+  <span class="label v2">V2 — Blog Post</span>
+  <h2 class="section-title">Gradient hero + wide prose</h2>
+</section>
+
+<section class="hero studio" style="padding:var(--space-lg) var(--space-md);text-align:left;">
+  <div class="hero-content" style="max-width:800px;margin:0 auto 0 0;">
+    <span class="blog-card-date" style="display:block;margin-bottom:0.5rem;">07 Aug 2026 · 7 min read</span>
+    <h1 style="font-size:clamp(2rem,4vw,3rem);font-weight:300;letter-spacing:-0.02em;line-height:1.15;margin-bottom:1rem;">Building Quality-Gated AI Code Review Loops</h1>
+    <p style="font-size:1.1rem;font-weight:300;color:var(--text-muted);line-height:1.5;">How to implement auditor-reviewer and planner-executor patterns for consistent, high-quality AI outputs in your development workflow.</p>
+  </div>
+</section>
+
+<section class="section" style="max-width:800px;padding-top:var(--space-lg);">
+  <p style="font-size:1rem;font-weight:300;line-height:1.8;color:var(--text-muted);margin-bottom:1.5rem;">The hardest part of working with AI code generation isn't getting it to write code — it's getting it to write <em>good</em> code that doesn't need rewriting. After six months of experimenting with multi-agent review pipelines, I've landed on a pattern that consistently produces production-quality output.</p>
+  <p style="font-size:1rem;font-weight:300;line-height:1.8;color:var(--text-muted);margin-bottom:1.5rem;">The key insight: treat AI code review the same way you'd treat human code review. Separate the concerns. Run them in sequence. Gate at each stage.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- BEFORE / AFTER COMPARISON -->
+<!-- ============================================================ -->
+<section class="section">
+  <span class="label now">Current (2/10)</span>
+  <h2 class="section-title">What changes — before vs after</h2>
+  
+  <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+    <thead>
+      <tr style="text-align:left;border-bottom:1px solid rgba(255,255,255,0.08);">
+        <th style="padding:0.75rem;font-weight:500;color:var(--text-dim);">Element</th>
+        <th style="padding:0.75rem;font-weight:500;color:#ef4444;">Current</th>
+        <th style="padding:0.75rem;font-weight:500;color:var(--accent-studio-start);">V2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:0.75rem;">Typography</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Lora 600 serif, 2rem fixed</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Inter 300, fluid clamp() scale</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:0.75rem;">Nav</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Bare text links</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Gradient underline on active</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:0.75rem;">Cards</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Filled bg + border</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">No cards — spacing + dividers</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:0.75rem;">Hero</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Plain heading</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Gradient radial glow + light typography</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:0.75rem;">Persona</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Identical visual language</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Studio = purple-blue, Field = amber-gold</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:0.75rem;">Toggle</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Full page redirect</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Instant gradient wipe + persona accent shift</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:0.75rem;">Gallery</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Edge-bleed grid, 2col</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Masonry with gradient frame borders</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:0.75rem;">Blog listing</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Flat card list</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Gradient hero + featured post + cards</td>
+      </tr>
+      <tr>
+        <td style="padding:0.75rem;">Blog post</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">768px tube, no hero</td>
+        <td style="padding:0.75rem;color:var(--text-muted);">Gradient hero + 960px wide prose + TOC</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#" class="footer-link">GitHub</a>
+    <a href="#" class="footer-link">LinkedIn</a>
+    <a href="#" class="footer-link">Instagram</a>
+    <a href="#" class="footer-link">CSSBattle</a>
+    <a href="#" class="footer-link">Goodreads</a>
+  </div>
+  <p class="footer-copy">ritikpatni.me × Stripe-inspired</p>
+</footer>
+
+</body>
+</html>
