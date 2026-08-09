@@ -54,31 +54,6 @@
   }
 }
 
-/* Photo strip */
-.photo-strip {
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding: 1rem 0;
-  -webkit-overflow-scrolling: touch;
-
-  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-
-  img {
-    height: 160px;
-    border-radius: var(--radius-md);
-    object-fit: cover;
-    flex-shrink: 0;
-    border: 1px solid var(--line);
-    transition: transform 200ms ease;
-
-    &:hover {
-      transform: scale(1.03);
-    }
-  }
-}
-
 /* Blog listing */
 .posts {
   max-width: var(--layout-max-width);
