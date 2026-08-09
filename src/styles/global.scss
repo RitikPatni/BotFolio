@@ -17,8 +17,14 @@
   --surface-border: var(--border-size-1);
   --font-body: "Inter", "Segoe UI", "Helvetica Neue", "Noto Sans", sans-serif;
   --font-display:
-    "IBM Plex Serif", "Iowan Old Style", "Palatino Linotype", serif;
+    "Lora", "Iowan Old Style", "Palatino Linotype", serif;
   --font-mono: "Fira Code", "Cascadia Code", "JetBrains Mono", "Menlo", "Consolas", monospace;
+
+  /* Font-size scale */
+  --fs-heading: 2rem;
+  --fs-subheading: 1.5rem;
+  --fs-content: 1rem;
+  --fs-code: 0.875rem;
 }
 
 :root[data-theme="light"] {
@@ -29,6 +35,16 @@
   --line: var(--gray-3);
   --accent: var(--gray-12);
   --accent-2: var(--gray-12);
+}
+
+/* 80% font-size scale on mobile */
+@media (max-width: 48rem) {
+  :root {
+    --fs-heading: 1.6rem;
+    --fs-subheading: 1.2rem;
+    --fs-content: 0.8rem;
+    --fs-code: 0.7rem;
+  }
 }
 
 * {
