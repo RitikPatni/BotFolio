@@ -136,16 +136,41 @@
   }
 }
 
-/* ─── Field persona ───────────────────────────────────────────── */
+/* ═════════════════════════════════════════════════════════════════
+   V2 Field Persona — About
+   ═════════════════════════════════════════════════════════════════ */
 
 [data-persona="field"] .about {
   &__hero {
-    padding-block: var(--size-10) var(--size-8);
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
     text-align: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.12;
+      background: var(--gradient-hero);
+    }
   }
 
   &__title {
-    font-weight: 700;
-    letter-spacing: var(--font-letterspacing-1);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__lead {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 1rem auto 0;
+    position: relative;
+    z-index: 1;
   }
 }
