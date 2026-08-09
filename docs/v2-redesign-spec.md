@@ -509,22 +509,38 @@ PHASE PLAN (V4 Pro — me)
     │  Produce HANDOFF PACKET
     ▼
 EXECUTOR (V4 Flash — delegate_task subagent)
-    │  Apply patches in exact order, build + verify
-    │  Return results
+    │  Apply patches, build, verify — but DO NOT commit
+    │  Return results (files modified, build output, verification)
+    │  Executor has ZERO commit authority
     ▼
 AUDITOR (V4 Pro — me, SEPARATE from planning)
     │  Read output files fresh — do NOT trust executor claims
     │  Run build + grep verification myself
     │  Compare against plan steps
-    │  Produce audit report: PASS / NEEDS WORK
+    │
+    ├── PASS → auditor commits with semantic message
+    │          → proceeds to Reviewer gate
+    │
+    └── FAIL → auditor produces REVISION PACKET
+               → back to Executor with specific failures
     ▼
 REVIEWER (Kimi K2.7 — hermes chat --quiet)
     │  Independent verification of all 3 stages
+    │  Reads committed state on branch
     │  Returns: APPROVED / NEEDS WORK
     │
-    ├── APPROVED → commit + push + next phase
+    ├── APPROVED → push to fork → next phase
     └── NEEDS WORK → IMPROVEMENT PACKET → back to Executor (max 3 loops)
 ```
+
+### Commit Authority
+
+| Role | Can commit? | When |
+|---|---|---|
+| Planner | No | — |
+| Executor | **No** | Executor only patches + builds, never commits |
+| Auditor | **Yes** | Only after independent verification PASS and before Kimi gate |
+| Reviewer | No | Only returns APPROVED or NEEDS WORK |
 
 ### Gate Rules (NON-NEGOTIABLE)
 
