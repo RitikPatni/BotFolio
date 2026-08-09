@@ -8,16 +8,20 @@ function blogSvg(title: string, desc: string, date: string, readTime: string): s
   return `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#030507"/><stop offset="100%" stop-color="#0d1117"/>
+        <stop offset="0%" stop-color="#0a0a0b"/><stop offset="100%" stop-color="#0d1015"/>
+      </linearGradient>
+      <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#82aaff"/><stop offset="100%" stop-color="#c792ea"/>
       </linearGradient>
     </defs>
     <rect width="100%" height="100%" fill="url(#bg)"/>
-    <rect x="0" y="0" width="6" height="100%" fill="rgba(255,255,255,0.08)"/>
-    <text x="56" y="60" font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#868e96">Ritik Patni</text>
-    <text x="1144" y="60" font-family="Arial,sans-serif" font-size="14" fill="#868e96" text-anchor="end">${e(date)}</text>
-    <text x="56" y="520" font-family="Georgia,serif" font-size="44" font-weight="600" fill="#f8fafb">${e(title.substring(0, 60))}${title.length > 60 ? "..." : ""}</text>
-    <text x="56" y="570" font-family="Arial,sans-serif" font-size="20" fill="#ced4da">${e(desc.substring(0, 90))}</text>
-    <text x="56" y="610" font-family="Arial,sans-serif" font-size="14" fill="#868e96">${e(date)} · ${e(readTime)} · blog</text>
+    <rect x="0" y="0" width="5" height="100%" fill="url(#accent)"/>
+    <ellipse cx="1080" cy="80" rx="300" ry="260" fill="url(#accent)" opacity="0.07"/>
+    <text x="56" y="74" font-family="Inter,ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="300" fill="#5c5c6e">Ritik Patni</text>
+    <text x="1144" y="74" font-family="Inter,ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="300" fill="#5c5c6e" text-anchor="end">${e(date)}</text>
+    <text x="56" y="516" font-family="Inter,ui-sans-serif,system-ui,sans-serif" font-size="44" font-weight="300" letter-spacing="-0.4" fill="#fafafa">${e(title.substring(0, 60))}${title.length > 60 ? "..." : ""}</text>
+    <text x="56" y="572" font-family="Inter,ui-sans-serif,system-ui,sans-serif" font-size="22" font-weight="300" fill="#888896">${e(desc.substring(0, 90))}</text>
+    <text x="56" y="612" font-family="Inter,ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="300" fill="#5c5c6e">${e(date)} · ${e(readTime)} · blog</text>
   </svg>`;
 }
 
@@ -35,5 +39,5 @@ export async function GET({ props }: { props: { post: any } }) {
     fitTo: { mode: "width", value: 1200 },
   }).render().asPng();
 
-  return new Response(png, { headers: { "Content-Type": "image/png" } });
+  return new Response(png, { headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=31536000, immutable" } });
 }
