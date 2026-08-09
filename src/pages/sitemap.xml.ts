@@ -2,9 +2,7 @@ import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
 
 function toUrl(base: string, path: string) {
-  return `${base}${path}`
-    .replace(/(?<!:)\/\/+/, "/")
-    .replace("https:/", "https://");
+  return new URL(path, base).toString();
 }
 
 export async function GET(context: APIContext) {

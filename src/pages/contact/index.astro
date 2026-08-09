@@ -1,22 +1,5 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
-import "../about/_about.scss";
+// Contact merged into About. Permanent redirect.
 ---
-
-<BaseLayout title="Contact moved — Ritik Patni" path="/about">
-  <section class="about">
-    <div class="about__hero about__hero--compact">
-      <h1 class="about__title">Contact moved</h1>
-      <p class="about__lead">
-        Contact is now merged with About for a single, cleaner profile page.
-      </p>
-      <p>
-        <a href="/about/#connect">Go to About + Contact</a>
-      </p>
-    </div>
-  </section>
-
-  <script is:inline>
-    window.location.replace("/about/#connect");
-  </script>
-</BaseLayout>
+<meta http-equiv="refresh" content="0;url=/about/#connect" />
+<script is:inline>window.location.replace("/about/#connect");</script>

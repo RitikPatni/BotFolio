@@ -101,6 +101,14 @@
     z-index: var(--layer-3);
     background: var(--bg);
     border-bottom: var(--surface-border) solid var(--line);
+    transition:
+      background-color var(--duration-fast-1) var(--ease-2),
+      box-shadow var(--duration-fast-1) var(--ease-2);
+
+    @supports (backdrop-filter: blur(12px)) {
+      backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+    }
 
     .base-layout__container {
       display: grid;
@@ -109,7 +117,7 @@
 
     @media (max-width: 48rem) {
       & {
-        position: static;
+        top: 0;
       }
     }
   }
