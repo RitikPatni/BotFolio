@@ -274,3 +274,63 @@
     }
   }
 }
+
+/* ─── Field persona — edge-bleed gallery ──────────────────────── */
+
+[data-persona="field"] .photography {
+  &__hero {
+    padding-block: var(--size-10) var(--size-8);
+    text-align: center;
+  }
+
+  &__title {
+    font-weight: 700;
+    letter-spacing: var(--font-letterspacing-1);
+  }
+
+  /* Edge-bleed: images span viewport edges */
+  &__gallery {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-14)), 1fr));
+    gap: var(--size-2);
+    margin-inline: calc(var(--layout-padding) * -1);
+  }
+
+  &__shot {
+    border-radius: 0;
+  }
+
+  &__image {
+    transition: transform 400ms var(--ease-2);
+  }
+
+  &__shot-link:hover &__image,
+  &__shot-link:focus-visible &__image {
+    transform: scale(1.02);
+  }
+
+  &__caption {
+    padding-inline: var(--size-3);
+    padding-block: var(--size-2);
+  }
+
+  &__section-title {
+    font-size: var(--font-size-6);
+    font-weight: 700;
+    margin-block: var(--size-8) var(--size-4);
+  }
+}
+
+/* Mobile: no negative margin (already full-width) */
+@media (max-width: 48rem) {
+  [data-persona="field"] .photography__gallery {
+    margin-inline: 0;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-persona="field"] .photography__image {
+    transition: none;
+  }
+}
+

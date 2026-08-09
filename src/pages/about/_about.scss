@@ -135,3 +135,17 @@
     block-size: var(--size-5);
   }
 }
+
+/* ─── Field persona ───────────────────────────────────────────── */
+
+[data-persona="field"] .about {
+  &__hero {
+    padding-block: var(--size-10) var(--size-8);
+    text-align: center;
+  }
+
+  &__title {
+    font-weight: 700;
+    letter-spacing: var(--font-letterspacing-1);
+  }
+}

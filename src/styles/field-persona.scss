@@ -1,0 +1,59 @@
+/* ==========================================================================
+   Field Persona — Immersive visual experience
+   All styles gated on [data-persona="field"] on <html>
+   Studio persona is completely untouched.
+   ========================================================================== */
+
+@use "open-props/style";
+
+[data-persona="field"] {
+  /* Layout */
+  --layout-max-width: var(--size-15);       /* ~1440px (was ~768px) */
+  --layout-padding: var(--size-fluid-4);
+  --prose-max-width: var(--size-content-4);
+  --surface-padding: var(--size-6);
+  --surface-radius: var(--radius-3);
+
+  /* Cinematic palette */
+  --bg: #000000;
+  --bg-soft: var(--gray-11);
+  --muted: var(--gray-5);
+  --line: var(--gray-9);
+
+  /* Playfair Display for headings */
+  --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", serif;
+
+  /* Force minimum heading weight — Playfair hairlines vanish on dark bg */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+  }
+}
+
+/* ─── Responsive: collapse field persona on mobile ────────────── */
+
+@media (max-width: 48rem) {
+  [data-persona="field"] {
+    --layout-max-width: 100%;
+    --layout-padding: var(--size-3);
+    --surface-padding: var(--size-4);
+  }
+}
+
+/* ─── Smooth persona transition ───────────────────────────────── */
+
+[data-persona="field"] .base-layout__container {
+  transition: max-width 400ms var(--ease-2);
+}
+
+[data-persona="field"] {
+  h1, h2, h3, h4, h5, h6 {
+    transition: font-family 300ms var(--ease-1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-persona="field"] .base-layout__container,
+  [data-persona="field"] h1, h2, h3, h4, h5, h6 {
+    transition: none;
+  }
+}
