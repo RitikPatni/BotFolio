@@ -1,5 +1,6 @@
 @use "open-props/style";
 @use "./primitives.scss";
+@use "./field-persona.scss";
 
 :root {
   --bg: var(--gray-12);
