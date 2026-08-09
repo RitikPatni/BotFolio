@@ -114,44 +114,40 @@ const updatePersonaUi = (persona: PersonaMode) => {
   const brandLink = document.querySelector<HTMLAnchorElement>(
     "[data-persona-brand]",
   );
-  const toggleButtons = document.querySelectorAll<HTMLButtonElement>(
-    "[data-persona-toggle]",
-  );
 
+  // Fix: studio home is "/" not "/coding"
   if (brandLink) {
-    brandLink.href = persona === "field" ? "/photography" : "/coding";
+    brandLink.href = persona === "field" ? "/photography" : "/";
   }
 
-  toggleButtons.forEach((toggleButton) => {
-    const iconElement = toggleButton.querySelector<HTMLElement>(
-      ".base-layout__persona-toggle-thumb-icon",
-    );
+  // Fix: target the pill buttons, not the old emoji toggle
+  const buttons = document.querySelectorAll<HTMLButtonElement>(
+    ".nav-persona-btn",
+  );
 
-    toggleButton.setAttribute(
-      "aria-pressed",
-      persona === "field" ? "true" : "false",
-    );
+  buttons.forEach((btn) => {
+    const btnPersona = btn.getAttribute("data-persona");
+    const isActive = btnPersona === persona;
 
-    if (iconElement) {
-      iconElement.classList.add("base-layout__persona-toggle-thumb-icon--swap");
-      window.setTimeout(() => {
-        iconElement.textContent = persona === "field" ? "📷" : "⌨";
-        iconElement.classList.remove(
-          "base-layout__persona-toggle-thumb-icon--swap",
-        );
-      }, 120);
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-pressed", String(isActive));
+
+    // Update the button's own label for screen readers
+    if (isActive) {
+      btn.setAttribute(
+        "aria-label",
+        persona === "field"
+          ? "Photography profile"
+          : "Developer profile",
+      );
+    } else {
+      btn.setAttribute(
+        "aria-label",
+        persona === "field"
+          ? "Switch to photography profile"
+          : "Switch to developer profile",
+      );
     }
-
-    toggleButton.setAttribute(
-      "aria-label",
-      persona === "field"
-        ? "Switch to developer profile"
-        : "Switch to photography profile",
-    );
-    toggleButton.setAttribute(
-      "title",
-      persona === "field" ? "Developer profile" : "Photography profile",
-    );
   });
 };
 
@@ -234,7 +230,7 @@ const bindPersonaToggle = () => {
         // Ignore storage write issues; persona still applies for the session.
       }
 
-      const targetBasePath = next === "field" ? "/photography" : "/coding";
+      const targetBasePath = next === "field" ? "/photography" : "/";
       const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
 
       if (currentPath !== targetBasePath) {
