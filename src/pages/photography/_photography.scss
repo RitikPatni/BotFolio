@@ -1,4 +1,3 @@
-@use "../../styles/patterns" as *;
 @use "./_photography.lightbox.scss";
 
 .photography {
@@ -29,7 +28,7 @@
   --photography-metadata-fullscreen-mobile-max-block: var(--size-15);
   --photography-related-mobile-max-block: var(--size-13);
 
-  /* ─── Pattern extends ───────────────────────────────────────── */
+  /* ─── Pattern styles ───────────────────────────────────────── */
 
   &__hero {
     padding: 4rem 2rem 3rem;
@@ -65,30 +64,40 @@
   }
 
   &__section-title {
-    @extend %section-title;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.5rem;
   }
 
   &__grid {
-    @extend %content-grid;
+    display: grid;
+    gap: 1.5rem;
     &--two {
-      @extend %content-grid-two;
+      grid-template-columns: 1fr 1fr;
     }
   }
 
   &__card {
-    @extend %surface-card;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
     &-title {
-      @extend %surface-card-title;
+      margin-top: 0;
+      font-family: var(--font-display);
+      font-size: var(--fs-subheading);
     }
     &--offset {
-      @extend %surface-card-offset;
+      margin-block-start: var(--size-4);
     }
   }
 
   &__tags {
-    @extend %tag-list;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2);
     &--spaced {
-      @extend %tag-list-spaced;
+      margin-block-end: var(--size-4);
     }
   }
 
@@ -116,28 +125,38 @@
   }
 
   &__list {
-    @extend %entry-list;
+    display: grid;
+    gap: var(--size-3);
     &--offset {
-      @extend %entry-list-offset;
+      margin-block-start: var(--size-5);
     }
   }
 
   &__item {
-    @extend %entry-item;
+    border: var(--surface-border) solid var(--line);
+    border-radius: var(--radius-2);
+    padding-block: var(--size-3);
+    padding-inline: var(--size-4);
+    background: var(--bg-soft);
     &-title {
-      @extend %entry-item-title;
+      margin: 0;
+      margin-block-end: var(--size-2);
+      font-family: var(--font-display);
+      font-size: var(--font-size-4);
     }
   }
 
   &__meta {
-    @extend %entry-meta;
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--font-size-1);
     &--spaced {
-      @extend %entry-meta-spaced;
+      margin-block-end: var(--size-2);
     }
   }
 
   &__description {
-    @extend %entry-description;
+    margin: 0;
   }
 
   /* ─── Photography-specific ──────────────────────────────────── */
@@ -281,4 +300,3 @@
     }
   }
 }
-

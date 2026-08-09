@@ -1,78 +1,91 @@
-@use "../../styles/patterns" as *;
+/* ═════════════════════════════════════════════════════════════════
+   V2 Newsletter Detail — Token-swapped (superseded by /blog)
+   ═════════════════════════════════════════════════════════════════ */
 
 .slug {
   &__hero {
-    @extend %page-hero;
-    &--compact {
-      @extend %page-hero-compact;
-    }
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    &::before { content: ''; position: absolute; inset: 0; opacity: 0.12; background: var(--gradient-hero); }
+    &--compact { padding-block-end: 1.5rem; }
   }
 
-  &__title {
-    @extend %page-title;
-  }
-  &__lead {
-    @extend %page-lead;
-  }
+  &__title { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 300; letter-spacing: -0.03em; position: relative; z-index: 1; }
+  &__lead  { font-size: 1.05rem; font-weight: 300; color: var(--text-muted); max-width: 500px; margin: 1rem auto 0; position: relative; z-index: 1; }
 
-  &__section-title {
-    @extend %section-title;
-  }
+  &__section-title { font-size: 1.5rem; font-weight: 300; letter-spacing: -0.01em; margin: 0 0 1.5rem; }
 
   &__grid {
-    @extend %content-grid;
-    &--two {
-      @extend %content-grid-two;
-    }
+    display: grid; gap: 1.5rem;
+    &--two { grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
   }
 
   &__card {
-    @extend %surface-card;
-    &-title {
-      @extend %surface-card-title;
-    }
-    &--offset {
-      @extend %surface-card-offset;
-    }
+    border: 1px solid var(--line); border-radius: var(--radius-md); padding: 1.5rem;
+    &-title   { font-size: 1.1rem; font-weight: 400; margin-bottom: 0.5rem; }
+    &--offset { margin-top: 1rem; }
   }
 
   &__tags {
-    @extend %tag-list;
-    &--spaced {
-      @extend %tag-list-spaced;
-    }
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    &--spaced { margin-block-end: 1.5rem; }
   }
 
-  &__tag {
-    @extend %tag-item;
-  }
+  &__tag { display: inline-flex; align-items: center; gap: 0.25rem; }
 
   &__list {
-    @extend %entry-list;
-    &--offset {
-      @extend %entry-list-offset;
-    }
+    display: grid; gap: 1.5rem;
+    &--offset { margin-block-start: 2rem; }
   }
 
   &__item {
-    @extend %entry-item;
-    &-title {
-      @extend %entry-item-title;
-    }
+    border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 1rem;
+    &-title { margin: 0; margin-block-end: 0.5rem; font-weight: 400; }
   }
 
   &__meta {
-    @extend %entry-meta;
-    &--spaced {
-      @extend %entry-meta-spaced;
-    }
+    margin: 0; color: var(--text-dim); font-size: 0.85rem;
+    &--spaced { margin-block-end: 0.5rem; }
   }
 
-  &__description {
-    @extend %entry-description;
-  }
+  &__description { margin: 0; font-weight: 300; color: var(--text-muted); }
 
+  /* Prose content — 960px wide */
   &__content {
-    @extend %prose;
+    max-width: 960px;
+    margin-inline: auto;
+    padding: 2rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.8;
+
+    > :first-child { margin-block-start: 0; }
+    > :last-child { margin-block-end: 0; }
+
+    h2 { font-size: 1.75rem; font-weight: 400; margin-block: 3rem 0.5rem; }
+    h3 { font-size: 1.35rem; font-weight: 400; margin-block: 2.5rem 0.5rem; }
+    h4 { font-size: 1.15rem; font-weight: 400; margin-block: 2rem 0.5rem; }
+
+    p { margin-block: 1rem; }
+
+    ul, ol { margin-block: 1rem; padding-inline-start: 1.5rem; }
+    li { margin-block: 0.25rem; }
+
+    a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--text-dim); }
+    a:hover { text-decoration-color: var(--accent-start); }
+
+    code { font-family: var(--font-mono); font-size: 0.875rem; background: var(--bg-soft); padding: 0.15em 0.4em; border-radius: 4px; }
+    pre { margin-block: 1.5rem; border-radius: var(--radius-sm); }
+    pre code { background: transparent; padding: 0; }
+
+    blockquote { margin-block: 1.5rem; margin-inline: 0; padding-inline: 1.5rem; border-left: 2px solid var(--line); color: var(--text-muted); font-style: italic; }
+
+    hr { border: 0; border-top: 1px solid var(--line); margin-block: 2rem; }
+    img { display: block; max-width: 100%; height: auto; border-radius: var(--radius-md); }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid var(--line); padding: 0.5rem; text-align: left; }
   }
 }
