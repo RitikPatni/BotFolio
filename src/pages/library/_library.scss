@@ -1,519 +1,211 @@
-@use "../../styles/patterns" as *;
+/* ═════════════════════════════════════════════════════════════════
+   V2 Library — Reading shelf
+   ═════════════════════════════════════════════════════════════════ */
 
 .library {
   &__hero {
-    @extend %page-hero;
-    &--compact {
-      @extend %page-hero-compact;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.12;
+      background: var(--gradient-hero);
     }
   }
 
   &__title {
-    @extend %page-title;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    position: relative;
+    z-index: 1;
   }
 
   &__lead {
-    @extend %page-lead;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 1rem auto 0;
+    position: relative;
+    z-index: 1;
   }
 
-  &__section-title {
-    margin: 0;
-    font-size: var(--font-size-4);
-    font-family: var(--font-display);
-    line-height: var(--font-lineheight-1);
+  &__panel {
+    margin-bottom: 3rem;
   }
 
-  &__views {
-    display: grid;
-    gap: var(--size-4);
-  }
-
-  &__view-switch {
-    display: inline-flex;
-    align-items: center;
+  /* Filter pills */
+  &__tags {
+    display: flex;
     flex-wrap: wrap;
-    gap: var(--size-1);
-    padding: var(--size-1);
-    border: var(--surface-border) solid var(--line);
-    border-radius: var(--radius-3);
-    width: fit-content;
-    background: color-mix(in srgb, var(--surface) 86%, var(--bg));
+    gap: 0.5rem;
+    margin: 0 0 2rem;
   }
 
-  &__view-button {
-    border: 0;
-    border-radius: var(--radius-2);
-    padding: var(--size-2) var(--size-3);
-    background: transparent;
-    color: var(--muted);
-    font-size: var(--font-size-1);
+  &__tag {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-round);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-muted);
     cursor: pointer;
-    transition:
-      color 180ms ease,
-      background-color 180ms ease,
-      transform 180ms ease;
+    background: none;
+    transition: all 200ms ease;
 
-    &:hover,
-    &:focus-visible {
+    &:hover {
       color: var(--text);
-      background: color-mix(in srgb, var(--surface) 55%, var(--bg));
-      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
     }
 
     &[aria-pressed="true"] {
       color: var(--text);
-      background: var(--surface);
-      box-shadow: 0 0 0 var(--surface-border) var(--line) inset;
+      border-color: color-mix(in srgb, var(--accent-start) 50%, var(--line));
+      background: color-mix(in srgb, var(--accent-start) 8%, transparent);
     }
   }
 
-  &__panel {
-    display: grid;
-    gap: var(--size-3);
+  &__tag-count {
+    color: var(--text-dim);
+    font-weight: 300;
+    margin-left: 0.25rem;
+  }
+}
+
+/* Reading shelf — horizontal scroll */
+.library__books-grid {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.5rem 0 1.5rem;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0.5rem;
+
+  /* Fade edges */
+  mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+}
+
+.library__item {
+  flex: 0 0 180px;
+  scroll-snap-align: start;
+  position: relative;
+
+  /* Hide meta by default — shelf is cover-only */
+  h3,
+  .library__item-meta-block,
+  .library__description,
+  .library__book-note {
+    display: none;
   }
 
-  &__grid {
-    @extend %content-grid;
-    &--two {
-      @extend %content-grid-two;
-    }
-  }
-
-  &__card {
-    @extend %surface-card;
-
-    &-title {
-      @extend %surface-card-title;
-    }
-
-    &--offset {
-      @extend %surface-card-offset;
-    }
-  }
-
-  &__stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-    gap: var(--size-3);
-    margin-block-end: var(--size-6);
-  }
-
-  &__stat {
-    @extend %surface-card;
-  }
-
-  &__stat-label {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--font-size-0);
-    letter-spacing: var(--font-letterspacing-3);
-    text-transform: uppercase;
-  }
-
-  &__stat-value {
-    margin: var(--size-2) 0 0;
-    font-family: var(--font-display);
-    font-size: var(--font-size-6);
-    line-height: var(--font-lineheight-1);
-  }
-
-  &__shelf {
-    margin-block-end: var(--size-6);
-  }
-
-  &__shelf-grid {
-    margin-block-start: var(--size-3);
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    gap: var(--size-3);
-  }
-
-  &__shelf-item {
-    @extend %surface-card;
-    display: grid;
-    align-content: start;
-    gap: var(--size-2);
-  }
-
-  &__shelf-title {
-    margin: 0;
-    font-size: var(--font-size-4);
-    font-family: var(--font-display);
-  }
-
-  &__shelf-meta {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--font-size-1);
-  }
-
-  &__shelf-description {
-    margin: 0;
-  }
-
-  &__book-note {
-    margin: 0;
-    font-size: var(--font-size-1);
-
-    a {
-      color: var(--text);
-      text-decoration: underline;
-      text-underline-offset: var(--size-relative-1);
-    }
-  }
-
-  &__tags {
-    @extend %tag-list;
-
-    &--spaced {
-      @extend %tag-list-spaced;
-    }
-  }
-
-  &__tag {
-    @extend %tag-item;
-
-    &-button {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--size-1);
-      padding: 0;
-      border: 0;
-      border-radius: 0;
-      color: var(--muted);
-      background: transparent;
-      cursor: pointer;
-      transition:
-        color 180ms ease,
-        text-decoration-color 180ms ease;
-
-      text-decoration: underline;
-      text-decoration-color: transparent;
-      text-underline-offset: var(--size-relative-1);
-
-      &:hover,
-      &:focus-visible {
-        color: var(--text);
-        text-decoration-color: currentColor;
-      }
-
-      &[aria-pressed="true"] {
-        color: var(--text);
-        text-decoration-color: currentColor;
-      }
-    }
-
-    &-count {
-      font-size: var(--font-size-0);
-      line-height: 1;
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-    }
-  }
-
-  &__list {
-    @extend %entry-list;
-
-    &--offset {
-      @extend %entry-list-offset;
-    }
-  }
-
-  &__books-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
-    gap: var(--size-3);
-
-    @media (min-width: 60rem) {
-      grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
-    }
-  }
-
-  &__item {
-    @extend %entry-item;
-    display: grid;
-    align-content: start;
-    gap: var(--size-2);
-    padding: var(--size-2);
-    border-radius: var(--radius-3);
-    transition:
-      transform 220ms ease,
-      box-shadow 220ms ease,
-      border-color 220ms ease;
-
-    &:hover,
-    &:focus-within {
-      transform: translateY(-3px);
-      border-color: color-mix(in srgb, var(--line), var(--text) 18%);
-      box-shadow: var(--shadow-2);
-    }
-
-    &[hidden] {
-      display: none;
-    }
-
-    &-title {
-      @extend %entry-item-title;
-      font-size: var(--font-size-3);
-      margin-block-end: 0;
-
-      a {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-    }
-  }
-
-  &__book-cover-link {
-    display: block;
-    border-radius: var(--radius-2);
-    overflow: clip;
-  }
-
-  &__book-cover {
-    display: block;
-    inline-size: 100%;
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    border-radius: var(--radius-2);
-    border: var(--surface-border) solid var(--line);
-    background: var(--bg);
-    transition: transform 300ms ease;
-  }
-
-  &__book-cover-link:hover &__book-cover,
-  &__book-cover-link:focus-visible &__book-cover {
-    transform: scale(1.03);
-  }
-
-  &__item-meta-block {
-    display: grid;
-    gap: 2px;
-    min-block-size: var(--size-7);
-  }
-
-  &__item-meta-primary,
-  &__item-meta-secondary {
-    margin: 0;
-    font-size: var(--font-size-1);
-    line-height: var(--font-lineheight-2);
-  }
-
-  &__item-meta-primary {
-    color: var(--text);
-    font-weight: var(--font-weight-6);
-  }
-
-  &__item-meta-secondary {
-    color: var(--muted);
-  }
-
-  &__notes-list {
-    @extend %entry-list;
-  }
-
-  &__note-item {
-    @extend %entry-item;
-    transition:
-      transform 220ms ease,
-      box-shadow 220ms ease,
-      border-color 220ms ease;
-
-    &:hover,
-    &:focus-within {
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--line), var(--text) 12%);
-      box-shadow: var(--shadow-1);
-    }
-  }
-
-  &__note-title {
-    @extend %entry-item-title;
-    margin-block-end: 0;
-  }
-
-  &__note-meta {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--font-size-1);
-  }
-
-  &__note-preview {
-    @extend %entry-description;
-    margin-block-start: 0;
-  }
-
-  &__note-linkline {
-    margin: 0;
-    font-size: var(--font-size-1);
-
-    a {
-      color: var(--text);
-      text-decoration: underline;
-      text-underline-offset: var(--size-relative-1);
-    }
-  }
-
-  &__book-notes {
-    margin-block-start: var(--size-4);
-    padding-block-start: var(--size-3);
-    border-block-start: var(--surface-border) solid var(--line);
-    display: grid;
-    gap: var(--size-1);
-  }
-
-  &__book-notes-title {
-    margin: 0;
-    font-size: var(--font-size-2);
-    font-family: var(--font-display);
-    line-height: var(--font-lineheight-1);
-  }
-
-  &__book-notes-lead {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--font-size-1);
-  }
-
-  &__highlights {
-    margin-block-start: var(--size-6);
-  }
-
-  &__highlights-head {
-    display: grid;
-    gap: var(--size-1);
-    margin-block-end: var(--size-4);
-  }
-
-  &__highlights-subtitle {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--font-size-1);
-  }
-
-  &__highlights-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-    gap: var(--size-3);
-  }
-
-  &__highlight-item {
-    @extend %surface-card;
-    display: grid;
-    align-content: start;
-    gap: var(--size-2);
-  }
-
-  &__highlight-kicker {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--font-size-0);
-    letter-spacing: var(--font-letterspacing-3);
-    text-transform: uppercase;
-  }
-
-  &__highlight-count {
-    font-variant-numeric: tabular-nums;
-    color: color-mix(in srgb, var(--muted) 84%, var(--text));
-  }
-
-  &__highlight-title {
-    margin: 0;
-    font-size: var(--font-size-4);
-    font-family: var(--font-display);
-  }
-
-  &__highlight-meta {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--font-size-1);
-  }
-
-  &__highlight-preview {
-    margin: 0;
-    line-height: var(--font-lineheight-3);
-  }
-
-  &__highlight-linkline {
-    margin: 0;
-    font-size: var(--font-size-1);
-
-    a {
-      color: var(--text);
-      text-decoration: underline;
-      text-underline-offset: var(--size-relative-1);
-    }
-  }
-
-  &__meta {
-    @extend %entry-meta;
-    min-block-size: var(--size-6);
-
-    &--spaced {
-      @extend %entry-meta-spaced;
-      margin-block-end: var(--size-1);
-    }
-  }
-
-  &__description {
-    @extend %entry-description;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-block-size: var(--size-9);
-  }
-
-  @media (max-width: 40rem) {
-    &__view-switch {
-      inline-size: 100%;
-    }
-
-    &__view-button {
-      flex: 1 1 auto;
-      text-align: center;
-    }
-
-    &__item {
-      padding: var(--size-2);
+  &:hover {
+    h3,
+    .library__item-meta-block,
+    .library__description,
+    .library__book-note {
+      display: block;
     }
   }
 }
 
-/* ─── Field persona ───────────────────────────────────────────── */
+.library__book-cover {
+  width: 180px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  transition: all 200ms ease;
 
-[data-persona="field"] .library {
-  &__hero {
-    padding-block: var(--size-10) var(--size-8);
-    text-align: center;
+  &:hover {
+    transform: scale(1.03);
+    border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
+}
 
-  &__title {
-    font-weight: 700;
-    letter-spacing: var(--font-letterspacing-1);
+.library__book-cover-link {
+  display: block;
+}
+
+/* Section title */
+.library__section-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.5rem;
+}
+
+/* Notes list */
+.library__notes-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.library__note-item {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.library__note-title {
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin: 0 0 0.5rem;
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
+}
 
-  /* Books grid: larger columns */
-  &__books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-13)), 1fr));
-    gap: var(--size-4);
+.library__note-meta {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--text-dim);
+}
 
-    @media (min-width: 60rem) {
-      grid-template-columns: repeat(auto-fill, minmax(var(--size-13), 1fr));
+.library__note-preview {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.library__note-linkline {
+  margin-top: 0.5rem;
+
+  a {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: var(--text);
     }
   }
+}
 
-  &__item {
-    padding: var(--size-3);
-    border-radius: var(--radius-3);
-    background: transparent;          /* Decision C: field cards transparent */
-    border: var(--surface-border) solid
-      color-mix(in srgb, var(--line) 50%, transparent);
-  }
+.library__meta {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
 
-  &__book-cover-link, &__book-cover {
-    border-radius: var(--radius-3);
-  }
+/* Empty state */
+.library__card {
+  padding: 2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  text-align: center;
+  color: var(--text-muted);
+  font-weight: 300;
 }
