@@ -2,17 +2,197 @@
 
 ## Overview
 
-Three independent workstreams:
+Six workstreams:
 
 | # | Workstream | Scope | Files touched | Status |
 |---|---|---|---|---|
 | 1 | Code blocks | Night Owl syntax highlighting + Fira Code ligatures | 6 | ✅ Merged |
 | 2 | SEO + Social | OG tags, Twitter cards, canonical URLs, og-image | 4 | ✅ Implemented |
-| 3 | Field persona | Complete visual transformation (wide, sans, immersive) | 9 | ⏳ Awaiting Q-decisions |
+| 3 | Field persona | Playfair Display + cinematic palette + pill nav + edge-bleed gallery | 9 | ✅ Spec approved |
+| 4 | Studio typography | Lora headings + fixed rem scale + mobile 80% | 3 | ✅ Spec approved |
+| 5 | Design polish | Card contrast, persona distinction, icon migration, content cleanup | 8 | ✅ Spec approved |
+| 6 | OG images | Satori-based programmatic OG cards — default + per-blog | 5 | ✅ Spec approved |
 
 ---
 
-## Workstream 2: SEO + Social Sharing (PHASE COMPLETE)
+## Design Audit — 2026-08-09
+
+Multi-model audit (3 subagents: design/UX, responsiveness, content/SEO/a11y) + live browser inspection + code review. Full subagent reports at `~/.hermes/cache/delegation/subagent-summary-*.txt`.
+
+### Decisions Made
+
+| Q | Domain | Decision |
+|---|---|---|
+| Q1 | Font stack | **D** — Inter (body) + Playfair Display (headings). High contrast, dramatic, art-gallery feel |
+| Q2 | Color palette | **C** — Higher contrast. Purer blacks/whites, fewer gray steps. Cinematic |
+| Q3 | Nav style | **B** — Horizontal pills. Compact, single row of large pill buttons |
+| Q4 | Gallery layout | **A** — Edge bleed. Images span viewport via negative margin |
+| Q5 | Approval gate | **Yes** — V4 Pro reviewer → Kimi K2.7 gate before implementation |
+| Q6 | Scope | **B** — All pages at once. Full 6-phase rollout |
+| A | Photography gallery width | Edge-bleed (option 3) — images span viewport via negative margin, zero JS |
+| B | Surface card contrast | Lighten cards to gray-10 (`#212529`), keep bg `#030507` |
+| C | Persona visual distinction | Field cards → transparent bg + border-only; studio cards stay filled |
+| D | Control icons | Emojis → SVG: braces `{ }` (studio), aperture (field), contrast (theme) |
+| E | Empty blog posts | Delete from live, set `draft: true`, remove from sitemap/RSS |
+| F | Contact page | 301 redirect `/contact` → `/about`, drop from sitemap |
+| G | OG card typeface | Lora (studio voice) — represents site brand, not a persona |
+
+### Studio Typography (Workstream 4)
+
+| Role | Size | Weight | Font |
+|---|---|---|---|
+| Page title (h1) | 2rem | 600 | Lora |
+| Sub-heading (h2/h3) | 1.5rem | 600 | Lora |
+| Card title | 1.5rem | 600 | Lora |
+| h4 | 1.25rem | 600 | Lora |
+| Entry item title | 1.25rem | 600 | Lora |
+| Lead / description | 1.125rem | 400 | Inter |
+| Body content | 1rem | 400 | Inter |
+| Code / meta | 0.875rem | 400 | Fira Code |
+| Tags / chips | 0.75rem | 600 | Inter (uppercase) |
+| Mobile | 80% of all above | — | — |
+
+Font stack: `--font-display: "Lora", "Iowan Old Style", "Palatino Linotype", serif`
+Weights loaded: Lora 400/500/600/700 (italic included), Inter 400/600, Fira Code 400.
+Letter-spacing: drop `--font-letterspacing-1` on page titles (Lora at 600 is calligraphic enough).
+Line-heights: keep Open Props defaults.
+
+#### Phase 4.1 — Font-size custom properties
+
+**File: `src/styles/global.scss`** — add to `:root` block (after `--font-mono`)
+
+```diff
++  /* Font-size scale */
++  --fs-heading: 2rem;
++  --fs-subheading: 1.5rem;
++  --fs-content: 1rem;
++  --fs-code: 0.875rem;
+```
+
+Add mobile 80% override after `:root[data-theme="light"]` block:
+
+```scss
+/* 80% font-size scale on mobile */
+@media (max-width: 48rem) {
+  :root {
+    --fs-heading: 1.6rem;
+    --fs-subheading: 1.2rem;
+    --fs-content: 0.8rem;
+    --fs-code: 0.7rem;
+  }
+}
+```
+
+**Checkpoint 4.1:** Custom properties available. No visual change yet — patterns still use Open Props tokens.
+
+#### Phase 4.2 — Replace Open Props sizes with custom properties
+
+**File: `src/styles/patterns.scss`** — replace all fluid/fixed font-size tokens
+
+| Selector | Old | New |
+|---|---|---|
+| `%page-title` | `font-size: var(--font-size-fluid-3)` | `font-size: var(--fs-heading)` |
+| `%prose` | `font-size: var(--font-size-2)` | `font-size: var(--fs-content)` |
+| `%prose h2` | `font-size: var(--font-size-6)` | `font-size: var(--fs-heading)` |
+| `%prose h3` | `font-size: var(--font-size-5)` | `font-size: var(--fs-subheading)` |
+| `%prose :where(code, kbd)` | `font-size: var(--font-size-1)` | `font-size: var(--fs-code)` |
+| `%prose pre code` | `font-size: var(--font-size-1)` | `font-size: var(--fs-code)` |
+| `%surface-card-title` | `font-size: var(--font-size-5)` | `font-size: var(--fs-subheading)` |
+
+Plus: drop `--font-letterspacing-1` from `%page-title`.
+
+**Checkpoint 4.2:** All headings use the fixed scale. H1 is now 2rem (was ~56px). Mobile: all sizes 80%.
+
+#### Phase 4.3 — Swap IBM Plex Serif → Lora
+
+**File: `src/styles/global.scss`**
+
+```diff
+-  --font-display: "IBM Plex Serif", "Iowan Old Style", "Palatino Linotype", serif;
++  --font-display: "Lora", "Iowan Old Style", "Palatino Linotype", serif;
+```
+
+**File: `src/layouts/BaseLayout/BaseLayout.astro`** — Google Fonts URL
+
+```diff
+-      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=IBM+Plex+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
++      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&family=Inter:wght@400;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap"
+```
+
+**Checkpoint 4.3:** All headings use Lora. IBM Plex Serif removed. Font weights trimmed to used values.
+
+### Self-Fixable Items (no decisions needed)
+
+| # | Severity | Page | Issue | Fix |
+|---|---|---|---|---|
+| 1 | 🔴 | All | theme-color meta `#111111` mismatches actual bg `#030507` | Change meta to `#030507` |
+| 2 | 🔴 | Blog/News | Heading hierarchy jumps h1→h3 (no h2) | Change listing h3 to h2 |
+| 3 | 🔴 | Photography | Empty H2/H4 in lightbox static DOM | `aria-hidden="true"` on dialog or defer to JS |
+| 4 | 🔴 | Photography | Missing alt on decorative gallery thumbs | Add `alt=""` |
+| 5 | 🟡 | All | Two `<nav aria-label="Main navigation">` — identical landmark labels | Distinct labels: "Studio navigation" / "Field navigation" |
+| 6 | 🟡 | All | `viewport` meta lacks `initial-scale=1` | Add `initial-scale=1.0` |
+| 7 | 🟡 | Blog | Two hand-written `<pre>` ASCII blocks lack `.astro-code` → no horizontal scroll | Add `overflow-x: auto` wrapper |
+| 8 | 🟡 | All | Prose h2/h3 share identical top margin (`--size-7`) | h2 gets `margin-block-start: var(--size-8)` |
+| 9 | 🔴 | All (SEO) | Sitemap URLs malformed (`https:///ritikpatni.me/`) | Fix `toUrl()` in `src/pages/sitemap.xml.ts` |
+| 10 | 🔴 | Newsletter | Over-escaped `&quot;` in 3+ H3 titles | Content pipeline fix — unescape titles |
+| 11 | 🔴 | Library | ~14 duplicate "Feedly" entries in Notes | Dedup by slug |
+| 12 | 🟡 | All | Google Fonts loads 11 weights across 3 families | Trim to: Inter 400/600, Lora 400/600/700, Fira Code 400 |
+| 13 | 🟡 | Mobile | Header loses stickiness at 48rem, 133px tall | `position: sticky` + collapse to single row |
+| 14 | 🟡 | Photos | 39 hi-res images on one page, some unverified lazy-loading | Verify `loading="lazy"` + `srcset` on all gallery images |
+
+### New Workstreams from Audit
+
+#### Workstream 5: Design Polish
+
+**Phase 5.1 — Surface card contrast**
+File: `src/styles/global.scss`
+Change `--bg-soft` from `var(--gray-11)` to `var(--gray-10)`.
+```diff
+-  --bg-soft: var(--gray-11);
++  --bg-soft: var(--gray-10);
+```
+
+**Phase 5.2 — SVG icon migration**
+Files: `BaseLayout.astro`, `BaseLayout.scss`, 3 new icon components (already created)
+- Persona toggle thumb: ⌨ → `<BracesIcon>`, 📷 → `<ApertureIcon>`
+- Theme FAB: ◐ → `<ContrastIcon>`
+- Remove emoji sizing CSS hacks
+
+**Phase 5.3 — Persona nav landmark labels**
+File: `BaseLayout.astro`
+```diff
+- aria-label="Main navigation"
++ aria-label="Studio navigation"  (on studio nav)
++ aria-label="Field navigation"   (on field nav)
+```
+
+**Phase 5.4 — Content cleanup**
+- 48 "Imported from Obsidian. Content was empty" posts → `draft: true`
+- 14 duplicate "Feedly" entries → dedup
+- `/contact` → 301 to `/about`, remove from sitemap
+- Newsletter `&quot;` escaping → unescape in content pipeline
+
+**Phase 5.5 — theme-color meta fix**
+File: `BaseLayout.astro`
+```diff
+- content="#111111"
++ content="#030507"
+```
+
+**Phase 5.6 — viewport + heading hierarchy + alt text**
+- `viewport` → add `initial-scale=1.0`
+- Blog/newsletter h3 → h2
+- Gallery thumbs → `alt=""`
+- Lightbox dialog → `aria-hidden="true"`
+
+**Phase 5.7 — Font weight trim**
+File: `BaseLayout.astro` Google Fonts URL
+Trim to: `Inter:wght@400;600`, `Lora:ital,wght@0,400;0,600;0,700;1,400;1,600`, `Fira+Code:wght@400`
+
+**Phase 5.8 — Mobile header + prose fixes**
+- `BaseLayout.scss`: keep header `position: sticky` on mobile, collapse to single row
+- `patterns.scss`: h2 gets `margin-block-start: var(--size-8)`
+- Blog ASCII pre blocks: wrap in `overflow-x: auto`
 
 ### Problem
 DuckDuckGo and other search engines showed poor descriptions for BotFolio pages. No Open Graph tags, no Twitter cards, no canonical URLs, no social preview image. The `<head>` only had `<title>` and `<meta name="description">`.
@@ -47,21 +227,29 @@ DuckDuckGo and other search engines showed poor descriptions for BotFolio pages.
 
 ---
 
-## Workstream 3: Field Persona Transformation
+## Workstream 3: Field Persona Transformation (REWRITTEN — 2026-08-09)
 
-Each workstream split into numbered phases with exact diffs. Phases are ordered for safe incremental delivery — each phase produces a working build.
-
----
-
-## Workstream 1: Code Blocks — Night Owl + Fira Code
+Decisions resolved. Spec rewritten to match: Playfair Display, cinematic palette, horizontal pill nav, edge-bleed gallery, all pages.
 
 ### Architecture Decision
 
-Astro v4 ships Shiki built-in. No new integration needed. We install `@shikijs/themes` for the Night Owl theme (not bundled with Shiki), configure Shiki via `astro.config.mjs`, fix CSS conflicts, and add Fira Code.
+**Strategy: CSS cascade gating, not page forking.**
 
-**Why not Prism/rehype-highlight/starry-night?** Shiki is already loaded. Adding another library for identical functionality is wasteful.
+Every field-persona change uses `[data-persona="field"]` as a selector prefix. This means:
+- Studio persona CSS is untouched — zero risk of regression
+- All field overrides live in one file (`field-persona.scss`)
+- No JS changes needed (persona toggle already sets `data-persona` attribute)
+- If field mode breaks, studio mode still works perfectly
 
-**Why Fira Code instead of JetBrains Mono/Cascadia Code?** User preference. Fira Code also has the widest ligature coverage and Google Fonts availability (no self-hosting).
+**Why not separate layouts?** Astro content collections share one `[...slug].astro` template. Forking layouts means duplicating every page route slug → double the maintenance. CSS gating is simpler and safer.
+
+**Font strategy:** Inter (body) at 400 weight + Playfair Display (headings) at minimum 500 weight. Playfair is a high-contrast transitional serif — dramatic, elegant, art-gallery feel. Its extreme stroke contrast (hairline thins vs bold thicks) creates instant visual identity distinct from studio's Lora. Minimum weight 500 ensures hairlines remain visible on dark backgrounds.
+
+**Color strategy:** Cinematic high-contrast palette. Pure black background, brighter whites, fewer intermediate gray steps. The page becomes a dark frame; photos provide all the color.
+
+**Nav strategy:** Horizontal pills. Large rounded buttons in a single row with icons (BracesIcon, ApertureIcon from Workstream 5). Compact and scannable. Icon-only on mobile.
+
+**Gallery strategy:** Edge-bleed. Images span viewport edges via CSS `margin-inline: calc(var(--layout-padding) * -1)`. On mobile (< 48rem): `margin-inline: 0` (already full-width).
 
 ### Phase 1.1 — Install dependencies + configure Shiki
 
@@ -253,152 +441,44 @@ New:
 
 ---
 
-## Phase 2 Open Questions (Design Decisions Before Implementation)
+### Cinematic Color Palette
 
-These must be resolved before any Phase 2 code is written. Each question has one recommended default.
-
-### Q1: Field Persona Font Stack
-
-Field persona currently specified as Inter-only (sans). Should we:
-
-| Option | Font pairing | Feel |
-|---|---|---|
-| **A (recommended)** | Inter (body + headings) — single typeface, varied weights | Clean, modern, Swiss-design inspired |
-| B | Inter (body) + DM Serif Display (headings) | Editorial, magazine-like contrast |
-| C | Space Grotesk (body + headings) | Geometric, slightly retro, distinctive |
-| D | Inter (body) + Playfair Display (headings) | High contrast, dramatic, art-gallery feel |
-
-Option A is recommended because it creates maximum differentiation from studio (which uses IBM Plex Serif for headings) while keeping the type system simple. Field mode becomes "pure sans" — no serifs anywhere — making the toggle between personas a clear typeface shift.
-
-**Your call:** A, B, C, D, or propose your own?
-
----
-
-### Q2: Field Color Palette — Keep or Deviate?
-
-Both personas currently share the same `--gray-*` Open Props palette. Options:
-
-| Option | Approach | Risk |
-|---|---|---|
-| **A (recommended)** | Same palette, different application. Gradients, transparency, softer borders. Gray-12 dark / gray-0 light. Zero palette drift. | Low — same tokens, different usage |
-| B | Warm-tinted palette for field (sepia/brown undertones vs. studio's neutral gray). Would need new CSS custom properties. | Medium — palette divergence risk |
-| C | Higher contrast field palette (purer blacks/whites, fewer gray steps). Cinematic feel. | Medium — could clash with photo content |
-
-Option A is recommended because photography already brings its own color via images. Let the photos do the heavy lifting; the UI should recede.
-
-**Your call:** A, B, C?
-
----
-
-### Q3: Field Nav — Card Grid vs. Mega Menu
-
-Currently spec'd as a card grid below the header. Alternative:
-
-| Option | Pattern | Best for |
-|---|---|---|
-| **A — Card Grid (recommended)** | 2-3 cards side by side with icon + title + description | 3 nav items (Gallery, Archive, About). Clean, spacious. |
-| B — Horizontal Pills | Large pill buttons with icons, single row | Compact, less immersive |
-| C — Vertical Sidebar | Left-aligned sidebar with icons, stays fixed | More app-like, desktop-only feel |
-
-Option A is recommended because it matches the "wide, immersive" brief and scales to 3 items naturally.
-
-**Your call:** A, B, C?
-
----
-
-### Q4: Photography Gallery — Edge Bleed vs. Contained
-
-| Option | Approach | Risk |
-|---|---|---|
-| **A — Edge bleed (recommended)** | Images span viewport edges via negative margins. Gap: `var(--size-2)`. | Needs responsive guard on mobile |
-| B — Contained-wide | Container full-width but images inside it with generous gap | Less dramatic |
-| C — Masonry | JS-driven masonry layout, varied heights | JS dependency, CLS risk |
-
-Option A is recommended — pure CSS, zero JS, maximum impact.
-
-**Your call:** A, B, C?
-
----
-
-### Q5: Multi-Model Approval Gate for Phase 2
-
-Phase 2 has 6 sub-phases (2.1–2.6). Before implementing, we should run the spec through our own reviewer loop to catch design issues early.
-
-Proposed flow:
+Field persona overrides the shared `:root` tokens with a higher-contrast cinematic scale:
 
 ```
-SPEC (this document)
-    │
-    ▼
-┌─────────────────────────────┐
-│ ① REVIEWER — V4 Pro          │  ← Read full spec
-│    → design coherence check  │  → Does field persona feel intentional or bolted-on?
-│    → accessibility check     │  → Does sans-only hurt readability at scale?
-│    → mobile-first check      │  → Does wide layout collapse cleanly?
-│    → performance check       │  → Any layout thrash on persona toggle?
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│ ② QUALITY GATE — Kimi K2.7   │  ← Fresh perspective
-│    → APPROVED / NEEDS WORK   │  → Different model, different training
-│    → critique + suggestions  │  → Final go/no-go per phase
-└──────────────────────────────┘
+Token        | Studio (shared :root) | Field override      | Purpose
+-------------|----------------------|---------------------|--------
+--bg         | gray-12 (#030507)    | #000000 (pure black) | Darker, more dramatic
+--bg-soft    | gray-10 (#212529)    | gray-11 (#1a1c1e)   | Fewer gray steps
+--text       | stone-0 (#f8fafb)    | stone-0              | Shared
+--muted      | gray-4               | gray-5              | Brighter muted text
+--line       | gray-8               | gray-9              | Subtler borders on pure black
 ```
 
-**Gate criteria:**
-- Kimi returns `APPROVED` → implement Phase 2.1
-- Kimi returns `NEEDS WORK` → incorporate feedback, re-gate
-- Max 2 review cycles
-
-Run this tomorrow before any code. The reviewer finds design smell; Kimi confirms or rejects.
-
-**Your call:** Run the gate tomorrow before implementation?
-
----
-
-### Q6: Scope — All Pages or Photography-First?
-
-| Option | Approach | Effort |
-|---|---|---|
-| **A — Photography-first (recommended)** | Implement field persona ONLY on photography + library pages first. Home and About get minimal treatment. Land, verify, then expand. | Lower risk |
-| B — All pages at once | Full 6-phase rollout across all field persona pages | Higher risk of regressions |
-
-Option A is recommended — photography is the hero page for field persona. Get it right there, then propagate patterns to library, home, about.
-
-**Your call:** A or B?
-
-
-### Architecture Decision
-
-**Strategy: CSS cascade gating, not page forking.**
-
-Every field-persona change uses `[data-persona="field"]` as a selector prefix. This means:
-- Studio persona CSS is untouched — zero risk of regression
-- All field overrides live in one file (`field-persona.scss`)
-- No JS changes needed (persona toggle already sets `data-persona` attribute)
-- If field mode breaks, studio mode still works perfectly
-
-**Why not separate layouts?** Astro content collections share one `[...slug].astro` template. Forking layouts means duplicating every page route slug → double the maintenance. CSS gating is simpler and safer.
-
-**Font strategy:** Field persona drops IBM Plex Serif entirely. All text (headings, body, meta, nav) uses Inter at varying weights. This creates the "sans, wide, experiential" feel via one consistent typeface at different scales.
-
-**Color strategy:** Same `--gray-*` palette, different application. Field uses gradients, softer borders, and more transparency instead of hard `--bg-soft` filled cards.
+Applied in `field-persona.scss`:
+```scss
+[data-persona="field"] {
+  --bg: #000000;
+  --bg-soft: var(--gray-11);
+  --muted: var(--gray-5);
+  --line: var(--gray-9);
+}
+```
 
 ### File Inventory
 
 | File | Type | What changes |
 |---|---|---|
-| `src/styles/field-persona.scss` | **NEW** | All `[data-persona="field"]` CSS overrides |
+| `src/styles/field-persona.scss` | **NEW** | All `[data-persona="field"]` overrides: layout, palette, fonts, pills, gallery, transitions |
 | `src/styles/global.scss` | Edit | Import `field-persona.scss` |
-| `src/layouts/BaseLayout/BaseLayout.astro` | Edit | Field nav gets card-style markup |
-| `src/layouts/BaseLayout/BaseLayout.scss` | Edit | Field nav card styles, container width gating |
-| `src/pages/photography/_photography.scss` | Edit | Field gallery bleed + hero gradient |
-| `src/pages/library/_library.scss` | Edit | Field book grid + filter tabs |
+| `src/layouts/BaseLayout/BaseLayout.astro` | Edit | Field nav: replace simple links with horizontal pills + SVG icons |
+| `src/layouts/BaseLayout/BaseLayout.scss` | Edit | Pill nav styles |
+| `src/pages/photography/_photography.scss` | Edit | Edge-bleed gallery + hero gradient |
+| `src/pages/library/_library.scss` | Edit | Field book grid + filter pills |
 | `src/pages/_home/_home.scss` | Edit | Field hero treatment |
-| `src/pages/about/_about.scss` | Edit | Field persona card styling |
+| `src/pages/about/_about.scss` | Edit | Field persona styling |
 
-### Phase 2.1 — Layout tokens + typography
+### Phase 3.1 — Layout tokens + Playfair typography
 
 **File: `src/styles/field-persona.scss` (NEW)**
 
@@ -406,24 +486,43 @@ Every field-persona change uses `[data-persona="field"]` as a selector prefix. T
 /* ==========================================================================
    Field Persona — Immersive visual experience
    All styles gated on [data-persona="field"] on <html>
-   Studio persona is completely untouched by this file.
+   Studio persona is completely untouched.
    ========================================================================== */
 
 @use "open-props/style";
 
-/* ─── Layout tokens ──────────────────────────────────────────── */
-
 [data-persona="field"] {
+  /* Layout */
   --layout-max-width: var(--size-15);       /* ~1440px (was ~768px) */
-  --layout-padding: var(--size-fluid-4);    /* fluid responsive padding */
-  --prose-max-width: var(--size-content-4); /* wider reading width */
-  --surface-padding: var(--size-6);         /* more breathing room */
-  --surface-radius: var(--radius-3);        /* softer corners */
+  --layout-padding: var(--size-fluid-4);
+  --prose-max-width: var(--size-content-4);
+  --surface-padding: var(--size-6);
+  --surface-radius: var(--radius-3);
 
-  /* Sans-only — no serifs in field persona */
-  --font-display: "Inter", "Segoe UI", "Helvetica Neue", sans-serif;
+  /* Cinematic palette */
+  --bg: #000000;
+  --bg-soft: var(--gray-11);
+  --muted: var(--gray-5);
+  --line: var(--gray-9);
+
+  /* Playfair Display for headings */
+  --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", serif;
+
+  /* Force minimum heading weight — Playfair hairlines vanish on dark bg */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+  }
 }
 ```
+
+**File: `src/layouts/BaseLayout/BaseLayout.astro`** — Google Fonts URL (add Playfair)
+
+```diff
+-      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=IBM+Plex+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
++      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&family=Inter:wght@400;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+```
+
+(Final URL combines WS4 Lora trim + WS3 Playfair. Also loaded in design-audit-variants.html.)
 
 **File: `src/styles/global.scss`** — add import at bottom
 
@@ -431,20 +530,21 @@ Every field-persona change uses `[data-persona="field"]` as a selector prefix. T
 @use "./field-persona.scss";
 ```
 
-**Checkpoint 2.1:** Toggle to field persona. Page goes wide (container expands to ~1440px). All headings switch from IBM Plex Serif to Inter. Spacing increases. Layout feels dramatically different from studio.
+**Checkpoint 3.1:** Toggle to field persona. Container expands to ~1440px. All headings switch to Playfair Display (500+ weight). Background goes pure black. Studio mode completely unchanged.
 
-### Phase 2.2 — Field navigation redesign
+### Phase 3.2 — Horizontal pill navigation
 
 **Current nav (studio):** Row of simple `<a>` links — `Journal | Notes | About`
-**Target nav (field):** Card grid with icons, labels, and descriptions
+**Current nav (field):** Same row of simple links — `Gallery | Archive | About`
+**Target nav (field):** Horizontal pills with SVG icons, single row. Compact, scannable.
 
-**File: `src/layouts/BaseLayout/BaseLayout.astro`** — replace field nav block (lines 201-217)
+**File: `src/layouts/BaseLayout/BaseLayout.astro`** — replace field nav block
 
 Current:
 ```astro
             <nav
               class="base-layout__links"
-              aria-label="Main navigation"
+              aria-label="Field navigation"
               data-persona-nav="field"
             >
               {
@@ -465,131 +565,137 @@ New:
 ```astro
             <nav
               class="base-layout__links base-layout__links--field"
-              aria-label="Main navigation"
+              aria-label="Field navigation"
               data-persona-nav="field"
             >
               {
                 navSets.field.map((item) => (
                   <a
                     href={item.href}
-                    class={`base-layout__field-nav-card ${path === item.href ? "base-layout__field-nav-card--active" : ""}`}
+                    class={`base-layout__pill ${path === item.href ? "base-layout__pill--active" : ""}`}
                     aria-current={path === item.href ? "page" : undefined}
                   >
-                    <span class="base-layout__field-nav-icon" aria-hidden="true">
-                      {item.href === "/photography" ? "📷" : item.href === "/library" ? "📚" : "🧑"}
+                    <span class="base-layout__pill-icon" aria-hidden="true">
+                      {item.href === "/photography" ? <ApertureIcon /> :
+                       item.href === "/library" ? <ImageIcon /> :
+                       <BracesIcon />}
                     </span>
-                    <span class="base-layout__field-nav-label">{item.label}</span>
-                    <span class="base-layout__field-nav-desc">
-                      {item.href === "/photography" ? "Curated image sets from field sessions" :
-                       item.href === "/library" ? "Reading notes, books, and long-form references" :
-                       "Field notes, bio, and contact"}
-                    </span>
+                    <span class="base-layout__pill-label">{item.label}</span>
                   </a>
                 ))
               }
             </nav>
 ```
 
-**File: `src/layouts/BaseLayout/BaseLayout.scss`** — add after `&__links` block (line 154)
+(Imports needed at top of BaseLayout.astro: `import ApertureIcon from "../../components/icons/ApertureIcon.astro"`, `import ImageIcon from "../../components/icons/ImageIcon.astro"`, `import BracesIcon from "../../components/icons/BracesIcon.astro"`. ImageIcon already exists in the codebase; ApertureIcon and BracesIcon created in WS5.2.)
+
+**File: `src/layouts/BaseLayout/BaseLayout.scss`** — pill styles
 
 ```scss
-  /* ─── Field persona nav cards ─────────────────────────────────── */
+  /* ─── Field persona pill nav ──────────────────────────────────── */
 
   &__links--field {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--size-13)), 1fr));
-    gap: var(--size-3);
-    padding-block: var(--size-2);  /* extra breathing room below header */
+    display: flex;
+    gap: var(--size-2);
+    flex-wrap: nowrap;
+
+    @media (max-width: 48rem) {
+      gap: var(--size-1);
+    }
   }
 
-  &__field-nav-card {
-    display: grid;
-    gap: var(--size-1);
-    padding: var(--size-4);
+  &__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-2);
+    padding: var(--size-2) var(--size-4);
     border: var(--surface-border) solid
-      color-mix(in srgb, var(--line) 60%, transparent);
-    border-radius: var(--radius-3);
-    background: color-mix(in srgb, var(--bg) 94%, transparent);
-    color: var(--text);
+      color-mix(in srgb, var(--line) 50%, transparent);
+    border-radius: var(--radius-round);
+    background: transparent;
+    color: var(--muted);
     text-decoration: none;
+    font-size: var(--font-size-1);
+    font-weight: var(--font-weight-5);
+    min-block-size: 44px;          /* touch target */
+    min-inline-size: 44px;
     transition:
-      border-color 220ms var(--ease-2),
-      background-color 220ms var(--ease-2),
-      transform 220ms var(--ease-2),
-      box-shadow 220ms var(--ease-2);
+      color 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease;
 
     &:hover,
     &:focus-visible {
-      border-color: color-mix(in srgb, var(--text) 20%, var(--line));
-      background: color-mix(in srgb, var(--bg-soft) 60%, var(--bg));
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-2);
+      color: var(--text);
+      border-color: color-mix(in srgb, var(--text) 25%, var(--line));
+      background: color-mix(in srgb, var(--bg-soft) 30%, transparent);
     }
 
     &--active {
-      border-color: color-mix(in srgb, var(--text) 30%, var(--line));
-      background: color-mix(in srgb, var(--bg-soft) 80%, var(--bg));
+      color: var(--text);
+      border-color: color-mix(in srgb, var(--text) 40%, var(--line));
+      background: color-mix(in srgb, var(--bg-soft) 60%, transparent);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      &:hover,
-      &:focus-visible {
-        transform: none;
-      }
+    @media (max-width: 48rem) {
+      padding: var(--size-2) var(--size-3);
     }
   }
 
-  &__field-nav-icon {
-    font-size: var(--font-size-5);
-    line-height: 1;
+  &__pill-icon {
+    display: flex;
+    align-items: center;
+    svg {
+      inline-size: var(--size-4);
+      block-size: var(--size-4);
+    }
   }
 
-  &__field-nav-label {
-    font-size: var(--font-size-3);
-    font-weight: var(--font-weight-6);
-    line-height: var(--font-lineheight-1);
-  }
-
-  &__field-nav-desc {
-    font-size: var(--font-size-1);
-    color: var(--muted);
-    line-height: var(--font-lineheight-2);
+  &__pill-label {
+    @media (max-width: 48rem) {
+      /* visually-hidden — NOT display:none (a11y: preserves accessible name) */
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
   }
 ```
 
-**Checkpoint 2.2:** Toggle to field persona. Header shows card grid nav with icons + descriptions. Hover states work. Active page card highlighted. Studio nav unchanged (simple links).
+**Checkpoint 3.2:** Toggle to field persona. Nav shows 3 pills: 📷 Gallery, 📷 Archive, 🧑 About. Hover states work. Active page pill highlighted. On mobile: icons only, labels hidden. Studio nav unchanged.
 
-### Phase 2.3 — Photography page field treatment
+### Phase 3.3 — Photography edge-bleed gallery
 
-**File: `src/pages/photography/_photography.scss`** — add at end of file
+**File: `src/pages/photography/_photography.scss`** — replace field persona section
 
 ```scss
-/* ─── Field persona ───────────────────────────────────────────── */
+/* ─── Field persona — edge-bleed gallery ──────────────────────── */
 
 [data-persona="field"] .photography {
   &__hero {
     padding-block: var(--size-10) var(--size-8);
     text-align: center;
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--bg-soft) 60%, var(--bg)) 0%,
-      var(--bg) 100%
-    );
   }
 
   &__title {
-    font-weight: var(--font-weight-8);
+    font-weight: 700;
     letter-spacing: var(--font-letterspacing-1);
   }
 
+  /* Edge-bleed: images span viewport edges */
   &__gallery {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-14)), 1fr));
     gap: var(--size-2);
-    margin-inline: calc(var(--layout-padding) * -1);  /* edge-to-edge bleed */
+    margin-inline: calc(var(--layout-padding) * -1);
   }
 
   &__shot {
-    border-radius: 0;  /* no card radius in field mode */
+    border-radius: 0;               /* no card radius in field */
   }
 
   &__image {
@@ -602,24 +708,36 @@ New:
   }
 
   &__caption {
-    padding-inline: var(--size-2);
+    padding-inline: var(--size-3);  /* compensate for edge-bleed */
     padding-block: var(--size-2);
   }
 
-  /* Category section titles get more breathing room */
   &__section-title {
     font-size: var(--font-size-6);
-    font-weight: var(--font-weight-7);
+    font-weight: 700;
     margin-block: var(--size-8) var(--size-4);
+  }
+}
+
+/* Mobile: no negative margin (already full-width) */
+@media (max-width: 48rem) {
+  [data-persona="field"] .photography__gallery {
+    margin-inline: 0;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-persona="field"] .photography__image {
+    transition: none;
   }
 }
 ```
 
-**Checkpoint 2.3:** Photography page in field mode: hero has gradient background + tall padding. Gallery images bleed to viewport edges (negative margin on gallery container). Hover scale on images. Category titles are larger. Studio mode unchanged.
+**Checkpoint 3.3:** Photography in field mode: hero center-aligned, gallery images bleed to viewport edges, hover scale on images. Category titles larger (700 weight Playfair). On mobile: edge-bleed disabled, images fill viewport naturally.
+### Phase 3.4 — Library field treatment
 
-### Phase 2.4 — Library page field treatment
-
-**File: `src/pages/library/_library.scss`** — add at end of file
+**File: `src/pages/library/_library.scss`** — add at end
 
 ```scss
 /* ─── Field persona ───────────────────────────────────────────── */
@@ -628,19 +746,14 @@ New:
   &__hero {
     padding-block: var(--size-10) var(--size-8);
     text-align: center;
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--bg-soft) 60%, var(--bg)) 0%,
-      var(--bg) 100%
-    );
   }
 
   &__title {
-    font-weight: var(--font-weight-8);
+    font-weight: 700;
     letter-spacing: var(--font-letterspacing-1);
   }
 
-  /* Books grid: larger columns, more gap */
+  /* Books grid: larger columns */
   &__books-grid {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-13)), 1fr));
     gap: var(--size-4);
@@ -650,76 +763,23 @@ New:
     }
   }
 
-  /* Book items: bigger covers, softer cards */
   &__item {
     padding: var(--size-3);
     border-radius: var(--radius-3);
-  }
-
-  &__book-cover-link {
-    border-radius: var(--radius-3);
-  }
-
-  &__book-cover {
-    border-radius: var(--radius-3);
-  }
-
-  /* Category filters: horizontal pill tabs instead of underline links */
-  &__tags {
-    gap: var(--size-1);
-    margin-block-end: var(--size-5);
-  }
-
-  &__tag-button {
-    font-size: var(--font-size-1);
-    padding: var(--size-2) var(--size-4);
-    border-radius: var(--radius-round);
+    background: transparent;          /* Decision C: field cards transparent */
     border: var(--surface-border) solid
-      color-mix(in srgb, var(--line) 60%, transparent);
-    text-decoration: none;
-    background: transparent;
-    color: var(--muted);
-    transition:
-      color 180ms ease,
-      background-color 180ms ease,
-      border-color 180ms ease;
-
-    &:hover,
-    &:focus-visible {
-      color: var(--text);
-      border-color: color-mix(in srgb, var(--text) 20%, var(--line));
-      background: color-mix(in srgb, var(--bg-soft) 40%, var(--bg));
-    }
-
-    &[aria-pressed="true"] {
-      color: var(--text);
-      border-color: color-mix(in srgb, var(--text) 40%, var(--line));
-      background: color-mix(in srgb, var(--bg-soft) 80%, var(--bg));
-    }
+      color-mix(in srgb, var(--line) 50%, transparent);
   }
 
-  /* Section titles larger */
-  &__section-title {
-    font-size: var(--font-size-5);
-    font-weight: var(--font-weight-7);
-    margin-block: var(--size-7) var(--size-3);
-  }
-
-  /* Notes list: wider cards */
-  &__notes-list {
-    gap: var(--size-4);
-  }
-
-  &__note-item {
-    padding: var(--size-5);
+  &__book-cover-link, &__book-cover {
     border-radius: var(--radius-3);
   }
 }
 ```
 
-**Checkpoint 2.4:** Library page in field mode: hero with gradient. Book covers are larger with wider columns. Filter buttons are pill-shaped tabs (not underline text). Notes cards have more padding. Studio mode unchanged.
+**Checkpoint 3.4:** Library in field mode: hero center-aligned, book covers larger with wider columns. Studio unchanged.
 
-### Phase 2.5 — Home + About page field treatment
+### Phase 3.5 — Home + About field treatment
 
 **File: `src/pages/_home/_home.scss`** — add at end
 
@@ -733,13 +793,13 @@ New:
   }
 
   &__title {
-    font-weight: var(--font-weight-8);
+    font-weight: 700;
     letter-spacing: var(--font-letterspacing-1);
   }
 
   &__section-title {
     font-size: var(--font-size-5);
-    font-weight: var(--font-weight-7);
+    font-weight: 700;
   }
 }
 ```
@@ -753,28 +813,23 @@ New:
   &__hero {
     padding-block: var(--size-10) var(--size-8);
     text-align: center;
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--bg-soft) 60%, var(--bg)) 0%,
-      var(--bg) 100%
-    );
   }
 
   &__title {
-    font-weight: var(--font-weight-8);
+    font-weight: 700;
     letter-spacing: var(--font-letterspacing-1);
   }
 }
 ```
 
-**Checkpoint 2.5:** Home and About pages in field mode: hero sections with gradient backgrounds and center-aligned text. All headings sans-serif. Studio mode unchanged.
+**Checkpoint 3.5:** Home and About in field mode: hero sections center-aligned, Playfair headings at 700 weight. Studio unchanged.
 
-### Phase 2.6 — Polish: transitions, responsive, edge cases
+### Phase 3.6 — Polish: transitions, responsive, edge cases
 
-**File: `src/styles/field-persona.scss`** — append responsive overrides
+**File: `src/styles/field-persona.scss`** — append
 
 ```scss
-/* ─── Responsive: collapse field mode on mobile ───────────────── */
+/* ─── Responsive: collapse field persona on mobile ────────────── */
 
 @media (max-width: 48rem) {
   [data-persona="field"] {
@@ -782,20 +837,9 @@ New:
     --layout-padding: var(--size-3);
     --surface-padding: var(--size-4);
   }
-
-  /* Single-column nav cards on mobile */
-  [data-persona="field"] .base-layout__links--field {
-    grid-template-columns: 1fr;
-    gap: var(--size-2);
-  }
-
-  /* No edge bleed on mobile — images fill width naturally */
-  [data-persona="field"] .photography__gallery {
-    margin-inline: 0;
-  }
 }
 
-/* ─── Smooth persona transition ────────────────────────────────── */
+/* ─── Smooth persona transition ───────────────────────────────── */
 
 [data-persona="field"] .base-layout__container {
   transition: max-width 400ms var(--ease-2);
@@ -809,61 +853,556 @@ New:
 
 @media (prefers-reduced-motion: reduce) {
   [data-persona="field"] .base-layout__container,
-  [data-persona="field"] h1,
-  [data-persona="field"] h2,
-  [data-persona="field"] h3,
-  [data-persona="field"] h4,
-  [data-persona="field"] h5,
-  [data-persona="field"] h6 {
+  [data-persona="field"] h1, h2, h3, h4, h5, h6 {
     transition: none;
   }
 }
 ```
 
-**Checkpoint 2.6:** Mobile responsive — field nav stacks as single column, gallery margins collapse, container goes full-width. Persona toggle animation smooth (container width and font-family transition). `prefers-reduced-motion` respected.
+**Checkpoint 3.6:** Mobile: container full-width, padding reduced. Persona toggle animation smooth. `prefers-reduced-motion` respected. Studio unchanged.
 
 ---
 
 ## Master Verification Checklist
 
-### Workstream 1 — Code Blocks
+### Workstream 3 — Field Persona
 - [ ] `npm run build` passes with zero errors
-- [ ] `npm run check` passes (TypeScript)
-- [ ] Blog post at `/blog/building-quality-gated-ai-code-review-loops` shows Night Owl theme colors
-- [ ] Code blocks have dark blue background (`#011627`), not `var(--bg-soft)` gray
-- [ ] Inline code (backtick-wrapped words) still have gray background — not broken
-- [ ] Fira Code ligatures active: `!=` `=>` `===` `->` `>=` span>
-- [ ] Light mode: code blocks still readable (Night Owl works in light mode too)
-- [ ] All other pages visually unchanged
-
-### Workstream 2 — Field Persona
+- [ ] `npm run check` passes
 - [ ] Studio persona: every page renders identically to current production
-- [ ] Field persona: max container width is `var(--size-15)` not `var(--size-md)`
-- [ ] Field persona: NO serif fonts anywhere — all Inter
-- [ ] Field nav: card grid with icons + descriptions, hover states, active highlight
-- [ ] Photography: hero gradient, gallery edge-to-edge, hover scale on images
-- [ ] Library: hero gradient, pill tab filters, larger book covers, wider notes cards
-- [ ] Home: field hero center-aligned, section titles larger
-- [ ] About: field hero gradient, social cards unchanged
-- [ ] Persona toggle: switching between personas animates smoothly
-- [ ] Persona toggle: studio→field→studio cycle preserves correct state
-- [ ] Light/dark mode: works in both personas independently
-- [ ] Mobile (< 48rem): field nav single-column, gallery no edge bleed
-- [ ] `npm run build` passes, `npm run check` passes
+- [ ] Field persona: container max-width is `var(--size-15)` (~1440px, not 768px)
+- [ ] Field persona: background is pure black (`#000000`)
+- [ ] Field persona: headings use Playfair Display at 500+ weight, body uses Inter
+- [ ] Field persona: muted text is brighter (gray-5 vs gray-4)
+- [ ] Field nav: horizontal pills with SVG icons, hover/active states
+- [ ] Field nav mobile: icon-only, labels hidden, pills maintain 44px touch target
+- [ ] Photography: edge-bleed gallery (images span viewport edges)
+- [ ] Photography mobile: edge-bleed disabled, images full-width
+- [ ] Library: hero center-aligned, wider book grid
+- [ ] Home: field hero center-aligned, Playfair headings
+- [ ] About: field hero center-aligned
+- [ ] Persona toggle animation: smooth container + font-family transition
+- [ ] `prefers-reduced-motion`: transitions disabled
+- [ ] Light mode: works in field persona independently
 - [ ] Zero console errors
 
+### Workstream 4 — Studio Typography
+- [ ] `npm run build` passes
+- [ ] Studio headings use Lora at 600 weight
+- [ ] Font sizes: 2rem h1/h2, 1.5rem h3/card, 1rem body, 0.875rem code
+- [ ] Mobile: 80% scale on all sizes
+- [ ] IBM Plex Serif removed from font stack and Google Fonts URL
+- [ ] `--font-letterspacing-1` dropped from page titles
+
+### Workstream 5 — Design Polish
+- [ ] Card background is gray-10 (`#212529`), visibly lifts from `#030507`
+- [ ] Persona toggle uses BracesIcon / ApertureIcon (SVG), not emoji
+- [ ] Theme FAB uses ContrastIcon (SVG), not emoji
+- [ ] Nav landmarks have distinct labels ("Studio navigation" / "Field navigation")
+- [ ] `viewport` meta includes `initial-scale=1.0`
+- [ ] `theme-color` meta dark is `#030507` (matching actual bg)
+- [ ] Blog/newsletter listings use h2 not h3
+- [ ] Gallery thumbnails have `alt=""` on decorative images
+- [ ] Lightbox dialog is `aria-hidden="true"`
+- [ ] Google Fonts URL trimmed to used weights only
+- [ ] Sitemap URLs are `https://ritikpatni.me/` (not `https:///ritikpatni.me/`)
+- [ ] Empty blog posts set to `draft: true`
+- [ ] `/contact` returns 301 to `/about`
+
 ### Rollback Plan
-Every phase is independently revertible via `git revert`. Since field persona changes are CSS-only and gated behind `[data-persona="field"]`, removing `field-persona.scss` and the import line in `global.scss` instantly restores the studio-only look.
+Every phase is independently revertible via `git revert`. Since all persona changes are CSS-gated behind `[data-persona="field"]`, removing `field-persona.scss` and the import line in `global.scss` instantly restores the studio-only look. Studio typography changes (Lora + scale) are reversible by reverting patterns.scss + global.scss + BaseLayout.astro.
 
 ---
 
 ## Phase Ordering (Execution Sequence)
 
 ```
-Phase 1.1 → 1.2 → 1.3  (code blocks: ship independently)
-Phase 2.1 → 2.2 → 2.3 → 2.4 → 2.5 → 2.6  (field persona: incremental)
+WS4: Studio typography (Lora + rem scale + mobile 80%)
+  ↓
+WS5.1-5.8: Design polish (14 self-fixable items)
+  ↓
+WS3.1 → 3.2 → 3.3 → 3.4 → 3.5 → 3.6  (field persona: incremental)
 ```
 
-Workstream 1 can ship before, after, or in parallel with Workstream 2. No dependencies between them.
+WS4 ships first — immediate typography improvement. WS5 next — quick wins. WS3 last — the biggest visual change, built on the clean foundation of WS4+WS5.
 
 Each phase checkpoint must pass before proceeding to the next phase. Do not batch phases — incremental verification prevents hard-to-debug regressions.
+
+---
+
+## Workstream 6: Programmatic OG Image Generation
+
+### Architecture Decision
+
+**Strategy: Satori + resvg at build time, zero runtime cost.**
+
+Satori (Vercel's HTML→SVG engine) renders JSX to SVG using Yoga layout (Flexbox subset). resvg converts SVG to PNG. Both run entirely at build time — no headless browser, no Cloudflare runtime dependency.
+
+**Why not Puppeteer/Playwright?** Adds 300MB+ of Chromium to the build. Satori is ~500KB and uses the same layout engine as React Native.
+
+**Why not `image_generate`?** AI can't reliably render text at 1200×630. Typography must be pixel-perfect for OG cards.
+
+**OG card typeface: Lora (studio voice).** OG cards represent the site brand, not a specific persona. Lora is the studio heading font and the site's primary display typeface. It reads as "Ritik Patni" regardless of which persona a visitor lands on.
+
+**Two endpoints:**
+
+| Route | What it generates | When |
+|---|---|---|
+| `/og/default.png` | Site-wide OG image (name + tagline) | Build time |
+| `/og/blog/[slug].png` | Per-blog OG image (title + date + read time) | Build time |
+
+### Dependencies
+
+```bash
+npm install satori @resvg/resvg-js
+```
+
+~500KB total, dev + build dependency only.
+
+### OG Card Design — Default
+
+```
+┌──────────────────────────────────────────────────────────┐
+│  [subtle gradient overlay]                    ⌨  📷      │
+│                                                          │
+│                    Ritik Patni                            │
+│              (Lora 600, 72px, white)                      │
+│                                                          │
+│     Frontend developer & wildlife/macro photographer      │
+│            (Inter 400, 24px, muted gray)                  │
+│                                                          │
+│                    ritikpatni.me                          │
+│            (Inter 400, 18px, dimmed gray)                 │
+│                                                          │
+│  ═══════════════════════════════════════════════════════  │
+│  dark bg (#030507) with subtle geometric/camera pattern  │
+└──────────────────────────────────────────────────────────┘
+```
+
+### OG Card Design — Per-Blog
+
+```
+┌──────────────────────────────────────────────────────────┐
+│  Ritik Patni                                    [date]   │
+│  (Inter 500, 14px, top-left)                             │
+│                                                          │
+│     Building Quality-Gated AI Code Review Loops           │
+│  (Lora 600, 40px multi-line, white, max 2 lines)         │
+│                                                          │
+│  How to implement auditor-reviewer and planner-...        │
+│  (Inter 400, 20px, muted, max 1 line — description)      │
+│                                                          │
+│  07 Aug 2026  ·  7 min read  ·  blog                     │
+│  (Inter 400, 14px, dimmed)                               │
+│                                                          │
+│  ═══════════════════════════════════════════════════════  │
+│  dark bg + subtle left-accent bar (Playfair aesthetic)   │
+└──────────────────────────────────────────────────────────┘
+```
+
+### File Inventory
+
+| File | Type | What |
+|---|---|---|
+| `src/pages/og/default.png.ts` | **NEW** | Astro endpoint: default OG card |
+| `src/pages/og/blog/[slug].png.ts` | **NEW** | Astro endpoint: per-blog OG cards |
+| `src/utils/og/render.ts` | **NEW** | Shared Satori renderer + layout primitives |
+| `src/utils/og/default-card.tsx` | **NEW** | JSX template for default card |
+| `src/utils/og/blog-card.tsx` | **NEW** | JSX template for blog card |
+| `public/og-image.png` | **DELETE** | Replaced by `/og/default.png` |
+| `package.json` | Edit | Add `satori`, `@resvg/resvg-js` |
+
+### Phase 6.1 — Install deps + shared renderer
+
+**File: `package.json`**
+
+```diff
+  "dependencies": {
++   "@resvg/resvg-js": "^2.6.0",
++   "satori": "^0.10.0",
+    ...
+  }
+```
+
+Run: `npm install`
+
+**File: `src/utils/og/render.ts` (NEW)**
+
+```ts
+import satori from "satori";
+import { Resvg } from "@resvg/resvg-js";
+import type { SatoriOptions } from "satori";
+
+const OG_WIDTH = 1200;
+const OG_HEIGHT = 630;
+
+// Fonts bundled locally under src/assets/fonts/ to avoid gstatic URL rot.
+// Download these 5 woff2 files once and commit them:
+//   Inter-Regular.woff2  (400)
+//   Inter-Medium.woff2   (500) — needed for blog card top-meta row
+//   Inter-Bold.woff2     (600)
+//   Lora-Regular.woff2   (400)
+//   Lora-Bold.woff2      (600)
+//
+// In Astro endpoints, resolve font binaries via import.meta.resolve
+// and readFileSync. Alternative: use Vite's ?arraybuffer import.
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+const FONTS_DIR = resolve(import.meta.dirname, "../../../assets/fonts");
+
+function loadFont(filename: string): ArrayBuffer {
+  return readFileSync(resolve(FONTS_DIR, filename)).buffer;
+}
+
+export async function renderOgImage(jsx: JSX.Element): Promise<Buffer> {
+  const fonts: SatoriOptions["fonts"] = [
+    { name: "Inter", data: loadFont("Inter-Regular.woff2"), weight: 400, style: "normal" },
+    { name: "Inter", data: loadFont("Inter-Medium.woff2"), weight: 500, style: "normal" },
+    { name: "Inter", data: loadFont("Inter-Bold.woff2"), weight: 600, style: "normal" },
+    { name: "Lora", data: loadFont("Lora-Regular.woff2"), weight: 400, style: "normal" },
+    { name: "Lora", data: loadFont("Lora-Bold.woff2"), weight: 600, style: "normal" },
+  ];
+
+  const svg = await satori(jsx, {
+    width: OG_WIDTH,
+    height: OG_HEIGHT,
+    fonts,
+  });
+
+  const resvg = new Resvg(svg, {
+    fitTo: { mode: "width", value: OG_WIDTH },
+  });
+
+  return resvg.render().asPng();
+}
+```
+
+### Phase 6.2 — Default OG card
+
+**File: `src/utils/og/default-card.tsx` (NEW)**
+
+```tsx
+/** @jsxImportSource satori */
+
+export function DefaultOgCard() {
+  return (
+    <div
+      style={{
+        width: 1200,
+        height: 630,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(135deg, #030507 0%, #0d1117 50%, #030507 100%)",
+        fontFamily: "Inter",
+        color: "#f8fafb",
+        gap: 24,
+        position: "relative",
+      }}
+    >
+      {/* Subtle decorative line */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 4,
+          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)",
+        }}
+      />
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        <h1
+          style={{
+            fontFamily: "Lora",
+            fontSize: 72,
+            fontWeight: 600,
+            color: "#f8fafb",
+            margin: 0,
+            lineHeight: 1.1,
+          }}
+        >
+          Ritik Patni
+        </h1>
+
+        <p
+          style={{
+            fontSize: 24,
+            fontWeight: 400,
+            color: "#ced4da",
+            margin: 0,
+            maxWidth: 700,
+            textAlign: "center",
+            lineHeight: 1.5,
+          }}
+        >
+          Frontend developer &amp; wildlife/macro photographer
+        </p>
+
+        <p
+          style={{
+            fontSize: 18,
+            fontWeight: 400,
+            color: "#868e96",
+            margin: 0,
+            marginTop: 8,
+          }}
+        >
+          ritikpatni.me
+        </p>
+      </div>
+    </div>
+  );
+}
+```
+
+**File: `src/pages/og/default.png.ts` (NEW)**
+
+```ts
+import { DefaultOgCard } from "../../utils/og/default-card";
+import { renderOgImage } from "../../utils/og/render";
+
+export async function GET() {
+  const png = await renderOgImage(<DefaultOgCard />);
+  return new Response(png, {
+    headers: {
+      "Content-Type": "image/png",
+      "Cache-Control": "public, max-age=31536000, immutable",
+    },
+  });
+}
+```
+
+### Phase 6.3 — Per-blog OG cards
+
+**File: `src/utils/og/blog-card.tsx` (NEW)**
+
+```tsx
+/** @jsxImportSource satori */
+
+export function BlogOgCard({
+  title,
+  description,
+  date,
+  readTime,
+}: {
+  title: string;
+  description: string;
+  date: string;
+  readTime: string;
+}) {
+  return (
+    <div
+      style={{
+        width: 1200,
+        height: 630,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        background: "linear-gradient(150deg, #030507 0%, #0d1117 100%)",
+        fontFamily: "Inter",
+        color: "#f8fafb",
+        padding: 56,
+        position: "relative",
+      }}
+    >
+      {/* Left accent bar */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          bottom: 0,
+          width: 6,
+          background: "linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03), transparent)",
+        }}
+      />
+
+      {/* Top metadata row */}
+      <div
+        style={{
+          position: "absolute",
+          top: 48,
+          left: 56,
+          display: "flex",
+          justifyContent: "space-between",
+          width: 1088,
+        }}
+      >
+        <span style={{ fontSize: 14, fontWeight: 500, color: "#868e96" }}>
+          Ritik Patni
+        </span>
+        <span style={{ fontSize: 14, fontWeight: 400, color: "#868e96" }}>
+          {date}
+        </span>
+      </div>
+
+      {/* Title */}
+      <h1
+        style={{
+          fontFamily: "Lora",
+          fontSize: 44,
+          fontWeight: 600,
+          color: "#f8fafb",
+          margin: 0,
+          marginBottom: 16,
+          lineHeight: 1.25,
+          maxWidth: 900,
+          display: "-webkit-box",
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+        }}
+      >
+        {title}
+      </h1>
+
+      {/* Description */}
+      <p
+        style={{
+          fontSize: 20,
+          fontWeight: 400,
+          color: "#ced4da",
+          margin: 0,
+          marginBottom: 24,
+          maxWidth: 750,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {description}
+      </p>
+
+      {/* Bottom meta */}
+      <p
+        style={{
+          fontSize: 14,
+          fontWeight: 400,
+          color: "#868e96",
+          margin: 0,
+        }}
+      >
+        {date} &middot; {readTime} &middot; blog
+      </p>
+    </div>
+  );
+}
+```
+
+**File: `src/pages/og/blog/[slug].png.ts` (NEW)**
+
+```ts
+import { getCollection } from "astro:content";
+import { BlogOgCard } from "../../../utils/og/blog-card";
+import { renderOgImage } from "../../../utils/og/render";
+import { formatDisplayDate } from "../../../utils/date";
+
+// Canonical read-time helper. If a shared utility is later added to
+// src/utils/readingTime.ts, replace this with an import of that helper.
+function getReadTime(body: string): string {
+  const words = body.split(/\s+/).length;
+  return `${Math.max(1, Math.ceil(words / 200))} min read`;
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+export async function GET({ props }: { props: { post: any } }) {
+  const { post } = props;
+  const date = formatDisplayDate(post.data.date);
+  const readTime = getReadTime(post.body || "");
+
+  const png = await renderOgImage(
+    <BlogOgCard
+      title={post.data.title}
+      description={post.data.description || ""}
+      date={date}
+      readTime={readTime}
+    />
+  );
+
+  return new Response(png, {
+    headers: {
+      "Content-Type": "image/png",
+      "Cache-Control": "public, max-age=31536000, immutable",
+    },
+  });
+}
+```
+
+### Phase 6.4 — Wire up OG tags
+
+**File: `src/layouts/BaseLayout/BaseLayout.astro`** — update `image` prop logic
+
+```diff
+- image = "/og-image.png",
++ image = "/og/default.png",
+```
+
+**File: `src/pages/blog/[...slug].astro`** — pass per-post OG image
+
+```diff
++ const ogImage = `/og/blog/${post.slug}.png`;
+
+  <BaseLayout
+    title={...}
+    description={...}
+    path={`/blog/${post.slug}`}
+    ogType="article"
++   image={ogImage}
+  >
+```
+
+### Phase 6.5 — Cleanup
+
+```bash
+rm public/og-image.png  # replaced by /og/default.png
+```
+
+### Checkpoint 6.x
+
+- [ ] `npm run build` passes (now slower — ~30-60s extra for 240 OG cards)
+- [ ] `curl -I https://ritikpatni.me/og/default.png` returns `image/png`
+- [ ] `curl -I https://ritikpatni.me/og/blog/building-quality-gated-ai-code-review-loops.png` returns `image/png`
+- [ ] Blog post pages render `og:image` pointing to per-blog OG card
+- [ ] Non-blog pages render `og:image` pointing to default OG card
+- [ ] Twitter Card Validator renders correctly at 1200×630
+- [ ] OG cards have correct typography (Lora headings, Inter body)
+- [ ] Dark gradient background renders cleanly
+
+### Verification
+
+```bash
+npm run build
+# Confirm dist/og/default.png and dist/og/blog/*.png exist
+ls dist/og/default.png
+ls dist/og/blog/ | wc -l  # should match non-draft blog count
+```
+
+---
+
+## Updated Master Verification Checklist
+
+(Add to existing checklist)
+
+### Workstream 6 — OG Image Generation
+- [ ] `npm run build` passes with Satori dependency
+- [ ] `dist/og/default.png` exists (1200×630, dark gradient, Lora heading)
+- [ ] Per-blog OG cards exist for all non-draft posts
+- [ ] Blog pages reference `/og/blog/<slug>.png` in `og:image`
+- [ ] All other pages reference `/og/default.png` in `og:image`
+- [ ] `public/og-image.png` removed
+- [ ] Twitter/OG validators show correct card images
+
