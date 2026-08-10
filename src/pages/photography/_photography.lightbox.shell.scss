@@ -67,8 +67,8 @@
 
 .photography__lightbox-action,
 .photography__lightbox-close {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,8 +108,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,4 +158,43 @@
   font-size: 0.85rem;
   color: var(--text-dim);
   margin: 0.25rem 0 0;
+}
+
+/* Chrome visibility — fullscreen auto-hide */
+.photography__lightbox-shell[data-ui-visible="false"] .photography__lightbox-toolbar,
+.photography__lightbox-shell[data-ui-visible="false"] .photography__lightbox-summary,
+.photography__lightbox-shell[data-ui-visible="false"] .photography__lightbox-nav {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+/* Mobile responsive */
+@media (max-width: 48rem) {
+  .photography__lightbox-toolbar {
+    padding: 0.75rem 1rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .photography__lightbox-frame {
+    padding: 1rem;
+  }
+
+  .photography__lightbox-image {
+    max-height: 65vh;
+  }
+
+  .photography__lightbox-summary {
+    padding: 0 1rem 1rem;
+  }
+
+  .photography__lightbox-nav {
+    &[data-gallery-prev] {
+      left: 0.5rem;
+    }
+
+    &[data-gallery-next] {
+      right: 0.5rem;
+    }
+  }
 }
