@@ -38,6 +38,18 @@
 
   /* Borders */
   --border-light: 1px solid var(--line);
+
+  /* Open Props → V2 aliases (migration) */
+  --muted: var(--text-dim);
+  --link: var(--accent-start);
+  --surface-1: var(--bg-soft);
+  --surface-2: var(--bg-soft);
+  --surface-3: var(--bg-soft);
+  --surface-border: 1px solid;
+  --font-display: inherit;
+  --font-sans: inherit;
+  --fs-subheading: 1.25rem;
+  --font-weight-6: 500;
 }
 
 /* Field persona: swap to amber-red-orange */

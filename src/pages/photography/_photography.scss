@@ -84,8 +84,8 @@
     padding: 1.5rem;
     &-title {
       margin-top: 0;
-      font-family: var(--font-display);
-      font-size: var(--fs-subheading);
+      font-family: inherit;
+      font-size: 1.25rem;
     }
     &--offset {
       margin-block-start: var(--size-4);
@@ -120,7 +120,7 @@
 
   &__tag-count {
     font-size: var(--font-size-0);
-    color: var(--muted);
+    color: var(--text-dim);
     font-variant-numeric: tabular-nums;
   }
 
@@ -133,7 +133,7 @@
   }
 
   &__item {
-    border: var(--surface-border) solid var(--line);
+    border: var(--border-light);
     border-radius: var(--radius-2);
     padding-block: var(--size-3);
     padding-inline: var(--size-4);
@@ -141,14 +141,14 @@
     &-title {
       margin: 0;
       margin-block-end: var(--size-2);
-      font-family: var(--font-display);
+      font-family: inherit;
       font-size: var(--font-size-4);
     }
   }
 
   &__meta {
     margin: 0;
-    color: var(--muted);
+    color: var(--text-dim);
     font-size: var(--font-size-1);
     &--spaced {
       margin-block-end: var(--size-2);
@@ -190,7 +190,7 @@
   &__shot {
     break-inside: avoid;
     margin-bottom: 1rem;
-    border-radius: 0;
+    border-radius: var(--radius-sm);
     overflow: hidden;
     border: 1px solid color-mix(in srgb, var(--accent-start) 15%, transparent);
     transition: border-color 200ms ease;
@@ -205,7 +205,7 @@
     inline-size: 100%;
     padding: 0;
     border: 0;
-    background: var(--surface-1);
+    background: var(--bg-soft);
     cursor: zoom-in;
 
     &:hover .photography__image,
@@ -218,7 +218,6 @@
     display: block;
     inline-size: 100%;
     block-size: 100%;
-    aspect-ratio: 4 / 3;
     object-fit: cover;
     transition: transform 180ms ease;
   }
@@ -247,9 +246,9 @@
     border: 0;
     border-radius: var(--radius-round);
     background: transparent;
-    color: var(--link);
+    color: var(--accent-start);
     font-size: var(--font-size-0);
-    text-underline-offset: var(--size-relative-1);
+    text-underline-offset: 0.25ch;
     cursor: pointer;
 
     @media (max-width: 48rem) {
