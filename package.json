@@ -19,6 +19,7 @@
     "books:metadata:fix": "node scripts/enrich-book-frontmatter-openlibrary.mjs --write",
     "books:metadata:ci": "node scripts/enrich-book-frontmatter-openlibrary.mjs --ci",
     "gallery:validate": "node scripts/validate-gallery.mjs",
+    "images:optimize": "bash scripts/optimize-images.sh",
     "gallery:validate:strict": "node scripts/validate-gallery.mjs --strict",
     "gallery:validate:ci": "node scripts/validate-gallery.mjs --ci",
     "gallery:hook:install": "node scripts/install-gallery-hook.mjs",

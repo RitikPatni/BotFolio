@@ -196,30 +196,37 @@ const bindThemeToggle = () => {
 };
 
 const bindPersonaToggle = () => {
-  const toggleButtons = document.querySelectorAll<HTMLButtonElement>(
-    "[data-persona-toggle]",
+  const buttons = document.querySelectorAll<HTMLButtonElement>(
+    ".nav-persona-btn",
   );
 
-  if (toggleButtons.length === 0) {
+  if (buttons.length === 0) {
     return;
   }
 
-  toggleButtons.forEach((toggleButton) => {
-    if (toggleButton.dataset.jsBound === "true") {
+  buttons.forEach((btn) => {
+    if (btn.dataset.jsBound === "true") {
       return;
     }
 
-    toggleButton.dataset.jsBound = "true";
-    toggleButton.addEventListener("click", () => {
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      );
-
+    btn.dataset.jsBound = "true";
+    btn.addEventListener("click", () => {
+      const btnPersona = btn.getAttribute("data-persona") as PersonaMode | null;
       const current =
         document.documentElement.getAttribute("data-persona") === "field"
           ? "field"
           : "studio";
-      const next: PersonaMode = current === "field" ? "studio" : "field";
+
+      // Only toggle when clicking the INACTIVE persona
+      if (!btnPersona || btnPersona === current) {
+        return;
+      }
+
+      const next: PersonaMode = btnPersona;
+
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
 
       applyPersona(next);
       updatePersonaUi(next);

@@ -31,6 +31,13 @@
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-round: 100px;
+
+  /* Layout */
+  --layout-max-width: 75rem;
+  --layout-padding: clamp(1rem, 3vw, 1.5rem);
+
+  /* Borders */
+  --border-light: 1px solid var(--line);
 }
 
 /* Field persona: swap to amber-red-orange */
