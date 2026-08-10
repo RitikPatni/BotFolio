@@ -63,7 +63,7 @@ export function initPhotographyLightbox() {
   const scheduleChromeHide = () => {
     clearChromeTimer();
 
-    if (!isFullscreenActive() || !metadataElement.hidden) {
+    if (!isFullscreenActive() || !metadataElement.classList.contains('is-visible')) {
       setChromeVisibility(true);
       return;
     }

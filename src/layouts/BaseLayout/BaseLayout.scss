@@ -75,7 +75,7 @@
     padding-block: var(--size-1);
     padding-inline: var(--size-3);
     background: var(--bg-soft);
-    border: var(--surface-border) solid var(--line);
+    border: var(--border-light);
     border-radius: var(--radius-2);
 
     &:focus-visible {
