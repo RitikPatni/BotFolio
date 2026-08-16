@@ -44,6 +44,7 @@ export type GalleryElements = {
   relatedGridElement: HTMLElement;
   metadataToggle: HTMLButtonElement;
   metadataCloseButton: HTMLButtonElement;
+  metadataScrim: HTMLElement;
   fullscreenToggle: HTMLButtonElement;
   closeButton: HTMLButtonElement;
   previousButton: HTMLButtonElement;
@@ -69,6 +70,7 @@ export function resolveElements(root: HTMLElement): GalleryElements | null {
   const relatedGridElement = root.querySelector("[data-gallery-related-grid]");
   const metadataToggle = root.querySelector("[data-gallery-metadata-toggle]");
   const metadataCloseButton = root.querySelector("[data-gallery-metadata-close]");
+  const metadataScrim = root.querySelector("[data-gallery-metadata-scrim]");
   const fullscreenToggle = root.querySelector("[data-gallery-fullscreen-toggle]");
   const closeButton = root.querySelector("[data-gallery-close]");
   const previousButton = root.querySelector("[data-gallery-prev]");
@@ -92,6 +94,7 @@ export function resolveElements(root: HTMLElement): GalleryElements | null {
     !(relatedGridElement instanceof HTMLElement) ||
     !(metadataToggle instanceof HTMLButtonElement) ||
     !(metadataCloseButton instanceof HTMLButtonElement) ||
+    !(metadataScrim instanceof HTMLElement) ||
     !(fullscreenToggle instanceof HTMLButtonElement) ||
     !(closeButton instanceof HTMLButtonElement) ||
     !(previousButton instanceof HTMLButtonElement) ||
@@ -119,6 +122,7 @@ export function resolveElements(root: HTMLElement): GalleryElements | null {
     relatedGridElement,
     metadataToggle,
     metadataCloseButton,
+    metadataScrim,
     fullscreenToggle,
     closeButton,
     previousButton,

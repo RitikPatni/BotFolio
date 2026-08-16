@@ -45,7 +45,17 @@
   --surface-1: var(--bg-soft);
   --surface-2: var(--bg-soft);
   --surface-3: var(--bg-soft);
-  --surface-border: 1px solid;
+  /* FIX: was "1px solid" — invalid inside `border: var(--surface-border) solid var(--line)` (double "solid") */
+  --surface-border: 1px;
+  /* FIX: referenced by %surface-card / .primitive-surface but never defined → cards lost radius + padding */
+  --surface-radius: var(--radius-2);
+  --surface-padding: var(--size-4);
+  /* FIX: referenced by %prose / %page-title / focus outline but never defined */
+  --fs-heading: var(--font-size-5);
+  --fs-content: var(--font-size-2);
+  --fs-code: var(--font-size-1);
+  --prose-max-width: 70ch;
+  --accent: var(--accent-start);
   --font-display: inherit;
   --font-sans: inherit;
   --fs-subheading: 1.25rem;

@@ -31,8 +31,17 @@ export function createLightboxRenderer({ images, elements, state }: RenderContex
   const renderMetadata = (metadata: GalleryLightboxMetadata) => {
     metadataListElement.replaceChildren();
 
+    const megapixels = computeMegapixels(metadata.resolution);
+    const resolutionValue = megapixels
+      ? `${metadata.resolution} · ${megapixels}`
+      : metadata.resolution;
+
+    const formattedDate = metadata.date
+      ? formatGalleryDate(metadata.date)
+      : undefined;
+
     const entries = [
-      ["Date", metadata.date],
+      ["Date", formattedDate],
       ["Location", metadata.location],
       ["Camera", metadata.camera],
       ["Lens", metadata.lens],
@@ -41,7 +50,7 @@ export function createLightboxRenderer({ images, elements, state }: RenderContex
       ["Shutter", metadata.shutterSpeed],
       ["ISO", metadata.iso],
       ["Category", metadata.category],
-      ["Resolution", metadata.resolution],
+      ["Resolution", resolutionValue],
     ] as const;
 
     entries.forEach(([label, value]) => {
@@ -57,6 +66,31 @@ export function createLightboxRenderer({ images, elements, state }: RenderContex
 
       metadataListElement.append(term, description);
     });
+  };
+
+  const formatGalleryDate = (iso: string): string => {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) {
+      return iso;
+    }
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const computeMegapixels = (resolution: string): string | undefined => {
+    const match = resolution.match(/(\d+)\s*[×x]\s*(\d+)/i);
+    if (!match) {
+      return undefined;
+    }
+    const width = Number(match[1]);
+    const height = Number(match[2]);
+    if (!width || !height) {
+      return undefined;
+    }
+    return `${((width * height) / 1_000_000).toFixed(1)} MP`;
   };
 
   const clearRelated = () => {
