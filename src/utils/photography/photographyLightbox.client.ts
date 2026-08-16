@@ -33,6 +33,7 @@ export function initPhotographyLightbox() {
     metadataElement,
     metadataToggle,
     metadataCloseButton,
+    metadataScrim,
     fullscreenToggle,
     closeButton,
     previousButton,
@@ -90,6 +91,7 @@ export function initPhotographyLightbox() {
 
   const setMetadataVisibility = (isVisible: boolean) => {
     metadataElement.classList.toggle('is-visible', isVisible);
+    metadataScrim.classList.toggle('is-visible', isVisible);
     lightboxShell.dataset.metadataVisible = String(isVisible);
     metadataToggle.setAttribute("aria-expanded", String(isVisible));
     const label = isVisible ? "Hide metadata" : "Show metadata";
@@ -135,6 +137,10 @@ export function initPhotographyLightbox() {
   });
 
   metadataCloseButton.addEventListener("click", () => {
+    setMetadataVisibility(false);
+  });
+
+  metadataScrim.addEventListener("click", () => {
     setMetadataVisibility(false);
   });
 

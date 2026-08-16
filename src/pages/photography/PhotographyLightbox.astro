@@ -21,6 +21,12 @@ const { galleryLightboxItemsJson } = Astro.props;
     data-ui-visible="true"
   >
     <div class="photography__lightbox-stage">
+      <div
+        class="photography__metadata-scrim"
+        data-gallery-metadata-scrim
+        aria-hidden="true"
+      ></div>
+
       <div class="photography__lightbox-toolbar" data-gallery-chrome>
         <p class="photography__lightbox-counter" data-gallery-counter></p>
         <div class="photography__lightbox-actions">
