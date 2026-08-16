@@ -71,12 +71,13 @@
 .post-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
-  gap: 0;
+  gap: var(--size-4);
 }
 
 .post-card {
-  padding: 2rem 0;
-  border-bottom: 1px solid var(--line);
+  padding: 2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
   transition: border-color 200ms;
 
   &:hover {
