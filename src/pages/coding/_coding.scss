@@ -50,6 +50,12 @@
     }
   }
 
+  @media (max-width: 48rem) {
+    &__grid--two {
+      grid-template-columns: 1fr;
+    }
+  }
+
   &__card {
     border: 1px solid var(--line);
     border-radius: var(--radius-md);

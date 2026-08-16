@@ -44,15 +44,21 @@
 /* Toolbar: bottom gradient bar */
 .photography__lightbox-toolbar {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 1rem 1.5rem;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
-  z-index: 10;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: color-mix(in srgb, var(--bg-soft) 72%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-round);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
+  z-index: 30;
 }
 
 .photography__lightbox-counter {
@@ -105,9 +111,9 @@
   border-radius: 4px;
 }
 
-/* Nav buttons: semi-transparent chevrons */
+/* Nav buttons: semi-transparent chevrons, fixed to viewport so they sit cleanly inside the edges */
 .photography__lightbox-nav {
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   width: 44px;
@@ -117,29 +123,50 @@
   justify-content: center;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: var(--text-muted);
   cursor: pointer;
   transition: background-color 200ms ease, color 200ms ease;
   z-index: 5;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.14);
     color: var(--text);
   }
 
   &[data-gallery-prev] {
-    left: 1rem;
+    left: 1.5rem;
   }
 
   &[data-gallery-next] {
-    right: 1rem;
+    right: 1.5rem;
   }
+}
+
+/* The shared tooltip rule sets [data-tooltip]{position:relative}, which would
+   pull these controls back into the centered flex flow. Force fixed positioning
+   with higher specificity so they bind to the viewport, not the frame. */
+dialog.photography__lightbox .photography__lightbox-nav {
+  position: fixed;
 }
 
 /* Summary: minimal bottom info bar */
 .photography__lightbox-summary {
-  padding: 0 1.5rem 1.5rem;
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  right: auto;
+  max-width: min(72%, 30rem);
+  padding: 0.75rem 1rem;
+  background: color-mix(in srgb, var(--bg-soft) 72%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
+  z-index: 25;
 }
 
 .photography__lightbox-category {
@@ -174,8 +201,34 @@
 /* Mobile responsive */
 @media (max-width: 48rem) {
   .photography__lightbox-toolbar {
-    padding: 0.75rem 1rem;
-    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    padding: 0.4rem 0.6rem;
+    gap: 0.35rem;
+  }
+
+  .photography__lightbox-actions {
+    gap: 0.35rem;
+  }
+
+  .photography__lightbox-action,
+  .photography__lightbox-close {
+    width: 40px;
+    height: 40px;
+  }
+
+  .photography__lightbox-nav {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    height: 40px;
+
+    &[data-gallery-prev] {
+      left: 1rem;
+    }
+
+    &[data-gallery-next] {
+      right: 1rem;
+    }
   }
 
   .photography__lightbox-frame {
@@ -187,16 +240,10 @@
   }
 
   .photography__lightbox-summary {
-    padding: 0 1rem 1rem;
-  }
-
-  .photography__lightbox-nav {
-    &[data-gallery-prev] {
-      left: 0.5rem;
-    }
-
-    &[data-gallery-next] {
-      right: 0.5rem;
-    }
+    top: calc(0.75rem + env(safe-area-inset-top, 0px));
+    left: 0.75rem;
+    right: 0.75rem;
+    max-width: none;
+    padding: 0.6rem 0.85rem;
   }
 }

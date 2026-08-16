@@ -185,6 +185,9 @@
 
     @media (max-width: 48rem) {
       columns: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
   }
 
@@ -298,5 +301,18 @@
       opacity: 1;
       transform: translate(-50%, 0);
     }
+  }
+}
+
+/* Mobile: let gallery + sections use full container width */
+@media (max-width: 48rem) {
+  .photography__hero,
+  .photography__category,
+  [class$="__section"] {
+    padding-inline: 0;
+  }
+
+  .photography__shot {
+    margin-inline: 0;
   }
 }
