@@ -16,9 +16,9 @@
 .slug-hero::before,
 .hero-accent,
 .blog-card,
-.post-card,
-.nav-link::after {
-  transition: all 200ms ease;
+.post-card {
+  transition: background-color 200ms ease, border-color 200ms ease,
+    color 200ms ease, opacity 200ms ease, transform 200ms ease;
 }
 
 /* Card hover: border + color transitions */

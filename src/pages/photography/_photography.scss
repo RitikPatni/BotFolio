@@ -110,7 +110,8 @@
     font-weight: 400;
     color: var(--text-muted);
     text-decoration: none;
-    transition: all 200ms ease;
+    transition: background-color 200ms ease, border-color 200ms ease,
+      color 200ms ease;
 
     &:hover {
       color: var(--text);
