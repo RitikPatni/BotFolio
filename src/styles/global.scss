@@ -64,3 +64,23 @@ a {
   object-fit: cover;
   background: var(--bg-soft);
 }
+
+/* Mobile: tighten heavy hero vertical padding so sections don't feel empty */
+@media (max-width: 48rem) {
+  body [class$="__hero"],
+  body .hero,
+  body .blog-hero {
+    padding-block: 3rem;
+    padding-inline: 0;
+  }
+
+  /* Let content/cards use full container width — kill inner section side padding */
+  .posts,
+  .photography__category,
+  .coding__flow,
+  .coding__grid,
+  .library__panel,
+  [class$="__section"] {
+    padding-inline: 0;
+  }
+}

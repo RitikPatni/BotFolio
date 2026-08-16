@@ -58,7 +58,7 @@
 .posts {
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 4rem 1rem;
 }
 
 .section-title {
@@ -163,5 +163,12 @@
   .post-card:hover,
   .blog-card:hover {
     border-color: color-mix(in srgb, var(--accent-start) 25%, var(--line));
+  }
+}
+
+/* Mobile: let post cards span the full container width */
+@media (max-width: 48rem) {
+  .posts {
+    padding-inline: 0;
   }
 }
