@@ -43,7 +43,7 @@
 
   &__grid {
     display: grid;
-    gap: 1.5rem;
+    gap: var(--size-5);
 
     &--two {
       grid-template-columns: 1fr 1fr;
