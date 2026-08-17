@@ -191,12 +191,34 @@ const applyStoredTheme = () => {
   }
 };
 
+const syncThemeToggle = (toggleButton: HTMLButtonElement) => {
+  const isLight = document.documentElement.getAttribute("data-theme") === "light";
+  const icon = toggleButton.querySelector<HTMLElement>(
+    ".base-layout__theme-fab-icon",
+  );
+
+  if (icon) {
+    icon.textContent = isLight ? "☾" : "☼";
+  }
+
+  toggleButton.setAttribute(
+    "aria-label",
+    isLight ? "Switch to dark theme" : "Switch to light theme",
+  );
+  toggleButton.setAttribute(
+    "title",
+    isLight ? "Switch to dark theme" : "Switch to light theme",
+  );
+};
+
 const bindThemeToggle = () => {
   const toggleButton = document.getElementById("themeFab");
 
   if (!(toggleButton instanceof HTMLButtonElement)) {
     return;
   }
+
+  syncThemeToggle(toggleButton);
 
   if (toggleButton.dataset.jsBound === "true") {
     return;
@@ -212,6 +234,7 @@ const bindThemeToggle = () => {
 
     runThemeTransition();
     applyTheme(next);
+    syncThemeToggle(toggleButton);
 
     try {
       localStorage.setItem(storageKey, next);
