@@ -110,6 +110,32 @@ const navigateTo = async (targetPath: string) => {
   window.location.assign(targetPath);
 };
 
+// Persona routing guard: studio-only pages are unreachable on the field
+// persona and vice versa (About is shared). Redirect on mismatch.
+const STUDIO_ROUTES = ["/coding", "/blog"];
+const FIELD_ROUTES = ["/photography", "/library"];
+
+const guardPersonaRoute = () => {
+  const persona = readStoredPersona();
+  const path = window.location.pathname.replace(/\/$/, "") || "/";
+  const isStudioOnly = STUDIO_ROUTES.some(
+    (r) => path === r || path.startsWith(`${r}/`),
+  );
+  const isFieldOnly = FIELD_ROUTES.some(
+    (r) => path === r || path.startsWith(`${r}/`),
+  );
+
+  if (persona === "field" && isStudioOnly) {
+    void navigateTo("/photography");
+    return;
+  }
+
+  if (persona === "studio" && isFieldOnly) {
+    void navigateTo("/coding");
+    return;
+  }
+};
+
 const updatePersonaUi = (persona: PersonaMode) => {
   const brandLink = document.querySelector<HTMLAnchorElement>(
     "[data-persona-brand]",
@@ -306,6 +332,7 @@ export function initBaseLayoutClient(options: BaseLayoutInitOptions = {}) {
   applyPersonaEntryTransition();
   applyStoredTheme();
   applyStoredPersona();
+  guardPersonaRoute();
   bindThemeToggle();
   bindPersonaToggle();
 
