@@ -1,6 +1,6 @@
 ---
 title: "Reading List #18"
-description: "Hello Everyone, I hope you had a pretty awesome weekend and are ready for what the next week brings up. ## 📚 To Read [What’s the Alternative to Firefox?](https://kevq.uk/whats-the-"
+description: "What’s the Alternative to Firefox?, Letter Case on the Web, A little known Media Query: Aspect Ratio, How many people with disabilities use our site?, Cool Things People Do With Their Blogs"
 date: "2022-05-02"
 draft: false
 tags:

@@ -1,6 +1,6 @@
 ---
 title: "Reading List #20"
-description: "Hello Everyone, I hope you have been doing great and are keeping yourself hydrated in this extreme summer. ## 📚 To Read [Why did you originally build CSS-Tricks?](https://chriscoyi"
+description: "Why did you originally build CSS-Tricks?, Who Is Inclusive Design For?, Listen To Me And Not Google, Test in many browsers, Changing with the times, Unblocking Your Writing Blocks"
 date: "2022-05-15"
 draft: false
 tags:

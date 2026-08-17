@@ -1,6 +1,6 @@
 ---
 title: "Weekly Notes #7"
-description: "Hello everyone, I hope you all had a fantastic week and are excited about the start of the new week. ## 📚 To Read [The Kobayashi Maru of Comparing Dates with Times](https://zachhol"
+description: "The Kobayashi Maru of Comparing Dates with Times, Hello, CSS Cascade Layers, Why Safari does not need any protection from Chromium, The web is a miracle"
 date: "2022-02-14"
 draft: false
 tags:

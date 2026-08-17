@@ -1,6 +1,6 @@
 ---
 title: "Weekly Notes #3"
-description: "Hello everyone, I hope you had a great and warm week! I'm done with all the cold 🥶 and hopefully next week will have some sun ☀️. Moreover, I tried a fun experiment of using Twitte"
+description: "Minimal Twitter, Case Study: lynnandtonic.com 2021 refresh, Engineering Management: The Pendulum Or The Ladder, The business of hype, Media Queries with display-mode"
 date: "2022-01-17"
 draft: false
 tags:

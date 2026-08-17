@@ -1,6 +1,6 @@
 ---
 title: "\\\\\\\\\\\\\\\"You are precisely as big as what you love and precisely as small as what you allow to annoy you.\\\\\\\\\\\\\\\" - Robert Anton Wilson"
-description: "## 📚 To Read [CSS :out-of-range](https://davidwalsh.name/css-out-of-range?utm_source=ritik&utm_medium=email&utm_campaign=you-are-precisely-as-big-as-what-you-love-and) This looks l"
+description: "CSS :out-of-range, Measure What You Impact, Not What You Influence, Work ethics, Robin, Modern alternatives to BEM, Design the next iPhone"
 date: "2022-08-30"
 draft: false
 tags:

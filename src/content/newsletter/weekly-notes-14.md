@@ -1,6 +1,6 @@
 ---
 title: "Weekly Notes #14"
-description: "Hello everyone, Finally, after an irregular schedule for the past few weeks, I'm back on track, and I'm so excited to share today's stuff with you all. So let's get started. ## 📚 T"
+description: "My guiding principles after 20 years of programming, #WorstWorkWednesday, Employment history doesn't define your value., CSS :has, Carousels: No one likes you, Exciting Times for Browsers (and CSS)"
 date: "2022-04-04"
 draft: false
 tags:

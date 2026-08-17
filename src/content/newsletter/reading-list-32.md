@@ -1,6 +1,6 @@
 ---
 title: "Reading List #32"
-description: "## 📚 To Read [Just hit publish](https://marcoheine.com/blog/just-hit-publish/) Just in case you missed the last few reminders, here is another one on why hitting the publish button"
+description: "Just hit publish, Testable Frontend: The Good, The Bad And The Flaky, what is there when there is nothing, being over it, The BEST Cooking Videos on Youtube, Recognising patterns"
 date: "2022-08-08"
 draft: false
 tags:

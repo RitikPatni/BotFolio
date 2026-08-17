@@ -1,6 +1,6 @@
 ---
 title: "Reading List #23"
-description: "Hello everyone, Here's this week's stuff. I hope you'll love reading it all. ## 📚 To Read [The apps I use to read and write for this blog](https://interconnected.org/home/2022/05/2"
+description: "The apps I use to read and write for this blog, Dark Mode Toggles Should be a Browser Feature, Learnings from 5 years of tech startup code audits"
 date: "2022-06-08"
 draft: false
 tags:

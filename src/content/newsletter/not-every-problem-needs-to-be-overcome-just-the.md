@@ -1,6 +1,6 @@
 ---
 title: "\\\\\\\\\\\\\\\"Not every problem needs to be overcome, just the ones stopping you from getting where you want to be.\\\\\\\\\\\\\\\" - Ann Hill"
-description: "## 📚 To Read [Some ways to get better at debugging](https://jvns.ca/blog/2022/08/30/a-way-to-categorize-debugging-skills/) Some good tips from [Julia Evans](https://twitter.com/b0r"
+description: "Some ways to get better at debugging, Julia Evans, Visit for a surprise, the joy and suffering of awareness, Why your website should work without Javascript."
 date: "2022-09-13"
 draft: false
 tags:

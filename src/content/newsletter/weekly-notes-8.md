@@ -1,6 +1,6 @@
 ---
 title: "Weekly Notes #8"
-description: "Hello Everyone, I hope you all had an outstanding week and are excited about the end of winters. ## 📚 To Read [Working Better: Interview with web designer Brad Frost](https://blog."
+description: "Working Better: Interview with web designer Brad Frost, What using RSS feeds feels like, A Recipe to Your Own Home-Coded Personal Website, The existential terror of LinkedIn"
 date: "2022-02-21"
 draft: false
 tags:

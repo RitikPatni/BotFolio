@@ -1,6 +1,6 @@
 ---
 title: "Reading List #31"
-description: "## 📚 To Read [Simultaneous Translation in HTML](https://shkspr.mobi/blog/2022/07/simultaneous-translation-in-html/?utm_source=ritik&utm_medium=email&utm_campaign=reading-list-31-41"
+description: "Simultaneous Translation in HTML, Procrastination and low motivation make productivity difficult. Body-doubling might help, Centered"
 date: "2022-08-02"
 draft: false
 tags:

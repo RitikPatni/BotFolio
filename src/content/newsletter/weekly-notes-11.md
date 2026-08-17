@@ -1,6 +1,6 @@
 ---
 title: "Weekly Notes #11"
-description: "Hello Folks, I have been on vacation the whole last week and as a result missed publishing the last edition. ## 📚 To Read [My Dev Content Creation Journey and Tips for Starting You"
+description: "My Dev Content Creation Journey and Tips for Starting Yours, The Joys and Sorrows of Maintaining a Personal Website, The Most Influential Website of All Time, The cost of opinion"
 date: "2022-03-18"
 draft: false
 tags:

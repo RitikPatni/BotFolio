@@ -1,6 +1,6 @@
 ---
 title: "Reading List #26"
-description: "Hello Everyone, I hope you all had a wonderful week. Mine was also a good one. With this, let's start with this week's reading material… ## 📚 To Read [SPAs: theory versus practice]"
+description: "SPAs: theory versus practice, In and Out of Style, Jeremy Keith, Analyzing pages in a particular state with Lighthouse, Ximena Vila Ferral: How to Protect Professional Boundaries"
 date: "2022-07-05"
 draft: false
 tags:

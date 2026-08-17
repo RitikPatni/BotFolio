@@ -1,6 +1,6 @@
 ---
 title: "Coming soon"
-description: "This is Weekly Notes, a newsletter about Tech, Websites, Mechanical Keyboards and random stuff. [Subscribe now](https://weeklynotes.substack.com/subscribe?)"
+description: "Subscribe now"
 date: "2021-12-06"
 draft: false
 tags:

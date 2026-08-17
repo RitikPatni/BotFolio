@@ -1,6 +1,6 @@
 ---
 title: "Reading List #33"
-description: "## 📚 To Read [Media Query Ranges](https://www.robinrendle.com/notes/media-query-ranges/?utm_source=ritik&utm_medium=email&utm_campaign=reading-list-33) This is a really useful synt"
+description: "Media Query Ranges, Spotify Separating Music and Podcasts in Upcoming App Redesign →, Foundations, No more Insight Porn"
 date: "2022-08-15"
 draft: false
 tags:
