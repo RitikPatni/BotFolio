@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
 import { formatDisplayDate } from "../../utils/date";
+import { excerpt } from "../../utils/excerpt";
 
 const entries = (await getCollection("newsletter"))
   .filter((item) => !item.data.draft)
@@ -10,7 +11,7 @@ const entries = (await getCollection("newsletter"))
   .map((item) => ({
     slug: item.slug,
     title: item.data.title,
-    description: item.data.description,
+    description: excerpt(item.data.description),
     date: item.data.date,
     readingTime: readingTimeMinutes(item.body ?? ""),
   }));
