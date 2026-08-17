@@ -1,6 +1,6 @@
 ---
 title: "Weekly Notes Example #3"
-description: "### 📚 To Read [Career Fulfillment Matrix](https://www.jason.af/career-fulfillment-matrix)Another great post from Jason on career and what success means to you. [2021 Roundup of Web"
+description: "Career Fulfillment Matrix, 2021 Roundup of Web Research, CSS Tricks, Show don’t Tell, Remembering You are not the user, Best practices can slow you down"
 date: "2022-01-03"
 draft: false
 tags:

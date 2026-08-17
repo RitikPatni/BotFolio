@@ -1,6 +1,6 @@
 ---
 title: "Reading List #25"
-description: "Hello Everyone, Another new week and hope you're all doing great. With that, let's start with this week's updates. ## 📚 To Read [The Smallest CSS](https://www.robinrendle.com/notes"
+description: "The Smallest CSS, Just Put Stuff Out There, The Latecomer’s Guide to Crypto Crashing — a quick map of where we are and what’s ahead, Software Engineering - The Soft Parts, Some holiday resolutions"
 date: "2022-06-21"
 draft: false
 tags:

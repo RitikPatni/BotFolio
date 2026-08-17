@@ -1,6 +1,6 @@
 ---
 title: "Weekly Notes #2"
-description: "Hello Everyone, This week was good for me. I learned about [POSSE](https://indieweb.org/POSSE), and I’m in love with the concept, and I’m really interested in doing one for myself,"
+description: "POSSE, 99 Good News Stories You Probably Didn't Hear About in 2021, Everyone Should Blog, Start at the beginning: the importance of learning the basics, The state of mobile first and desktop first"
 date: "2022-01-10"
 draft: false
 tags:

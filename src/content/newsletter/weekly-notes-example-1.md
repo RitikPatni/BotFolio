@@ -1,6 +1,6 @@
 ---
 title: "Weekly Notes Example #1"
-description: "[Introducing Block](https://block.xyz/) This is one heck of a website. I loved playing with that block [Craft button](https://codepen.io/Adir-SL/pen/BadXawa) Some buttons that are"
+description: "Introducing Block, Craft button, Open Props, Test Your Website on a Crappy Laptop, Web Tech is better Developer Norms are worse, How to Care Less About Work"
 date: "2022-01-03"
 draft: false
 tags:

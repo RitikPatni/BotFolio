@@ -1,6 +1,6 @@
 ---
 title: "Reading List #19"
-description: "Hello Everyone, Another interesting week for me. This week I've been reading up on [IndieWeb](https://indieweb.org) and have been experimenting with this. This seems extremely exci"
+description: "IndieWeb, Why blog?, Garbage Heap, My 2022 predictions from 2012, You Don’t Need A UI Framework, Josh"
 date: "2022-05-08"
 draft: false
 tags:

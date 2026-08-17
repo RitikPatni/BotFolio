@@ -1,6 +1,6 @@
 ---
 title: "Weekly Notes Example #2"
-description: "Another week and here we go[Writing Non Advice](https://danluu.com/writing-non-advice/) Here, Dan Luu explains why every writing style can be different and yet, it can be fine. The"
+description: "Writing Non Advice, Embracing The Platform - Bramus, CSS Shadow Palette Generator, State of CSS 2021 Survey Results, How I (Re)Learnt to read, Maybe Nothing"
 date: "2022-01-03"
 draft: false
 tags:
