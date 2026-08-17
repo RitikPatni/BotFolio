@@ -181,29 +181,54 @@ export function createLightboxRenderer({ images, elements, state }: RenderContex
     }
 
     state.activeIndex = index;
+
+    // Avoid the "last image lingers then refreshes" flash: fade the current
+    // image out, then only swap metadata + reveal once the new source is ready.
+    const swapIn = () => {
+      counterElement.textContent = `${index + 1} / ${images.length}`;
+      categoryElement.textContent = image.category;
+      titleElement.textContent = image.title;
+      dateElement.hidden = !image.date;
+      dateElement.textContent = image.date || "";
+      renderMetadata(image.metadata);
+      renderTags(image.tags);
+
+      if (state.activeTag && image.tags.includes(state.activeTag)) {
+        renderRelated(state.activeTag);
+      } else {
+        clearRelated();
+        renderTags(image.tags);
+      }
+
+      previousButton.disabled = images.length <= 1;
+      nextButton.disabled = images.length <= 1;
+
+      imageElement.classList.remove("is-swapping");
+    };
+
+    imageElement.classList.add("is-swapping");
+
+    // Point the element at the new source first.
     imageElement.src = image.src;
     imageElement.srcset = image.srcSet;
     imageElement.sizes = "(max-width: 60rem) 100vw, 75vw";
     imageElement.width = image.width;
     imageElement.height = image.height;
     imageElement.alt = image.alt;
-    counterElement.textContent = `${index + 1} / ${images.length}`;
-    categoryElement.textContent = image.category;
-    titleElement.textContent = image.title;
-    dateElement.hidden = !image.date;
-    dateElement.textContent = image.date || "";
-    renderMetadata(image.metadata);
-    renderTags(image.tags);
 
-    if (state.activeTag && image.tags.includes(state.activeTag)) {
-      renderRelated(state.activeTag);
+    // If the new source is already decoded (cached), swap metadata immediately.
+    // Otherwise wait for load so the stale frame never paints.
+    if (imageElement.complete && imageElement.naturalWidth > 0) {
+      swapIn();
     } else {
-      clearRelated();
-      renderTags(image.tags);
+      const onReady = () => {
+        imageElement.removeEventListener("load", onReady);
+        imageElement.removeEventListener("error", onReady);
+        swapIn();
+      };
+      imageElement.addEventListener("load", onReady);
+      imageElement.addEventListener("error", onReady);
     }
-
-    previousButton.disabled = images.length <= 1;
-    nextButton.disabled = images.length <= 1;
   };
 
   return { renderImage };

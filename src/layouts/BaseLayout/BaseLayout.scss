@@ -94,7 +94,7 @@
     top: 0;
     z-index: 50;
     padding-block: 0.625rem;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    background: var(--bg);
     backdrop-filter: blur(16px);
     border-bottom: var(--border-light);
     transition: background-color 180ms ease, box-shadow 180ms ease;
@@ -152,10 +152,10 @@
     width: 2.25rem;
     height: 2.25rem;
     border-radius: var(--radius-round);
-    border: var(--border-light);
+    border: 1px solid color-mix(in srgb, var(--text) 45%, transparent);
     background: var(--bg-soft);
-    color: var(--text-dim);
-    font-size: 1rem;
+    color: var(--text);
+    font-size: 1.125rem;
     cursor: pointer;
     display: grid;
     place-items: center;
@@ -170,9 +170,9 @@
     @media (max-width: 48rem) {
       right: 0.75rem;
       bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
-      width: 2rem;
-      height: 2rem;
-      font-size: 0.875rem;
+      width: 2.25rem;
+      height: 2.25rem;
+      font-size: 1rem;
     }
 
     @media (prefers-reduced-motion: reduce) {

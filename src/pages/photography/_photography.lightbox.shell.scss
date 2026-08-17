@@ -109,6 +109,11 @@
   max-height: 80vh;
   object-fit: contain;
   border-radius: 4px;
+  transition: opacity 150ms ease;
+
+  &.is-swapping {
+    opacity: 0;
+  }
 }
 
 /* Nav buttons: semi-transparent chevrons, fixed to viewport so they sit cleanly inside the edges */

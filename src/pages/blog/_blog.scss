@@ -49,7 +49,8 @@
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
-  gap: 0;
+  column-gap: 2rem;
+  row-gap: 0;
 }
 
 .blog-card {
@@ -78,7 +79,7 @@
     font-size: 0.8rem;
     font-weight: 400;
     color: var(--text-dim);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.875rem;
   }
 
   &-title {

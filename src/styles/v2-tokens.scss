@@ -9,7 +9,7 @@
   --bg-soft: #121214;
   --text: #fafafa;
   --text-muted: #888896;
-  --text-dim: #5c5c6e;
+  --text-dim: #7e7e88; /* dark: raised from #5c5c6e (2.86) to pass AA on --bg-soft */
   --line: rgba(255, 255, 255, 0.06);
 
   /* Persona accents */
@@ -21,6 +21,9 @@
   /* Active accent (swapped by persona) */
   --accent-start: var(--studio-start);
   --accent-end: var(--studio-end);
+  /* Accent-colored TEXT on the current bg: bright accent in dark (passes),
+     overridden to AA-safe dark variants in light mode (see below). */
+  --accent-text: var(--accent-start);
 
   /* Gradient assets */
   --gradient-underline: linear-gradient(90deg, var(--accent-start), var(--accent-end));
@@ -74,6 +77,12 @@
   --bg-soft: #f0f0f3;
   --text: #0a0a0b;
   --text-muted: #5c5c6e;
-  --text-dim: #888896;
+  --text-dim: #56566a;
   --line: rgba(0, 0, 0, 0.08);
+  /* Accent text default; overridden per persona below for AA contrast on white */
+  --accent-text: var(--accent-start);
 }
+
+/* Light-theme accent text must be darkened to pass WCAG AA on white surfaces */
+[data-persona="studio"][data-theme="light"] { --accent-text: #1e50c8; }
+[data-persona="field"][data-theme="light"]  { --accent-text: #9a5808; }
