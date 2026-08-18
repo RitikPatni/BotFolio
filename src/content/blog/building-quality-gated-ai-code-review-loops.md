@@ -1,6 +1,6 @@
 ---
 title: "Building Quality-Gated AI Code Review Loops"
-description: "How to implement auditor-reviewer and planner-executor-reviewer loops that gate AI-generated code through multiple specialized models before delivery."
+description: "How to implement planner, executor, auditor, and quality-gate loops that keep AI-generated code reviewable before delivery."
 date: "2026-08-07"
 draft: false
 tags:
@@ -11,226 +11,258 @@ tags:
   - "multi-model"
 category: "blog"
 ---
-AI coding agents are fast. They're also wrong — a lot. The problem isn't speed; it's that generated code usually gets one pass through a single model and lands in your repo unchecked.
+AI coding agents are fast. They are also wrong often enough that speed without verification becomes a liability. The problem is not generation; it is allowing generated code to receive one cursory pass and land in a repository unchecked.
 
-The fix is a **quality-gated loop**: multiple specialized models arranged in a pipeline where each phase has one job, and nothing reaches the user until a dedicated reviewer approves it.
+The fix is a **quality-gated loop**: a small pipeline in which each stage has one job, every handoff is explicit, and nothing reaches a user until an independent gate approves it.
 
-Here are the two patterns I use daily, with the exact implementation.
+This article covers two practical patterns: one for improving an existing codebase and one for building from a blank canvas.
 
 ---
 
-## The Two Loops
+## The two loops
 
-| | **Audit-Review Loop** | **Complete Reviewer Loop** |
+| | **Audit-review loop** | **Complete reviewer loop** |
 |---|---|---|
-| **When to use** | You already have code. You want it reviewed and enhanced. | You're building something from scratch. |
-| **Flow** | Reviewer → Enhancer → Quality Gate | Planner → Executor → Auditor → Quality Gate |
-| **Key difference** | Starts with existing code. No planner needed. | Starts with a blank canvas. Planner creates the blueprint first. |
+| **When to use** | You already have code and want it reviewed and improved. | You are building something from scratch. |
+| **Flow** | Reviewer → Enhancer → Quality gate | Planner → Executor → Auditor → Quality gate |
+| **Key difference** | Starts with an existing implementation. | Starts with a plan and a blank canvas. |
+
+The names are deliberately boring. That is useful: the quality comes from the boundaries between stages, not from giving one agent an impressive title.
 
 ---
 
-## Pattern 1: Audit-Review Loop (for existing code)
+## Pattern 1: Audit-review loop
 
-### The Flow
+Use this when the code already exists and you want a focused improvement pass.
+
+### The flow
 
 ```
 EXISTING CODE
     │
     ▼
 ┌─────────────────────────┐
-│ ① REVIEWER (strong model) │  → Deep analysis. Finds issues, gaps, bugs.
-│    DeepSeek V4 Pro        │  → Produces ISSUES LIST with severity levels.
+│ ① REVIEWER              │  → Reads the code deeply.
+│                         │  → Finds bugs, gaps, and risks.
+│                         │  → Produces a prioritised issues list.
 └──────────┬──────────────┘
            │
            ▼
 ┌─────────────────────────┐
-│ ② ENHANCER (fast model)   │  → Receives issues list.
-│    DeepSeek V4 Flash      │  → Implements fixes via delegate_task.
-│    (delegate_task)        │  → Returns patch set.
+│ ② ENHANCER              │  → Receives the issues list.
+│                         │  → Applies only the requested fixes.
+│                         │  → Runs the verification commands.
 └──────────┬──────────────┘
            │
            ▼
        ┌───────────────┐
-       │ ③ QUALITY LOOP │
+       │ ③ QUALITY GATE │
        │               │
        ▼               │
 ┌──────────────────┐   │
-│ GATE (Kimi K2.7)  │   │  → Spawned as one-shot `hermes chat`
-│                   │   │  → APPROVED → DONE
-│ APPROVED? → DONE  │   │  → NEEDS MORE WORK → loop back to ①
-│ NEEDS MORE WORK?──┘   │     with Kimi's new issues list
+│ APPROVED? → DONE │   │
+│ NEEDS WORK? ────┘   │  → Sends a new issues list back to the loop.
 └──────────────────┘
 ```
 
-### Why three different models?
+### Why separate the roles?
 
-- **Reviewer (V4 Pro)**: Strong reasoning. Can spot edge cases, logic errors, and consistency violations that a fast model misses.
-- **Enhancer (V4 Flash)**: Cheap and fast. Just applies patches, no thinking required. The issues list already tells it exactly what to do.
-- **Quality Gate (Kimi K2.7 Code)**: A fresh pair of eyes. Different training, different biases. Catches things both the reviewer and enhancer missed.
+The reviewer is optimised for depth. It should find edge cases, logic errors, missing tests, and violations of the existing design.
 
-### Key insight: the reviewer must pre-research
+The enhancer is optimised for accurate execution. It should not spend its context budget rediscovering the repository or inventing a different solution. It receives a concrete handoff and applies it.
 
-The reviewer phase doesn't just say "fix the error handling." It gives the enhancer **exact file paths, line numbers, and old_string/new_string pairs**. The enhancer should never run `find` or `grep` — all discovery is done by the stronger model upfront.
+The quality gate is deliberately independent. It gets a fresh view of the result and checks whether the requested change actually works, whether the constraints were respected, and whether the fix introduced a new problem.
 
-### The Loop
+The point is not to use three different brands. The point is to prevent the same reasoning process from writing, approving, and rationalising its own work.
 
-Max 3 rounds. If Kimi keeps rejecting, something is structurally wrong. Break out and deliver with a note.
+### Make the review actionable
+
+A weak review says:
+
+> Fix the error handling.
+
+A useful review gives the enhancer enough information to act without another discovery expedition:
+
+```
+ISSUE: Failed requests can leave the cache marked as fresh.
+SEVERITY: High
+LOCATION: src/cache/refresh.ts, refreshCache()
+CHANGE: Move the freshness update after the awaited request succeeds.
+VERIFY: Run npm test -- cache/refresh.test.ts
+```
+
+The reviewer should provide exact file paths, relevant symbols or line ranges, expected behaviour, and verification commands. The enhancer should not need to run a second search just to understand the assignment.
+
+### The loop budget
+
+Set a hard limit, usually three rounds. If the quality gate keeps rejecting the result, the problem is probably structural: the review missed a constraint, the handoff is ambiguous, or the requested change is larger than the loop can safely handle.
+
+Do not let an automated loop become an endless argument. Stop, surface the unresolved issue, and return to planning.
 
 ---
 
-## Pattern 2: Complete Reviewer Loop (for building from scratch)
+## Pattern 2: Complete reviewer loop
 
-### The Flow
+Use this when there is no implementation yet and the work needs more than a quick edit.
+
+### The flow
 
 ```
 USER TASK
     │
     ▼
 ┌─────────────────────────────┐
-│ ① PLANNER                     │
-│    DeepSeek V4 Pro            │  ← Analyzes task, produces HANDOFF PACKET
-│    → goal, constraints, steps │
-│    → pre-researched file paths│
+│ ① PLANNER                   │
+│                             │  → Clarifies the goal and constraints.
+│                             │  → Inspects the repository.
+│                             │  → Produces a self-contained handoff.
 └──────────────┬──────────────┘
                │
                ▼
 ┌─────────────────────────────┐
-│ ② EXECUTOR                    │
-│    DeepSeek V4 Flash          │  ← delegate_task subagent
-│    → receives handoff packet  │  → applies patches, runs verify commands
-│    → zero discovery allowed   │  → returns execution summary
+│ ② EXECUTOR                  │
+│                             │  → Receives the handoff.
+│                             │  → Applies the changes.
+│                             │  → Runs the stated checks.
 └──────────────┬──────────────┘
                │
                ▼
 ┌─────────────────────────────┐
-│ ③ AUDITOR                     │
-│    DeepSeek V4 Pro            │  ← Checks execution vs plan
-│    → plan compliance          │  → constraint compliance
-│    → deliverable check        │  → produces audit report + verdict
+│ ③ AUDITOR                   │
+│                             │  → Compares the result with the plan.
+│                             │  → Checks constraints and deliverables.
+│                             │  → Reports evidence, not confidence.
 └──────────────┬──────────────┘
                │
                ▼
        ┌───────────────┐
-       │ ④ REVIEW LOOP │
+       │ ④ QUALITY GATE │
        │               │
        ▼               │
 ┌──────────────────┐   │
-│ REVIEWER          │   │
-│ Kimi K2.7 Code    │   │  ← Spawned as one-shot `hermes chat`
-│                   │   │
-│ APPROVED? → DONE  │   │
-│ NEEDS IMPROVEMENT?│───┘  (loop back to ② with Kimi's critique)
+│ APPROVED? → DONE │   │
+│ NEEDS WORK? ─────┘   │  → Sends targeted critique to the executor.
 └──────────────────┘
 ```
 
-### The Handoff Packet
+### The handoff packet
 
-This is the most important artifact. The planner creates it, the executor executes it, the auditor checks against it.
+The handoff is the most important artifact in the system. The planner creates it, the executor follows it, and the auditor checks against it.
 
-Format:
-
-```
+```text
 ---HANDOFF PACKET---
-GOAL: Add dark mode toggle to settings
+GOAL: Add a dark-mode toggle to settings
 
 FILE PATHS (already found):
   src/components/ThemeToggle.astro — new component
   src/layouts/BaseLayout.astro — add toggle to header
-  src/styles/theme.scss — add dark mode variables
+  src/styles/theme.scss — add dark-mode variables
 
 CONSTRAINTS:
-- Do NOT modify src/styles/reset.scss — it's canonical
-- Keep light mode as default (no flash on load)
-- Match existing component patterns (UiIcon, SocialIcon)
+- Do not modify src/styles/reset.scss — it is canonical.
+- Keep light mode as the default; avoid a flash on load.
+- Match existing component patterns.
 
 STEPS:
-1. CREATE src/components/ThemeToggle.astro — Astro component with <script> island for theme persistence
-2. PATCH src/layouts/BaseLayout.astro — add <ThemeToggle /> inside header <nav>
-3. PATCH src/styles/theme.scss — add :root[data-theme="dark"] block with inverted colors
-4. VERIFY: npm run build (no errors)
-5. VERIFY: grep -r "data-theme" dist/ (confirms output)
+1. Create ThemeToggle.astro with persistence for the selected theme.
+2. Add the component to the existing header navigation.
+3. Add dark-mode variables without changing light-mode defaults.
+4. Run npm run build.
+5. Run the relevant component and integration tests.
 
 DELIVERABLES:
-- src/components/ThemeToggle.astro (NEW)
-- src/layouts/BaseLayout.astro (PATCHED)
-- src/styles/theme.scss (PATCHED)
+- src/components/ThemeToggle.astro
+- src/layouts/BaseLayout.astro
+- src/styles/theme.scss
 
 VERIFICATION:
-- Build passes with zero errors
-- Dark mode variables don't override light mode defaults
-- Component follows UiIcon/SocialIcon pattern
+- Build passes with zero errors.
+- Light mode remains the default.
+- The component follows existing project conventions.
 ---END HANDOFF---
 ```
 
-### Why pre-research matters
+A good handoff removes ambiguity before implementation starts. It identifies the files, constraints, sequence, and proof required for completion.
 
-Subagents spend 50%+ of their API calls on discovery — finding files, reading CLIs, exploring codebase structure. By embedding exact paths, line numbers, and interfaces in the handoff, the executor's API budget goes entirely toward actual patching and verification.
+### Why planning includes discovery
 
-A handoff with 6 steps → the executor finishes in 6-8 API calls. Without pre-research → those same 6 steps burn 12-18 calls, and half on discovery.
+Implementation agents are expensive when they spend half their time looking for files, reading command documentation, or guessing at interfaces. The planner should do that discovery once and put the findings in the handoff.
+
+The executor can then spend its context on changing the right things and verifying them. This also makes the work easier to audit: the reviewer can compare the final diff with a concrete plan instead of a vague request.
 
 ---
 
-## Implementation (with Hermes Agent)
+## Implementation with Hermes Agent
 
-### Configuring model routing
+The architecture is independent of provider or model brand. Configure your planner, executor, auditor, and quality gate according to the strengths and cost limits of your environment.
+
+### Role-based routing
 
 ```bash
-# Executor uses delegated model
-hermes config set delegation.provider deepseek
-hermes config set delegation.model deepseek-v4-flash
+# Route delegated implementation work to the executor configuration.
+hermes config set delegation.provider <executor-provider>
+hermes config set delegation.model <executor-model>
 hermes config set delegation.max_iterations 12
 ```
 
-The planner and auditor use the main session model (DeepSeek V4 Pro). The quality gate reviewer is spawned as a separate process:
+The main session can handle planning and auditing, while the quality gate can run as a separate one-shot process:
 
 ```bash
-hermes chat --provider opencode-go -m kimi-k2.7-code -q "<review prompt>" --quiet
+hermes chat \
+  --provider <quality-gate-provider> \
+  --model <quality-gate-model> \
+  -q "<review prompt>" \
+  --quiet
 ```
 
-### Dispatching the executor
+The placeholders are intentional. The workflow should survive a provider change without rewriting the engineering process.
+
+### Dispatch the executor
 
 ```python
 delegate_task(
     goal="Execute the plan from the HANDOFF PACKET",
-    context="<full HANDOFF PACKET text>",
-    toolsets=['terminal', 'file']
+    context="<complete HANDOFF PACKET>",
+    toolsets=["terminal", "file"],
 )
 ```
 
-### Model routing table
+### Routing table
 
-| Role | Model | Why |
-|------|-------|-----|
-| Planner | DeepSeek V4 Pro | Strong reasoning. Handles ambiguity. |
-| Executor | DeepSeek V4 Flash | Cheap, fast, literal. Follows instructions. |
-| Auditor | DeepSeek V4 Pro | Same strong reasoning. 360° check. |
-| Quality Gate | Kimi K2.7 Code | Independent model. Fresh perspective. |
+| Role | Responsibility |
+|------|----------------|
+| Planner | Clarifies the task, researches the repository, and writes the handoff. |
+| Executor | Applies the handoff literally and runs the verification commands. |
+| Auditor | Checks the result against the plan and the stated constraints. |
+| Quality gate | Provides an independent final verdict with evidence. |
+
+The roles matter more than the labels attached to the tools performing them.
 
 ---
 
 ## Pitfalls
 
-**Don't let one model review itself.** The auditor and quality gate must be different from the executor. A model that wrote the code cannot find its own bugs.
+**Do not let one stage approve its own work.** The quality gate needs a genuinely fresh perspective. It should not inherit the executor's assumptions or treat an implementation summary as proof.
 
-**Don't skip phases.** Even if the executor output looks good, run the full pipeline. The auditor catches plan-level mistakes the executor silently followed; the quality gate catches things neither saw.
+**Do not skip stages because the diff looks good.** The auditor catches plan-level mistakes; the quality gate catches problems that both the planner and executor missed.
 
-**The handoff packet must be self-contained.** The executor has zero conversation context. Include every file path, every command, every constraint.
+**Keep the handoff self-contained.** A delegated executor has no useful context beyond what you provide. Include paths, interfaces, constraints, commands, and acceptance criteria.
 
-**Respect the loop budget.** 3 rounds max. If the quality gate keeps rejecting, the plan is wrong — not the execution. Redo the planning phase instead of looping.
+**Respect the loop budget.** Three rounds is usually enough. Repeated rejection is a signal to revisit the plan, not permission to keep applying random patches.
 
-**Don't trust self-reports.** The executor saying "done" is not verification. The auditor must check deliverables exist and pass the verification checklist.
-
----
-
-## When to Use Which
-
-- **Existing codebase, want a review?** → Audit-Review Loop
-- **Building something new?** → Complete Reviewer Loop
-- **Quick one-off edit?** → Neither. Don't over-engineer.
-- **Trivial change in a single file?** → Single model. The overhead isn't worth it.
-
-The threshold is simple: if the task has 3+ steps across 2+ files, use a loop. If it's a one-line change, just do it.
+**Do not trust self-reports.** "Done" is not evidence. Confirm that the files exist, the tests ran, the build passed, and the resulting behaviour matches the request.
 
 ---
 
-The core insight isn't about specific models — those will change. It's about the pattern: **strong planner → literal executor → independent reviewer**. Each phase has one job, and nothing ships until someone who didn't write the code says it's good.
+## When to use which
+
+- **Existing codebase, want a review?** → Audit-review loop.
+- **Building something new?** → Complete reviewer loop.
+- **Quick one-off edit?** → Neither. Do not over-engineer it.
+- **Trivial change in one file?** → A single pass is enough.
+
+The threshold is simple: if the task has three or more meaningful steps across two or more files, a loop usually earns its overhead. If it is a one-line change, use the shortest reliable path.
+
+---
+
+The core insight is not a particular model or provider. Those will change. It is the pattern: **clear plan → literal execution → independent audit → quality gate**. Each stage has one job, and nothing ships until someone who did not write the code says it is good.
