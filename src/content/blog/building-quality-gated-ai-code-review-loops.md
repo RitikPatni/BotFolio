@@ -86,43 +86,13 @@ Use this when there is no implementation yet and the work needs more than a quic
 
 ### The flow
 
-```
-USER TASK
-    │
-    ▼
-┌─────────────────────────────┐
-│ ① PLANNER                   │
-│                             │  → Clarifies the goal and constraints.
-│                             │  → Inspects the repository.
-│                             │  → Produces a self-contained handoff.
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│ ② EXECUTOR                  │
-│                             │  → Receives the handoff.
-│                             │  → Applies the changes.
-│                             │  → Runs the stated checks.
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│ ③ AUDITOR                   │
-│                             │  → Compares the result with the plan.
-│                             │  → Checks constraints and deliverables.
-│                             │  → Reports evidence, not confidence.
-└──────────────┬──────────────┘
-               │
-               ▼
-       ┌───────────────┐
-       │ ④ QUALITY GATE │
-       │               │
-       ▼               │
-┌──────────────────┐   │
-│ APPROVED? → DONE │   │
-│ NEEDS WORK? ─────┘   │  → Sends targeted critique to the executor.
-└──────────────────┘
-```
+_Diagram drawn with [Koboyo](https://koboyo.com) — edit the live canvas [here](https://koboyo.com/edit/diagrams-qpkara)._
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://koboyo.com/e/89d777d9-43fa-46c9-b9e6-bab572455650/19dcfb3b-9d27-469d-8c41-8f06b6467069.svg?theme=dark">
+  <img alt="Complete reviewer loop: User task → Planner → Executor → Auditor → Quality gate → Done, or back to Executor" src="https://koboyo.com/e/89d777d9-43fa-46c9-b9e6-bab572455650/19dcfb3b-9d27-469d-8c41-8f06b6467069.svg">
+</picture>
+
 
 ### The handoff packet
 
