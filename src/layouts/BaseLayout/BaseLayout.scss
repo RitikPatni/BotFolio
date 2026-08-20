@@ -382,3 +382,20 @@ html.is-theme-switching
     box-shadow: 0 0 12px color-mix(in srgb, var(--accent-start) 12%, transparent);
   }
 }
+
+/* Mobile nav: 7 studio links can't fit one row without breaking words.
+   Wrap into whole-word chips (never mid-word) and center them so the
+   persona switch + brand stay usable. Field (3 short links) is fine too. */
+@media (max-width: 48rem) {
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 0.5rem;
+  }
+
+  .nav-link {
+    white-space: nowrap;
+    padding: 0.4rem 0.65rem;
+    font-size: 0.8125rem;
+  }
+}
