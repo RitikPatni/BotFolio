@@ -128,6 +128,16 @@
     padding-top: 0.5rem;
   }
 
+  /* Mobile: constrain the menu row to the viewport so the inner nav
+     scrolls horizontally instead of pushing page-level overflow. */
+  @media (max-width: 48rem) {
+    &__menu-row {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;            /* clip to viewport; nav scrolls inside */
+    }
+  }
+
   &__brand {
     font-size: 1rem;
     font-weight: 400;
@@ -383,18 +393,29 @@ html.is-theme-switching
   }
 }
 
-/* Mobile nav: 7 studio links can't fit one row without breaking words.
-   Wrap into whole-word chips (never mid-word) and center them so the
-   persona switch + brand stay usable. Field (3 short links) is fine too. */
+/* Mobile nav: 7 studio links don't fit one row. Keep a single horizontal
+   row and let it scroll (swipe) instead of wrapping onto two lines. */
 @media (max-width: 48rem) {
   .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 0.25rem 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;        /* old Edge */
+    padding-bottom: 0.125rem;        /* breathing room for the scroll track */
+    min-width: 0;                    /* let it shrink to parent so inner scroll engages */
+    max-width: 100%;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;                  /* Chrome/Safari */
   }
 
   .nav-link {
     white-space: nowrap;
+    flex: 0 0 auto;                  /* don't shrink — keep tappable width */
     padding: 0.4rem 0.65rem;
     font-size: 0.8125rem;
   }
