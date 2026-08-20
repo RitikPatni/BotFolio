@@ -76,9 +76,16 @@
 }
 
 .photography__metadata-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 1rem;
   font-weight: 400;
   color: var(--text);
+
+  .photography__inline-icon {
+    flex: none;
+  }
 }
 
 .photography__metadata-close {
