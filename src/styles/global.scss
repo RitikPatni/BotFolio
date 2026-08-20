@@ -98,3 +98,14 @@ a {
   height: auto;
   max-width: 100%;
 }
+
+/* Same scoping gap applies to code blocks rendered from markdown: long lines must
+   scroll inside the block on mobile, not overflow/clip the page. */
+.slug-prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.slug-prose pre code {
+  white-space: pre;
+}
