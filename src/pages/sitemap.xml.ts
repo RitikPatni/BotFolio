@@ -16,6 +16,7 @@ export async function GET(context: APIContext) {
     "/newsletter/",
     "/uses/",
     "/library/",
+    "/resources/",
     "/photography/",
     "/contact/",
   ];
@@ -30,12 +31,17 @@ export async function GET(context: APIContext) {
     "highlights",
     ({ data }) => !data.draft,
   );
+  const resources = await getCollection(
+    "resources",
+    ({ data }) => !data.draft,
+  );
 
   const dynamicPaths = [
     ...blog.map((item) => `/blog/${item.slug}/`),
     ...newsletter.map((item) => `/newsletter/${item.slug}/`),
     ...books.map((item) => `/library/books/${item.slug}/`),
     ...highlights.map((item) => `/library/highlights/${item.slug}/`),
+    ...resources.map((item) => `/resources/${item.slug}/`),
   ];
 
   const urls = [...staticPaths, ...dynamicPaths];

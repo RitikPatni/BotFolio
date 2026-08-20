@@ -57,4 +57,11 @@ const highlights = defineCollection({
   schema: highlightsSchema,
 });
 
-export const collections = { blog, newsletter, books, highlights };
+const resources = defineCollection({
+  type: "content",
+  schema: baseSchema.extend({
+    url: z.union([z.string().url(), z.literal("")]).default(""),
+  }),
+});
+
+export const collections = { blog, newsletter, books, highlights, resources };

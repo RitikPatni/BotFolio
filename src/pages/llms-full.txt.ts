@@ -19,6 +19,7 @@ export async function GET(context: APIContext) {
   const newsletter = await getCollection("newsletter", ({ data }) => !data.draft);
   const books = await getCollection("books", ({ data }) => !data.draft);
   const highlights = await getCollection("highlights", ({ data }) => !data.draft);
+  const resources = await getCollection("resources", ({ data }) => !data.draft);
 
   const entries: Entry[] = [
     ...blog.map((p) => ({
@@ -45,6 +46,13 @@ export async function GET(context: APIContext) {
     ...highlights.map((p) => ({
       title: p.data.title,
       url: `${site}/library/highlights/${p.slug}/`,
+      description: p.data.description,
+      body: p.body ?? "",
+      date: p.data.date,
+    })),
+    ...resources.map((p) => ({
+      title: p.data.title,
+      url: `${site}/resources/${p.slug}/`,
       description: p.data.description,
       body: p.body ?? "",
       date: p.data.date,

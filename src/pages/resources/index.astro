@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { formatDisplayDate } from "../../utils/date";
+
+const resources = (await getCollection("resources"))
+  .filter((post) => !post.data.draft)
+  .map((post) => ({
+    slug: `/resources/${post.slug}`,
+    title: post.data.title,
+    description: post.data.description,
+    tags: post.data.tags,
+    url: post.data.url,
+    date: post.data.date,
+  }))
+  .sort((a, b) => b.date.getTime() - a.date.getTime());
+import "../blog/_blog.scss";
+---
+
+<BaseLayout title="Resources — Ritik Patni" path="/resources">
+  <section class="blog-hero">
+    <div class="blog-hero-content">
+      <h1 class="blog-hero-title">Resources</h1>
+      <p class="blog-hero-lead">
+        A curated directory of tools, assets, and references worth keeping —
+        each with a description, tags, and a unique source link.
+      </p>
+    </div>
+  </section>
+
+  <section class="blog-posts">
+    {
+      resources.length === 0 ? (
+        <p class="text-muted">No resources yet.</p>
+      ) : (
+        <div class="blog-grid">
+          {resources.map((item, i) => (
+            <article class={i === 0 ? "blog-card blog-card--featured" : "blog-card"}>
+              <div class="blog-card-date">{formatDisplayDate(item.date)}</div>
+              <h2 class="blog-card-title">
+                <a href={item.slug}>{item.title}</a>
+              </h2>
+              <p class="blog-card-desc">{item.description}</p>
+              <p class="blog-card-meta">
+                {item.tags.join(" · ")}
+                {item.url ? ` · ${item.url}` : ""}
+              </p>
+            </article>
+          ))}
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>
