@@ -140,8 +140,16 @@
     color: var(--text-muted);
   }
 
-  /* Images */
+  /* Images — Koboyo diagrams must scale proportionally on mobile */
+  picture {
+    display: block;
+    width: 100%;
+  }
+
   img {
+    display: block;
+    width: 100%;
+    height: auto;
     max-width: 100%;
     border-radius: var(--radius-md);
     margin: 2rem 0;

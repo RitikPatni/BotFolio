@@ -87,3 +87,14 @@ a {
     padding-inline: 0;
   }
 }
+
+/* Koboyo diagrams live inside markdown <Content />, which is NOT component-scoped,
+   so scoped .slug-prose rules don't reach them. Force proportional scaling globally
+   so the tall portrait SVGs (e.g. 302x930) don't get clipped on mobile. */
+.slug-prose picture,
+.slug-prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
