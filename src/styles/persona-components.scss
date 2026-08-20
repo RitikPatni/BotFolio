@@ -1,0 +1,478 @@
+/* ==========================================================================
+   Persona — Per-Component Layout Layer
+   Centralized source of truth for component-level layout overrides.
+   studio (personal)  → minimalist: editorial bento, calm cards, serif detail
+   field (photography) → brutalist: hard grid compartments, macro-type, telemetry
+   Token/type base lives in persona-studio-minimalist.scss / persona-field-brutalist.scss.
+   This layer only reshapes components — no markup changes.
+   ========================================================================== */
+
+/* ─────────────────────────────────────────────────────────────────────────
+   STUDIO (personal) — minimalist component layout
+   ───────────────────────────────────────────────────────────────────────── */
+[data-persona="studio"] {
+
+  /* Hero: flatter, calmer — minimalist prefers quiet over a glowing bloom */
+  [class$="__hero"] {
+    padding-block: clamp(3.5rem, 8vw, 6.5rem);
+    text-align: left;
+
+    &::before {
+      opacity: 0.04;
+    }
+  }
+
+  /* Macro hero name: serif, editorial, not the 300 hairline */
+  .hero-name,
+  .about__title,
+  .coding__title,
+  .photography__title,
+  .library__title,
+  .uses-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+  }
+
+  /* Cards: calm editorial surfaces, crisp 6px corners, hairline divider,
+     generous internal padding, ultra-diffuse shadow only. */
+  .post-card,
+  .blog-card,
+  .coding__card,
+  .photography__card,
+  .library__card,
+  .uses-section,
+  .about__card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--bg-soft);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: border-color 200ms ease, transform 200ms ease;
+  }
+
+  .post-card:hover,
+  .blog-card:hover,
+  .coding__card:hover,
+  .about__card:hover {
+    border-color: color-mix(in srgb, var(--accent-start) 22%, var(--line));
+    transform: translateY(-2px);
+  }
+
+  /* Featured card: subtle accent wash, slightly more presence */
+  .post-card--featured,
+  .blog-card--featured {
+    background: color-mix(in srgb, var(--accent-start) 5%, var(--bg-soft));
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  /* Listings: airy, single-column-ish editorial rhythm with comfortable gutters */
+  .post-grid,
+  .blog-grid {
+    gap: 1.25rem 2rem;
+  }
+
+  /* Blog cards read as a clean list, not floating tiles */
+  .blog-card {
+    padding-block: 1.75rem;
+    background: transparent;
+    box-shadow: none;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+  }
+
+  .blog-card--featured {
+    border-radius: var(--radius-md);
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* Library: reveal shelf — covers with a thin frame, meta on hover.
+     Minimalist keeps it cover-first, quiet. */
+  .library__item {
+    flex-basis: 172px;
+  }
+
+  .library__book-cover {
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    box-shadow: none;
+    transition: transform 200ms ease, border-color 200ms ease;
+  }
+
+  .library__item:hover .library__book-cover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent-start) 28%, var(--line));
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  }
+
+  /* Photography gallery: editorial masonry, calm frames, no accent border scream */
+  .photography__shot {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+    transition: border-color 200ms ease, transform 200ms ease;
+  }
+
+  .photography__shot:hover {
+    border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
+  }
+
+  .photography__caption {
+    padding: 0.6rem 0.75rem;
+  }
+
+  .photography__caption-title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.9rem;
+  }
+
+  /* Tags/pills: small, sentence-case, restrained — not loud chips */
+  .blog-filter-pill,
+  .photography__tag,
+  .library__tag {
+    border-radius: var(--radius-round);
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
+  }
+
+  /* Notes list: clean editorial rows, serif title */
+  .library__note-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  /* About slots: studio lens is the calm editorial one */
+  .about__card[data-persona-slot="studio"] {
+    border-left: 2px solid var(--accent-start);
+  }
+
+  /* ── Polish pass: make the ink-blue accent PRESENT at rest (critique:
+     studio read too close to baseline on library/about). Persistent cues
+     instead of hover-only. ── */
+  .section-title,
+  .blog-hero-title,
+  .library__section-title,
+  .coding__card-title,
+  .photography__section-title,
+  .uses-section-title,
+  .about__card-title {
+    color: var(--text);
+  }
+
+  /* Accent rule on every editorial card at rest — quiet but present */
+  .post-card,
+  .blog-card,
+  .coding__card,
+  .library__card,
+  .about__card,
+  .uses-section,
+  .library__item {
+    border-left: 2px solid color-mix(in srgb, var(--accent-start) 45%, var(--line));
+  }
+
+  /* Library shelf: quiet ink-blue frame at rest so it doesn't read baseline */
+  .library__book-cover {
+    border: 1px solid color-mix(in srgb, var(--accent-start) 22%, var(--line));
+  }
+
+  /* Accent on interactive text at rest */
+  a:hover,
+  .view-all,
+  .blog-filter-pill:hover,
+  .library__tag:hover {
+    color: var(--accent-start);
+  }
+
+  /* Force consistent crisp radii — no stray soft corners anywhere */
+  .post-card,
+  .blog-card,
+  .blog-card--featured,
+  .coding__card,
+  .coding__item,
+  .library__item,
+  .library__book-cover,
+  .photography__shot,
+  .about__card,
+  .uses-item {
+    border-radius: var(--radius-md);
+  }
+
+  /* Uses: section dividers softened */
+  .uses-section {
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    padding-top: 1.5rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   FIELD (photography) — brutalist component layout
+   ───────────────────────────────────────────────────────────────────────── */
+[data-persona="field"] {
+
+  /* Hero: hard, left-aligned, no bloom. Macro-type already handled in base. */
+  [class$="__hero"] {
+    text-align: left;
+    padding-block: clamp(3rem, 7vw, 5.5rem);
+
+    &::before {
+      background: none;
+      opacity: 0;
+    }
+  }
+
+  /* Hero lead: mono telemetry, uppercase, wide tracking */
+  .hero-tagline,
+  .about__lead,
+  .coding__lead,
+  .photography__lead,
+  .library__lead,
+  .uses-lead,
+  .blog-hero-lead {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 60ch;
+  }
+
+  /* Cards become hard structural compartments — 0 radius, visible hairline,
+     flat fill. No shadow, no float. */
+  .post-card,
+  .blog-card,
+  .coding__card,
+  .photography__card,
+  .library__card,
+  .about__card {
+    border: 1px solid var(--line);
+    border-radius: 0;
+    background: var(--bg-soft);
+    box-shadow: none;
+  }
+
+  .post-card:hover,
+  .blog-card:hover,
+  .coding__card:hover,
+  .about__card:hover {
+    border-color: var(--accent-start);
+  }
+
+  /* Featured: hazard accent rule, flat */
+  .post-card--featured,
+  .blog-card--featured {
+    border-left: 3px solid var(--accent-start);
+    background: color-mix(in srgb, var(--accent-start) 6%, var(--bg-soft));
+  }
+
+  /* Blog listing as hard-edged rows with thick dividers */
+  .blog-card {
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .blog-card--featured {
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+  }
+
+  /* Listing grids: rigid, gap-as-divider via 1px line grid */
+  .post-grid,
+  .blog-grid {
+    gap: 0;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  }
+
+  .post-card:not(.post-card--featured) {
+    border: 1px solid var(--line);
+    border-top: none;
+  }
+
+  /* Photography gallery: Swiss grid compartments, hard frames, hairline gaps */
+  .photography__gallery {
+    columns: 3;
+    column-gap: 0;
+    gap: 0;
+  }
+
+  .photography__shot {
+    border: 1px solid var(--line);
+    border-radius: 0;
+    margin-bottom: 0;
+    break-inside: avoid;
+    transition: none;
+  }
+
+  .photography__shot-link:hover .photography__image {
+    transform: none;
+  }
+
+  .photography__caption {
+    padding: 0.5rem 0.6rem;
+    border-top: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+
+  .photography__caption-title {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  /* Tags as hard mono chips */
+  .blog-filter-pill,
+  .photography__tag,
+  .library__tag {
+    border-radius: 0;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.7rem;
+    border: 1px solid var(--line);
+  }
+
+  .library__tag[aria-pressed="true"] {
+    border-color: var(--accent-start);
+    background: color-mix(in srgb, var(--accent-start) 10%, transparent);
+    color: var(--text);
+  }
+
+  /* Library shelf: hard covers, no float */
+  .library__item {
+    flex-basis: 176px;
+  }
+
+  .library__book-cover {
+    border-radius: 0;
+    border: 1px solid var(--line);
+    box-shadow: none;
+    transition: border-color 160ms ease;
+  }
+
+  .library__item:hover .library__book-cover {
+    transform: none;
+    border-color: var(--accent-start);
+  }
+
+  /* Notes list: mono meta, hard rows */
+  .library__note-item {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .library__note-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: 1rem;
+  }
+
+  /* About slots: field lens gets the hazard rule */
+  .about__card[data-persona-slot="field"] {
+    border-left: 3px solid var(--accent-start);
+    background: color-mix(in srgb, var(--accent-start) 5%, var(--bg-soft));
+  }
+
+  /* Uses: hard section rules, mono titles */
+  .uses-section {
+    border-top: 2px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    padding-top: 1.5rem;
+  }
+
+  .uses-section-title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+  }
+
+  .uses-item {
+    border-bottom: 1px solid var(--line);
+    padding-block: 0.5rem;
+  }
+
+  .uses-item-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  /* ── Polish pass: close critique gaps ── */
+
+  /* 3. Every heading + section title must be Archivo Black uppercase —
+     no serif/Inter leakage on sub-headings. */
+  h2,
+  h3,
+  .section-title,
+  .blog-hero-title,
+  .library__section-title,
+  .coding__card-title,
+  .photography__section-title,
+  .about__card-title,
+  .library__note-title {
+    font-family: var(--font-display) !important;
+    text-transform: uppercase !important;
+    letter-spacing: -0.02em;
+  }
+
+  /* 4. Fully kill the soft hero glow — display:none so nothing bleeds. */
+  [class$="__hero"]::before,
+  .hero::before,
+  .blog-hero::before,
+  .photography__hero::before {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+    opacity: 0 !important;
+  }
+
+  /* 5. Stop "PHOTOGRAPHY" mid-word break on narrow screens (global sets
+     overflow-wrap:anywhere on headings). Keep the word whole; let it scale. */
+  h1 {
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+  }
+
+}
+
+/* ==========================================================================
+   STRICT PERSONA PARTITION — top level so BOTH personas get correct scoping.
+   (Rules nested inside a [data-persona] block can never match the OTHER
+   persona, so the home/about slot hiding must live here, un-nested.)
+   ========================================================================== */
+
+/* Home: show only the matching persona's slot */
+[data-home-slot="studio"],
+[data-home-slot="field"] {
+  display: none;
+}
+[data-persona="studio"] [data-home-slot="studio"],
+[data-persona="field"] [data-home-slot="field"] {
+  display: block;
+}
+
+/* About "Current lens": show only the matching persona's card */
+[data-persona-slot="studio"],
+[data-persona-slot="field"] {
+  display: none;
+}
+[data-persona="studio"] [data-persona-slot="studio"],
+[data-persona="field"] [data-persona-slot="field"] {
+  display: block;
+}

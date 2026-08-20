@@ -110,10 +110,11 @@ const navigateTo = async (targetPath: string) => {
   window.location.assign(targetPath);
 };
 
-// Persona routing guard: studio-only pages are unreachable on the field
-// persona and vice versa (About is shared). Redirect on mismatch.
-const STUDIO_ROUTES = ["/coding", "/blog"];
-const FIELD_ROUTES = ["/photography", "/library"];
+// Persona routing guard: strict partition. Studio-only routes are unreachable
+// on the field persona and vice versa. About + Home are shared; on mismatch,
+// redirect to the active persona's home.
+const STUDIO_ROUTES = ["/coding", "/blog", "/newsletter", "/resources", "/library"];
+const FIELD_ROUTES = ["/photography"];
 
 const guardPersonaRoute = () => {
   const persona = readStoredPersona();
@@ -131,7 +132,7 @@ const guardPersonaRoute = () => {
   }
 
   if (persona === "studio" && isFieldOnly) {
-    void navigateTo("/coding");
+    void navigateTo("/");
     return;
   }
 };

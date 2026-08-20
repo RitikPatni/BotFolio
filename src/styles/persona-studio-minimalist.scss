@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Persona: studio (personal) — Minimalist discipline
+   Pairs taste-skill v2 + redesign-skill + minimalist-skill.
+   Editorial warm-monochrome, serif display headers, restrained accents.
+   Per redesign-skill audit: no pure black, tabular nums, sentence-case,
+   padding rhythm bottom > top. Does NOT touch markup — token/type only.
+   ========================================================================== */
+
+[data-persona="studio"] {
+  /* Warm monochrome base (overrides shared dark/light tokens) */
+  --bg: #0c0c0e;
+  --bg-soft: #141416;
+  --text: #f4f2ee;
+  --text-muted: #9a958c;
+  --text-dim: #6f6a62;
+  --line: rgba(244, 242, 238, 0.08);
+
+  /* Restrained accent: single desaturated ink-blue, no gradient scream */
+  --studio-start: #8aa6c8;
+  --studio-end: #b8c4d4;
+  --accent-start: var(--studio-start);
+  --accent-end: var(--studio-end);
+
+  /* Minimalist radii: crisp, never pill on containers */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-round: 999px;
+
+  /* Typography: serif display + geometric sans body, warm */
+  --font-body: "Geist", "Switzer", "Helvetica Neue", system-ui, sans-serif;
+  --font-display: "Newsreader", "Playfair Display", "Instrument Serif", Georgia, serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Light theme for studio: warm bone, charcoal ink */
+[data-persona="studio"][data-theme="light"] {
+  --bg: #f7f6f3;
+  --bg-soft: #fbfbfa;
+  --text: #1c1b19;
+  --text-muted: #6b6660;
+  --text-dim: #56564f;
+  --line: rgba(28, 27, 25, 0.10);
+  --accent-start: #1e50c8;
+  --accent-end: #4a73d6;
+}
+
+/* Headlines: serif display, tight tracking, heavier than the 300 default */
+[data-persona="studio"] h1,
+[data-persona="studio"] h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+[data-persona="studio"] h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Body: slightly warmer, tighter leading than the airy 1.8 default */
+[data-persona="studio"] body,
+[data-persona="studio"] p,
+[data-persona="studio"] li {
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Tabular figures for any data (redesign-skill: numbers in proportional font) */
+[data-persona="studio"] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Soft, diffuse shadow only — minimalist bans heavy drop shadows */
+[data-persona="studio"] .primitive-surface,
+[data-persona="studio"] .photography__card,
+[data-persona="studio"] .blog-card,
+[data-persona="studio"] .coding__card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Section padding rhythm: bottom slightly larger than top (redesign-skill) */
+[data-persona="studio"] [class$="__section"],
+[data-persona="studio"] [class$="__hero"] {
+  padding-block: clamp(3rem, 7vw, 6rem) clamp(3.5rem, 8vw, 7rem);
+}
+
+/* De-emphasize the AI-gradient hero glow; minimalist prefers flat calm */
+[data-persona="studio"] .photography__hero::before,
+[data-persona="studio"] [class$="__hero"]::before {
+  opacity: 0.05;
+}

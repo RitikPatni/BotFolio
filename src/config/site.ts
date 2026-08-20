@@ -14,14 +14,17 @@ export type SocialProfile = {
 
 export const NAV_LINKS_BY_PERSONA: Record<PersonaMode, NavLink[]> = {
   studio: [
+    { href: "/", label: "Home" },
     { href: "/coding", label: "Journal" },
     { href: "/blog", label: "Notes" },
+    { href: "/newsletter", label: "Dispatches" },
     { href: "/resources", label: "Resources" },
+    { href: "/library", label: "Library" },
     { href: "/about", label: "About" },
   ],
   field: [
+    { href: "/", label: "Home" },
     { href: "/photography", label: "Gallery" },
-    { href: "/library", label: "Archive" },
     { href: "/about", label: "About" },
   ],
 };
