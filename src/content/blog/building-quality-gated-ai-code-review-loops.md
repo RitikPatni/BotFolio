@@ -37,33 +37,13 @@ Use this when the code already exists and you want a focused improvement pass.
 
 ### The flow
 
-```
-EXISTING CODE
-    │
-    ▼
-┌─────────────────────────┐
-│ ① REVIEWER              │  → Reads the code deeply.
-│                         │  → Finds bugs, gaps, and risks.
-│                         │  → Produces a prioritised issues list.
-└──────────┬──────────────┘
-           │
-           ▼
-┌─────────────────────────┐
-│ ② ENHANCER              │  → Receives the issues list.
-│                         │  → Applies only the requested fixes.
-│                         │  → Runs the verification commands.
-└──────────┬──────────────┘
-           │
-           ▼
-       ┌───────────────┐
-       │ ③ QUALITY GATE │
-       │               │
-       ▼               │
-┌──────────────────┐   │
-│ APPROVED? → DONE │   │
-│ NEEDS WORK? ────┘   │  → Sends a new issues list back to the loop.
-└──────────────────┘
-```
+_Diagram drawn with [Koboyo](https://koboyo.com)._
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="/diagrams/audit-review-loop.dark.svg">
+  <img alt="Audit-review loop: Existing code → Reviewer → Enhancer → Quality gate → Approved, or back to Enhancer" src="/diagrams/audit-review-loop.svg">
+</picture>
+
 
 ### Why separate the roles?
 
@@ -107,43 +87,14 @@ Use this when there is no implementation yet and the work needs more than a quic
 
 ### The flow
 
-```
-USER TASK
-    │
-    ▼
-┌─────────────────────────────┐
-│ ① PLANNER                   │
-│                             │  → Clarifies the goal and constraints.
-│                             │  → Inspects the repository.
-│                             │  → Produces a self-contained handoff.
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│ ② EXECUTOR                  │
-│                             │  → Receives the handoff.
-│                             │  → Applies the changes.
-│                             │  → Runs the stated checks.
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│ ③ AUDITOR                   │
-│                             │  → Compares the result with the plan.
-│                             │  → Checks constraints and deliverables.
-│                             │  → Reports evidence, not confidence.
-└──────────────┬──────────────┘
-               │
-               ▼
-       ┌───────────────┐
-       │ ④ QUALITY GATE │
-       │               │
-       ▼               │
-┌──────────────────┐   │
-│ APPROVED? → DONE │   │
-│ NEEDS WORK? ─────┘   │  → Sends targeted critique to the executor.
-└──────────────────┘
-```
+_Diagram drawn with [Koboyo](https://koboyo.com)._
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="/diagrams/complete-reviewer-loop.dark.svg">
+  <img alt="Complete reviewer loop: User task → Planner → Executor → Auditor → Quality gate → Done, or back to Executor" src="/diagrams/complete-reviewer-loop.svg">
+</picture>
+
+
 
 ### The handoff packet
 
