@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
 import { formatDisplayDate } from "../../utils/date";
 import { excerpt } from "../../utils/excerpt";
@@ -8,13 +8,13 @@ import { excerpt } from "../../utils/excerpt";
 export async function getStaticPaths() {
   const items = await getCollection("newsletter", ({ data }) => !data.draft);
   return items.map((item) => ({
-    params: { slug: item.slug },
+    params: { slug: item.id.replace(/\.md$/, "") },
     props: { item },
   }));
 }
 
 const { item } = Astro.props;
-const { Content } = await item.render();
+const { Content } = await render(item);
 const reading = readingTimeMinutes(item.body ?? "");
 import "./_slug.scss";
 ---

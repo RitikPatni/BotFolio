@@ -1,5 +1,6 @@
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
+import { slugOf } from "../utils/slug";
 
 const SITE = (context: APIContext) =>
   (context.site ?? new URL("https://ritikpatni.me")).toString().replace(/\/$/, "");
@@ -24,28 +25,28 @@ export async function GET(context: APIContext) {
   const entries: Entry[] = [
     ...blog.map((p) => ({
       title: p.data.title,
-      url: `${site}/blog/${p.slug}/`,
+      url: `${site}/blog/${slugOf(p)}/`,
       description: p.data.description,
       body: p.body ?? "",
       date: p.data.date,
     })),
     ...newsletter.map((p) => ({
       title: p.data.title,
-      url: `${site}/newsletter/${p.slug}/`,
+      url: `${site}/newsletter/${slugOf(p)}/`,
       description: p.data.description,
       body: p.body ?? "",
       date: p.data.date,
     })),
     ...books.map((p) => ({
       title: p.data.title,
-      url: `${site}/library/books/${p.slug}/`,
+      url: `${site}/library/books/${slugOf(p)}/`,
       description: p.data.description,
       body: p.body ?? "",
       date: p.data.date,
     })),
     ...highlights.map((p) => ({
       title: p.data.title,
-      url: `${site}/library/highlights/${p.slug}/`,
+      url: `${site}/library/highlights/${slugOf(p)}/`,
       description: p.data.description,
       body: p.body ?? "",
       date: p.data.date,

@@ -1,18 +1,18 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { formatDisplayDate } from "../../../utils/date";
 
 export async function getStaticPaths() {
   const items = await getCollection("highlights", ({ data }) => !data.draft);
   return items.map((item) => ({
-    params: { slug: item.slug },
+    params: { slug: item.id.replace(/\.md$/, "") },
     props: { item },
   }));
 }
 
 const { item } = Astro.props;
-const { Content } = await item.render();
+const { Content } = await render(item);
 import "./_slug.scss";
 ---
 

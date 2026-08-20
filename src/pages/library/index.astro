@@ -8,6 +8,7 @@ import {
   normalizeBookDescription,
 } from "../../utils/library";
 import { formatDisplayDate } from "../../utils/date";
+import { slugOf } from "../../utils/slug";
 
 const books = (await getCollection("books"))
   .filter((item) => !item.data.draft)
@@ -29,7 +30,7 @@ const getBookCategoryMeta = (item: (typeof books)[number]) => {
       String(genre).toLowerCase().includes("fiction"),
   );
 
-  const textPool = `${item.data.description}\n${item.body}`.toLowerCase();
+  const textPool = `${item.data.description}\n${item.body ?? ""}`.toLowerCase();
   const hasNonFictionTag =
     textPool.includes("#genre/non-fiction") ||
     textPool.includes("#genre/nonfiction");
@@ -83,7 +84,7 @@ const booksWithNotes = books.map((item) => {
   if (!linkedHighlight && bookKey) {
     linkedHighlight =
       bookHighlights.find((candidate) => {
-        if (usedBookHighlightSlugs.has(candidate.slug)) {
+        if (usedBookHighlightSlugs.has(slugOf(candidate))) {
           return false;
         }
 
@@ -97,14 +98,14 @@ const booksWithNotes = books.map((item) => {
   }
 
   if (linkedHighlight) {
-    usedBookHighlightSlugs.add(linkedHighlight.slug);
+    usedBookHighlightSlugs.add(slugOf(linkedHighlight));
   }
 
   return {
     ...item,
     ...getBookCategoryMeta(item),
     normalizedDescription: normalizeBookDescription(item.data.description),
-    coverImage: extractCoverImage(item.body),
+    coverImage: extractCoverImage(item.body ?? ""),
     displayTitle: stripBookPrefix(item.data.title),
     linkedHighlight,
   };
@@ -189,7 +190,7 @@ import "./_library.scss";
                   {item.coverImage ? (
                     <a
                       class="library__book-cover-link"
-                      href={`/library/books/${item.slug}`}
+                      href={`/library/books/${slugOf(item)}`}
                     >
                       <img
                         class="library__book-cover"
@@ -204,7 +205,7 @@ import "./_library.scss";
                   ) : null}
 
                   <h3 class="library__item-title">
-                    <a href={`/library/books/${item.slug}`}>
+                    <a href={`/library/books/${slugOf(item)}`}>
                       {item.displayTitle}
                     </a>
                   </h3>
@@ -229,7 +230,7 @@ import "./_library.scss";
                   {item.linkedHighlight ? (
                     <p class="library__book-note">
                       <a
-                        href={`/library/highlights/${item.linkedHighlight.slug}`}
+                        href={`/library/highlights/${slugOf(item.linkedHighlight)}`}
                       >
                         Book notes
                       </a>
@@ -254,7 +255,7 @@ import "./_library.scss";
               recentHighlights.map((item) => (
                 <article class="library__note-item">
                   <h3 class="library__note-title">
-                    <a href={`/library/highlights/${item.slug}`}>
+                    <a href={`/library/highlights/${slugOf(item)}`}>
                       {item.data.title}
                     </a>
                   </h3>

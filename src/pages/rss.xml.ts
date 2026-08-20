@@ -1,20 +1,21 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
+import { slugOf } from '../utils/slug';
 
 export async function GET(context: APIContext) {
   const blogEntries = (await getCollection('blog', ({ data }) => !data.draft)).map((entry) => ({
     title: entry.data.title,
     description: entry.data.description,
     pubDate: entry.data.date,
-    link: `/blog/${entry.slug}/`
+    link: `/blog/${slugOf(entry)}/`
   }));
 
   const newsletterEntries = (await getCollection('newsletter', ({ data }) => !data.draft)).map((entry) => ({
     title: `[Newsletter] ${entry.data.title}`,
     description: entry.data.description,
     pubDate: entry.data.date,
-    link: `/newsletter/${entry.slug}/`
+    link: `/newsletter/${slugOf(entry)}/`
   }));
 
   const items = [...blogEntries, ...newsletterEntries].sort(

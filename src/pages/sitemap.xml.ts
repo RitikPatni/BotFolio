@@ -1,5 +1,6 @@
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
+import { slugOf } from "../utils/slug";
 
 function toUrl(base: string, path: string) {
   return new URL(path, base).toString();
@@ -37,11 +38,11 @@ export async function GET(context: APIContext) {
   );
 
   const dynamicPaths = [
-    ...blog.map((item) => `/blog/${item.slug}/`),
-    ...newsletter.map((item) => `/newsletter/${item.slug}/`),
-    ...books.map((item) => `/library/books/${item.slug}/`),
-    ...highlights.map((item) => `/library/highlights/${item.slug}/`),
-    ...resources.map((item) => `/resources/${item.slug}/`),
+    ...blog.map((item) => `/blog/${slugOf(item)}/`),
+    ...newsletter.map((item) => `/newsletter/${slugOf(item)}/`),
+    ...books.map((item) => `/library/books/${slugOf(item)}/`),
+    ...highlights.map((item) => `/library/highlights/${slugOf(item)}/`),
+    ...resources.map((item) => `/resources/${slugOf(item)}/`),
   ];
 
   const urls = [...staticPaths, ...dynamicPaths];

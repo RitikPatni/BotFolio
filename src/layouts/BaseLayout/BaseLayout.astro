@@ -2,7 +2,7 @@
 import "../../styles/global.scss";
 import "./BaseLayout.scss";
 import { SITE_CONFIG, NAV_LINKS_BY_PERSONA } from "../../config/site";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import SocialIcon from "../../components/SocialIcon.astro";
 
 interface Props {
@@ -148,7 +148,7 @@ const imageUrl = new URL(image, Astro.site).toString();
       content="#030507"
       media="(prefers-color-scheme: dark)"
     />
-    <ViewTransitions />
+    <ClientRouter />
     <link
       rel="alternate"
       type="application/rss+xml"
