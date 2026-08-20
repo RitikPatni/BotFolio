@@ -152,3 +152,44 @@
     padding-inline: 0;
   }
 }
+
+/* Field-home: photography-forward featured shots grid (replaces blog list) */
+.field-home__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 1rem;
+}
+
+.field-home__shot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+
+.field-home__shot:hover {
+  border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
+  transform: translateY(-2px);
+}
+
+.field-home__shot-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.field-home__shot-cat {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+

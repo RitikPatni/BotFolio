@@ -448,4 +448,31 @@
     word-break: normal !important;
     hyphens: none !important;
   }
+
+}
+
+/* ==========================================================================
+   STRICT PERSONA PARTITION — top level so BOTH personas get correct scoping.
+   (Rules nested inside a [data-persona] block can never match the OTHER
+   persona, so the home/about slot hiding must live here, un-nested.)
+   ========================================================================== */
+
+/* Home: show only the matching persona's slot */
+[data-home-slot="studio"],
+[data-home-slot="field"] {
+  display: none;
+}
+[data-persona="studio"] [data-home-slot="studio"],
+[data-persona="field"] [data-home-slot="field"] {
+  display: block;
+}
+
+/* About "Current lens": show only the matching persona's card */
+[data-persona-slot="studio"],
+[data-persona-slot="field"] {
+  display: none;
+}
+[data-persona="studio"] [data-persona-slot="studio"],
+[data-persona="field"] [data-persona-slot="field"] {
+  display: block;
 }

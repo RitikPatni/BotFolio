@@ -2,6 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { formatDisplayDate } from "../../utils/date";
+import { photographyGalleryData } from "../../data/photography";
+import { photographyCategories } from "../../data/photography/manifest";
 import "./_home.scss";
 
 const posts = (await getCollection("blog"))
@@ -14,6 +16,17 @@ const posts = (await getCollection("blog"))
     description: post.data.description,
     date: post.data.date,
   }));
+
+// Field-home: a photography-forward hero + a few featured shots from the gallery.
+const featuredShots = photographyGalleryData
+  .slice(0, 6)
+  .map((img) => ({
+    title: img.title,
+    category: img.category,
+    filename: img.filename,
+  }));
+const categoryLabel = (id: string) =>
+  photographyCategories.find((c) => c.id === id)?.label ?? id;
 ---
 
 <BaseLayout
@@ -21,8 +34,8 @@ const posts = (await getCollection("blog"))
   description="I build thoughtful web experiences and document nature up close."
   path="/"
 >
-  <!-- Gradient hero -->
-  <section class="hero">
+  <!-- Studio hero -->
+  <section class="hero" data-home-slot="studio">
     <div class="hero-content">
       <h1 class="hero-name">Ritik <span class="fw-500">Patni</span></h1>
       <p class="hero-tagline">Building thoughtful product surfaces, systems, and shipping notes.</p>
@@ -30,8 +43,17 @@ const posts = (await getCollection("blog"))
     </div>
   </section>
 
-  <!-- Blog list -->
-  <section class="posts">
+  <!-- Field hero -->
+  <section class="hero hero--field" data-home-slot="field">
+    <div class="hero-content">
+      <h1 class="hero-name">Field <span class="fw-500">Notes</span></h1>
+      <p class="hero-tagline">Wildlife, birds, and macro studies — photographed in the field.</p>
+      <span class="hero-accent">Photography</span>
+    </div>
+  </section>
+
+  <!-- Studio: blog list -->
+  <section class="posts" data-home-slot="studio">
     <h2 class="section-title">Latest posts</h2>
     {
       posts.length === 0 ? (
@@ -50,6 +72,24 @@ const posts = (await getCollection("blog"))
     }
     <p class="mt-2">
       <a class="view-all" href="/blog">View all posts →</a>
+    </p>
+  </section>
+
+  <!-- Field: featured shots -->
+  <section class="posts field-home" data-home-slot="field">
+    <h2 class="section-title">Recent frames</h2>
+    <div class="field-home__grid">
+      {
+        featuredShots.map((shot) => (
+          <a class="field-home__shot" href="/photography">
+            <span class="field-home__shot-title">{shot.title}</span>
+            <span class="field-home__shot-cat">{categoryLabel(shot.category)}</span>
+          </a>
+        ))
+      }
+    </div>
+    <p class="mt-2">
+      <a class="view-all" href="/photography">Open the gallery →</a>
     </p>
   </section>
 </BaseLayout>

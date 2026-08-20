@@ -64,10 +64,12 @@
   hyphens: none;
 }
 
-/* Mobile: cap the macro-h1 further so PHOTOGRAPHY never clips the viewport */
+/* Mobile: PHOTOGRAPHY (10 letters in Archivo Black ≈ 8.1em wide) must fit the
+   viewport. 10vw keeps it ~81vw wide; 3rem cap prevents over-shrink on tiny
+   screens. Sized from measurement, not guesswork. */
 @media (max-width: 48rem) {
   [data-persona="field"] h1 {
-    font-size: clamp(2rem, 12vw, 3.75rem);
+    font-size: clamp(1.75rem, 10vw, 3rem);
   }
 }
 
