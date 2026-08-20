@@ -37,33 +37,12 @@ Use this when the code already exists and you want a focused improvement pass.
 
 ### The flow
 
-```
-EXISTING CODE
-    │
-    ▼
-┌─────────────────────────┐
-│ ① REVIEWER              │  → Reads the code deeply.
-│                         │  → Finds bugs, gaps, and risks.
-│                         │  → Produces a prioritised issues list.
-└──────────┬──────────────┘
-           │
-           ▼
-┌─────────────────────────┐
-│ ② ENHANCER              │  → Receives the issues list.
-│                         │  → Applies only the requested fixes.
-│                         │  → Runs the verification commands.
-└──────────┬──────────────┘
-           │
-           ▼
-       ┌───────────────┐
-       │ ③ QUALITY GATE │
-       │               │
-       ▼               │
-┌──────────────────┐   │
-│ APPROVED? → DONE │   │
-│ NEEDS WORK? ────┘   │  → Sends a new issues list back to the loop.
-└──────────────────┘
-```
+_Diagram drawn with [Koboyo](https://koboyo.com) — edit the live canvas [here](https://koboyo.com/edit/diagrams-qpkara)._
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://koboyo.com/e/89d777d9-43fa-46c9-b9e6-bab572455650/5f340914-9086-4e02-93cd-6b6cc3820020.svg?theme=dark">
+  <img alt="Audit-review loop: Existing code → Reviewer → Enhancer → Quality gate → Approved, or back to Enhancer" src="https://koboyo.com/e/89d777d9-43fa-46c9-b9e6-bab572455650/5f340914-9086-4e02-93cd-6b6cc3820020.svg">
+</picture>
 
 ### Why separate the roles?
 
