@@ -1,14 +1,42 @@
 /* ═════════════════════════════════════════════════════════════════
-   V2 Transitions — Micro-interactions + reduced motion
+   V2 Transitions — Page transitions + subtle interaction motion
    ═════════════════════════════════════════════════════════════════ */
 
-/* ViewTransitions: fade between pages */
-::view-transition-old(page-content),
-::view-transition-new(page-content) {
-  animation-duration: 200ms;
+/* Shared easing — calm, intentional, not bouncy */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 360ms;
 }
 
-/* Persona toggle: smooth accent transition */
+/* ── Page transitions (Astro ClientRouter, main = "page-content") ──
+   Cross-fade + slight vertical lift so navigation feels smooth, not a hard cut. */
+@keyframes vt-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes vt-fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+
+::view-transition-old(page-content) {
+  animation: vt-fade-out var(--dur-base) var(--ease-soft) both;
+}
+::view-transition-new(page-content) {
+  animation: vt-fade-in var(--dur-slow) var(--ease-out) both;
+}
+
+/* Keep the default root cross-fade minimal so only page-content animates */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-base);
+}
+
+/* ── General interaction motion ──
+   Buttons, links, cards, images ease on state changes. */
 .nav-persona-btn,
 .nav-link,
 .hero::before,
@@ -16,22 +44,35 @@
 .slug-hero::before,
 .hero-accent,
 .blog-card,
-.post-card {
-  transition: background-color 200ms ease, border-color 200ms ease,
-    color 200ms ease, opacity 200ms ease, transform 200ms ease;
+.post-card,
+button,
+a,
+input,
+select,
+textarea,
+.photo-strip img,
+.library__book-cover,
+.base-layout__theme-fab {
+  transition: background-color var(--dur-base) var(--ease-soft),
+    border-color var(--dur-base) var(--ease-soft),
+    color var(--dur-base) var(--ease-soft),
+    opacity var(--dur-base) var(--ease-soft),
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-soft);
 }
 
 /* Card hover: border + color transitions */
 .blog-card:hover,
 .post-card:hover {
   border-color: color-mix(in srgb, var(--accent-start) 25%, var(--line));
+  transform: translateY(-2px);
 }
 
 /* Nav: underline animated on page change */
 .nav-link::after {
   transform-origin: left;
   transform: scaleX(0);
-  transition: transform 200ms ease;
+  transition: transform var(--dur-base) var(--ease-out);
 }
 
 .nav-link.active::after {
@@ -39,17 +80,40 @@
 }
 
 /* Image hover micro-scale */
-.photo-strip img:hover {
+.photo-strip img:hover,
+.library__book-cover:hover {
   transform: scale(1.03);
 }
 
-/* Reduced motion: disable all */
+/* Theme FAB press feedback */
+.base-layout__theme-fab:active {
+  transform: scale(0.92);
+}
+
+/* Entrance: gentle fade-up of the main content on first paint + after swaps */
+@keyframes content-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.base-layout__main {
+  animation: content-rise var(--dur-slow) var(--ease-out) both;
+}
+
+/* Reduced motion: disable all transition/animation */
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0.01ms;
+    --dur-base: 0.01ms;
+    --dur-slow: 0.01ms;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
