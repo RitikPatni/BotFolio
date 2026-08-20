@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Persona: field (photography) — Brutalist discipline
+   Pairs taste-skill v2 + redesign-skill + brutalist-skill.
+   Swiss-industrial print mode: heavy grotesk, uppercase macro type,
+   hazard accent, hard structure, visible dividers.
+   Per redesign-skill audit: no gradients-as-default, consistent light
+   source, single accent, hard edges. Token/type only — no markup changes.
+   ========================================================================== */
+
+[data-persona="field"] {
+  /* Matte unbleached paper (dark variant = carbon ink on near-black) */
+  --bg: #0b0b0c;
+  --bg-soft: #131314;
+  --text: #f2f2f0;
+  --text-muted: #8c8c88;
+  --text-dim: #6a6a66;
+  --line: rgba(242, 242, 240, 0.14);
+
+  /* Single hazard accent — the ONLY accent color (redesign-skill: one accent) */
+  --field-start: #ff2a2a;
+  --field-end: #e61919;
+  --accent-start: var(--field-start);
+  --accent-end: var(--field-end);
+
+  /* Hard edges — brutalist rejects soft radii */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-round: 0;
+
+  /* Typography: neo-grotesque heavy + mono telemetry */
+  --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Archivo Black", "Inter", "Arial Black", sans-serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", "Space Mono", monospace;
+}
+
+/* Light theme for field: Swiss print — newsprint + carbon ink + hazard red */
+[data-persona="field"][data-theme="light"] {
+  --bg: #eae8e3;
+  --bg-soft: #f4f4f0;
+  --text: #0a0a0a;
+  --text-muted: #4a4a46;
+  --text-dim: #6b6b64;
+  --line: rgba(10, 10, 10, 0.18);
+  --accent-start: #e61919;
+  --accent-end: #b81414;
+}
+
+/* Macro typography: massive, uppercase, negative tracking, compressed leading */
+[data-persona="field"] h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  font-size: clamp(3rem, 11vw, 9rem);
+}
+
+[data-persona="field"] h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+[data-persona="field"] h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Micro/metadata: monospace, uppercase, wide tracking (telemetry feel) */
+[data-persona="field"] .photography__meta,
+[data-persona="field"] .photography__caption-title,
+[data-persona="field"] .primitive-chip,
+[data-persona="field"] [class$="__meta"] {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+}
+
+/* Body: tighter, utilitarian */
+[data-persona="field"] body,
+[data-persona="field"] p,
+[data-persona="field"] li {
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Hard structural dividers instead of soft cards */
+[data-persona="field"] .primitive-surface,
+[data-persona="field"] .photography__card,
+[data-persona="field"] .blog-card,
+[data-persona="field"] .coding__card {
+  border: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--bg-soft);
+}
+
+/* Visible grid dividers on the gallery (brutalist structure) */
+[data-persona="field"] .photography__shot {
+  border: 1px solid var(--line);
+  border-radius: 0;
+}
+
+/* Kill the soft radial hero glow — brutalist is flat/hard */
+[data-persona="field"] .photography__hero::before,
+[data-persona="field"] [class$="__hero"]::before {
+  background: none;
+  opacity: 0;
+}
+
+/* Tabular figures for telemetry/metadata */
+[data-persona="field"] {
+  font-variant-numeric: tabular-nums;
+}

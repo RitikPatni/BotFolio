@@ -3,6 +3,8 @@
 @use "./v2-tokens.scss";
 @use "./v2-typography.scss";
 @use "./v2-transitions.scss";
+@use "./persona-studio-minimalist.scss";
+@use "./persona-field-brutalist.scss";
 
 :where(h1, h2, h3, h4, h5, h6) {
   text-wrap: balance;
