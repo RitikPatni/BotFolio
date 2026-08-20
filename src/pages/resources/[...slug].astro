@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { formatDisplayDate } from "../../utils/date";
+import { excerpt } from "../../utils/excerpt";
+import "../blog/_slug.scss";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("resources", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+import "../blog/_slug.scss";
+---
+
+<BaseLayout
+  title={`${post.data.title} — Resources`}
+  description={post.data.description}
+  path={`/resources/${post.slug}`}
+  ogType="article"
+>
+  <section class="slug-hero">
+    <div class="slug-hero-content">
+      <p class="slug-hero-meta">
+        {formatDisplayDate(post.data.date)}
+        {post.data.tags.length ? ` · ${post.data.tags.join(" · ")}` : ""}
+      </p>
+      <h1 class="slug-hero-title">{post.data.title}</h1>
+      <p class="slug-hero-lead">{excerpt(post.data.description)}</p>
+    </div>
+  </section>
+
+  <article class="slug-prose">
+    <Content />
+  </article>
+</BaseLayout>
