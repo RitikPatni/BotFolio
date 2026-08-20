@@ -148,6 +148,57 @@
     border-left: 2px solid var(--accent-start);
   }
 
+  /* ── Polish pass: make the ink-blue accent PRESENT at rest (critique:
+     studio read too close to baseline on library/about). Persistent cues
+     instead of hover-only. ── */
+  .section-title,
+  .blog-hero-title,
+  .library__section-title,
+  .coding__card-title,
+  .photography__section-title,
+  .uses-section-title,
+  .about__card-title {
+    color: var(--text);
+  }
+
+  /* Accent rule on every editorial card at rest — quiet but present */
+  .post-card,
+  .blog-card,
+  .coding__card,
+  .library__card,
+  .about__card,
+  .uses-section,
+  .library__item {
+    border-left: 2px solid color-mix(in srgb, var(--accent-start) 45%, var(--line));
+  }
+
+  /* Library shelf: quiet ink-blue frame at rest so it doesn't read baseline */
+  .library__book-cover {
+    border: 1px solid color-mix(in srgb, var(--accent-start) 22%, var(--line));
+  }
+
+  /* Accent on interactive text at rest */
+  a:hover,
+  .view-all,
+  .blog-filter-pill:hover,
+  .library__tag:hover {
+    color: var(--accent-start);
+  }
+
+  /* Force consistent crisp radii — no stray soft corners anywhere */
+  .post-card,
+  .blog-card,
+  .blog-card--featured,
+  .coding__card,
+  .coding__item,
+  .library__item,
+  .library__book-cover,
+  .photography__shot,
+  .about__card,
+  .uses-item {
+    border-radius: var(--radius-md);
+  }
+
   /* Uses: section dividers softened */
   .uses-section {
     border-top: 1px solid var(--line);
@@ -359,5 +410,42 @@
     letter-spacing: 0.06em;
     font-size: 0.72rem;
     color: var(--text-muted);
+  }
+
+  /* ── Polish pass: close critique gaps ── */
+
+  /* 3. Every heading + section title must be Archivo Black uppercase —
+     no serif/Inter leakage on sub-headings. */
+  h2,
+  h3,
+  .section-title,
+  .blog-hero-title,
+  .library__section-title,
+  .coding__card-title,
+  .photography__section-title,
+  .about__card-title,
+  .library__note-title {
+    font-family: var(--font-display) !important;
+    text-transform: uppercase !important;
+    letter-spacing: -0.02em;
+  }
+
+  /* 4. Fully kill the soft hero glow — display:none so nothing bleeds. */
+  [class$="__hero"]::before,
+  .hero::before,
+  .blog-hero::before,
+  .photography__hero::before {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+    opacity: 0 !important;
+  }
+
+  /* 5. Stop "PHOTOGRAPHY" mid-word break on narrow screens (global sets
+     overflow-wrap:anywhere on headings). Keep the word whole; let it scale. */
+  h1 {
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
   }
 }
