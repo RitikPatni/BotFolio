@@ -37,12 +37,13 @@ Use this when the code already exists and you want a focused improvement pass.
 
 ### The flow
 
-_Diagram drawn with [Koboyo](https://koboyo.com) — edit the live canvas [here](https://koboyo.com/edit/diagrams-qpkara)._
+_Diagram drawn with [Koboyo](https://koboyo.com)._
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://koboyo.com/e/89d777d9-43fa-46c9-b9e6-bab572455650/5f340914-9086-4e02-93cd-6b6cc3820020.svg?theme=dark">
-  <img alt="Audit-review loop: Existing code → Reviewer → Enhancer → Quality gate → Approved, or back to Enhancer" src="https://koboyo.com/e/89d777d9-43fa-46c9-b9e6-bab572455650/5f340914-9086-4e02-93cd-6b6cc3820020.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="/diagrams/audit-review-loop.dark.svg">
+  <img alt="Audit-review loop: Existing code → Reviewer → Enhancer → Quality gate → Approved, or back to Enhancer" src="/diagrams/audit-review-loop.svg">
 </picture>
+
 
 ### Why separate the roles?
 
@@ -86,12 +87,13 @@ Use this when there is no implementation yet and the work needs more than a quic
 
 ### The flow
 
-_Diagram drawn with [Koboyo](https://koboyo.com) — edit the live canvas [here](https://koboyo.com/edit/diagrams-qpkara)._
+_Diagram drawn with [Koboyo](https://koboyo.com)._
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://koboyo.com/e/89d777d9-43fa-46c9-b9e6-bab572455650/19dcfb3b-9d27-469d-8c41-8f06b6467069.svg?theme=dark">
-  <img alt="Complete reviewer loop: User task → Planner → Executor → Auditor → Quality gate → Done, or back to Executor" src="https://koboyo.com/e/89d777d9-43fa-46c9-b9e6-bab572455650/19dcfb3b-9d27-469d-8c41-8f06b6467069.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="/diagrams/complete-reviewer-loop.dark.svg">
+  <img alt="Complete reviewer loop: User task → Planner → Executor → Auditor → Quality gate → Done, or back to Executor" src="/diagrams/complete-reviewer-loop.svg">
 </picture>
+
 
 
 ### The handoff packet
