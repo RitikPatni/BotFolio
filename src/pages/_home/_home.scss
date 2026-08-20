@@ -146,27 +146,6 @@
   }
 }
 
-/* ═════════════════════════════════════════════════════════════════
-   Field Persona — Home
-   ═════════════════════════════════════════════════════════════════ */
-
-[data-persona="field"] {
-  .hero-accent {
-    background: color-mix(in srgb, var(--accent-start) 15%, transparent);
-    color: var(--accent-text);
-  }
-
-  .post-card--featured {
-    background: color-mix(in srgb, var(--accent-start) 4%, transparent);
-    border-color: color-mix(in srgb, var(--accent-start) 25%, var(--line));
-  }
-
-  .post-card:hover,
-  .blog-card:hover {
-    border-color: color-mix(in srgb, var(--accent-start) 25%, var(--line));
-  }
-}
-
 /* Mobile: let post cards span the full container width */
 @media (max-width: 48rem) {
   .posts {

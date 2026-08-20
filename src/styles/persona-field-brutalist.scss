@@ -22,10 +22,14 @@
   --accent-start: var(--field-start);
   --accent-end: var(--field-end);
 
-  /* Hard edges — brutalist rejects soft radii */
+  /* Hard edges — brutalist rejects soft radii (incl. Open Props radius-2/3) */
   --radius-sm: 0;
   --radius-md: 0;
   --radius-round: 0;
+  --radius-1: 0;
+  --radius-2: 0;
+  --radius-3: 0;
+  --radius-4: 0;
 
   /* Typography: neo-grotesque heavy + mono telemetry */
   --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
