@@ -388,7 +388,7 @@ html.is-theme-switching
 
   &.active {
     color: var(--accent-text);
-    background: color-mix(in srgb, var(--accent-start) 16%, var(--bg));
+    background: var(--persona-btn-active-bg, color-mix(in srgb, var(--accent-start) 16%, var(--bg)));
     border: 1px solid color-mix(in srgb, var(--accent-start) 45%, var(--line));
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-start) 25%, transparent),
       0 0 12px color-mix(in srgb, var(--accent-start) 22%, transparent);
@@ -421,4 +421,19 @@ html.is-theme-switching
     padding: 0.4rem 0.65rem;
     font-size: 0.8125rem;
   }
+}
+
+/* Light-mode persona switcher: pinned dark text so it never inherits a leaked
+   dark --text-muted. Inactive = #4b4b57 (AA on light); active uses accent-text. */
+[data-theme="light"] .nav-persona-btn {
+  color: #4b4b57;
+  &:hover { color: #0a0a0b; background: rgba(0, 0, 0, 0.05); }
+  &.active {
+    color: #1e50c8;
+    background: color-mix(in srgb, var(--accent-start) 14%, #ffffff);
+    border-color: color-mix(in srgb, var(--accent-start) 45%, var(--line));
+  }
+}
+[data-persona="field"][data-theme="light"] .nav-persona-btn.active {
+  color: #9a5808;
 }

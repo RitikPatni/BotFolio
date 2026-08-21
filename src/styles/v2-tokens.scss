@@ -48,7 +48,6 @@
   --surface-1: var(--bg-soft);
   --surface-2: var(--bg-soft);
   --surface-3: var(--bg-soft);
-  /* FIX: was "1px solid" — invalid inside `border: var(--surface-border) solid var(--line)` (double "solid") */
   --surface-border: 1px;
   /* FIX: referenced by %surface-card / .primitive-surface but never defined → cards lost radius + padding */
   --surface-radius: var(--radius-2);
@@ -63,6 +62,9 @@
   --font-sans: inherit;
   --fs-subheading: 1.25rem;
   --font-weight-6: 500;
+  /* Active persona-switcher button background — pinned so it never inherits a
+     theme-leaked --bg. Dark: subtle accent tint over the dark surface. */
+  --persona-btn-active-bg: color-mix(in srgb, var(--accent-start) 18%, var(--bg-soft));
 }
 
 /* Field persona: swap to amber-red-orange */
@@ -81,6 +83,9 @@
   --line: rgba(0, 0, 0, 0.08);
   /* Accent text default; overridden per persona below for AA contrast on white */
   --accent-text: var(--accent-start);
+  /* Active persona-switcher button background in LIGHT: a light, clearly-tinted
+     surface so the dark --accent-text passes AA. Pinned (not var(--bg)). */
+  --persona-btn-active-bg: color-mix(in srgb, var(--accent-start) 14%, #ffffff);
 }
 
 /* Light-theme accent text must be darkened to pass WCAG AA on white surfaces */
