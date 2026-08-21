@@ -1,20 +1,21 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
 import { formatDisplayDate } from "../../utils/date";
 import { excerpt } from "../../utils/excerpt";
+import { slugOf } from "../../utils/slug";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id.replace(/\.md$/, "") },
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 const reading = readingTimeMinutes(post.body ?? "");
 import "./_slug.scss";
 ---
@@ -22,8 +23,8 @@ import "./_slug.scss";
 <BaseLayout
   title={`${post.data.title} — Writing`}
   description={post.data.description}
-  path={`/blog/${post.slug}`}
-  image={`/og/blog/${post.slug}.png`}
+  path={`/blog/${slugOf(post)}`}
+  image={`/og/blog/${slugOf(post)}.png`}
   ogType="article"
 >
   <!-- Gradient hero -->

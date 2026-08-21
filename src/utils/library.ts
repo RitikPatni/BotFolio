@@ -126,8 +126,9 @@ export const normalizeBookDescription = (description: string) => {
 };
 
 export const getHighlightMeta = (item: CollectionEntry<"highlights">) => {
-  const metadata = parseMetadataSection(item.body);
-  const blocks = parseHighlightBlocks(item.body);
+  const body = item.body ?? "";
+  const metadata = parseMetadataSection(body);
+  const blocks = parseHighlightBlocks(body);
   const preview = blocks.length ? stripMarkdown(blocks[0]) : "";
   const author = cleanAuthor(
     metadata.get("author") || item.data.description || "Unknown source",
@@ -141,7 +142,7 @@ export const getHighlightMeta = (item: CollectionEntry<"highlights">) => {
 
   return {
     author,
-    coverImage: extractCoverImage(item.body),
+    coverImage: extractCoverImage(body),
     highlightCount: blocks.length,
     language,
     preview,

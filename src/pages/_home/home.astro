@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import { formatDisplayDate } from "../../utils/date";
 import { photographyGalleryData } from "../../data/photography";
 import { photographyCategories } from "../../data/photography/manifest";
+import { slugOf } from "../../utils/slug";
 import "./_home.scss";
 
 const posts = (await getCollection("blog"))
@@ -11,7 +12,7 @@ const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3)
   .map((post) => ({
-    slug: post.slug,
+    slug: slugOf(post),
     title: post.data.title,
     description: post.data.description,
     date: post.data.date,

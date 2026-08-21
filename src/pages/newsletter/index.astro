@@ -4,12 +4,13 @@ import { getCollection } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
 import { formatDisplayDate } from "../../utils/date";
 import { excerpt } from "../../utils/excerpt";
+import { slugOf } from "../../utils/slug";
 
 const entries = (await getCollection("newsletter"))
   .filter((item) => !item.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .map((item) => ({
-    slug: item.slug,
+    slug: slugOf(item),
     title: item.data.title,
     description: excerpt(item.data.description),
     date: item.data.date,

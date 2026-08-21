@@ -4,13 +4,14 @@ import { getCollection } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
 import { formatDisplayDate } from "../../utils/date";
 import { excerpt } from "../../utils/excerpt";
+import { slugOf } from "../../utils/slug";
 
 const blogPosts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .map((post) => {
     const words = post.body ?? "";
     return {
-      slug: `/blog/${post.slug}`,
+      slug: `/blog/${slugOf(post)}`,
       title: post.data.title,
       description: excerpt(post.data.description),
       date: post.data.date,
@@ -23,7 +24,7 @@ const newsletterPosts = (await getCollection("newsletter"))
   .map((post) => {
     const words = post.body ?? "";
     return {
-      slug: `/newsletter/${post.slug}`,
+      slug: `/newsletter/${slugOf(post)}`,
       title: post.data.title,
       description: excerpt(post.data.description),
       date: post.data.date,

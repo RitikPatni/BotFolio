@@ -2,11 +2,12 @@
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { formatDisplayDate } from "../../utils/date";
+import { slugOf } from "../../utils/slug";
 
 const resources = (await getCollection("resources"))
   .filter((post) => !post.data.draft)
   .map((post) => ({
-    slug: `/resources/${post.slug}`,
+    slug: `/resources/${slugOf(post)}`,
     title: post.data.title,
     description: post.data.description,
     tags: post.data.tags,

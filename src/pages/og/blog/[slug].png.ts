@@ -27,7 +27,7 @@ function blogSvg(title: string, desc: string, date: string, readTime: string): s
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+  return posts.map((post) => ({ params: { slug: post.id.replace(/\.md$/, "") }, props: { post } }));
 }
 
 export async function GET({ props }: { props: { post: any } }) {

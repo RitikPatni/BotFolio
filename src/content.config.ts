@@ -1,4 +1,5 @@
 import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
 
 const baseSchema = z.object({
   title: z.string(),
@@ -14,7 +15,7 @@ const highlightsSchema = baseSchema.extend({
 });
 
 const blog = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
   schema: baseSchema.extend({
     source_url: z.string().default(""),
     source_type: z.string().default(""),
@@ -34,12 +35,12 @@ const blog = defineCollection({
 });
 
 const newsletter = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.md", base: "./src/content/newsletter" }),
   schema: baseSchema,
 });
 
 const books = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.md", base: "./src/content/books" }),
   schema: baseSchema.extend({
     author: z.string().default(""),
     language: z.string().default(""),
@@ -53,12 +54,12 @@ const books = defineCollection({
 });
 
 const highlights = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.md", base: "./src/content/highlights" }),
   schema: highlightsSchema,
 });
 
 const resources = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.md", base: "./src/content/resources" }),
   schema: baseSchema.extend({
     url: z.union([z.string().url(), z.literal("")]).default(""),
   }),
