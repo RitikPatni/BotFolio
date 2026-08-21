@@ -177,20 +177,43 @@ function tidFromSeed(str) {
   return out;
 }
 
-async function xrpc(pds, token, method, body) {
-  const res = await fetch(`${pds}/xrpc/${method}`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      ...(token ? { authorization: `Bearer ${token}` } : {}),
-    },
-    body: JSON.stringify(body),
-  });
-  const text = await res.text();
-  if (!res.ok) {
-    throw new Error(`${method} failed (${res.status}): ${text}`);
+async function xrpc(pds, token, method, body, { retries = 3 } = {}) {
+  let lastErr;
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(`${pds}/xrpc/${method}`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          ...(token ? { authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify(body),
+      });
+      const text = await res.text();
+      if (res.ok) return text ? JSON.parse(text) : null;
+      // Retry only on 5xx / rate-limit; 4xx (except 429) is a real error — rethrow.
+      if (res.status >= 500 || res.status === 429) {
+        lastErr = new Error(`${method} failed (${res.status}) attempt ${attempt}/${retries}: ${text.slice(0, 200)}`);
+        console.warn(lastErr.message);
+        if (attempt < retries) {
+          await new Promise((r) => setTimeout(r, 1500 * attempt * attempt)); // 1.5s, 6s
+          continue;
+        }
+      }
+      throw new Error(`${method} failed (${res.status}): ${text}`);
+    } catch (e) {
+      // network-level failure (fetch reject) — retry
+      lastErr = e;
+      if (String(e.message).includes("failed (")) throw e; // already a final HTTP error
+      console.warn(`network error attempt ${attempt}/${retries}: ${e.message}`);
+      if (attempt < retries) {
+        await new Promise((r) => setTimeout(r, 1500 * attempt * attempt));
+        continue;
+      }
+      throw e;
+    }
   }
-  return text ? JSON.parse(text) : null;
+  throw lastErr;
 }
 
 async function publishRecords(opts) {
@@ -216,17 +239,28 @@ async function publishRecords(opts) {
   });
 
   let ok = 0;
+  const failed = [];
   for (const doc of documents) {
     const rkey = tidFromSeed(doc.path);
-    await xrpc(pds, token, "com.atproto.repo.putRecord", {
-      repo: did,
-      collection: "site.standard.document",
-      rkey,
-      record: doc,
-    });
-    ok++;
+    try {
+      await xrpc(pds, token, "com.atproto.repo.putRecord", {
+        repo: did,
+        collection: "site.standard.document",
+        rkey,
+        record: doc,
+      });
+      ok++;
+    } catch (e) {
+      failed.push({ path: doc.path, error: e.message });
+      console.error(`FAILED ${doc.path}: ${e.message}`);
+    }
   }
-  console.log(`Published ${ok} document records. Done.`);
+  if (failed.length > 0) {
+    console.error(`\n${failed.length}/${documents.length} documents FAILED:`);
+    for (const f of failed) console.error(` - ${f.path}: ${f.error}`);
+    process.exitCode = 3; // non-zero so the Action shows red, but partial progress is kept
+  }
+  console.log(`Published ${ok}/${documents.length} document records. Done.`);
 }
 
 main().catch((e) => {
