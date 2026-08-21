@@ -38,7 +38,12 @@ if echo "$STAGED" | grep -E '^(src/data/photography/|src/assets/photography/|scr
 else
   echo "[gallery-hook] No gallery-related staged changes. Skipping gallery validator."
 fi
-`;
+
+if echo "$STAGED" | grep -E '^(src/content/blog/.*\.md|scripts/standard-site-publish\.mjs|package\.json|\.github/workflows/standard-site\.yml)' >/dev/null; then
+  echo "[standard-site-hook] Detected blog/content changes. Regenerating Standard.site artifacts (dry run)..."
+  npm run -s standard-site:generate
+fi
+`
 
 async function main() {
   await fs.mkdir(hooksDir, { recursive: true });

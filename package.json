@@ -7,6 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "build:cf": "npm run standard-site:generate && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "content:frontmatter:parity": "node scripts/content-frontmatter-parity.mjs",
@@ -23,6 +24,7 @@
     "gallery:validate:strict": "node scripts/validate-gallery.mjs --strict",
     "gallery:validate:ci": "node scripts/validate-gallery.mjs --ci",
     "gallery:hook:install": "node scripts/install-gallery-hook.mjs",
+    "standard-site:generate": "node scripts/standard-site-publish.mjs",
     "prepare": "node scripts/install-gallery-hook.mjs"
   },
   "dependencies": {
