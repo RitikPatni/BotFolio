@@ -49,5 +49,36 @@ import "./_newsletter.scss";
         )
       }
     </section>
+
+    <section class="newsletter__subscribe">
+      <h2 class="newsletter__subscribe-title">Subscribe</h2>
+      <p class="newsletter__subscribe-lead">
+        Two independent ways to follow new writing — pick either, they don't
+        depend on each other.
+      </p>
+      <ul class="newsletter__subscribe-list">
+        <li>
+          <strong>RSS</strong> — for any feed reader. The full archive is
+          available as a standard RSS feed:
+          <a href="/rss.xml">ritikpatni.me/rss.xml</a>.
+        </li>
+        <li>
+          <strong>AT Protocol (Standard.site)</strong> — for AT-native clients.
+          Every post is published as a <code>site.standard.document</code> record
+          to the channel below; an AT Proto reader can subscribe directly and
+          receive new posts without polling this site.
+          <br />
+          <span class="newsletter__subscribe-aturi">
+            Publication: <code>at://did:plc:53jkze3ofomdesnodoz5i34y/site.standard.publication</code>
+          </span>
+          <br />
+          <a
+            href="https://bsky.social/xrpc/com.atproto.repo.listRecords?repo=ritikpatni.bsky.social&collection=site.standard.document"
+          >
+            View published records
+          </a>
+        </li>
+      </ul>
+    </section>
   </div>
 </BaseLayout>
