@@ -137,14 +137,96 @@ async function main() {
 
   const publish = process.argv.includes("--publish");
   if (publish && env.BLUESKY_APP_PASSWORD) {
-    console.log("BLUESKY_APP_PASSWORD present + --publish: live publish path goes here.");
-    console.log("(Implement AT Proto com.atproto.repo.createRecord calls against the PDS.)");
+    await publishRecords({
+      handle: "ritikpatni.bsky.social",
+      appPassword: env.BLUESKY_APP_PASSWORD,
+      pds: env.ATPROTO_PDS || "https://bsky.social",
+      did: DID,
+      publicationRKey,
+      publication,
+      documents,
+    });
   } else if (publish) {
     console.error("Refusing to publish: BLUESKY_APP_PASSWORD not set. Aborting --publish.");
     process.exit(2);
   } else {
     console.log("Dry run complete. Pass --publish (with BLUESKY_APP_PASSWORD) to push live.");
   }
+}
+
+/* ── AT Proto publishing ────────────────────────────────────────────────
+   Real publish against a Bluesky/PDS XRPC endpoint. Uses putRecord with a
+   stable rkey per record so re-runs UPDATE rather than duplicate. */
+
+// Minimal valid TID (atproto base32, big-endian, <=64 bits) from a string seed.
+const TID_ALPHABET = "234567abcdefghijklmnopqrstuvwxyz";
+function tidFromSeed(str) {
+  let h = 0n;
+  for (let i = 0; i < str.length; i++) {
+    h = (h * 31n + BigInt(str.charCodeAt(i))) & 0xffffffffffffffffn;
+  }
+  // Mix in microseconds of now for sortability, keep within 64 bits.
+  const ts = BigInt(Date.now() % 1e15) & 0xffffffffffffffffn;
+  const value = ((ts << 24n) ^ (h << 8n) ^ (h & 0xffn)) & 0xffffffffffffffffn;
+  let v = value;
+  let out = "";
+  for (let i = 0; i < 13; i++) {
+    out = TID_ALPHABET[Number(v & 31n)] + out;
+    v >>= 5n;
+  }
+  return out;
+}
+
+async function xrpc(pds, token, method, body) {
+  const res = await fetch(`${pds}/xrpc/${method}`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      ...(token ? { authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(body),
+  });
+  const text = await res.text();
+  if (!res.ok) {
+    throw new Error(`${method} failed (${res.status}): ${text}`);
+  }
+  return text ? JSON.parse(text) : null;
+}
+
+async function publishRecords(opts) {
+  const { handle, appPassword, pds, did, publicationRKey, publication, documents } = opts;
+
+  console.log(`Authenticating to ${pds} as ${handle}...`);
+  const session = await xrpc(pds, null, "com.atproto.server.createSession", {
+    identifier: handle,
+    password: appPassword,
+  });
+  const token = session.accessJwt;
+  if (session.did !== did) {
+    console.warn(`Warning: session DID ${session.did} != expected ${did}`);
+  }
+  console.log("Session OK.");
+
+  console.log("Upserting publication record...");
+  await xrpc(pds, token, "com.atproto.repo.putRecord", {
+    repo: did,
+    collection: "site.standard.publication",
+    rkey: publicationRKey,
+    record: publication,
+  });
+
+  let ok = 0;
+  for (const doc of documents) {
+    const rkey = tidFromSeed(doc.path);
+    await xrpc(pds, token, "com.atproto.repo.putRecord", {
+      repo: did,
+      collection: "site.standard.document",
+      rkey,
+      record: doc,
+    });
+    ok++;
+  }
+  console.log(`Published ${ok} document records. Done.`);
 }
 
 main().catch((e) => {
