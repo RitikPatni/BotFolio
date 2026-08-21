@@ -155,6 +155,11 @@ const imageUrl = new URL(image, Astro.site).toString();
       title={SITE_CONFIG.rssTitle}
       href="/rss.xml"
     />
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="1954c052-315e-42e7-bf31-c803cf2cd164"
+    ></script>
     <slot name="head" />
   </head>
   <body>
