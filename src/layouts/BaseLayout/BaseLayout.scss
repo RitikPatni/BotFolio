@@ -387,9 +387,11 @@ html.is-theme-switching
   }
 
   &.active {
-    background: color-mix(in srgb, var(--text) 7%, transparent);
-    color: var(--text);
-    box-shadow: 0 0 12px color-mix(in srgb, var(--accent-start) 12%, transparent);
+    color: var(--accent-text);
+    background: color-mix(in srgb, var(--accent-start) 16%, var(--bg));
+    border: 1px solid color-mix(in srgb, var(--accent-start) 45%, var(--line));
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-start) 25%, transparent),
+      0 0 12px color-mix(in srgb, var(--accent-start) 22%, transparent);
   }
 }
 
