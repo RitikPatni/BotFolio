@@ -173,9 +173,9 @@ const imageUrl = new URL(image, Astro.site).toString();
                 <strong>{SITE_CONFIG.personName}</strong>
               </a>
             </div>
-            <div class="nav-persona-toggle" data-persona-toggle>
-              <button type="button" class="nav-persona-btn active" data-persona="studio" aria-label="Developer profile">Dev</button>
-              <button type="button" class="nav-persona-btn" data-persona="field" aria-label="Photography profile">Photo</button>
+            <div class="nav-persona-toggle" data-persona-toggle role="group" aria-label="Profile switcher">
+              <button type="button" class="nav-persona-btn active" data-persona="studio" aria-label="Developer profile" aria-pressed="true">Dev</button>
+              <button type="button" class="nav-persona-btn" data-persona="field" aria-label="Photography profile" aria-pressed="false">Photo</button>
             </div>
           </div>
           <div class="base-layout__menu-row">
@@ -207,6 +207,7 @@ const imageUrl = new URL(image, Astro.site).toString();
         <div class="base-layout__container base-layout__footer-content">
           <p class="base-layout__footer-copy">
             © {new Date().getFullYear()}
+            {" "}
             {SITE_CONFIG.personName} · Built with Astro.
           </p>
           <nav class="base-layout__socials" aria-label="Social links">
@@ -235,6 +236,7 @@ const imageUrl = new URL(image, Astro.site).toString();
         type="button"
         id="themeFab"
         aria-label="Toggle light and dark theme"
+        aria-pressed="false"
         title="Toggle theme"
       >
         <span class="base-layout__theme-fab-icon" aria-hidden="true">☼</span>

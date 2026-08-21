@@ -210,6 +210,7 @@ const syncThemeToggle = (toggleButton: HTMLButtonElement) => {
     "title",
     isLight ? "Switch to dark theme" : "Switch to light theme",
   );
+  toggleButton.setAttribute("aria-pressed", String(isLight));
 };
 
 const bindThemeToggle = () => {
