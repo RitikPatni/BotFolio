@@ -204,38 +204,40 @@ import "./_library.scss";
                     </a>
                   ) : null}
 
-                  <h3 class="library__item-title">
-                    <a href={`/library/books/${slugOf(item)}`}>
-                      {item.displayTitle}
-                    </a>
-                  </h3>
-                  <div class="library__item-meta-block">
-                    <p class="library__item-meta-primary">
-                      {item.data.author || "Unknown author"}
-                      {item.data.language ? ` · ${item.data.language}` : ""}
-                    </p>
-                    <p class="library__item-meta-secondary">
-                      {formatDisplayDate(item.data.date)}
-                      {item.data.published_year
-                        ? ` · Published ${item.data.published_year}`
-                        : ""}
-                    </p>
-                  </div>
-                  {item.normalizedDescription ? (
-                    <p class="library__description">
-                      {item.normalizedDescription}
-                    </p>
-                  ) : null}
-
-                  {item.linkedHighlight ? (
-                    <p class="library__book-note">
-                      <a
-                        href={`/library/highlights/${slugOf(item.linkedHighlight)}`}
-                      >
-                        Book notes
+                  <div class="library__overlay">
+                    <h3 class="library__item-title">
+                      <a href={`/library/books/${slugOf(item)}`}>
+                        {item.displayTitle}
                       </a>
-                    </p>
-                  ) : null}
+                    </h3>
+                    <div class="library__item-meta-block">
+                      <p class="library__item-meta-primary">
+                        {item.data.author || "Unknown author"}
+                        {item.data.language ? ` · ${item.data.language}` : ""}
+                      </p>
+                      <p class="library__item-meta-secondary">
+                        {formatDisplayDate(item.data.date)}
+                        {item.data.published_year
+                          ? ` · Published ${item.data.published_year}`
+                          : ""}
+                      </p>
+                    </div>
+                    {item.normalizedDescription ? (
+                      <p class="library__description">
+                        {item.normalizedDescription}
+                      </p>
+                    ) : null}
+
+                    {item.linkedHighlight ? (
+                      <p class="library__book-note">
+                        <a
+                          href={`/library/highlights/${slugOf(item.linkedHighlight)}`}
+                        >
+                          Book notes
+                        </a>
+                      </p>
+                    ) : null}
+                  </div>
                 </article>
               ))}
             </div>

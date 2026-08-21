@@ -100,53 +100,58 @@
   scroll-snap-align: start;
   position: relative;
 
-  /* Meta is an overlay over the cover (no layout shift). Hidden until hover/focus. */
-  h3,
-  .library__item-meta-block,
-  .library__description,
-  .library__book-note {
+  /* Single overlay container — flex column, scrollable, animated as a unit.
+     Fixes: children colliding at static anchors (random positioning),
+     long content overflowing past the cover (chopping), and
+     four children animating independently (jank). */
+  .library__overlay {
     position: absolute;
-    left: 0;
-    right: 0;
-    padding: 0.5rem 0.6rem;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.6rem 0.65rem;
     background: linear-gradient(
       to top,
       color-mix(in srgb, var(--bg) 92%, transparent),
       color-mix(in srgb, var(--bg) 60%, transparent)
     );
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    border-radius: var(--radius-sm);
     opacity: 0;
     transform: translateY(6px);
-    transition: opacity 200ms ease, transform 200ms ease;
+    transition: opacity 200ms var(--ease-out, ease), transform 200ms var(--ease-out, ease);
     pointer-events: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
-  h3 {
-    bottom: 2.4rem;
+  .library__item-title {
     font-size: 0.95rem;
     font-weight: 400;
   }
 
   .library__item-meta-block {
-    bottom: 0;
     font-size: 0.78rem;
     color: var(--text-muted);
   }
 
   .library__description,
   .library__book-note {
-    top: 0;
-    bottom: auto;
     font-size: 0.8rem;
     color: var(--text-muted);
+  }
+
+  .library__book-note {
+    margin-top: auto; /* pin "Book notes" link to the bottom of the overlay */
+    a { text-decoration: underline; text-underline-offset: 2px; }
   }
 
   /* Reveal on hover OR keyboard focus (a11y parity). */
   &:hover,
   &:focus-within {
-    h3,
-    .library__item-meta-block,
-    .library__description,
-    .library__book-note {
+    .library__overlay {
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
