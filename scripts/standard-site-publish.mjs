@@ -25,7 +25,8 @@ const BLOG_DIR = resolve(ROOT, "src/content/blog");
 const OUT_DIR = resolve(ROOT, "public/standard-site");
 const WELL_KNOWN_DIR = resolve(ROOT, "public/.well-known");
 
-// Load env from project .env or hermes .env (read-only; never printed).
+// Load env from project .env or hermes .env, then overlay real process.env
+// (so CI secrets injected as environment variables win). Read-only; never printed.
 function loadEnv() {
   const paths = [
     resolve(ROOT, ".env"),
@@ -38,6 +39,10 @@ function loadEnv() {
       const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*"?([^"\n]*)"?\s*$/i);
       if (m) env[m[1]] = m[2].trim();
     }
+  }
+  // Overlay actual environment variables (e.g. CI-injected secrets).
+  for (const key of ["BLUESKY_APP_PASSWORD", "SITE_URL"]) {
+    if (process.env[key]) env[key] = process.env[key];
   }
   return env;
 }

@@ -1,0 +1,36 @@
+name: Standard.site Publish
+
+# Manual only — never auto-publishes on push. Run from the Actions tab
+# (Workflow dispatch) after a site deploy, or whenever you want to sync the
+# AT Proto records. Requires the BLUESKY_APP_PASSWORD repo secret.
+on:
+  workflow_dispatch:
+    inputs:
+      site_url:
+        description: "Public site URL used in the publication record"
+        required: false
+        default: "https://ritikpatni.me"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate + publish Standard.site records
+        env:
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          SITE_URL: ${{ github.event.inputs.site_url }}
+        run: npm run standard-site:generate -- --publish
