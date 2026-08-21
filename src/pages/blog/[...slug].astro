@@ -17,6 +17,8 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const reading = readingTimeMinutes(post.body ?? "");
+const STANDARD_SITE_DID = "did:plc:53jkze3ofomdesnodoz5i34y";
+const standardSiteDocUri = `at://${STANDARD_SITE_DID}/site.standard.document/${slugOf(post)}`;
 import "./_slug.scss";
 ---
 
@@ -27,6 +29,11 @@ import "./_slug.scss";
   image={`/og/blog/${slugOf(post)}.png`}
   ogType="article"
 >
+  <link
+    slot="head"
+    rel="site.standard.document"
+    href={standardSiteDocUri}
+  />
   <!-- Gradient hero -->
   <section class="slug-hero">
     <div class="slug-hero-content">
