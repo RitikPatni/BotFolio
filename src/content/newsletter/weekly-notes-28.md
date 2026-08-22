@@ -40,7 +40,7 @@ No one needs this style, and yet, this is there by default in all the browsers. 
 
 [Why the HTML Outlining Algorithm was removed from the spec – the truth will shock you!](https://brucelawson.co.uk/2022/why-the-html-outlining-algorithm-was-removed-from-the-spec-the-truth-will-shock-you/?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-28)
 
-Recently, the HTML spec changed to [replace current outline algorithm with one based on heading levels](https://github.com/whatwg/html/pull/7829?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-28). So the idea that you could use <h1> for a generic heading across your documents, and the browser would “know” which level it actually should be by its nesting inside <section> and other related “sectioning elements”, is no more.
+Recently, the HTML spec changed to [replace current outline algorithm with one based on heading levels](https://github.com/whatwg/html/pull/7829?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-28). So the idea that you could use `<h1>` for a generic heading across your documents, and the browser would “know” which level it actually should be by its nesting inside `<section>` and other related “sectioning elements”, is no more.
 
 ## 😃 Something that made me smile
 

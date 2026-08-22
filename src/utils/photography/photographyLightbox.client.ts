@@ -111,6 +111,7 @@ export function initPhotographyLightbox() {
     renderImage(index);
     setChromeVisibility(true);
     setMetadataVisibility(false);
+    dialog.setAttribute("aria-hidden", "false");
     dialog.showModal();
   };
 
@@ -248,6 +249,7 @@ export function initPhotographyLightbox() {
   dialog.addEventListener("close", () => {
     clearChromeTimer();
     setChromeVisibility(true);
+    dialog.setAttribute("aria-hidden", "true");
 
     if (isFullscreenActive()) {
       void document.exitFullscreen();
