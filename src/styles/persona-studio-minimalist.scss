@@ -82,12 +82,16 @@
 
 /* Section padding rhythm: bottom slightly larger than top (redesign-skill) */
 [data-persona="studio"] [class$="__section"],
-[data-persona="studio"] [class$="__hero"] {
-  padding-block: clamp(3rem, 7vw, 6rem) clamp(3.5rem, 8vw, 7rem);
+[data-persona="studio"] .page-hero {
+  --page-hero-glow-opacity: 0.04;
+}
+
+[data-persona="studio"] .page-hero--standard {
+  --page-hero-padding-block: clamp(3rem, 7vw, 6rem) clamp(3.5rem, 8vw, 7rem);
 }
 
 /* De-emphasize the AI-gradient hero glow; minimalist prefers flat calm */
 [data-persona="studio"] .photography__hero::before,
-[data-persona="studio"] [class$="__hero"]::before {
+[data-persona="studio"] .page-hero::before {
   opacity: 0.05;
 }

@@ -13,9 +13,12 @@
 [data-persona="studio"] {
 
   /* Hero: flatter, calmer — minimalist prefers quiet over a glowing bloom */
-  [class$="__hero"] {
-    padding-block: clamp(3.5rem, 8vw, 6.5rem);
-    text-align: left;
+  .page-hero {
+    --page-hero-glow-opacity: 0.04;
+
+    &--standard {
+      --page-hero-padding-block: clamp(3.5rem, 8vw, 6.5rem);
+    }
 
     &::before {
       opacity: 0.04;
@@ -24,6 +27,7 @@
 
   /* Macro hero name: serif, editorial, not the 300 hairline */
   .hero-name,
+  .page-hero__title,
   .about__title,
   .coding__title,
   .photography__title,
@@ -215,9 +219,8 @@
 [data-persona="field"] {
 
   /* Hero: hard, left-aligned, no bloom. Macro-type already handled in base. */
-  [class$="__hero"] {
-    text-align: left;
-    padding-block: clamp(3rem, 7vw, 5.5rem);
+  .page-hero {
+    --page-hero-glow-opacity: 0;
 
     &::before {
       background: none;
@@ -227,6 +230,7 @@
 
   /* Hero lead: mono telemetry, uppercase, wide tracking */
   .hero-tagline,
+  .page-hero__lead,
   .about__lead,
   .coding__lead,
   .photography__lead,
@@ -434,7 +438,7 @@
   }
 
   /* 4. Fully kill the soft hero glow — display:none so nothing bleeds. */
-  [class$="__hero"]::before,
+  .page-hero::before,
   .hero::before,
   .blog-hero::before,
   .photography__hero::before {

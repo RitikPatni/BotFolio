@@ -3,39 +3,15 @@
    ═════════════════════════════════════════════════════════════════ */
 
 .blog-hero {
-  padding: 5rem 2rem 3rem;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.12;
-    background: var(--gradient-hero);
-  }
-
   &-content {
-    position: relative;
-    z-index: 1;
+    /* Shared positioning comes from .page-hero__inner. */
   }
 
   &-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 300;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin: 0 0 1rem;
   }
 
   &-lead {
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    font-weight: 300;
-    color: var(--text-muted);
     max-width: 500px;
-    margin: 0 auto;
-    line-height: 1.5;
   }
 }
 

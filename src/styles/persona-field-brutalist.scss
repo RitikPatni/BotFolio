@@ -125,8 +125,8 @@
 }
 
 /* Kill the soft radial hero glow — brutalist is flat/hard */
-[data-persona="field"] .photography__hero::before,
-[data-persona="field"] [class$="__hero"]::before {
+[data-persona="field"] .page-hero::before,
+[data-persona="field"] .photography__hero::before {
   background: none;
   opacity: 0;
 }

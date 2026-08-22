@@ -2,25 +2,6 @@
    V2 Library — Book detail (Stripe-inspired)
    ═════════════════════════════════════════════════════════════════ */
 
-.slug__hero {
-  padding: 4rem 2rem 3rem;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.12;
-    background: var(--gradient-hero);
-  }
-
-  &--book {
-    padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
-    text-align: left;
-  }
-}
-
 .slug__book-hero {
   align-items: center;
   display: grid;
@@ -61,36 +42,20 @@
 }
 
 .slug__meta {
-  font-size: 0.85rem;
-  font-weight: 400;
   color: var(--text-dim);
   margin: 0 0 1.5rem;
-  position: relative;
-  z-index: 1;
 }
 
 .slug__title {
-  font-size: clamp(2.5rem, 6vw, 6rem);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
   margin: 0 0 1.5rem;
   overflow-wrap: anywhere;
-  position: relative;
-  z-index: 1;
   max-width: 48rem;
-  text-wrap: balance;
 }
 
 .slug__lead {
-  font-size: 1.1rem;
-  font-weight: 300;
   color: var(--text-muted);
   max-width: 640px;
   margin: 0;
-  line-height: 1.5;
-  position: relative;
-  z-index: 1;
 }
 
 /* Book metadata list */

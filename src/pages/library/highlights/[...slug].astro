@@ -30,20 +30,22 @@ import "./_slug.scss";
   path="/library"
 >
   <div class="slug">
-    <article class="slug__hero slug__hero--compact">
-      <p class="slug__meta">{formatDisplayDate(item.data.date)}</p>
-      <h1 class="slug__title">{item.data.title}</h1>
-      <p class="slug__lead">{item.data.description}</p>
-      {
-        relatedBook ? (
-          <p class="slug__related-linkline">
-            <span>Book:</span>{" "}
-            <a href={`/library/books/${slugOf(relatedBook)}`}>
-              {relatedBook.data.title}
-            </a>
-          </p>
-        ) : null
-      }
+    <article class="slug__hero page-hero page-hero--compact">
+      <div class="page-hero__inner">
+        <p class="slug__meta page-hero__meta">{formatDisplayDate(item.data.date)}</p>
+        <h1 class="slug__title page-hero__title">{item.data.title}</h1>
+        <p class="slug__lead page-hero__lead">{item.data.description}</p>
+        {
+          relatedBook ? (
+            <p class="slug__related-linkline">
+              <span>Book:</span>{" "}
+              <a href={`/library/books/${slugOf(relatedBook)}`}>
+                {relatedBook.data.title}
+              </a>
+            </p>
+          ) : null
+        }
+      </div>
     </article>
 
     <article class="slug__card">

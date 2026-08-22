@@ -30,12 +30,14 @@ const latestNewsletter = (await getCollection("newsletter"))
 
 <BaseLayout title="Developer — Ritik Patni" path="/coding">
   <div class="coding">
-    <section class="coding__hero">
-      <h1 class="coding__title">Developer</h1>
-      <p class="coding__lead">
-        Product-minded frontend engineering, design systems, and practical notes
-        from shipping and maintaining web products.
-      </p>
+    <section class="coding__hero page-hero page-hero--standard">
+      <div class="page-hero__inner">
+        <h1 class="coding__title page-hero__title">Developer</h1>
+        <p class="coding__lead page-hero__lead">
+          Product-minded frontend engineering, design systems, and practical notes
+          from shipping and maintaining web products.
+        </p>
+      </div>
     </section>
 
     <section class="coding__flow" aria-label="Coding sections">

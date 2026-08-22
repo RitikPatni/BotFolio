@@ -35,8 +35,8 @@ import "./_slug.scss";
   path="/library"
 >
   <div class="slug">
-    <article class="slug__hero slug__hero--book">
-      <div class="slug__book-hero">
+    <article class="slug__hero page-hero page-hero--media">
+      <div class="slug__book-hero page-hero__inner">
         <figure class="slug__cover-frame">
           <img
             class="slug__cover-image"
@@ -53,9 +53,9 @@ import "./_slug.scss";
         </figure>
 
         <div class="slug__book-details">
-          <p class="slug__meta">{formatDisplayDate(item.data.date)}</p>
-          <h1 class="slug__title">{item.data.title}</h1>
-          <p class="slug__lead">{item.data.description}</p>
+          <p class="slug__meta page-hero__meta">{formatDisplayDate(item.data.date)}</p>
+          <h1 class="slug__title page-hero__title">{item.data.title}</h1>
+          <p class="slug__lead page-hero__lead">{item.data.description}</p>
           <ul class="slug__book-meta" aria-label="Book metadata">
             {
               item.data.author ? (
