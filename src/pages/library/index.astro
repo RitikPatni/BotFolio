@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import { BOOK_CATEGORIES } from "../../data/library";
 import {
   extractCoverImage,
+  findBookHighlights,
   getHighlightMeta,
   normalizeBookDescription,
 } from "../../utils/library";
@@ -41,13 +42,6 @@ const getBookCategoryMeta = (item: (typeof books)[number]) => {
   return { genre, language };
 };
 
-const normalizeTitleKey = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/^\(book\)\s*/g, "")
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
-    .trim();
-
 const stripBookPrefix = (value: string) =>
   value.replace(/^\(book\)\s*/i, "").trim();
 
@@ -66,36 +60,13 @@ const nonBookHighlights = parsedHighlights.filter(
 
 const recentHighlights = nonBookHighlights.slice(0, 24);
 
-const bookHighlightByTitle = new Map<string, (typeof bookHighlights)[number]>();
-for (const item of bookHighlights) {
-  const key = normalizeTitleKey(item.data.title);
-  if (!key || bookHighlightByTitle.has(key)) {
-    continue;
-  }
-  bookHighlightByTitle.set(key, item);
-}
-
 const usedBookHighlightSlugs = new Set<string>();
 
 const booksWithNotes = books.map((item) => {
-  const bookKey = normalizeTitleKey(item.data.title);
-  let linkedHighlight = bookHighlightByTitle.get(bookKey) || null;
-
-  if (!linkedHighlight && bookKey) {
-    linkedHighlight =
-      bookHighlights.find((candidate) => {
-        if (usedBookHighlightSlugs.has(slugOf(candidate))) {
-          return false;
-        }
-
-        const candidateKey = normalizeTitleKey(candidate.data.title);
-        if (!candidateKey) {
-          return false;
-        }
-
-        return candidateKey.includes(bookKey) || bookKey.includes(candidateKey);
-      }) || null;
-  }
+  const linkedHighlight =
+    findBookHighlights(item.data.title, bookHighlights).find(
+      (candidate) => !usedBookHighlightSlugs.has(slugOf(candidate)),
+    ) || null;
 
   if (linkedHighlight) {
     usedBookHighlightSlugs.add(slugOf(linkedHighlight));

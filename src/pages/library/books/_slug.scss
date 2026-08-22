@@ -6,7 +6,6 @@
   padding: 4rem 2rem 3rem;
   position: relative;
   overflow: hidden;
-  text-align: center;
 
   &::before {
     content: '';
@@ -16,29 +15,71 @@
     background: var(--gradient-hero);
   }
 
-  &--compact {
-    padding-block-end: 1rem;
+  &--book {
+    padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+    text-align: left;
   }
+}
+
+.slug__book-hero {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 6vw, 6rem);
+  grid-template-columns: minmax(14rem, 0.72fr) minmax(0, 1.28fr);
+  margin: 0 auto;
+  max-width: 72rem;
+}
+
+.slug__cover-frame {
+  margin: 0;
+  max-width: 22rem;
+  position: relative;
+  width: 100%;
+}
+
+.slug__cover-image {
+  aspect-ratio: 2 / 3;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  box-shadow: 0.8rem 0.8rem 0 color-mix(in srgb, var(--accent-start) 24%, transparent);
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.slug__cover-caption {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  margin-top: 0.75rem;
+  text-transform: uppercase;
+}
+
+.slug__book-details {
+  min-width: 0;
 }
 
 .slug__meta {
   font-size: 0.85rem;
-    font-weight: 400;
-    color: var(--text-dim);
-    margin: 0 0 1rem;
-    position: relative;
-    z-index: 1;
+  font-weight: 400;
+  color: var(--text-dim);
+  margin: 0 0 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .slug__title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2.5rem, 6vw, 6rem);
   font-weight: 300;
   letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin: 0 auto 1.5rem;
+  line-height: 1.12;
+  margin: 0 0 1.5rem;
+  overflow-wrap: anywhere;
   position: relative;
   z-index: 1;
-  max-width: 960px;
+  max-width: 48rem;
+  text-wrap: balance;
 }
 
 .slug__lead {
@@ -46,7 +87,7 @@
   font-weight: 300;
   color: var(--text-muted);
   max-width: 640px;
-  margin: 0 auto;
+  margin: 0;
   line-height: 1.5;
   position: relative;
   z-index: 1;
@@ -64,6 +105,7 @@
   font-weight: 300;
   position: relative;
   z-index: 1;
+  margin-inline: 0;
 
   li {
     line-height: 1.45;
@@ -78,6 +120,139 @@
     color: var(--text);
     text-decoration: underline;
     text-underline-offset: 2px;
+  }
+}
+
+/* Related reading notes */
+.slug__related {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-top: 1rem;
+  position: relative;
+  z-index: 1;
+  background: var(--bg-soft);
+}
+
+.slug__related-heading {
+  align-items: end;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.slug__related-kicker {
+  margin: 0 0 0.35rem;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.slug__related-title {
+  margin: 0 0 0.9rem;
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+
+.slug__related-count {
+  color: var(--text-dim);
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.slug__related-list {
+  display: grid;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.slug__related-item {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.slug__related-link {
+  color: var(--text);
+  display: block;
+  text-decoration: none;
+
+  &:hover {
+    .slug__related-item-title {
+      text-decoration-color: var(--accent-start);
+    }
+  }
+}
+
+.slug__related-item-heading {
+  align-items: baseline;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.slug__related-item-title {
+  min-width: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--text-dim);
+  text-underline-offset: 3px;
+}
+
+.slug__related-meta {
+  color: var(--text-dim);
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.slug__related-preview {
+  color: var(--text-muted);
+  display: block;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-top: 0.55rem;
+  max-width: 70ch;
+}
+
+@media (max-width: 40rem) {
+  .slug__related-link {
+    display: block;
+  }
+
+  .slug__book-hero {
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+  }
+
+  .slug__cover-frame {
+    justify-self: center;
+    max-width: min(20rem, 72vw);
+  }
+
+  .slug__book-details {
+    text-align: center;
+  }
+
+  .slug__book-details .slug__title,
+  .slug__book-details .slug__lead {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .slug__book-meta {
+    text-align: left;
+  }
+
+  .slug__related-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 }
 
@@ -99,6 +274,11 @@
   font-weight: 300;
   line-height: 1.8;
   color: var(--text);
+
+  /* The cover is promoted into the hero; keep any additional markdown content. */
+  & > p:has(> img) {
+    display: none;
+  }
 
   /* Headings */
   h2 {
