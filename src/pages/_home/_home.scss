@@ -51,6 +51,40 @@
     font-weight: 400;
     background: color-mix(in srgb, var(--accent-start) 15%, transparent);
     color: var(--accent-text);
+    margin-bottom: 1.5rem;
+  }
+
+  &-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.5rem;
+    border-radius: var(--radius-round);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text);
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, transform 120ms ease;
+
+    &:hover {
+      color: var(--text);
+      border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
+      background: color-mix(in srgb, var(--accent-start) 8%, var(--bg-soft));
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &:hover,
+      &:active {
+        transform: none;
+      }
+    }
   }
 }
 
