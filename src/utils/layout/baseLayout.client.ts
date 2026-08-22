@@ -288,12 +288,22 @@ const bindPersonaToggle = () => {
         // Ignore storage write issues; persona still applies for the session.
       }
 
-      const targetBasePath = next === "field" ? "/photography" : "/";
       const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+      const isStudioOnly = STUDIO_ROUTES.some(
+        (route) => currentPath === route || currentPath.startsWith(`${route}/`),
+      );
+      const isFieldOnly = FIELD_ROUTES.some(
+        (route) => currentPath === route || currentPath.startsWith(`${route}/`),
+      );
+      const targetPath = next === "field" && isStudioOnly
+        ? "/photography"
+        : next === "studio" && isFieldOnly
+          ? "/"
+          : currentPath;
 
-      if (currentPath !== targetBasePath) {
+      if (currentPath !== targetPath) {
         if (prefersReducedMotion.matches) {
-          void navigateTo(targetBasePath);
+          void navigateTo(targetPath);
           return;
         }
 
@@ -305,7 +315,7 @@ const bindPersonaToggle = () => {
 
         document.documentElement.classList.add(personaSwitchClassName);
         window.setTimeout(() => {
-          void navigateTo(targetBasePath);
+          void navigateTo(targetPath);
         }, personaSwitchDurationMs);
       }
     });
