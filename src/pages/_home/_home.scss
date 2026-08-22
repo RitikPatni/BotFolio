@@ -23,7 +23,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 1.5rem;
   }
 
   &-name {
@@ -55,14 +55,13 @@
     font-weight: 400;
     background: color-mix(in srgb, var(--accent-start) 15%, transparent);
     color: var(--accent-text);
-    margin-bottom: 1.5rem;
   }
 
   &-cta {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.75rem;
+    padding: 0.625rem 1.5rem;
     border-radius: var(--radius-round);
     font-size: 0.95rem;
     font-weight: 400;
