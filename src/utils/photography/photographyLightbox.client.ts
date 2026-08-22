@@ -40,6 +40,15 @@ export function initPhotographyLightbox() {
     nextButton,
     frameElement,
   } = elements;
+  const statusElement = root.querySelector<HTMLElement>("[data-gallery-status]");
+
+  const clearGalleryLoading = (trigger: HTMLElement | null) => {
+    trigger?.removeAttribute("aria-busy");
+    if (statusElement) {
+      statusElement.hidden = true;
+      statusElement.textContent = "";
+    }
+  };
 
   const state = {
     activeIndex: 0,
@@ -108,6 +117,7 @@ export function initPhotographyLightbox() {
 
   const openDialog = (index: number, trigger: HTMLElement | null) => {
     lastTrigger = trigger instanceof HTMLElement ? trigger : null;
+    clearGalleryLoading(lastTrigger);
     renderImage(index);
     setChromeVisibility(true);
     setMetadataVisibility(false);
@@ -298,4 +308,5 @@ export function initPhotographyLightbox() {
   });
 
   updateFullscreenButton();
+  root.dataset.galleryReady = "true";
 }

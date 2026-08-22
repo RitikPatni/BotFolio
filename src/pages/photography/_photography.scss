@@ -191,6 +191,24 @@
     }
   }
 
+  &__gallery-status {
+    position: fixed;
+    inset-inline-start: 50%;
+    inset-block-end: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 90;
+    max-inline-size: min(32rem, calc(100vw - 2rem));
+    margin: 0;
+    padding: 0.65rem 0.9rem;
+    transform: translateX(-50%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-round);
+    background: color-mix(in srgb, var(--bg-soft) 92%, transparent);
+    color: var(--text);
+    box-shadow: 0 8px 28px color-mix(in srgb, var(--bg) 45%, transparent);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
   &__shot {
     break-inside: avoid;
     margin-bottom: 1rem;

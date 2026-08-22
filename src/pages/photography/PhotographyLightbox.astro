@@ -8,6 +8,14 @@ interface Props {
 const { galleryLightboxItemsJson } = Astro.props;
 ---
 
+<p
+  class="photography__gallery-status"
+  data-gallery-status
+  role="status"
+  aria-live="polite"
+  hidden
+></p>
+
 <dialog
   class="photography__lightbox"
   data-gallery-dialog
@@ -152,6 +160,49 @@ const { galleryLightboxItemsJson } = Astro.props;
     </aside>
   </div>
 </dialog>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector("[data-gallery-root]");
+    const status = root?.querySelector("[data-gallery-status]");
+
+    if (!(root instanceof HTMLElement) || !(status instanceof HTMLElement)) {
+      return;
+    }
+
+    root.addEventListener(
+      "click",
+      (event) => {
+        const target = event.target;
+        const trigger =
+          target instanceof Element
+            ? target.closest("[data-gallery-trigger]")
+            : null;
+
+        if (!(trigger instanceof HTMLElement)) {
+          return;
+        }
+
+        trigger.setAttribute("aria-busy", "true");
+        status.hidden = false;
+        status.textContent = "Opening gallery…";
+
+        window.setTimeout(() => {
+          if (root.dataset.galleryReady !== "true") {
+            status.textContent = "Gallery is still loading…";
+          }
+        }, 700);
+
+        window.setTimeout(() => {
+          if (root.dataset.galleryReady !== "true") {
+            status.textContent = "Gallery is taking longer than expected. Try again.";
+          }
+        }, 4000);
+      },
+      true,
+    );
+  })();
+</script>
 
 <script
   is:inline
