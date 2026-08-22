@@ -8,6 +8,7 @@ const baseSchema = z.object({
   draft: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
   category: z.string().default(""),
+  authors: z.array(z.string()).default(["Ritik Patni"]),
 });
 
 const highlightsSchema = baseSchema.extend({
