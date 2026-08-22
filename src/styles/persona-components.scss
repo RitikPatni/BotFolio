@@ -42,7 +42,7 @@
   .coding__card,
   .photography__card,
   .library__card,
-  .uses-section,
+  .uses-card,
   .about__card {
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
@@ -171,7 +171,7 @@
   .coding__card,
   .library__card,
   .about__card,
-  .uses-section,
+  .uses-card,
   .library__item {
     border-left: 2px solid color-mix(in srgb, var(--accent-start) 45%, var(--line));
   }
@@ -204,12 +204,8 @@
   }
 
   /* Uses: section dividers softened */
-  .uses-section {
-    border-top: 1px solid var(--line);
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    padding-top: 1.5rem;
+  .uses-card {
+    border-radius: var(--radius-md);
   }
 }
 
@@ -392,12 +388,11 @@
   }
 
   /* Uses: hard section rules, mono titles */
-  .uses-section {
+  .uses-card {
     border-top: 2px solid var(--line);
     border-radius: 0;
-    background: transparent;
+    background: var(--bg-soft);
     box-shadow: none;
-    padding-top: 1.5rem;
   }
 
   .uses-section-title {

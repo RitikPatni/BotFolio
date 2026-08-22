@@ -178,7 +178,12 @@ import "./_library.scss";
               <p>No books yet.</p>
             </article>
           ) : (
-            <div class="library__books-grid">
+            <div
+              class="library__books-grid"
+              role="region"
+              aria-label="Bookshelf, horizontally scrollable"
+              tabindex="0"
+            >
               {booksWithNotes.map((item) => (
                 <article
                   class="library__item"
@@ -187,22 +192,22 @@ import "./_library.scss";
                   data-book-language={item.language}
                   data-book-has-notes={item.linkedHighlight ? "true" : "false"}
                 >
-                  {item.coverImage ? (
-                    <a
-                      class="library__book-cover-link"
-                      href={`/library/books/${slugOf(item)}`}
-                    >
-                      <img
-                        class="library__book-cover"
-                        src={item.coverImage}
-                        alt={`${item.displayTitle} cover`}
-                        width="180"
-                        height="260"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </a>
-                  ) : null}
+                  <a
+                    class="library__book-cover-link"
+                    href={`/library/books/${slugOf(item)}`}
+                  >
+                    <img
+                      class:list={["library__book-cover", !item.coverImage && "library__book-cover--placeholder"]}
+                      src={item.coverImage || "/book-cover-placeholder.svg"}
+                      alt={`${item.displayTitle} cover${item.coverImage ? "" : " unavailable"}`}
+                      width="180"
+                      height="260"
+                      loading="lazy"
+                      decoding="async"
+                      data-book-cover
+                      data-cover-fallback="/book-cover-placeholder.svg"
+                    />
+                  </a>
 
                   <div class="library__overlay">
                     <h3 class="library__item-title">
@@ -295,6 +300,28 @@ import "./_library.scss";
 
   <script>
     // @ts-nocheck
+    const initBookCovers = () => {
+      document.querySelectorAll("[data-book-cover]").forEach((image) => {
+        if (!(image instanceof HTMLImageElement) || image.dataset.coverBound === "true") {
+          return;
+        }
+
+        image.dataset.coverBound = "true";
+        image.addEventListener("error", () => {
+          const fallback = image.dataset.coverFallback;
+
+          if (!fallback || image.src.endsWith(fallback)) {
+            return;
+          }
+
+          image.dataset.coverState = "fallback";
+          image.alt = `${image.alt.replace(/ unavailable$/, "")} unavailable`;
+          image.srcset = "";
+          image.src = fallback;
+        });
+      });
+    };
+
     const initBookFilters = () => {
       const roots = document.querySelectorAll("[data-library-root]");
 
@@ -365,8 +392,15 @@ import "./_library.scss";
       });
     };
 
+    initBookCovers();
     initBookFilters();
-    document.addEventListener("DOMContentLoaded", initBookFilters);
-    document.addEventListener("astro:page-load", initBookFilters);
+    document.addEventListener("DOMContentLoaded", () => {
+      initBookCovers();
+      initBookFilters();
+    });
+    document.addEventListener("astro:page-load", () => {
+      initBookCovers();
+      initBookFilters();
+    });
   </script>
 </BaseLayout>

@@ -6,23 +6,52 @@ import './_uses.scss';
 
 <BaseLayout title="Uses — Ritik Patni" path="/uses">
   <div class="uses-v2">
-    <h1 class="uses-title">Uses</h1>
-    <p class="uses-lead">Hardware, software, and tools I use for development and photography.</p>
+    <header class="uses-intro">
+      <p class="uses-kicker">WORKBENCH / FIELD KIT</p>
+      <h1 class="uses-title">Uses</h1>
+      <p class="uses-lead">
+        Hardware, software, and tools I use for development and photography.
+      </p>
+    </header>
 
     <div class="uses-body">
-      {USES_SECTIONS.map((section) => (
-        <section class="uses-section">
-          <h2 class="uses-section-title">{section.label}</h2>
-          <ul class="uses-list">
-            {section.cards.flatMap((card) =>
-              card.items.map((item) => (
-                <li class="uses-item">
-                  {item.label && <span class="uses-item-label">{item.label}</span>}
-                  {item.text}
-                </li>
-              ))
-            )}
-          </ul>
+      {USES_SECTIONS.map((section, sectionIndex) => (
+        <section
+          class="uses-section"
+          aria-labelledby={`uses-section-${sectionIndex}`}
+        >
+          <header class="uses-section__head">
+            <span class="uses-section__index" aria-hidden="true">
+              {String(sectionIndex + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <h2 class="uses-section-title" id={`uses-section-${sectionIndex}`}>
+                {section.label}
+              </h2>
+              <p class="uses-section__meta">
+                {section.cards.length} {section.cards.length === 1 ? "category" : "categories"}
+              </p>
+            </div>
+          </header>
+
+          <div class="uses-cards">
+            {section.cards.map((card) => (
+              <article class:list={["uses-card", card.wide && "uses-card--wide"]}>
+                <header class="uses-card__head">
+                  <p class="uses-card__badge">{card.badge}</p>
+                  <h3 class="uses-card__title">{card.title}</h3>
+                </header>
+                <ul class:list={["uses-list", card.columns && "uses-list--columns"]}>
+                  {card.items.map((item) => (
+                    <li class="uses-item">
+                      {item.label && <span class="uses-item-label">{item.label}</span>}
+                      <span>{item.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
         </section>
       ))}
     </div>

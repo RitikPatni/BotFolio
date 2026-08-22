@@ -281,6 +281,8 @@ const bindPersonaToggle = () => {
 
       applyPersona(next);
       updatePersonaUi(next);
+      syncNavOverflow();
+      window.requestAnimationFrame(syncNavOverflow);
 
       try {
         localStorage.setItem(personaStorageKey, next);
@@ -320,6 +322,44 @@ const bindPersonaToggle = () => {
       }
     });
   });
+};
+
+const syncNavOverflow = () => {
+  const navs = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-persona-nav]"),
+  );
+  const visibleNav = navs.find((nav) => nav.getBoundingClientRect().width > 0);
+  const hint = document.querySelector<HTMLElement>("[data-nav-scroll-hint]");
+
+  navs.forEach((nav) => {
+    const overflowing = nav.scrollWidth > nav.clientWidth + 1;
+    nav.dataset.navOverflowing = String(overflowing);
+    nav.dataset.navScrolled = String(nav.scrollLeft > 4);
+  });
+
+  if (!hint || !visibleNav) {
+    return;
+  }
+
+  const overflowing = visibleNav.scrollWidth > visibleNav.clientWidth + 1;
+  hint.hidden = !overflowing;
+  hint.textContent = visibleNav.scrollLeft > 4 ? "More" : "Swipe for more";
+};
+
+const bindNavOverflow = () => {
+  const navs = document.querySelectorAll<HTMLElement>("[data-persona-nav]");
+
+  navs.forEach((nav) => {
+    if (nav.dataset.overflowBound === "true") {
+      return;
+    }
+
+    nav.dataset.overflowBound = "true";
+    nav.addEventListener("scroll", syncNavOverflow, { passive: true });
+  });
+
+  syncNavOverflow();
+  window.requestAnimationFrame(syncNavOverflow);
 };
 
 const animateReveals = () => {
@@ -370,6 +410,7 @@ export function initBaseLayoutClient(options: BaseLayoutInitOptions = {}) {
   guardPersonaRoute();
   bindThemeToggle();
   bindPersonaToggle();
+  bindNavOverflow();
 
   if (shouldAnimateReveals) {
     animateReveals();

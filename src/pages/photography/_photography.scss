@@ -194,12 +194,12 @@
   &__gallery-status {
     position: fixed;
     inset-inline-start: 50%;
-    inset-block-end: calc(1rem + env(safe-area-inset-bottom, 0px));
+    inset-block-start: 50%;
     z-index: 90;
     max-inline-size: min(32rem, calc(100vw - 2rem));
     margin: 0;
     padding: 0.65rem 0.9rem;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     border: 1px solid var(--line);
     border-radius: var(--radius-round);
     background: color-mix(in srgb, var(--bg-soft) 92%, transparent);

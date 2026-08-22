@@ -124,6 +124,7 @@
   }
 
   &__menu-row {
+    position: relative;
     border-top: var(--border-light);
     padding-top: 0.5rem;
   }
@@ -413,6 +414,53 @@ html.is-theme-switching
     padding-bottom: 0.125rem;        /* breathing room for the scroll track */
     min-width: 0;                    /* let it shrink to parent so inner scroll engages */
     max-width: 100%;
+  }
+
+  .nav-links[data-nav-overflowing="true"] {
+    padding-inline-end: 2.25rem;
+    mask-image: linear-gradient(
+      to right,
+      black 0,
+      black calc(100% - 2.25rem),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      black 0,
+      black calc(100% - 2.25rem),
+      transparent 100%
+    );
+
+    &[data-nav-scrolled="true"] {
+      padding-inline: 2.25rem;
+      mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        black 2.25rem,
+        black calc(100% - 2.25rem),
+        transparent 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        black 2.25rem,
+        black calc(100% - 2.25rem),
+        transparent 100%
+      );
+    }
+  }
+
+  .nav-scroll-hint:not([hidden]) {
+    position: absolute;
+    inset-block-start: 0.65rem;
+    inset-inline-end: 0.15rem;
+    padding-inline-start: 0.5rem;
+    background: linear-gradient(to right, transparent, var(--bg) 35%);
+    color: var(--text-dim);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    pointer-events: none;
   }
 
   .nav-links::-webkit-scrollbar {

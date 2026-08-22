@@ -8,14 +8,6 @@ interface Props {
 const { galleryLightboxItemsJson } = Astro.props;
 ---
 
-<p
-  class="photography__gallery-status"
-  data-gallery-status
-  role="status"
-  aria-live="polite"
-  hidden
-></p>
-
 <dialog
   class="photography__lightbox"
   data-gallery-dialog
@@ -29,6 +21,13 @@ const { galleryLightboxItemsJson } = Astro.props;
     data-ui-visible="true"
   >
     <div class="photography__lightbox-stage">
+      <p
+        class="photography__gallery-status"
+        data-gallery-status
+        role="status"
+        aria-live="polite"
+        hidden
+      ></p>
       <div
         class="photography__metadata-scrim"
         data-gallery-metadata-scrim

@@ -23,6 +23,11 @@ const {
 
 const socials = SITE_CONFIG.socials;
 const navSets = NAV_LINKS_BY_PERSONA;
+const normalizedPath = path.replace(/\/$/, "") || "/";
+const isNavLinkActive = (href: string) =>
+  href === "/"
+    ? normalizedPath === "/"
+    : normalizedPath === href || normalizedPath.startsWith(`${href}/`);
 const canonicalUrl = new URL(path, Astro.site).toString();
 const imageUrl = new URL(image, Astro.site).toString();
 ---
@@ -249,7 +254,7 @@ const imageUrl = new URL(image, Astro.site).toString();
             <div class="base-layout__nav">
               <a
                 class="base-layout__brand"
-                href="/coding"
+                href="/"
                 aria-label="Go to profile home"
                 data-persona-brand
               >
@@ -264,14 +269,17 @@ const imageUrl = new URL(image, Astro.site).toString();
           <div class="base-layout__menu-row">
             <nav class="nav-links" aria-label="Studio navigation" data-persona-nav="studio">
               {navSets.studio.map(item => (
-                <a href={item.href} class={path === item.href ? 'nav-link active' : 'nav-link'} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+                <a href={item.href} class={isNavLinkActive(item.href) ? 'nav-link active' : 'nav-link'} aria-current={isNavLinkActive(item.href) ? 'page' : undefined}>{item.label}</a>
               ))}
             </nav>
             <nav class="nav-links" aria-label="Field navigation" data-persona-nav="field">
               {navSets.field.map(item => (
-                <a href={item.href} class={path === item.href ? 'nav-link active' : 'nav-link'} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+                <a href={item.href} class={isNavLinkActive(item.href) ? 'nav-link active' : 'nav-link'} aria-current={isNavLinkActive(item.href) ? 'page' : undefined}>{item.label}</a>
               ))}
             </nav>
+            <span class="nav-scroll-hint" data-nav-scroll-hint hidden aria-hidden="true">
+              Swipe for more
+            </span>
           </div>
         </div>
       </header>

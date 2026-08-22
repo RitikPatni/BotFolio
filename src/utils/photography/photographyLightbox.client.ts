@@ -39,15 +39,44 @@ export function initPhotographyLightbox() {
     previousButton,
     nextButton,
     frameElement,
+    imageElement,
   } = elements;
   const statusElement = root.querySelector<HTMLElement>("[data-gallery-status]");
 
   const clearGalleryLoading = (trigger: HTMLElement | null) => {
     trigger?.removeAttribute("aria-busy");
+    dialog.removeAttribute("aria-busy");
     if (statusElement) {
       statusElement.hidden = true;
       statusElement.textContent = "";
     }
+  };
+
+  const setGalleryImageState = (
+    imageState: "loading" | "loaded" | "error",
+  ) => {
+    imageElement.dataset.imageState = imageState;
+
+    if (imageState === "loading") {
+      dialog.setAttribute("aria-busy", "true");
+      if (statusElement) {
+        statusElement.hidden = false;
+        statusElement.textContent = "Loading image…";
+      }
+      return;
+    }
+
+    dialog.removeAttribute("aria-busy");
+
+    if (!statusElement) {
+      return;
+    }
+
+    statusElement.hidden = imageState !== "error";
+    statusElement.textContent =
+      imageState === "error"
+        ? "This image could not load. Try another photo."
+        : "";
   };
 
   const state = {
@@ -96,7 +125,12 @@ export function initPhotographyLightbox() {
     fullscreenToggle.dataset.tooltip = label;
   };
 
-  const { renderImage } = createLightboxRenderer({ images, elements, state });
+  const { renderImage } = createLightboxRenderer({
+    images,
+    elements,
+    state,
+    onImageState: setGalleryImageState,
+  });
 
   const setMetadataVisibility = (isVisible: boolean) => {
     metadataElement.classList.toggle('is-visible', isVisible);
@@ -259,6 +293,7 @@ export function initPhotographyLightbox() {
   dialog.addEventListener("close", () => {
     clearChromeTimer();
     setChromeVisibility(true);
+    imageElement.removeAttribute("data-image-state");
     dialog.setAttribute("aria-hidden", "true");
 
     if (isFullscreenActive()) {
