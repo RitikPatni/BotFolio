@@ -65,8 +65,36 @@ const imageUrl = new URL(image, Astro.site).toString();
           }
         };
 
+        const guardSavedPersonaRoute = () => {
+          let persona = "studio";
+          try {
+            persona = localStorage.getItem(PERSONA_STORAGE_KEY) === "field"
+              ? "field"
+              : "studio";
+          } catch {
+            return;
+          }
+
+          const path = window.location.pathname.replace(/\/$/, "") || "/";
+          const studioOnly = path === "/coding" || path === "/blog" ||
+            path.startsWith("/coding/") || path.startsWith("/blog/");
+          const fieldOnly = path === "/photography" ||
+            path.startsWith("/photography/");
+          const target = persona === "field" && studioOnly
+            ? "/photography"
+            : persona === "studio" && fieldOnly
+              ? "/"
+              : null;
+
+          if (target) {
+            document.documentElement.classList.add("is-persona-routing");
+            window.location.replace(target);
+          }
+        };
+
         applySavedTheme();
         applySavedPersona();
+        guardSavedPersonaRoute();
 
         try {
           if (sessionStorage.getItem("rp-persona-transition") === "1") {
@@ -180,7 +208,7 @@ const imageUrl = new URL(image, Astro.site).toString();
             </div>
             <div class="nav-persona-toggle" data-persona-toggle role="group" aria-label="Profile switcher">
               <button type="button" class="nav-persona-btn active" data-persona="studio" aria-label="Developer profile" aria-pressed="true">Dev</button>
-              <button type="button" class="nav-persona-btn" data-persona="field" aria-label="Photography profile" aria-pressed="false">Photo</button>
+              <button type="button" class="nav-persona-btn" data-persona="field" aria-label="Switch to photography profile" aria-pressed="false">Photo</button>
             </div>
           </div>
           <div class="base-layout__menu-row">

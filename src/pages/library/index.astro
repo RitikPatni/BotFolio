@@ -7,16 +7,16 @@ import {
   getHighlightMeta,
   normalizeBookDescription,
 } from "../../utils/library";
-import { formatDisplayDate } from "../../utils/date";
+import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { slugOf } from "../../utils/slug";
 
 const books = (await getCollection("books"))
   .filter((item) => !item.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date));
 
 const highlights = (await getCollection("highlights"))
   .filter((item) => !item.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date));
 
 const getBookCategoryMeta = (item: (typeof books)[number]) => {
   const languageRaw = String(item.data.language || "")
@@ -25,7 +25,7 @@ const getBookCategoryMeta = (item: (typeof books)[number]) => {
   const language = languageRaw === "hindi" ? "hindi" : "english";
 
   const hasNonFictionGenre = item.data.genres.some(
-    (genre) =>
+    (genre: string) =>
       String(genre).toLowerCase().includes("non") &&
       String(genre).toLowerCase().includes("fiction"),
   );

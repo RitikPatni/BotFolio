@@ -54,7 +54,7 @@
 }
 
 .blog-card {
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   border-bottom: 1px solid var(--line);
   transition: border-color 200ms;
 
@@ -137,5 +137,17 @@
   &:hover {
     color: var(--text);
     border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
+  }
+
+  &.is-active {
+    color: var(--text);
+    background: color-mix(in srgb, var(--accent-start) 8%, transparent);
+    border-color: color-mix(in srgb, var(--accent-start) 40%, var(--line));
+  }
+}
+
+@media (max-width: 48rem) {
+  .blog-posts {
+    padding-inline: 0;
   }
 }

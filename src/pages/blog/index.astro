@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
-import { formatDisplayDate } from "../../utils/date";
+import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { excerpt } from "../../utils/excerpt";
 import { slugOf } from "../../utils/slug";
 
@@ -34,9 +34,17 @@ const newsletterPosts = (await getCollection("newsletter"))
   });
 
 const posts = [...blogPosts, ...newsletterPosts]
-  .sort((a, b) => b.date.getTime() - a.date.getTime());
+  .sort((a, b) => dateTimestamp(b.date) - dateTimestamp(a.date));
 
 const categories = ["all", "blog", "newsletter"];
+const requestedCategory = Astro.url.searchParams.get("category");
+const selectedCategory = categories.includes(requestedCategory ?? "")
+  ? requestedCategory!
+  : "all";
+const visiblePosts =
+  selectedCategory === "all"
+    ? posts
+    : posts.filter((post) => post.category === selectedCategory);
 import "./_blog.scss";
 ---
 
@@ -52,19 +60,29 @@ import "./_blog.scss";
   <!-- Filter pills -->
   <div class="blog-filters">
     {categories.map((cat) => (
-      <a href={`/blog${cat === 'all' ? '' : `?category=${cat}`}`} class="blog-filter-pill">{cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}</a>
+      <a
+        href={`/blog${cat === "all" ? "" : `?category=${cat}`}`}
+        data-blog-filter={cat}
+        class:list={["blog-filter-pill", { "is-active": selectedCategory === cat }]}
+        aria-current={selectedCategory === cat ? "page" : undefined}
+      >
+        {cat === "all" ? "All" : cat.charAt(0).toUpperCase() + cat.slice(1)}
+      </a>
     ))}
   </div>
 
   <!-- Blog list -->
   <section class="blog-posts">
     {
-      posts.length === 0 ? (
+      visiblePosts.length === 0 ? (
         <p class="text-muted">No posts yet.</p>
       ) : (
         <div class="blog-grid">
-          {posts.map((post, i) => (
-            <article class={i === 0 ? "blog-card blog-card--featured" : "blog-card"}>
+          {visiblePosts.map((post, i) => (
+            <article
+              class={i === 0 ? "blog-card blog-card--featured" : "blog-card"}
+              data-blog-card-category={post.category}
+            >
               <div class="blog-card-date">{formatDisplayDate(post.date)}</div>
               <h2 class="blog-card-title"><a href={post.slug}>{post.title}</a></h2>
               <p class="blog-card-desc">{post.description}</p>
@@ -76,3 +94,54 @@ import "./_blog.scss";
     }
   </section>
 </BaseLayout>
+
+<script is:inline>
+  (() => {
+    const filters = [...document.querySelectorAll("[data-blog-filter]")];
+    const cards = [...document.querySelectorAll("[data-blog-card-category]")];
+    if (!filters.length || !cards.length) return;
+
+    const applyFilter = (category, updateUrl) => {
+      const validCategory = ["all", "blog", "newsletter"].includes(category)
+        ? category
+        : "all";
+      const visibleCards = cards.filter(
+        (card) =>
+          validCategory === "all" ||
+          card.dataset.blogCardCategory === validCategory,
+      );
+
+      cards.forEach((card) => {
+        card.hidden = !visibleCards.includes(card);
+        card.classList.toggle(
+          "blog-card--featured",
+          visibleCards[0] === card,
+        );
+      });
+      filters.forEach((filter) => {
+        const active = filter.dataset.blogFilter === validCategory;
+        filter.classList.toggle("is-active", active);
+        if (active) filter.setAttribute("aria-current", "page");
+        else filter.removeAttribute("aria-current");
+      });
+
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        if (validCategory === "all") url.searchParams.delete("category");
+        else url.searchParams.set("category", validCategory);
+        window.history.pushState({}, "", url);
+      }
+    };
+
+    filters.forEach((filter) => {
+      filter.addEventListener("click", (event) => {
+        event.preventDefault();
+        applyFilter(filter.dataset.blogFilter || "all", true);
+      });
+    });
+    window.addEventListener("popstate", () => {
+      applyFilter(new URL(window.location.href).searchParams.get("category") || "all", false);
+    });
+    applyFilter(new URL(window.location.href).searchParams.get("category") || "all", false);
+  })();
+</script>

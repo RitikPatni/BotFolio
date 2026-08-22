@@ -22,7 +22,7 @@ import "../blog/_slug.scss";
 <BaseLayout
   title={`${post.data.title} — Resources`}
   description={post.data.description}
-  path={`/resources/${post.slug}`}
+  path={`/resources/${slugOf(post)}`}
   ogType="article"
 >
   <section class="slug-hero">

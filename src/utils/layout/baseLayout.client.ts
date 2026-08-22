@@ -170,7 +170,7 @@ const updatePersonaUi = (persona: PersonaMode) => {
     } else {
       btn.setAttribute(
         "aria-label",
-        persona === "field"
+        btnPersona === "field"
           ? "Switch to photography profile"
           : "Switch to developer profile",
       );

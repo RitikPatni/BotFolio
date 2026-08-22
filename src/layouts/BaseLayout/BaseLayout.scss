@@ -278,6 +278,10 @@
     ═════════════════════════════════════════════════════════════════ */
 }
 
+html.is-persona-routing body {
+  visibility: hidden;
+}
+
 html.is-persona-switching .base-layout__main,
 html.is-persona-switching .base-layout__footer {
   animation: persona-shell-out 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
