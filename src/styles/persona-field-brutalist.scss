@@ -71,6 +71,10 @@
   [data-persona="field"] h1 {
     font-size: clamp(1.75rem, 10vw, 3rem);
   }
+
+  [data-persona="field"] .page-hero--standard .page-hero__title {
+    font-size: clamp(1.75rem, 10vw, 3rem);
+  }
 }
 
 [data-persona="field"] h2 {

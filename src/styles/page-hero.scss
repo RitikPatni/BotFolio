@@ -99,9 +99,13 @@
   }
 
   &--intro {
-    padding: 0;
+    padding-block: clamp(0.75rem, 2vw, 1.5rem) clamp(2rem, 4vw, 3rem);
     overflow: visible;
-    background: none;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--accent-start) 3%, transparent),
+      transparent 78%
+    );
     text-align: start;
 
     &::before {

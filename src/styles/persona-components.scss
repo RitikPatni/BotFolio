@@ -17,7 +17,7 @@
     --page-hero-glow-opacity: 0.04;
 
     &--standard {
-      --page-hero-padding-block: clamp(3.5rem, 8vw, 6.5rem);
+      --page-hero-padding-block: clamp(3.25rem, 6vw, 5rem) clamp(2.75rem, 6vw, 4rem);
     }
 
     &::before {
@@ -226,6 +226,11 @@
       background: none;
       opacity: 0;
     }
+  }
+
+  /* Interior pages keep the Field voice without competing with their content. */
+  .page-hero--standard .page-hero__title {
+    font-size: clamp(2.5rem, 7vw, 6rem);
   }
 
   /* Hero lead: mono telemetry, uppercase, wide tracking */
