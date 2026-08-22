@@ -25,12 +25,14 @@ import "./_slug.scss";
   path="/newsletter"
 >
   <div class="slug">
-    <article class="slug__hero slug__hero--compact">
-      <p class="slug__meta">
-        {formatDisplayDate(item.data.date)} · {reading} min read
-      </p>
-      <h1 class="slug__title">{item.data.title}</h1>
-      <p class="slug__lead">{excerpt(item.data.description)}</p>
+    <article class="slug__hero page-hero page-hero--compact">
+      <div class="page-hero__inner">
+        <p class="slug__meta page-hero__meta">
+          {formatDisplayDate(item.data.date)} · {reading} min read
+        </p>
+        <h1 class="slug__title page-hero__title">{item.data.title}</h1>
+        <p class="slug__lead page-hero__lead">{excerpt(item.data.description)}</p>
+      </div>
     </article>
 
     <article class="slug__card">

@@ -1,0 +1,134 @@
+/* Shared hero foundation. Route styles should only define content-specific
+   details; layout, alignment, surfaces, and responsive rhythm live here. */
+.page-hero {
+  --page-hero-content-max: 60rem;
+  --page-hero-glow-opacity: 0.1;
+  --page-hero-padding-block: clamp(3rem, 7vw, 4rem) clamp(2.25rem, 5vw, 3rem);
+
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--page-hero-padding-block);
+  padding-inline: 2rem;
+  text-align: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-hero);
+    opacity: var(--page-hero-glow-opacity);
+    pointer-events: none;
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+    max-inline-size: var(--page-hero-content-max);
+    margin-inline: auto;
+  }
+
+  &__title {
+    margin: 0 0 1rem;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  &__lead {
+    max-inline-size: 40rem;
+    margin: 0 auto;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  &__meta {
+    margin: 0 0 1rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  &--landing {
+    --page-hero-glow-opacity: 0.15;
+    --page-hero-padding-block: clamp(4rem, 10vw, 6rem);
+
+    .page-hero__lead {
+      max-inline-size: 40rem;
+      margin-block-end: 2rem;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+    }
+  }
+
+  &--standard {
+    text-align: start;
+
+    .page-hero__lead {
+      margin-inline: 0;
+    }
+  }
+
+  &--listing {
+    --page-hero-padding-block: clamp(3.5rem, 7vw, 5rem) clamp(2.25rem, 5vw, 3rem);
+  }
+
+  &--detail {
+    --page-hero-glow-opacity: 0.1;
+    --page-hero-padding-block: clamp(3.5rem, 7vw, 4rem) clamp(2.25rem, 5vw, 3rem);
+  }
+
+  &--compact {
+    --page-hero-padding-block: clamp(3rem, 6vw, 4rem) 1rem;
+  }
+
+  &--media {
+    --page-hero-padding-block: clamp(2rem, 6vw, 5rem);
+    text-align: start;
+
+    > .page-hero__inner {
+      max-inline-size: 72rem;
+    }
+
+    .page-hero__lead {
+      margin-inline: 0;
+    }
+  }
+
+  &--intro {
+    padding: 0;
+    overflow: visible;
+    background: none;
+    text-align: start;
+
+    &::before {
+      display: none;
+    }
+
+    > .page-hero__inner {
+      max-inline-size: 44rem;
+      margin-inline: 0;
+    }
+
+    .page-hero__lead {
+      margin-inline: 0;
+    }
+  }
+}
+
+@media (max-width: 48rem) {
+  .page-hero {
+    padding-inline: 0;
+
+    &--media {
+      padding-inline: 0;
+    }
+
+    &--intro {
+      padding-inline: 0;
+    }
+  }
+}

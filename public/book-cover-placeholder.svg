@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 260" role="img" aria-labelledby="title desc">
+  <title id="title">Book cover unavailable</title>
+  <desc id="desc">A neutral placeholder for a book cover that could not be loaded.</desc>
+  <rect width="180" height="260" fill="#20252d" />
+  <path d="M18 20h144v220H18z" fill="none" stroke="#697383" stroke-width="2" />
+  <path d="M38 70h104M38 84h72M38 190h104" fill="none" stroke="#697383" stroke-width="3" />
+  <text x="38" y="154" fill="#d5d9df" font-family="monospace" font-size="14" letter-spacing="2">NO COVER</text>
+</svg>

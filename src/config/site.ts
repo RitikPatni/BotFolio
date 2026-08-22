@@ -18,11 +18,14 @@ export const NAV_LINKS_BY_PERSONA: Record<PersonaMode, NavLink[]> = {
     { href: "/coding", label: "Journal" },
     { href: "/blog", label: "Notes" },
     { href: "/library", label: "Library" },
+    { href: "/uses", label: "Uses" },
     { href: "/about", label: "About" },
   ],
   field: [
     { href: "/", label: "Home" },
     { href: "/photography", label: "Gallery" },
+    { href: "/library", label: "Library" },
+    { href: "/uses", label: "Uses" },
     { href: "/about", label: "About" },
   ],
 };

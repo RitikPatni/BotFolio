@@ -9,9 +9,15 @@ type RenderContext = {
   images: GalleryDialogImage[];
   elements: GalleryElements;
   state: LightboxRenderState;
+  onImageState?: (state: "loading" | "loaded" | "error") => void;
 };
 
-export function createLightboxRenderer({ images, elements, state }: RenderContext) {
+export function createLightboxRenderer({
+  images,
+  elements,
+  state,
+  onImageState,
+}: RenderContext) {
   const {
     imageElement,
     counterElement,
@@ -173,6 +179,8 @@ export function createLightboxRenderer({ images, elements, state }: RenderContex
     });
   };
 
+  let currentRequest: symbol | undefined;
+
   const renderImage = (index: number) => {
     const image = images[index];
 
@@ -181,10 +189,16 @@ export function createLightboxRenderer({ images, elements, state }: RenderContex
     }
 
     state.activeIndex = index;
+    const requestToken = Symbol("gallery-image-request");
+    currentRequest = requestToken;
 
     // Avoid the "last image lingers then refreshes" flash: fade the current
     // image out, then only swap metadata + reveal once the new source is ready.
     const swapIn = () => {
+      if (currentRequest !== requestToken) {
+        return;
+      }
+
       counterElement.textContent = `${index + 1} / ${images.length}`;
       categoryElement.textContent = image.category;
       titleElement.textContent = image.title;
@@ -206,6 +220,7 @@ export function createLightboxRenderer({ images, elements, state }: RenderContex
       imageElement.classList.remove("is-swapping");
     };
 
+    onImageState?.("loading");
     imageElement.classList.add("is-swapping");
 
     // Point the element at the new source first.
@@ -220,11 +235,18 @@ export function createLightboxRenderer({ images, elements, state }: RenderContex
     // Otherwise wait for load so the stale frame never paints.
     if (imageElement.complete && imageElement.naturalWidth > 0) {
       swapIn();
+      onImageState?.("loaded");
     } else {
-      const onReady = () => {
+      const onReady = (event: Event) => {
         imageElement.removeEventListener("load", onReady);
         imageElement.removeEventListener("error", onReady);
+
+        if (currentRequest !== requestToken) {
+          return;
+        }
+
         swapIn();
+        onImageState?.(event.type === "error" ? "error" : "loaded");
       };
       imageElement.addEventListener("load", onReady);
       imageElement.addEventListener("error", onReady);

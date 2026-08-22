@@ -22,17 +22,17 @@ import "../blog/_slug.scss";
 <BaseLayout
   title={`${post.data.title} — Resources`}
   description={post.data.description}
-  path={`/resources/${post.slug}`}
+  path={`/resources/${slugOf(post)}`}
   ogType="article"
 >
-  <section class="slug-hero">
-    <div class="slug-hero-content">
-      <p class="slug-hero-meta">
+  <section class="slug-hero page-hero page-hero--detail">
+    <div class="slug-hero-content page-hero__inner">
+      <p class="slug-hero-meta page-hero__meta">
         {formatDisplayDate(post.data.date)}
         {post.data.tags.length ? ` · ${post.data.tags.join(" · ")}` : ""}
       </p>
-      <h1 class="slug-hero-title">{post.data.title}</h1>
-      <p class="slug-hero-lead">{excerpt(post.data.description)}</p>
+      <h1 class="slug-hero-title page-hero__title">{post.data.title}</h1>
+      <p class="slug-hero-lead page-hero__lead">{excerpt(post.data.description)}</p>
     </div>
   </section>
 

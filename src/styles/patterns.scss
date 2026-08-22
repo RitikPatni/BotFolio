@@ -1,13 +1,5 @@
 @use "open-props/style";
 
-%page-hero {
-  padding-block: var(--size-6) var(--size-5);
-}
-
-%page-hero-compact {
-  padding-block-end: var(--size-3);
-}
-
 %page-title {
   margin: 0;
   margin-block-end: var(--size-3);

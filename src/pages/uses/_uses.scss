@@ -1,74 +1,179 @@
-/* ═════════════════════════════════════════════════════════════════
-   V2 Uses Page — Minimal list
-   ═════════════════════════════════════════════════════════════════ */
+/* Uses: a compact inventory that can carry both persona treatments. */
 
 .uses-v2 {
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.uses-intro {
+  max-width: 44rem;
+  margin-block-end: clamp(3rem, 7vw, 5rem);
+}
+
+.uses-kicker,
+.uses-card__badge,
+.uses-section__meta,
+.uses-section__index {
+  margin: 0;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.uses-kicker {
+  margin-block-end: 1.25rem;
+  color: var(--accent-text);
 }
 
 .uses-title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  margin: 0 0 1rem;
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
 }
 
 .uses-lead {
-  font-size: 1.05rem;
-  font-weight: 300;
+  max-width: 36rem;
+  margin: 1.5rem 0 0;
   color: var(--text-muted);
-  margin: 0 0 3rem;
-  line-height: 1.5;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
 }
 
 .uses-body {
   display: grid;
-  gap: 3rem;
+  gap: clamp(3rem, 8vw, 6rem);
 }
 
 .uses-section {
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
+  padding-block-start: 1.5rem;
+  border-block-start: 1px solid var(--line);
+}
+
+.uses-section__head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  margin-block-end: 1.5rem;
+}
+
+.uses-section__index {
+  padding-block-start: 0.35rem;
+  color: var(--accent-text);
 }
 
 .uses-section-title {
-  font-size: 1.35rem;
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: 400;
-  margin: 0 0 1.5rem;
+  letter-spacing: -0.03em;
+}
+
+.uses-section__meta {
+  margin-block-start: 0.4rem;
+  letter-spacing: 0.05em;
+}
+
+.uses-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.uses-card {
+  min-width: 0;
+  padding: clamp(1.15rem, 3vw, 1.75rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--bg-soft) 72%, transparent);
+}
+
+.uses-card--wide {
+  grid-column: 1 / -1;
+}
+
+.uses-card__head {
+  display: grid;
+  gap: 0.55rem;
+  margin-block-end: 1.25rem;
+}
+
+.uses-card__badge {
+  color: var(--accent-text);
+}
+
+.uses-card__title {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 .uses-list {
-  list-style: none;
+  display: grid;
+  gap: 0;
   padding: 0;
   margin: 0;
-  display: grid;
-  gap: 0.75rem;
+  list-style: none;
+}
+
+.uses-list--columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1.5rem;
 }
 
 .uses-item {
-  font-size: 0.95rem;
-  font-weight: 300;
-  color: var(--text);
-  line-height: 1.6;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+  align-items: baseline;
+  min-width: 0;
+  padding-block: 0.75rem;
+  border-block-start: 1px solid var(--line);
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 .uses-item-label {
-  font-weight: 500;
   color: var(--text);
-  margin-right: 0.5rem;
-
-  &::after {
-    content: ':';
-    font-weight: 300;
-    color: var(--text-dim);
-  }
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 .uses-footnote {
-  margin-top: 3rem;
-  font-size: 0.85rem;
-  font-weight: 300;
+  margin: clamp(3rem, 8vw, 5rem) 0 0;
   color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 48rem) {
+  .uses-v2 {
+    padding-block: 2.5rem 4rem;
+  }
+
+  .uses-intro {
+    margin-block-end: 3.5rem;
+  }
+
+  .uses-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .uses-card--wide {
+    grid-column: auto;
+  }
+
+  .uses-list--columns {
+    grid-template-columns: 1fr;
+  }
 }

@@ -3,24 +3,8 @@
    ═════════════════════════════════════════════════════════════════ */
 
 .slug-hero {
-  padding: 4rem 2rem 3rem;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.1;
-    background: var(--gradient-hero);
-  }
-
   &-content {
-    position: relative;
-    z-index: 1;
-    max-width: 960px;
-    margin: 0 auto;
+    /* Shared positioning comes from .page-hero__inner. */
   }
 
   &-meta {
@@ -31,20 +15,10 @@
   }
 
   &-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    margin: 0 0 1.5rem;
   }
 
   &-lead {
-    font-size: 1.1rem;
-    font-weight: 300;
-    color: var(--text-muted);
     max-width: 640px;
-    margin: 0 auto;
-    line-height: 1.5;
   }
 }
 

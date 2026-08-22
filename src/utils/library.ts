@@ -125,6 +125,55 @@ export const normalizeBookDescription = (description: string) => {
   return trimmed;
 };
 
+export const normalizeBookTitle = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/^\(book\)\s*/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim();
+
+const titleMatches = (left: string, right: string) => {
+  if (!left || !right) {
+    return false;
+  }
+
+  return left === right || left.includes(right) || right.includes(left);
+};
+
+export const findBookHighlights = (
+  bookTitle: string,
+  highlights: CollectionEntry<"highlights">[],
+) => {
+  const bookKey = normalizeBookTitle(bookTitle);
+
+  return highlights
+    .filter((item) => getHighlightMeta(item).sourceType === "readwise-books")
+    .filter((item) =>
+      titleMatches(bookKey, normalizeBookTitle(item.data.title)),
+    )
+    .sort((left, right) => {
+      const leftKey = normalizeBookTitle(left.data.title);
+      const rightKey = normalizeBookTitle(right.data.title);
+      const leftIsExact = leftKey === bookKey ? 1 : 0;
+      const rightIsExact = rightKey === bookKey ? 1 : 0;
+
+      return rightIsExact - leftIsExact;
+    });
+};
+
+export const findRelatedBook = (
+  highlightTitle: string,
+  books: CollectionEntry<"books">[],
+) => {
+  const highlightKey = normalizeBookTitle(highlightTitle);
+
+  return (
+    books.find((item) =>
+      titleMatches(highlightKey, normalizeBookTitle(item.data.title)),
+    ) ?? null
+  );
+};
+
 export const getHighlightMeta = (item: CollectionEntry<"highlights">) => {
   const body = item.body ?? "";
   const metadata = parseMetadataSection(body);

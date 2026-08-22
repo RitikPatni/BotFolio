@@ -13,4 +13,4 @@ category: "readwise-articles"
 
 ## Highlights
 
-- <input type="checkbox" role="switch">
+- <input type="checkbox" role="switch" aria-label="Mark highlight as complete">

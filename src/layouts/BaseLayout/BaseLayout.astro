@@ -23,6 +23,11 @@ const {
 
 const socials = SITE_CONFIG.socials;
 const navSets = NAV_LINKS_BY_PERSONA;
+const normalizedPath = path.replace(/\/$/, "") || "/";
+const isNavLinkActive = (href: string) =>
+  href === "/"
+    ? normalizedPath === "/"
+    : normalizedPath === href || normalizedPath.startsWith(`${href}/`);
 const canonicalUrl = new URL(path, Astro.site).toString();
 const imageUrl = new URL(image, Astro.site).toString();
 ---
@@ -65,8 +70,86 @@ const imageUrl = new URL(image, Astro.site).toString();
           }
         };
 
+        const guardSavedPersonaRoute = () => {
+          let persona = "studio";
+          try {
+            persona = localStorage.getItem(PERSONA_STORAGE_KEY) === "field"
+              ? "field"
+              : "studio";
+          } catch {
+            return;
+          }
+
+          const path = window.location.pathname.replace(/\/$/, "") || "/";
+          const studioOnly = path === "/coding" || path === "/blog" ||
+            path.startsWith("/coding/") || path.startsWith("/blog/");
+          const fieldOnly = path === "/photography" ||
+            path.startsWith("/photography/");
+          const target = persona === "field" && studioOnly
+            ? "/photography"
+            : persona === "studio" && fieldOnly
+              ? "/"
+              : null;
+
+          if (target) {
+            document.documentElement.classList.add("is-persona-routing");
+            window.location.replace(target);
+          }
+        };
+
         applySavedTheme();
         applySavedPersona();
+        guardSavedPersonaRoute();
+
+        if (!window.__rpGalleryFeedbackBound) {
+          document.addEventListener(
+            "click",
+            (event) => {
+              const target = event.target;
+              const trigger =
+                target instanceof Element
+                  ? target.closest("[data-gallery-trigger]")
+                  : null;
+              const root = trigger?.closest("[data-gallery-root]");
+              const status = root?.querySelector("[data-gallery-status]");
+
+              if (
+                !(trigger instanceof HTMLElement) ||
+                !(root instanceof HTMLElement) ||
+                !(status instanceof HTMLElement)
+              ) {
+                return;
+              }
+
+              const requestId = String(Date.now());
+              status.dataset.galleryRequest = requestId;
+              trigger.setAttribute("aria-busy", "true");
+              status.hidden = false;
+              status.textContent = "Opening gallery…";
+
+              window.setTimeout(() => {
+                if (
+                  status.dataset.galleryRequest === requestId &&
+                  !root.querySelector("dialog[open]")
+                ) {
+                  status.textContent = "Gallery is still loading…";
+                }
+              }, 700);
+
+              window.setTimeout(() => {
+                if (
+                  status.dataset.galleryRequest === requestId &&
+                  !root.querySelector("dialog[open]")
+                ) {
+                  status.textContent =
+                    "Gallery is taking longer than expected. Try again.";
+                }
+              }, 4000);
+            },
+            true,
+          );
+          window.__rpGalleryFeedbackBound = true;
+        }
 
         try {
           if (sessionStorage.getItem("rp-persona-transition") === "1") {
@@ -171,7 +254,7 @@ const imageUrl = new URL(image, Astro.site).toString();
             <div class="base-layout__nav">
               <a
                 class="base-layout__brand"
-                href="/coding"
+                href="/"
                 aria-label="Go to profile home"
                 data-persona-brand
               >
@@ -180,20 +263,23 @@ const imageUrl = new URL(image, Astro.site).toString();
             </div>
             <div class="nav-persona-toggle" data-persona-toggle role="group" aria-label="Profile switcher">
               <button type="button" class="nav-persona-btn active" data-persona="studio" aria-label="Developer profile" aria-pressed="true">Dev</button>
-              <button type="button" class="nav-persona-btn" data-persona="field" aria-label="Photography profile" aria-pressed="false">Photo</button>
+              <button type="button" class="nav-persona-btn" data-persona="field" aria-label="Switch to photography profile" aria-pressed="false">Photo</button>
             </div>
           </div>
           <div class="base-layout__menu-row">
             <nav class="nav-links" aria-label="Studio navigation" data-persona-nav="studio">
               {navSets.studio.map(item => (
-                <a href={item.href} class={path === item.href ? 'nav-link active' : 'nav-link'} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+                <a href={item.href} class={isNavLinkActive(item.href) ? 'nav-link active' : 'nav-link'} aria-current={isNavLinkActive(item.href) ? 'page' : undefined}>{item.label}</a>
               ))}
             </nav>
             <nav class="nav-links" aria-label="Field navigation" data-persona-nav="field">
               {navSets.field.map(item => (
-                <a href={item.href} class={path === item.href ? 'nav-link active' : 'nav-link'} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+                <a href={item.href} class={isNavLinkActive(item.href) ? 'nav-link active' : 'nav-link'} aria-current={isNavLinkActive(item.href) ? 'page' : undefined}>{item.label}</a>
               ))}
             </nav>
+            <span class="nav-scroll-hint" data-nav-scroll-hint hidden aria-hidden="true">
+              Swipe for more
+            </span>
           </div>
         </div>
       </header>

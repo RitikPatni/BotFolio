@@ -2,6 +2,12 @@
 import BaseLayout from "../../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 import { formatDisplayDate } from "../../../utils/date";
+import {
+  extractCoverImage,
+  findBookHighlights,
+  getHighlightMeta,
+} from "../../../utils/library";
+import { slugOf } from "../../../utils/slug";
 
 export async function getStaticPaths() {
   const items = await getCollection("books", ({ data }) => !data.draft);
@@ -13,6 +19,13 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { Content } = await render(item);
+const highlights = (await getCollection("highlights"))
+  .filter(({ data }) => !data.draft);
+const bookHighlights = findBookHighlights(item.data.title, highlights);
+const coverImage = extractCoverImage(item.body ?? "");
+const hasAdditionalContent = Boolean(
+  (item.body ?? "").replace(/!\[[^\]]*\]\([^)]+\)/g, "").trim(),
+);
 import "./_slug.scss";
 ---
 
@@ -22,81 +35,151 @@ import "./_slug.scss";
   path="/library"
 >
   <div class="slug">
-    <article class="slug__hero slug__hero--compact">
-      <p class="slug__meta">{formatDisplayDate(item.data.date)}</p>
-      <h1 class="slug__title">{item.data.title}</h1>
-      <p class="slug__lead">{item.data.description}</p>
-      <ul class="slug__book-meta" aria-label="Book metadata">
-        {
-          item.data.author ? (
-            <li>
-              <strong>Author:</strong> {item.data.author}
-            </li>
-          ) : null
-        }
-        {
-          item.data.language ? (
-            <li>
-              <strong>Language:</strong> {item.data.language}
-            </li>
-          ) : null
-        }
-        {
-          item.data.genres?.length ? (
-            <li>
-              <strong>Genres:</strong> {item.data.genres.join(", ")}
-            </li>
-          ) : null
-        }
-        {
-          item.data.published_year ? (
-            <li>
-              <strong>Published:</strong> {item.data.published_year}
-            </li>
-          ) : null
-        }
-        {
-          item.data.publisher ? (
-            <li>
-              <strong>Publisher:</strong> {item.data.publisher}
-            </li>
-          ) : null
-        }
-        {
-          item.data.isbn13 ? (
-            <li>
-              <strong>ISBN-13:</strong> {item.data.isbn13}
-            </li>
-          ) : null
-        }
-        {
-          item.data.isbn10 ? (
-            <li>
-              <strong>ISBN-10:</strong> {item.data.isbn10}
-            </li>
-          ) : null
-        }
-        {
-          item.data.openlibrary_url ? (
-            <li>
-              <strong>OpenLibrary:</strong>{" "}
-              <a
-                href={item.data.openlibrary_url}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                View record
-              </a>
-            </li>
-          ) : null
-        }
-      </ul>
-    </article>
+    <article class="slug__hero page-hero page-hero--media">
+      <div class="slug__book-hero page-hero__inner">
+        <figure class="slug__cover-frame">
+          <img
+            class="slug__cover-image"
+            src={coverImage || "/book-cover-placeholder.svg"}
+            alt={`${item.data.title} cover${coverImage ? "" : " unavailable"}`}
+            width="480"
+            height="720"
+            loading="eager"
+            decoding="async"
+          />
+          <figcaption class="slug__cover-caption">
+            {coverImage ? "Cover" : "Cover unavailable"}
+          </figcaption>
+        </figure>
 
-    <article class="slug__card">
-      <div class="slug__content">
-        <Content />
+        <div class="slug__book-details">
+          <p class="slug__meta page-hero__meta">{formatDisplayDate(item.data.date)}</p>
+          <h1 class="slug__title page-hero__title">{item.data.title}</h1>
+          <p class="slug__lead page-hero__lead">{item.data.description}</p>
+          <ul class="slug__book-meta" aria-label="Book metadata">
+            {
+              item.data.author ? (
+                <li>
+                  <strong>Author:</strong> {item.data.author}
+                </li>
+              ) : null
+            }
+            {
+              item.data.language ? (
+                <li>
+                  <strong>Language:</strong> {item.data.language}
+                </li>
+              ) : null
+            }
+            {
+              item.data.genres?.length ? (
+                <li>
+                  <strong>Genres:</strong> {item.data.genres.join(", ")}
+                </li>
+              ) : null
+            }
+            {
+              item.data.published_year ? (
+                <li>
+                  <strong>Published:</strong> {item.data.published_year}
+                </li>
+              ) : null
+            }
+            {
+              item.data.publisher ? (
+                <li>
+                  <strong>Publisher:</strong> {item.data.publisher}
+                </li>
+              ) : null
+            }
+            {
+              item.data.isbn13 ? (
+                <li>
+                  <strong>ISBN-13:</strong> {item.data.isbn13}
+                </li>
+              ) : null
+            }
+            {
+              item.data.isbn10 ? (
+                <li>
+                  <strong>ISBN-10:</strong> {item.data.isbn10}
+                </li>
+              ) : null
+            }
+            {
+              item.data.openlibrary_url ? (
+                <li>
+                  <strong>OpenLibrary:</strong>{" "}
+                  <a
+                    href={item.data.openlibrary_url}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View record
+                  </a>
+                </li>
+              ) : null
+            }
+          </ul>
+        </div>
       </div>
     </article>
+
+    {
+      bookHighlights.length ? (
+        <aside class="slug__related" aria-labelledby="book-notes-title">
+          <div class="slug__related-heading">
+            <div>
+              <p class="slug__related-kicker">From the reading log</p>
+              <h2 id="book-notes-title" class="slug__related-title">
+                Book notes
+              </h2>
+            </div>
+            <span class="slug__related-count">
+              {bookHighlights.length} {bookHighlights.length === 1 ? "note" : "notes"}
+            </span>
+          </div>
+          <ul class="slug__related-list">
+            {bookHighlights.map((highlight) => {
+              const highlightMeta = getHighlightMeta(highlight);
+
+              return (
+                <li class="slug__related-item">
+                  <a
+                    class="slug__related-link"
+                    href={`/library/highlights/${slugOf(highlight)}`}
+                  >
+                    <span class="slug__related-item-heading">
+                      <span class="slug__related-item-title">
+                        {highlight.data.title}
+                      </span>
+                      <span class="slug__related-meta">
+                        {highlightMeta.highlightCount}{" "}
+                        {highlightMeta.highlightCount === 1
+                          ? "highlight"
+                          : "highlights"}
+                      </span>
+                    </span>
+                    {highlightMeta.preview ? (
+                      <span class="slug__related-preview">
+                        {highlightMeta.preview}
+                      </span>
+                    ) : null}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </aside>
+      ) : null
+    }
+
+    {hasAdditionalContent ? (
+      <article class="slug__card">
+        <div class="slug__content">
+          <Content />
+        </div>
+      </article>
+    ) : null}
   </div>
 </BaseLayout>

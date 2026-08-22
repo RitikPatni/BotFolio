@@ -2,6 +2,7 @@
 @use "./primitives.scss";
 @use "./v2-tokens.scss";
 @use "./v2-typography.scss";
+@use "./page-hero.scss";
 @use "./v2-transitions.scss";
 @use "./persona-studio-minimalist.scss";
 @use "./persona-field-brutalist.scss";
@@ -68,15 +69,8 @@ a {
   background: var(--bg-soft);
 }
 
-/* Mobile: tighten heavy hero vertical padding so sections don't feel empty */
+/* Mobile: let shared heroes and content sections use the container width. */
 @media (max-width: 48rem) {
-  body [class$="__hero"],
-  body .hero,
-  body .blog-hero {
-    padding-block: 3rem;
-    padding-inline: 0;
-  }
-
   /* Let content/cards use full container width — kill inner section side padding */
   .posts,
   .photography__category,

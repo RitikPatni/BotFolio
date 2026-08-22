@@ -114,6 +114,10 @@
   &.is-swapping {
     opacity: 0;
   }
+
+  &[data-image-state="error"] {
+    opacity: 0;
+  }
 }
 
 /* Nav buttons: semi-transparent chevrons, fixed to viewport so they sit cleanly inside the edges */

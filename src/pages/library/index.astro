@@ -4,19 +4,20 @@ import { getCollection } from "astro:content";
 import { BOOK_CATEGORIES } from "../../data/library";
 import {
   extractCoverImage,
+  findBookHighlights,
   getHighlightMeta,
   normalizeBookDescription,
 } from "../../utils/library";
-import { formatDisplayDate } from "../../utils/date";
+import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { slugOf } from "../../utils/slug";
 
 const books = (await getCollection("books"))
   .filter((item) => !item.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date));
 
 const highlights = (await getCollection("highlights"))
   .filter((item) => !item.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date));
 
 const getBookCategoryMeta = (item: (typeof books)[number]) => {
   const languageRaw = String(item.data.language || "")
@@ -25,7 +26,7 @@ const getBookCategoryMeta = (item: (typeof books)[number]) => {
   const language = languageRaw === "hindi" ? "hindi" : "english";
 
   const hasNonFictionGenre = item.data.genres.some(
-    (genre) =>
+    (genre: string) =>
       String(genre).toLowerCase().includes("non") &&
       String(genre).toLowerCase().includes("fiction"),
   );
@@ -40,13 +41,6 @@ const getBookCategoryMeta = (item: (typeof books)[number]) => {
 
   return { genre, language };
 };
-
-const normalizeTitleKey = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/^\(book\)\s*/g, "")
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
-    .trim();
 
 const stripBookPrefix = (value: string) =>
   value.replace(/^\(book\)\s*/i, "").trim();
@@ -66,36 +60,13 @@ const nonBookHighlights = parsedHighlights.filter(
 
 const recentHighlights = nonBookHighlights.slice(0, 24);
 
-const bookHighlightByTitle = new Map<string, (typeof bookHighlights)[number]>();
-for (const item of bookHighlights) {
-  const key = normalizeTitleKey(item.data.title);
-  if (!key || bookHighlightByTitle.has(key)) {
-    continue;
-  }
-  bookHighlightByTitle.set(key, item);
-}
-
 const usedBookHighlightSlugs = new Set<string>();
 
 const booksWithNotes = books.map((item) => {
-  const bookKey = normalizeTitleKey(item.data.title);
-  let linkedHighlight = bookHighlightByTitle.get(bookKey) || null;
-
-  if (!linkedHighlight && bookKey) {
-    linkedHighlight =
-      bookHighlights.find((candidate) => {
-        if (usedBookHighlightSlugs.has(slugOf(candidate))) {
-          return false;
-        }
-
-        const candidateKey = normalizeTitleKey(candidate.data.title);
-        if (!candidateKey) {
-          return false;
-        }
-
-        return candidateKey.includes(bookKey) || bookKey.includes(candidateKey);
-      }) || null;
-  }
+  const linkedHighlight =
+    findBookHighlights(item.data.title, bookHighlights).find(
+      (candidate) => !usedBookHighlightSlugs.has(slugOf(candidate)),
+    ) || null;
 
   if (linkedHighlight) {
     usedBookHighlightSlugs.add(slugOf(linkedHighlight));
@@ -135,9 +106,11 @@ import "./_library.scss";
 
 <BaseLayout title="Library — Ritik Patni" path="/library">
   <div class="library">
-    <section class="library__hero">
-      <h1 class="library__title">Library</h1>
-      <p class="library__lead">Books and notes from the reading log.</p>
+    <section class="library__hero page-hero page-hero--standard">
+      <div class="page-hero__inner">
+        <h1 class="library__title page-hero__title">Library</h1>
+        <p class="library__lead page-hero__lead">Books and notes from the reading log.</p>
+      </div>
     </section>
 
     <div
@@ -178,7 +151,12 @@ import "./_library.scss";
               <p>No books yet.</p>
             </article>
           ) : (
-            <div class="library__books-grid">
+            <div
+              class="library__books-grid"
+              role="region"
+              aria-label="Bookshelf, horizontally scrollable"
+              tabindex="0"
+            >
               {booksWithNotes.map((item) => (
                 <article
                   class="library__item"
@@ -187,22 +165,22 @@ import "./_library.scss";
                   data-book-language={item.language}
                   data-book-has-notes={item.linkedHighlight ? "true" : "false"}
                 >
-                  {item.coverImage ? (
-                    <a
-                      class="library__book-cover-link"
-                      href={`/library/books/${slugOf(item)}`}
-                    >
-                      <img
-                        class="library__book-cover"
-                        src={item.coverImage}
-                        alt={`${item.displayTitle} cover`}
-                        width="180"
-                        height="260"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </a>
-                  ) : null}
+                  <a
+                    class="library__book-cover-link"
+                    href={`/library/books/${slugOf(item)}`}
+                  >
+                    <img
+                      class:list={["library__book-cover", !item.coverImage && "library__book-cover--placeholder"]}
+                      src={item.coverImage || "/book-cover-placeholder.svg"}
+                      alt={`${item.displayTitle} cover${item.coverImage ? "" : " unavailable"}`}
+                      width="180"
+                      height="260"
+                      loading="lazy"
+                      decoding="async"
+                      data-book-cover
+                      data-cover-fallback="/book-cover-placeholder.svg"
+                    />
+                  </a>
 
                   <div class="library__overlay">
                     <h3 class="library__item-title">
@@ -295,6 +273,28 @@ import "./_library.scss";
 
   <script>
     // @ts-nocheck
+    const initBookCovers = () => {
+      document.querySelectorAll("[data-book-cover]").forEach((image) => {
+        if (!(image instanceof HTMLImageElement) || image.dataset.coverBound === "true") {
+          return;
+        }
+
+        image.dataset.coverBound = "true";
+        image.addEventListener("error", () => {
+          const fallback = image.dataset.coverFallback;
+
+          if (!fallback || image.src.endsWith(fallback)) {
+            return;
+          }
+
+          image.dataset.coverState = "fallback";
+          image.alt = `${image.alt.replace(/ unavailable$/, "")} unavailable`;
+          image.srcset = "";
+          image.src = fallback;
+        });
+      });
+    };
+
     const initBookFilters = () => {
       const roots = document.querySelectorAll("[data-library-root]");
 
@@ -365,8 +365,15 @@ import "./_library.scss";
       });
     };
 
+    initBookCovers();
     initBookFilters();
-    document.addEventListener("DOMContentLoaded", initBookFilters);
-    document.addEventListener("astro:page-load", initBookFilters);
+    document.addEventListener("DOMContentLoaded", () => {
+      initBookCovers();
+      initBookFilters();
+    });
+    document.addEventListener("astro:page-load", () => {
+      initBookCovers();
+      initBookFilters();
+    });
   </script>
 </BaseLayout>

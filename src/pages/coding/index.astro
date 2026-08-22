@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { formatDisplayDate } from "../../utils/date";
+import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { slugOf } from "../../utils/slug";
 import "./_coding.scss";
 
 const latestPosts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date))
   .slice(0, 4)
   .map((post) => ({
     slug: slugOf(post),
@@ -18,7 +18,7 @@ const latestPosts = (await getCollection("blog"))
 
 const latestNewsletter = (await getCollection("newsletter"))
   .filter((entry) => !entry.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date))
   .slice(0, 3)
   .map((entry) => ({
     slug: slugOf(entry),
@@ -30,12 +30,14 @@ const latestNewsletter = (await getCollection("newsletter"))
 
 <BaseLayout title="Developer — Ritik Patni" path="/coding">
   <div class="coding">
-    <section class="coding__hero">
-      <h1 class="coding__title">Developer</h1>
-      <p class="coding__lead">
-        Product-minded frontend engineering, design systems, and practical notes
-        from shipping and maintaining web products.
-      </p>
+    <section class="coding__hero page-hero page-hero--standard">
+      <div class="page-hero__inner">
+        <h1 class="coding__title page-hero__title">Developer</h1>
+        <p class="coding__lead page-hero__lead">
+          Product-minded frontend engineering, design systems, and practical notes
+          from shipping and maintaining web products.
+        </p>
+      </div>
     </section>
 
     <section class="coding__flow" aria-label="Coding sections">

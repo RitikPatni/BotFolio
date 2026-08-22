@@ -13,9 +13,12 @@
 [data-persona="studio"] {
 
   /* Hero: flatter, calmer — minimalist prefers quiet over a glowing bloom */
-  [class$="__hero"] {
-    padding-block: clamp(3.5rem, 8vw, 6.5rem);
-    text-align: left;
+  .page-hero {
+    --page-hero-glow-opacity: 0.04;
+
+    &--standard {
+      --page-hero-padding-block: clamp(3.5rem, 8vw, 6.5rem);
+    }
 
     &::before {
       opacity: 0.04;
@@ -24,6 +27,7 @@
 
   /* Macro hero name: serif, editorial, not the 300 hairline */
   .hero-name,
+  .page-hero__title,
   .about__title,
   .coding__title,
   .photography__title,
@@ -42,7 +46,7 @@
   .coding__card,
   .photography__card,
   .library__card,
-  .uses-section,
+  .uses-card,
   .about__card {
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
@@ -74,7 +78,7 @@
 
   /* Blog cards read as a clean list, not floating tiles */
   .blog-card {
-    padding-block: 1.75rem;
+    padding: 1.75rem 1rem;
     background: transparent;
     box-shadow: none;
     border-bottom: 1px solid var(--line);
@@ -84,6 +88,10 @@
   .blog-card--featured {
     border-radius: var(--radius-md);
     border-bottom: 1px solid var(--line);
+  }
+
+  .blog-card.blog-card--featured {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
   }
 
   /* Library: reveal shelf — covers with a thin frame, meta on hover.
@@ -167,7 +175,7 @@
   .coding__card,
   .library__card,
   .about__card,
-  .uses-section,
+  .uses-card,
   .library__item {
     border-left: 2px solid color-mix(in srgb, var(--accent-start) 45%, var(--line));
   }
@@ -200,12 +208,8 @@
   }
 
   /* Uses: section dividers softened */
-  .uses-section {
-    border-top: 1px solid var(--line);
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    padding-top: 1.5rem;
+  .uses-card {
+    border-radius: var(--radius-md);
   }
 }
 
@@ -215,9 +219,8 @@
 [data-persona="field"] {
 
   /* Hero: hard, left-aligned, no bloom. Macro-type already handled in base. */
-  [class$="__hero"] {
-    text-align: left;
-    padding-block: clamp(3rem, 7vw, 5.5rem);
+  .page-hero {
+    --page-hero-glow-opacity: 0;
 
     &::before {
       background: none;
@@ -227,6 +230,7 @@
 
   /* Hero lead: mono telemetry, uppercase, wide tracking */
   .hero-tagline,
+  .page-hero__lead,
   .about__lead,
   .coding__lead,
   .photography__lead,
@@ -272,7 +276,7 @@
 
   /* Blog listing as hard-edged rows with thick dividers */
   .blog-card {
-    padding-block: 1.5rem;
+    padding: 1.5rem 1rem;
     border-bottom: 1px solid var(--line);
     border-radius: 0;
     background: transparent;
@@ -282,6 +286,10 @@
   .blog-card--featured {
     padding: 1.5rem;
     border: 1px solid var(--line);
+  }
+
+  .blog-card.blog-card--featured {
+    padding: 1.5rem;
   }
 
   /* Listing grids: rigid, gap-as-divider via 1px line grid */
@@ -384,12 +392,11 @@
   }
 
   /* Uses: hard section rules, mono titles */
-  .uses-section {
+  .uses-card {
     border-top: 2px solid var(--line);
     border-radius: 0;
-    background: transparent;
+    background: var(--bg-soft);
     box-shadow: none;
-    padding-top: 1.5rem;
   }
 
   .uses-section-title {
@@ -431,7 +438,7 @@
   }
 
   /* 4. Fully kill the soft hero glow — display:none so nothing bleeds. */
-  [class$="__hero"]::before,
+  .page-hero::before,
   .hero::before,
   .blog-hero::before,
   .photography__hero::before {

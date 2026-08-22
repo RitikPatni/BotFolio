@@ -2,13 +2,13 @@
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
-import { formatDisplayDate } from "../../utils/date";
+import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { excerpt } from "../../utils/excerpt";
 import { slugOf } from "../../utils/slug";
 
 const entries = (await getCollection("newsletter"))
   .filter((item) => !item.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date))
   .map((item) => ({
     slug: slugOf(item),
     title: item.data.title,
@@ -21,11 +21,13 @@ import "./_newsletter.scss";
 
 <BaseLayout title="Newsletter Archive — Ritik Patni" path="/newsletter">
   <div class="newsletter">
-    <section class="newsletter__hero">
-      <h1 class="newsletter__title">Newsletter Archive</h1>
-      <p class="newsletter__lead">
-        Complete Buttondown archive mirrored into this site.
-      </p>
+    <section class="newsletter__hero page-hero page-hero--standard">
+      <div class="page-hero__inner">
+        <h1 class="newsletter__title page-hero__title">Newsletter Archive</h1>
+        <p class="newsletter__lead page-hero__lead">
+          Complete Buttondown archive mirrored into this site.
+        </p>
+      </div>
     </section>
 
     <section class="newsletter__list">

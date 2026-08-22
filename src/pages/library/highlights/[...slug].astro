@@ -2,6 +2,8 @@
 import BaseLayout from "../../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 import { formatDisplayDate } from "../../../utils/date";
+import { findRelatedBook, getHighlightMeta } from "../../../utils/library";
+import { slugOf } from "../../../utils/slug";
 
 export async function getStaticPaths() {
   const items = await getCollection("highlights", ({ data }) => !data.draft);
@@ -13,6 +15,12 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { Content } = await render(item);
+const books = (await getCollection("books"))
+  .filter(({ data }) => !data.draft);
+const relatedBook =
+  getHighlightMeta(item).sourceType === "readwise-books"
+    ? findRelatedBook(item.data.title, books)
+    : null;
 import "./_slug.scss";
 ---
 
@@ -22,10 +30,22 @@ import "./_slug.scss";
   path="/library"
 >
   <div class="slug">
-    <article class="slug__hero slug__hero--compact">
-      <p class="slug__meta">{formatDisplayDate(item.data.date)}</p>
-      <h1 class="slug__title">{item.data.title}</h1>
-      <p class="slug__lead">{item.data.description}</p>
+    <article class="slug__hero page-hero page-hero--compact">
+      <div class="page-hero__inner">
+        <p class="slug__meta page-hero__meta">{formatDisplayDate(item.data.date)}</p>
+        <h1 class="slug__title page-hero__title">{item.data.title}</h1>
+        <p class="slug__lead page-hero__lead">{item.data.description}</p>
+        {
+          relatedBook ? (
+            <p class="slug__related-linkline">
+              <span>Book:</span>{" "}
+              <a href={`/library/books/${slugOf(relatedBook)}`}>
+                {relatedBook.data.title}
+              </a>
+            </p>
+          ) : null
+        }
+      </div>
     </article>
 
     <article class="slug__card">

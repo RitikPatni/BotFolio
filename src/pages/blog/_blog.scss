@@ -3,39 +3,15 @@
    ═════════════════════════════════════════════════════════════════ */
 
 .blog-hero {
-  padding: 5rem 2rem 3rem;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.12;
-    background: var(--gradient-hero);
-  }
-
   &-content {
-    position: relative;
-    z-index: 1;
+    /* Shared positioning comes from .page-hero__inner. */
   }
 
   &-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 300;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin: 0 0 1rem;
   }
 
   &-lead {
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    font-weight: 300;
-    color: var(--text-muted);
     max-width: 500px;
-    margin: 0 auto;
-    line-height: 1.5;
   }
 }
 
@@ -54,7 +30,7 @@
 }
 
 .blog-card {
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   border-bottom: 1px solid var(--line);
   transition: border-color 200ms;
 
@@ -137,5 +113,17 @@
   &:hover {
     color: var(--text);
     border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
+  }
+
+  &.is-active {
+    color: var(--text);
+    background: color-mix(in srgb, var(--accent-start) 8%, transparent);
+    border-color: color-mix(in srgb, var(--accent-start) 40%, var(--line));
+  }
+}
+
+@media (max-width: 48rem) {
+  .blog-posts {
+    padding-inline: 0;
   }
 }

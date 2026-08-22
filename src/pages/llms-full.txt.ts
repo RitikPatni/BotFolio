@@ -1,5 +1,6 @@
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
+import { dateTimestamp, toDate, type DateInput } from "../utils/date";
 import { slugOf } from "../utils/slug";
 
 const SITE = (context: APIContext) =>
@@ -10,7 +11,7 @@ interface Entry {
   url: string;
   description: string;
   body: string;
-  date?: Date;
+  date?: DateInput;
 }
 
 export async function GET(context: APIContext) {
@@ -53,17 +54,19 @@ export async function GET(context: APIContext) {
     })),
     ...resources.map((p) => ({
       title: p.data.title,
-      url: `${site}/resources/${p.slug}/`,
+      url: `${site}/resources/${slugOf(p)}/`,
       description: p.data.description,
       body: p.body ?? "",
       date: p.data.date,
     })),
-  ].sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0));
+  ].sort((a, b) =>
+    dateTimestamp(b.date ?? 0) - dateTimestamp(a.date ?? 0),
+  );
 
   const sections = entries
     .map(
       (e) =>
-        `## ${e.title}\nURL: ${e.url}${e.date ? `\nPublished: ${e.date.toISOString().slice(0, 10)}` : ""}\n${e.description ? e.description + "\n" : ""}\n${e.body.trim()}\n`,
+        `## ${e.title}\nURL: ${e.url}${e.date ? `\nPublished: ${toDate(e.date).toISOString().slice(0, 10)}` : ""}\n${e.description ? e.description + "\n" : ""}\n${e.body.trim()}\n`,
     )
     .join("\n---\n\n");
 

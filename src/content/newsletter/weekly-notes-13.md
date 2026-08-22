@@ -26,7 +26,7 @@ Have you ever wondered why we use lol so much? If not, here's a history lesson f
 
 What if we started to think about note-taking systems as active agents, rather than receptacles?
 
-[Picture perfect images with the modern <img> element](https://stackoverflow.blog/2022/03/28/picture-perfect-images-with-the-modern-element/?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-13)
+[Picture perfect images with the modern \<img\> element](https://stackoverflow.blog/2022/03/28/picture-perfect-images-with-the-modern-element/?utm_source=ritik&utm_medium=email&utm_campaign=weekly-notes-13)
 
 You may not think about images as part of your web dev work, but they can affect your web app's performance more than any other part of your code.
 

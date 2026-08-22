@@ -170,7 +170,7 @@ const updatePersonaUi = (persona: PersonaMode) => {
     } else {
       btn.setAttribute(
         "aria-label",
-        persona === "field"
+        btnPersona === "field"
           ? "Switch to photography profile"
           : "Switch to developer profile",
       );
@@ -281,6 +281,8 @@ const bindPersonaToggle = () => {
 
       applyPersona(next);
       updatePersonaUi(next);
+      syncNavOverflow();
+      window.requestAnimationFrame(syncNavOverflow);
 
       try {
         localStorage.setItem(personaStorageKey, next);
@@ -288,12 +290,22 @@ const bindPersonaToggle = () => {
         // Ignore storage write issues; persona still applies for the session.
       }
 
-      const targetBasePath = next === "field" ? "/photography" : "/";
       const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+      const isStudioOnly = STUDIO_ROUTES.some(
+        (route) => currentPath === route || currentPath.startsWith(`${route}/`),
+      );
+      const isFieldOnly = FIELD_ROUTES.some(
+        (route) => currentPath === route || currentPath.startsWith(`${route}/`),
+      );
+      const targetPath = next === "field" && isStudioOnly
+        ? "/photography"
+        : next === "studio" && isFieldOnly
+          ? "/"
+          : currentPath;
 
-      if (currentPath !== targetBasePath) {
+      if (currentPath !== targetPath) {
         if (prefersReducedMotion.matches) {
-          void navigateTo(targetBasePath);
+          void navigateTo(targetPath);
           return;
         }
 
@@ -305,11 +317,49 @@ const bindPersonaToggle = () => {
 
         document.documentElement.classList.add(personaSwitchClassName);
         window.setTimeout(() => {
-          void navigateTo(targetBasePath);
+          void navigateTo(targetPath);
         }, personaSwitchDurationMs);
       }
     });
   });
+};
+
+const syncNavOverflow = () => {
+  const navs = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-persona-nav]"),
+  );
+  const visibleNav = navs.find((nav) => nav.getBoundingClientRect().width > 0);
+  const hint = document.querySelector<HTMLElement>("[data-nav-scroll-hint]");
+
+  navs.forEach((nav) => {
+    const overflowing = nav.scrollWidth > nav.clientWidth + 1;
+    nav.dataset.navOverflowing = String(overflowing);
+    nav.dataset.navScrolled = String(nav.scrollLeft > 4);
+  });
+
+  if (!hint || !visibleNav) {
+    return;
+  }
+
+  const overflowing = visibleNav.scrollWidth > visibleNav.clientWidth + 1;
+  hint.hidden = !overflowing;
+  hint.textContent = visibleNav.scrollLeft > 4 ? "More" : "Swipe for more";
+};
+
+const bindNavOverflow = () => {
+  const navs = document.querySelectorAll<HTMLElement>("[data-persona-nav]");
+
+  navs.forEach((nav) => {
+    if (nav.dataset.overflowBound === "true") {
+      return;
+    }
+
+    nav.dataset.overflowBound = "true";
+    nav.addEventListener("scroll", syncNavOverflow, { passive: true });
+  });
+
+  syncNavOverflow();
+  window.requestAnimationFrame(syncNavOverflow);
 };
 
 const animateReveals = () => {
@@ -360,6 +410,7 @@ export function initBaseLayoutClient(options: BaseLayoutInitOptions = {}) {
   guardPersonaRoute();
   bindThemeToggle();
   bindPersonaToggle();
+  bindNavOverflow();
 
   if (shouldAnimateReveals) {
     animateReveals();

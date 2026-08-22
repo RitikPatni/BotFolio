@@ -2,54 +2,42 @@
    V2 Library — Highlight detail (Stripe-inspired)
    ═════════════════════════════════════════════════════════════════ */
 
-.slug__hero {
-  padding: 4rem 2rem 3rem;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.12;
-    background: var(--gradient-hero);
-  }
-
-  &--compact {
-    padding-block-end: 1rem;
-  }
-}
-
 .slug__meta {
-  font-size: 0.85rem;
   font-weight: 400;
   color: var(--text-dim);
-  margin: 0 0 1rem;
-  position: relative;
-  z-index: 1;
+  margin: 0 0 1.5rem;
 }
 
 .slug__title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin: 0 auto 1.5rem;
-  position: relative;
-  z-index: 1;
+  line-height: 1.25;
+  padding-block-start: 0.12em;
   max-width: 960px;
 }
 
 .slug__lead {
-  font-size: 1.1rem;
-  font-weight: 300;
   color: var(--text-muted);
   max-width: 640px;
-  margin: 0 auto;
-  line-height: 1.5;
-  position: relative;
-  z-index: 1;
+}
+
+.slug__related-linkline {
+  color: var(--text-muted);
+  margin: 1.25rem auto 0;
+  max-width: 640px;
+
+  span {
+    color: var(--text-dim);
+  }
+
+  a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--text-dim);
+    text-underline-offset: 3px;
+
+    &:hover {
+      text-decoration-color: var(--accent-start);
+    }
+  }
 }
 
 /* Card wrapper */

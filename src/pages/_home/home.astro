@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { formatDisplayDate } from "../../utils/date";
+import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { photographyGalleryData } from "../../data/photography";
 import { photographyCategories } from "../../data/photography/manifest";
 import { slugOf } from "../../utils/slug";
@@ -9,7 +9,7 @@ import "./_home.scss";
 
 const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date))
   .slice(0, 3)
   .map((post) => ({
     slug: slugOf(post),
@@ -36,20 +36,20 @@ const categoryLabel = (id: string) =>
   path="/"
 >
   <!-- Studio hero -->
-  <section class="hero" data-home-slot="studio">
-    <div class="hero-content">
-      <h1 class="hero-name">Ritik <span class="fw-500">Patni</span></h1>
-      <p class="hero-tagline">Building thoughtful product surfaces, systems, and shipping notes.</p>
+  <section class="hero page-hero page-hero--landing" data-home-slot="studio">
+    <div class="hero-content page-hero__inner">
+      <h1 class="hero-name page-hero__title">Ritik <span class="fw-500">Patni</span></h1>
+      <p class="hero-tagline page-hero__lead">Building thoughtful product surfaces, systems, and shipping notes.</p>
       <span class="hero-accent">Frontend Developer</span>
       <a class="hero-cta" href="/blog">Read my notes →</a>
     </div>
   </section>
 
   <!-- Field hero -->
-  <section class="hero hero--field" data-home-slot="field">
-    <div class="hero-content">
-      <h1 class="hero-name">Field <span class="fw-500">Notes</span></h1>
-      <p class="hero-tagline">Wildlife, birds, and macro studies — photographed in the field.</p>
+  <section class="hero hero--field page-hero page-hero--landing" data-home-slot="field">
+    <div class="hero-content page-hero__inner">
+      <h1 class="hero-name page-hero__title">Field <span class="fw-500">Notes</span></h1>
+      <p class="hero-tagline page-hero__lead">Wildlife, birds, and macro studies — photographed in the field.</p>
       <span class="hero-accent">Photography</span>
       <a class="hero-cta" href="/photography">Open the gallery →</a>
     </div>
