@@ -88,6 +88,11 @@ const PHOTOGRAPHY: UsesSection = {
         { text: "Viltrox AF 56mm F1.4 XF" },
       ],
     },
+    {
+      badge: "Carry",
+      title: "Bags",
+      items: [{ text: "Peak Design Travel Backpack 30L" }],
+    },
   ],
 };
 
