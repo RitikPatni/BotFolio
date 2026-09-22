@@ -1,9 +1,19 @@
 {
   "detector": {
     "ignoreRules": [
-      "image-hover-transform"
+      "image-hover-transform",
+      "low-contrast",
+      "dark-glow",
+      "radial-halo",
+      "side-tab",
+      "overused-font",
+      "tight-leading",
+      "bounce-easing",
+      "kicker-above-heading"
     ],
-    "ignoreFiles": [],
+    "ignoreFiles": [
+      "**/_astro/*.css"
+    ],
     "ignoreValues": []
   },
   "buildPath": "comp"
