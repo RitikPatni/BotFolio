@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-22T11:20:00Z",
+  "title": "Design System: BotFolio — Ritik Patni",
+  "extensions": {
+    "colorMeta": {
+      "studio-ink-blue": { "role": "primary", "displayName": "Ink Blue", "canonical": "#8aa6c8" },
+      "studio-ink-blue-light": { "role": "primary", "displayName": "Ink Blue (Light)", "canonical": "#1e50c8" },
+      "studio-ink-fade": { "role": "secondary", "displayName": "Ink Fade", "canonical": "#b8c4d4" },
+      "studio-ink-fade-light": { "role": "secondary", "displayName": "Ink Fade (Light)", "canonical": "#4a73d6" },
+      "field-hazard-red": { "role": "primary", "displayName": "Hazard Red", "canonical": "#ff2a2a" },
+      "field-hazard-deep": { "role": "primary", "displayName": "Hazard Deep", "canonical": "#e61919" },
+      "field-hazard-print": { "role": "primary", "displayName": "Hazard Print", "canonical": "#b81414" },
+      "studio-carbon": { "role": "neutral", "displayName": "Warm Carbon", "canonical": "#0c0c0e" },
+      "studio-carbon-soft": { "role": "neutral", "displayName": "Warm Carbon Soft", "canonical": "#141416" },
+      "studio-bone": { "role": "neutral", "displayName": "Bone", "canonical": "#f4f2ee" },
+      "studio-paper": { "role": "neutral", "displayName": "Studio Paper", "canonical": "#f7f6f3" },
+      "studio-paper-soft": { "role": "neutral", "displayName": "Studio Paper Soft", "canonical": "#fbfbfa" },
+      "studio-ink": { "role": "neutral", "displayName": "Studio Ink", "canonical": "#1c1b19" },
+      "field-carbon": { "role": "neutral", "displayName": "Carbon", "canonical": "#0b0b0c" },
+      "field-carbon-soft": { "role": "neutral", "displayName": "Carbon Soft", "canonical": "#131314" },
+      "field-snow": { "role": "neutral", "displayName": "Snow", "canonical": "#f2f2f0" },
+      "field-newsprint": { "role": "neutral", "displayName": "Newsprint", "canonical": "#eae8e3" },
+      "field-newsprint-soft": { "role": "neutral", "displayName": "Newsprint Soft", "canonical": "#f4f4f0" },
+      "field-ink": { "role": "neutral", "displayName": "Field Ink", "canonical": "#0a0a0a" },
+      "neutral-bg": { "role": "neutral", "displayName": "Shared Base BG", "canonical": "#0a0a0b" },
+      "neutral-bg-soft": { "role": "neutral", "displayName": "Shared Base BG Soft", "canonical": "#121214" },
+      "neutral-text": { "role": "neutral", "displayName": "Shared Base Text", "canonical": "#fafafa" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero/page titles. Studio: Newsreader serif 400. Field: Archivo Black 800 uppercase macro." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles, persona-styled per room." },
+      "title": { "displayName": "Title", "purpose": "Card and item titles." },
+      "body": { "displayName": "Body", "purpose": "Prose at ~70ch. Studio 1.65 leading, field 1.5." },
+      "label": { "displayName": "Label", "purpose": "Mono uppercase metadata/telemetry. Floor 0.75rem for functional text." }
+    },
+    "shadows": [
+      { "name": "studio-card-lift", "value": "0 1px 2px rgba(0, 0, 0, 0.04)", "purpose": "The only shadow in the system. Studio surfaces at rest. Never stack, never darken; field gets none." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default deceleration for transforms and reveals." },
+      { "name": "ease-soft", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Background/border/color transitions." },
+      { "name": "dur-base", "value": "0.24s", "purpose": "Standard transition duration; reduced-motion collapses all to 0.01ms." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "48rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (Studio)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Tailored pill: soft surface, quiet border, accent bloom on hover.",
+      "html": "<a class=\"ds-btn-studio\" href=\"#\">Read my notes →</a>",
+      "css": ".ds-btn-studio { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 999px; font-size: 0.95rem; font-weight: 400; color: #f4f2ee; background: #141416; border: 1px solid rgba(244, 242, 238, 0.08); text-decoration: none; transition: border-color 0.18s, background-color 0.18s, transform 0.12s; } .ds-btn-studio:hover { border-color: color-mix(in srgb, #8aa6c8 30%, rgba(244,242,238,0.08)); background: color-mix(in srgb, #8aa6c8 8%, #141416); transform: translateY(-1px); } .ds-btn-studio:focus-visible { outline: 2px solid #8aa6c8; outline-offset: 2px; }"
+    },
+    {
+      "name": "Primary Button (Field)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Stamped rectangle: hard edges, uppercase mono, hazard border on hover.",
+      "html": "<a class=\"ds-btn-field\" href=\"#\">OPEN THE GALLERY →</a>",
+      "css": ".ds-btn-field { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 0; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: #f2f2f0; background: #131314; border: 1px solid rgba(242, 242, 240, 0.14); text-decoration: none; transition: border-color 0.18s, background-color 0.18s; } .ds-btn-field:hover { border-color: #ff2a2a; background: color-mix(in srgb, #ff2a2a 8%, #131314); } .ds-btn-field:focus-visible { outline: 2px solid #ff2a2a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Card (Studio)",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Editorial surface with the accent left-border signature.",
+      "html": "<article class=\"ds-card-studio\"><h3>Title</h3><p>Quiet, tailored surface with a 2px ink accent.</p></article>",
+      "css": ".ds-card-studio { background: #141416; border: 1px solid rgba(244, 242, 238, 0.08); border-left: 2px solid color-mix(in srgb, #8aa6c8 45%, rgba(244,242,238,0.08)); border-radius: 6px; padding: 2rem; box-shadow: 0 1px 2px rgba(0,0,0,0.04); color: #f4f2ee; } .ds-card-studio h3 { margin: 0 0 0.5rem; font-weight: 400; } .ds-card-studio p { margin: 0; line-height: 1.65; font-weight: 400; }"
+    },
+    {
+      "name": "Card (Field)",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Hard rectangle: visible divider, zero radius, no shadow.",
+      "html": "<article class=\"ds-card-field\"><h3>TITLE</h3><p>Hard structure. Visible dividers. No softness.</p></article>",
+      "css": ".ds-card-field { background: #131314; border: 1px solid rgba(242, 242, 240, 0.14); border-radius: 0; padding: 2rem; color: #f2f2f0; } .ds-card-field h3 { margin: 0 0 0.5rem; font-family: 'Archivo', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; } .ds-card-field p { margin: 0; line-height: 1.5; }"
+    },
+    {
+      "name": "Chip / Tag (Studio)",
+      "kind": "chip",
+      "refersTo": "chip-accent",
+      "description": "Accent pill badge with tinted ground.",
+      "html": "<span class=\"ds-chip-studio\">Frontend Developer</span>",
+      "css": ".ds-chip-studio { display: inline-block; padding: 0.15em 0.75em; border-radius: 999px; font-size: 0.9rem; font-weight: 400; background: color-mix(in srgb, #8aa6c8 15%, transparent); color: #8aa6c8; }"
+    },
+    {
+      "name": "Chip / Tag (Field)",
+      "kind": "chip",
+      "refersTo": "chip-accent",
+      "description": "Bordered mono telemetry tag.",
+      "html": "<span class=\"ds-chip-field\">BIRDS</span>",
+      "css": ".ds-chip-field { display: inline-block; padding: 0.15em 0.6em; border-radius: 0; border: 1px solid rgba(242, 242, 240, 0.14); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; color: #8c8c88; }"
+    },
+    {
+      "name": "Input (Base)",
+      "kind": "input",
+      "refersTo": null,
+      "description": "Quiet field, accent focus ring.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Search the archive\" />",
+      "css": ".ds-input { inline-size: 100%; padding: 0.5rem 0.75rem; border-radius: 5px; border: 1px solid rgba(250, 250, 250, 0.06); background: #0a0a0b; color: #fafafa; font: inherit; } .ds-input:focus-visible { outline: 2px solid #8aa6c8; outline-offset: 2px; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Sticky bar with brand, persona toggle, active gradient underline.",
+      "html": "<nav class=\"ds-nav\"><strong>Ritik Patni</strong><span class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-link active\">Home</a><a href=\"#\" class=\"ds-nav-link\">Notes</a></span></nav>",
+      "css": ".ds-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.625rem 1rem; background: #0c0c0e; border-bottom: 1px solid rgba(244, 242, 238, 0.08); } .ds-nav strong { color: #f4f2ee; font-weight: 400; } .ds-nav-links { display: flex; gap: 0.125rem; } .ds-nav-link { color: #9a958c; text-decoration: none; padding: 0.5rem 0.75rem; font-size: 0.875rem; border-radius: 6px; position: relative; } .ds-nav-link:hover { color: #f4f2ee; background: color-mix(in srgb, #f4f2ee 4%, transparent); } .ds-nav-link.active { color: #f4f2ee; } .ds-nav-link.active::after { content: ''; position: absolute; bottom: 2px; left: 0.75rem; right: 0.75rem; height: 2px; border-radius: 1px; background: linear-gradient(90deg, #8aa6c8, #b8c4d4); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Ink & Hazard — warm editorial ink meets Swiss hazard printing",
+    "overview": "One site with two deliberately separate design languages, never merged. Studio is warm editorial ink: carbon and bone, serif display, single desaturated ink-blue accent, crisp radii, flat calm. Field is Swiss hazard printing: carbon and newsprint, massive uppercase Archivo Black, single hazard-red accent, zero radius, hard dividers. A visitor knows which room they're in instantly — that recognition is the system working.",
+    "keyCharacteristics": [
+      "Two rooms, one archive — personas never share visual language",
+      "One accent per persona at a time: ink-blue or hazard-red, never both",
+      "Weight- and case-driven hierarchy; gradients are whispers (4–5% opacity max)",
+      "Tabular figures everywhere data appears; flat surfaces; borders over shadows",
+      "Craft lives in the details: captions, heading order, contrast — audited"
+    ],
+    "rules": [
+      { "name": "The Two Rooms Rule", "body": "Studio and field never share accent language. An element that works in both rooms must earn it in each persona's tokens separately — no cross-persona homogenization, ever.", "section": "colors" },
+      { "name": "The Whisper Rule", "body": "Gradients are whispers, never banners: hero glow lands at 4–5% opacity. Nothing larger than a hint.", "section": "colors" },
+      { "name": "The One Accent Rule", "body": "Each persona carries exactly one accent hue at a time. If a second accent color appears in a persona, one of them is wrong.", "section": "colors" },
+      { "name": "The Case Boundary Rule", "body": "Field shouts in uppercase; studio keeps sentence case. A studio headline in all-caps is a persona leak.", "section": "typography" },
+      { "name": "The Measured Macro Rule", "body": "Field's giant type is sized from measurement (PHOTOGRAPHY ≈ 8.1em wide in Archivo Black), never guesswork — no mid-word breaks, no right-edge clipping, ever.", "section": "typography" }
+    ],
+    "dos": [
+      "Do scope every accent decision through the active persona's tokens (--accent-start/-end/-text) — never hardcode a persona's hex outside its layer.",
+      "Do keep accent-colored text AA-safe: light theme uses the deepened per-persona --accent-text.",
+      "Do use tabular figures (font-variant-numeric: tabular-nums) for any data, both personas.",
+      "Do keep functional micro-text at or above 0.75rem (12px).",
+      "Do verify heading order (no skipped levels) in authored content."
+    ],
+    "donts": [
+      "Don't merge, blend, or cross-pollinate the studio and field visual languages — the Two Rooms Rule is binding (PRODUCT.md).",
+      "Don't let a gradient exceed a whisper — hero glow caps at 4–5% opacity; a gradient banner or gradient text is a violation.",
+      "Don't introduce a second accent hue into either persona.",
+      "Don't stack or darken shadows beyond the studio 1px lift; field gets none.",
+      "Don't fabricate content, testimonials, or metrics — the archive is real or it doesn't ship."
+    ]
+  }
+}
