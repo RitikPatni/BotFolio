@@ -81,9 +81,8 @@ textarea,
 }
 
 /* Image hover micro-scale */
-.photo-strip img:hover,
-.library__book-cover:hover {
-  transform: scale(1.03);
+.photo-strip img:hover {
+  transform: scale(1.02);
 }
 
 /* Theme FAB press feedback */

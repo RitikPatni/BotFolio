@@ -1,0 +1,10 @@
+{
+  "detector": {
+    "ignoreRules": [
+      "image-hover-transform"
+    ],
+    "ignoreFiles": [],
+    "ignoreValues": []
+  },
+  "buildPath": "comp"
+}
