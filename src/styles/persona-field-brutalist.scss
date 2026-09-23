@@ -13,7 +13,7 @@
   --bg-soft: #131314;
   --text: #f2f2f0;
   --text-muted: #8c8c88;
-  --text-dim: #6a6a66;
+  --text-dim: #7f7f7a; /* raised from #6a6a66 (3.42 on --bg-soft) to pass AA — same warm hue */
   --line: rgba(242, 242, 240, 0.14);
 
   /* Single hazard accent — the ONLY accent color (redesign-skill: one accent) */
@@ -43,7 +43,7 @@
   --bg-soft: #f4f4f0;
   --text: #0a0a0a;
   --text-muted: #4a4a46;
-  --text-dim: #6b6b64;
+  --text-dim: #676760; /* lowered from #6b6b64 (4.38 on --bg, borderline fail) to clear AA with margin — same warm hue */
   --line: rgba(10, 10, 10, 0.18);
   --accent-start: #e61919;
   --accent-end: #b81414;

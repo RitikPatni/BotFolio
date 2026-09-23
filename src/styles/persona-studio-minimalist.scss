@@ -12,7 +12,7 @@
   --bg-soft: #141416;
   --text: #f4f2ee;
   --text-muted: #9a958c;
-  --text-dim: #6f6a62;
+  --text-dim: #857f75; /* raised from #6f6a62 (3.43 on --bg-soft) to pass AA — same warm hue */
   --line: rgba(244, 242, 238, 0.08);
 
   /* Restrained accent: single desaturated ink-blue, no gradient scream */
