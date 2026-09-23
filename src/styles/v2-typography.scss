@@ -1,14 +1,17 @@
 /* ==========================================================================
-   V2 Typography — Inter 300, fluid clamp scale
+   V2 Typography — Geist body, fluid clamp scale
    Stripe-inspired: weight-driven hierarchy, no serif
    ========================================================================== */
 
 :root {
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  /* Matches the stack both personas actually render (studio sets this exact
+     stack; field overrides with Archivo). Inter never renders on the site —
+     it survives only in OG-image SVGs, by design. */
+  --font-body: "Geist", "Switzer", "Helvetica Neue", system-ui, sans-serif;
   --font-mono: "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
 }
 
-/* Heading weights — Inter 300 with negative tracking */
+/* Heading weights — body sans (300) with negative tracking */
 h1 {
   font-size: clamp(2.5rem, 6vw, 5rem);
   font-weight: 300;

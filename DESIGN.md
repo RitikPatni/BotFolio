@@ -26,13 +26,13 @@ colors:
   neutral-text: "#fafafa"
   # Persona muted text (element-level computed values)
   studio-text-muted: "#9a958c"
-  studio-text-dim: "#6f6a62"
+  studio-text-dim: "#857f75"
   studio-text-muted-light: "#6b6660"
   studio-text-dim-light: "#56564f"
   field-text-muted: "#8c8c88"
-  field-text-dim: "#6a6a66"
+  field-text-dim: "#7f7f7a"
   field-text-muted-light: "#4a4a46"
-  field-text-dim-light: "#6b6b64"
+  field-text-dim-light: "#676760"
   # Base (pre-persona) layer — fallback only, fully overridden by both personas
   base-text-muted: "#888896"
   base-text-dim: "#7e7e88"
@@ -105,7 +105,7 @@ typography:
     fontWeight: 400
     lineHeight: 1.08
   hero-title:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "clamp(2.5rem, 6vw, 4rem)"
     fontWeight: 400
     lineHeight: 1.1
@@ -122,17 +122,17 @@ typography:
     fontWeight: 400
     lineHeight: 1.1
   section-title:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "clamp(1.5rem, 3vw, 2rem)"
     fontWeight: 300
     lineHeight: 1.2
   section-title-alt:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "clamp(1.4rem, 3vw, 2rem)"
     fontWeight: 400
     letterSpacing: "-0.03em"
   section-title-uses:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "clamp(1.15rem, 2.5vw, 1.5rem)"
     fontWeight: 400
   title:
@@ -148,22 +148,22 @@ typography:
     lineHeight: 1.3
     letterSpacing: "0.02em"
   prose-h2:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1.75rem"
     fontWeight: 400
     lineHeight: 1.25
   prose-h3:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1.35rem"
     fontWeight: 400
     lineHeight: 1.3
   prose-h4:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1.15rem"
     fontWeight: 400
     lineHeight: 1.35
   section-title-lg:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1.5rem"
     fontWeight: 300
   body:
@@ -172,7 +172,7 @@ typography:
     fontWeight: 400
     lineHeight: 1.65
   body-base:
-    fontFamily: "Inter, Geist, system-ui, -apple-system, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 300
     lineHeight: 1.8
@@ -182,26 +182,26 @@ typography:
     fontWeight: 400
     lineHeight: 1.5
   lede:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "clamp(1rem, 1.5vw, 1.25rem)"
     fontWeight: 400
     lineHeight: 1.6
   lede-uses:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "clamp(1rem, 2vw, 1.2rem)"
     lineHeight: 1.6
   intro:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1.05rem"
     fontWeight: 400
     lineHeight: 1.65
   item-title:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.95rem"
     fontWeight: 400
     lineHeight: 1.4
   body-sm:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.95rem"
     fontWeight: 300
     lineHeight: 1.6
@@ -210,11 +210,11 @@ typography:
     fontSize: "0.95rem"
     lineHeight: 1.5
   prose-sm:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.98rem"
     lineHeight: 1.65
   meta:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.85rem"
     fontWeight: 400
     lineHeight: 1.5
@@ -222,11 +222,11 @@ typography:
     fontFamily: "Archivo, JetBrains Mono, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.85rem"
   meta-sm:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.8rem"
     lineHeight: 1.5
   nav:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.875rem"
     fontWeight: 400
   cta-field:
@@ -234,17 +234,17 @@ typography:
     fontSize: "0.8rem"
     letterSpacing: "0.06em"
   meta-lg:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.9rem"
   uses-meta:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.92rem"
   caption:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.78rem"
     lineHeight: 1.5
   meta-xs:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.76rem"
   lightbox-counter:
     fontFamily: "Geist Mono, JetBrains Mono, ui-monospace, monospace"
@@ -267,11 +267,11 @@ typography:
     fontSize: "0.7rem"
     letterSpacing: "0.06em"
   micro:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.75rem"
     lineHeight: 1.5
   scroll-hint:
-    fontFamily: "Geist, Switzer, Inter, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.68rem"
     letterSpacing: "0.04em"
     lineHeight: 1.5
@@ -382,10 +382,10 @@ Prose code samples render in the Night Owl syntax theme, preserved deliberately 
 ## Typography
 
 **Display Font:** Newsreader (studio) / Archivo Black (field), per persona — with Georgia / Arial Black fallbacks
-**Body Font:** Geist (studio) / Archivo (field) — with Helvetica Neue fallbacks; shared base is Inter
+**Body Font:** Geist (studio) / Archivo (field) — with Helvetica Neue fallbacks; the shared base stack is Geist ("Geist", "Switzer", "Helvetica Neue", system-ui). OG images render Inter by design.
 **Label/Mono Font:** Geist Mono (studio) / JetBrains Mono (field); shared base mono is Fira Code; inline code ships Fira Code
 
-**Character:** Studio types like an editor — serif display at weight 400 with tight tracking, sentence case, comfortable 1.65 leading. Field types like a printing press — uppercase grotesque at 800, negative tracking, compressed 0.9–0.95 leading, with monospace telemetry for metadata. The shared base (Inter 300, weight-driven hierarchy) exists beneath both but is always overridden.
+**Character:** Studio types like an editor — serif display at weight 400 with tight tracking, sentence case, comfortable 1.65 leading. Field types like a printing press — uppercase grotesque at 800, negative tracking, compressed 0.9–0.95 leading, with monospace telemetry for metadata. The shared base (Geist, weight-driven hierarchy) exists beneath both; studio sets it natively, field overrides with Archivo.
 
 ### Hierarchy
 - **Display** (studio: 400, clamp(2.5rem, 6vw, 5rem), 1.08 / field: 800, clamp(2.5rem, 9vw, 7rem), 0.9, uppercase): studio = serif page titles; field = macro headlines sized so PHOTOGRAPHY fits without mid-word breaks (mobile: clamp(1.75rem, 10vw, 3rem), measured not guessed). The uses page carries its own macro clamp(3rem, 9vw, 6.5rem); studio's oversized hero variant clamps to 6rem.
