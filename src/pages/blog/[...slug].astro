@@ -1,4 +1,5 @@
 ---
+import crypto from "node:crypto";
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
@@ -17,6 +18,14 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const reading = readingTimeMinutes(post.body ?? "");
+// OG cache-bust: the PNG endpoint URL changes whenever title/description/date change,
+// so platform embed caches (Discord, Twitter) refetch instead of serving a stale card.
+const ogVersion = crypto
+  .createHash("sha256")
+  .update(`${post.data.title}|${post.data.description}|${post.data.date}`)
+  .digest("hex")
+  .slice(0, 8);
+const ogImage = `/og/blog/${slugOf(post)}.png?v=${ogVersion}`;
 const STANDARD_SITE_DID = "did:plc:53jkze3ofomdesnodoz5i34y";
 const standardSiteDocUri = `at://${STANDARD_SITE_DID}/site.standard.document/${slugOf(post)}`;
 import "./_slug.scss";
@@ -26,7 +35,7 @@ import "./_slug.scss";
   title={`${post.data.title} — Writing`}
   description={post.data.description}
   path={`/blog/${slugOf(post)}`}
-  image={`/og/blog/${slugOf(post)}.png`}
+  image={ogImage}
   ogType="article"
 >
   <link
