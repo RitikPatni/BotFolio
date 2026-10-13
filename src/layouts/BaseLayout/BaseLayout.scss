@@ -481,7 +481,7 @@ html.is-theme-switching
   color: #4b4b57;
   &:hover { color: #0a0a0b; background: rgba(0, 0, 0, 0.05); }
   &.active {
-    color: #1e50c8;
+    color: var(--accent-text);
     background: color-mix(in srgb, var(--accent-start) 14%, #ffffff);
     border-color: color-mix(in srgb, var(--accent-start) 45%, var(--line));
   }

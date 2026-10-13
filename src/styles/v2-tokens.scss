@@ -1,38 +1,36 @@
 /* ==========================================================================
-   V2 Design Tokens — Stripe-inspired
-   Shared across both personas. Accent swaps via data-persona.
+   Field Notes design tokens — warm editorial, moss accent.
+   Light-first: cream paper surfaces are the DEFAULT. Dark retained as a
+   scoped theme (photography gallery / explicit opt-in), not the site default.
+   Accent: single moss family — no gradients on paper surfaces.
    ========================================================================== */
 
 :root {
-  /* Surfaces */
-  --bg: #0a0a0b;
-  --bg-soft: #121214;
-  --text: #fafafa;
-  --text-muted: #888896;
-  --text-dim: #7e7e88; /* dark: raised from #5c5c6e (2.86) to pass AA on --bg-soft */
-  --line: rgba(255, 255, 255, 0.06);
+  /* Surfaces — cream paper */
+  --bg: #f7f4ed;
+  --bg-soft: #fffdf8;
+  --bg-deep: #eee9dd;
 
-  /* Persona accents */
-  --studio-start: #82aaff;
-  --studio-end: #c792ea;
-  --field-start: #F59E0B;
-  --field-end: #EF4444;
+  /* Ink */
+  --text: #1d1b16;
+  --text-muted: #55503f;
+  --text-dim: #8a8371;
+  --line: rgba(29, 27, 22, 0.14);
 
-  /* Active accent (swapped by persona) */
-  --accent-start: var(--studio-start);
-  --accent-end: var(--studio-end);
-  /* Accent-colored TEXT on the current bg: bright accent in dark (passes),
-     overridden to AA-safe dark variants in light mode (see below). */
-  --accent-text: var(--accent-start);
+  /* Moss accent family */
+  --accent-start: #5f7350;
+  --accent-end: #46573a;
+  --accent-wash: #c2cdb2;
+  --accent-text: #46573a;
 
-  /* Gradient assets */
+  /* Gradient assets retained for compat; near-invisible tints on paper */
   --gradient-underline: linear-gradient(90deg, var(--accent-start), var(--accent-end));
-  --gradient-hero: radial-gradient(ellipse at 50% 0%, var(--accent-start) 0%, transparent 70%);
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, var(--accent-wash) 0%, transparent 70%);
   --gradient-border: linear-gradient(135deg, var(--accent-start), var(--accent-end));
 
   /* Radii */
-  --radius-sm: 8px;
-  --radius-md: 12px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
   --radius-round: 100px;
 
   /* Layout */
@@ -42,52 +40,60 @@
   /* Borders */
   --border-light: 1px solid var(--line);
 
-  /* Open Props → V2 aliases (migration) */
+  /* Open Props → Field Notes aliases */
   --muted: var(--text-dim);
   --link: var(--accent-start);
   --surface-1: var(--bg-soft);
   --surface-2: var(--bg-soft);
-  --surface-3: var(--bg-soft);
+  --surface-3: var(--bg-deep);
   --surface-border: 1px;
   /* FIX: referenced by %surface-card / .primitive-surface but never defined → cards lost radius + padding */
-  --surface-radius: var(--radius-2);
+  --surface-radius: var(--radius-md);
   --surface-padding: var(--size-4);
   /* FIX: referenced by %prose / %page-title / focus outline but never defined */
   --fs-heading: var(--font-size-5);
   --fs-content: var(--font-size-2);
   --fs-code: var(--font-size-1);
-  --prose-max-width: 70ch;
+  --prose-max-width: 68ch;
   --accent: var(--accent-start);
-  --font-display: inherit;
-  --font-sans: inherit;
+  /* Display face: Fraunces (already loaded) finally assigned; Geist stays for UI labels */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Geist", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --fs-subheading: 1.25rem;
   --font-weight-6: 500;
   /* Active persona-switcher button background — pinned so it never inherits a
-     theme-leaked --bg. Dark: subtle accent tint over the dark surface. */
-  --persona-btn-active-bg: color-mix(in srgb, var(--accent-start) 18%, var(--bg-soft));
-}
-
-/* Field persona: swap to amber-red-orange */
-[data-persona="field"] {
-  --accent-start: var(--field-start);
-  --accent-end: var(--field-end);
-}
-
-/* Light theme */
-:root[data-theme="light"] {
-  --bg: #fafafa;
-  --bg-soft: #f0f0f3;
-  --text: #0a0a0b;
-  --text-muted: #5c5c6e;
-  --text-dim: #56566a;
-  --line: rgba(0, 0, 0, 0.08);
-  /* Accent text default; overridden per persona below for AA contrast on white */
-  --accent-text: var(--accent-start);
-  /* Active persona-switcher button background in LIGHT: a light, clearly-tinted
-     surface so the dark --accent-text passes AA. Pinned (not var(--bg)). */
+     theme-leaked --bg. */
   --persona-btn-active-bg: color-mix(in srgb, var(--accent-start) 14%, #ffffff);
 }
 
-/* Light-theme accent text must be darkened to pass WCAG AA on white surfaces */
-[data-persona="studio"][data-theme="light"] { --accent-text: #1e50c8; }
-[data-persona="field"][data-theme="light"]  { --accent-text: #9a5808; }
+/* Dark theme — scoped (photography gallery / explicit opt-in).
+   Warm charcoal; moss tuned brighter for AA on dark. */
+:root[data-theme="dark"],
+[data-theme="dark"] {
+  --bg: #171812;
+  --bg-soft: #1f2119;
+  --bg-deep: #10110c;
+  --text: #f0ede2;
+  --text-muted: #a8a394;
+  --text-dim: #7d7869;
+  --line: rgba(240, 237, 226, 0.1);
+  --accent-start: #9db38a;
+  --accent-end: #7d9468;
+  --accent-wash: #2a3325;
+  --accent-text: #b3c7a0;
+  --persona-btn-active-bg: color-mix(in srgb, var(--accent-start) 18%, var(--bg-soft));
+}
+
+/* Persona system kept temporarily for compat (P2 dissolves the toggle);
+   both personas resolve to the same moss family. */
+[data-persona="field"] {
+  --accent-start: #5f7350;
+  --accent-end: #46573a;
+}
+[data-persona="studio"][data-theme="light"],
+[data-persona="field"][data-theme="light"],
+[data-persona="studio"],
+[data-persona="field"] { --accent-text: #46573a; }
+:root[data-theme="dark"],
+[data-theme="dark"] { --accent-text: #b3c7a0; }
