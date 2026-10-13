@@ -11,6 +11,7 @@ interface Props {
   path?: string;
   image?: string;
   ogType?: string;
+  theme?: "light" | "dark";
 }
 
 const {
@@ -19,6 +20,8 @@ const {
   path = "/",
   image = "/og/default.png",
   ogType = "website",
+  /* Field Notes: photography gallery keeps a dark viewing frame */
+  theme = path.startsWith("/photography") ? ("dark" as const) : ("light" as const),
 } = Astro.props;
 
 const socials = SITE_CONFIG.socials;
@@ -35,7 +38,7 @@ const imageUrl = new URL(image, Astro.site).toString();
 <!doctype html>
 <html
   lang="en"
-  data-theme="light"
+  data-theme={theme}
   data-persona="studio"
   transition:name="page-root"
   transition:animate="none"
@@ -61,40 +64,12 @@ const imageUrl = new URL(image, Astro.site).toString();
         };
 
         const applySavedPersona = () => {
-          try {
-            const savedPersona = localStorage.getItem(PERSONA_STORAGE_KEY);
-            const persona = savedPersona === "field" ? "field" : "studio";
-            document.documentElement.setAttribute("data-persona", persona);
-          } catch {
-            document.documentElement.setAttribute("data-persona", "studio");
-          }
+          /* Persona mode dissolved (Field Notes): single identity. */
+          document.documentElement.setAttribute("data-persona", "studio");
         };
 
-        const guardSavedPersonaRoute = () => {
-          let persona = "studio";
-          try {
-            persona = localStorage.getItem(PERSONA_STORAGE_KEY) === "field"
-              ? "field"
-              : "studio";
-          } catch {
-            return;
-          }
-
-          const path = window.location.pathname.replace(/\/$/, "") || "/";
-          const studioOnly = path === "/coding" || path === "/blog" ||
-            path.startsWith("/coding/") || path.startsWith("/blog/");
-          const fieldOnly = path === "/photography" ||
-            path.startsWith("/photography/");
-          const target = persona === "field" && studioOnly
-            ? "/photography"
-            : persona === "studio" && fieldOnly
-              ? "/"
-              : null;
-
-          if (target) {
-            document.documentElement.classList.add("is-persona-routing");
-            window.location.replace(target);
-          }
+                const guardSavedPersonaRoute = () => {
+          /* no persona routing — single identity */
         };
 
         applySavedTheme();
@@ -261,10 +236,7 @@ const imageUrl = new URL(image, Astro.site).toString();
                 <strong>{SITE_CONFIG.personName}</strong>
               </a>
             </div>
-            <div class="nav-persona-toggle" data-persona-toggle role="group" aria-label="Profile switcher">
-              <button type="button" class="nav-persona-btn active" data-persona="studio" aria-label="Developer profile" aria-pressed="true">Dev</button>
-              <button type="button" class="nav-persona-btn" data-persona="field" aria-label="Switch to photography profile" aria-pressed="false">Photo</button>
-            </div>
+            <a class="base-layout__gallery-link" href="/photography" aria-label="Photography gallery">Gallery</a>
           </div>
           <div class="base-layout__menu-row">
             <nav class="nav-links" aria-label="Studio navigation" data-persona-nav="studio">

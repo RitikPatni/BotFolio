@@ -1,4 +1,5 @@
 ---
+import { Image as AstroImage } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { dateTimestamp, formatDisplayDate } from "../../utils/date";
@@ -18,16 +19,43 @@ const posts = (await getCollection("blog"))
     date: post.data.date,
   }));
 
-// Field-home: a photography-forward hero + a few featured shots from the gallery.
+// Field Notes home: one hero, photography woven in as a visual strip.
+const galleryAssetModules = import.meta.glob(
+  "../../assets/photography/**/*.{avif,gif,jpeg,jpg,png,webp}",
+  { eager: true },
+) as Record<string, { default: ImageMetadata }>;
+const galleryAssets = new Map(
+  Object.entries(galleryAssetModules).map(([path, module]) => [
+    path.replace("../../assets/photography/", ""),
+    module.default,
+  ]),
+);
 const featuredShots = photographyGalleryData
-  .slice(0, 6)
-  .map((img) => ({
-    title: img.title,
-    category: img.category,
-    filename: img.filename,
-  }));
+  .map((img) => {
+    const assetModule = galleryAssets.get(`${img.category}/${img.filename}`);
+    if (!(assetModule && img.alt)) return null;
+    return {
+      title: img.title,
+      category: img.category,
+      asset: assetModule,
+      alt: img.alt,
+    };
+  })
+  .filter((shot): shot is NonNullable<typeof shot> => shot !== null)
+  .slice(0, 5);
 const categoryLabel = (id: string) =>
   photographyCategories.find((c) => c.id === id)?.label ?? id;
+
+// Hero signature frame: one warm, personal favorite.
+const heroFrameEntry = photographyGalleryData.find(
+  (img) => img.filename === "bulbul-golden-light.jpg",
+);
+const heroFrameAsset = heroFrameEntry
+  ? galleryAssets.get(`${heroFrameEntry.category}/${heroFrameEntry.filename}`)
+  : undefined;
+const heroFrame = heroFrameEntry && heroFrameAsset
+  ? { asset: heroFrameAsset, alt: heroFrameEntry.alt, title: heroFrameEntry.title, category: heroFrameEntry.category }
+  : null;
 ---
 
 <BaseLayout
@@ -35,28 +63,58 @@ const categoryLabel = (id: string) =>
   description="I build thoughtful web experiences and document nature up close."
   path="/"
 >
-  <!-- Studio hero -->
-  <section class="hero page-hero page-hero--landing" data-home-slot="studio">
+  <!-- Hero: one identity, dev + photography -->
+  <section class="hero page-hero page-hero--landing">
     <div class="hero-content page-hero__inner">
       <h1 class="hero-name page-hero__title">Ritik <span class="fw-500">Patni</span></h1>
-      <p class="hero-tagline page-hero__lead">Building thoughtful product surfaces, systems, and shipping notes.</p>
-      <span class="hero-accent">Frontend Developer</span>
-      <a class="hero-cta" href="/blog">Read my notes →</a>
+      <p class="hero-tagline page-hero__lead">I build thoughtful product surfaces — and document nature up close, one frame at a time.</p>
+      <span class="hero-accent">Frontend developer · wildlife photographer</span>
+      <a class="hero-cta" href="/blog">Read the notes →</a>
     </div>
+    {heroFrame && (
+    <figure class="hero-frame">
+      <AstroImage
+        src={heroFrame.asset}
+        alt={heroFrame.alt}
+        widths={[480, 960]}
+        sizes="(max-width: 64rem) 92vw, 420px"
+        loading="eager"
+        class="hero-frame-img"
+      />
+      <figcaption class="hero-frame-cap">{heroFrame.title} · {categoryLabel(heroFrame.category)}</figcaption>
+    </figure>
+    )}
   </section>
 
-  <!-- Field hero -->
-  <section class="hero hero--field page-hero page-hero--landing" data-home-slot="field">
-    <div class="hero-content page-hero__inner">
-      <h1 class="hero-name page-hero__title">Field <span class="fw-500">Notes</span></h1>
-      <p class="hero-tagline page-hero__lead">Wildlife, birds, and macro studies — photographed in the field.</p>
-      <span class="hero-accent">Photography</span>
-      <a class="hero-cta" href="/photography">Open the gallery →</a>
+  <!-- Recent frames: photography woven in -->
+  <section class="posts field-home">
+    <p class="section-kicker">Photography</p>
+    <h2 class="section-title">Recent frames</h2>
+    <div class="field-home__grid">
+      {
+        featuredShots.map((shot) => (
+          <a class="field-home__shot" href="/photography" aria-label={`${shot.title} — open gallery`}>
+            <AstroImage
+              src={shot.asset}
+              alt={shot.alt}
+              widths={[320, 640]}
+              sizes="(max-width: 48rem) 45vw, 220px"
+              loading="lazy"
+              class="field-home__shot-img"
+            />
+            <span class="field-home__shot-title">{shot.title}</span>
+            <span class="field-home__shot-cat">{categoryLabel(shot.category)}</span>
+          </a>
+        ))
+      }
     </div>
+    <p class="mt-2">
+      <a class="view-all" href="/photography">Open the gallery →</a>
+    </p>
   </section>
 
-  <!-- Studio: blog list -->
-  <section class="posts" data-home-slot="studio">
+  <!-- Journal -->
+  <section class="posts">
     <p class="section-kicker">Journal</p>
     <h2 class="section-title">Latest posts</h2>
     {
@@ -76,25 +134,6 @@ const categoryLabel = (id: string) =>
     }
     <p class="mt-2">
       <a class="view-all" href="/blog">View all posts →</a>
-    </p>
-  </section>
-
-  <!-- Field: featured shots -->
-  <section class="posts field-home" data-home-slot="field">
-    <p class="section-kicker">Photography</p>
-    <h2 class="section-title">Recent frames</h2>
-    <div class="field-home__grid">
-      {
-        featuredShots.map((shot) => (
-          <a class="field-home__shot" href="/photography">
-            <span class="field-home__shot-title">{shot.title}</span>
-            <span class="field-home__shot-cat">{categoryLabel(shot.category)}</span>
-          </a>
-        ))
-      }
-    </div>
-    <p class="mt-2">
-      <a class="view-all" href="/photography">Open the gallery →</a>
     </p>
   </section>
 </BaseLayout>

@@ -8,25 +8,25 @@ const FONT_FILES = fs
   .filter((f) => f.endsWith(".ttf"))
   .map((f) => path.join(FONT_DIR, f));
 
-const INK = "#f5f5f0";
-const PAPER = "#f5f5f0";
-const BLACK = "#111111";
-const YELLOW = "#ffd400";
-const MUTED = "#9a9a94";
+/* Field Notes identity card — cream paper, ink serif, moss tick */
+const PAPER = "#f7f4ed";
+const INK = "#1d1b16";
+const MOSS = "#5f7350";
+const MOSS_DEEP = "#46573a";
+const MUTED = "#8a8371";
 
 function svg(): string {
   return `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="630" fill="${BLACK}"/>
-  <rect x="0" y="0" width="1200" height="96" fill="${PAPER}"/>
-  <text x="48" y="64" font-family="Inter" font-size="36" font-weight="900" fill="${BLACK}" letter-spacing="5">RITIK PATNI</text>
-  <text x="1152" y="64" font-family="Inter" font-size="28" font-weight="800" fill="${BLACK}" text-anchor="end">ritikpatni.me</text>
-  <text x="44" y="330" font-family="Inter" font-size="150" font-weight="900" fill="${INK}" letter-spacing="-6">RITIK</text>
-  <rect x="44" y="366" width="380" height="70" fill="${YELLOW}"/>
-  <text x="234" y="420" font-family="Inter" font-size="44" font-weight="900" fill="${BLACK}" text-anchor="middle">PATNI</text>
-  <text x="48" y="486" font-family="Inter" font-size="24" font-weight="500" fill="${MUTED}">Frontend developer · wildlife/macro photographer</text>
-  <rect x="0" y="534" width="1200" height="96" fill="#181818"/>
-  <text x="48" y="592" font-family="Inter" font-size="26" font-weight="700" fill="${INK}">Clean notes on frontend, systems, and photography</text>
-  <rect x="1080" y="586" width="72" height="4" fill="${YELLOW}"/>
+  <rect width="1200" height="630" fill="${PAPER}"/>
+  <rect x="0" y="0" width="6" height="630" fill="${MOSS_DEEP}"/>
+  <text x="64" y="96" font-family="Fraunces" font-size="42" font-weight="600" fill="${INK}">The Weekly Read</text>
+  <text x="1136" y="94" font-family="Plex Mono" font-size="19" font-weight="500" fill="${MUTED}" text-anchor="end" letter-spacing="3">FIELD NOTES</text>
+  <line x1="64" y1="126" x2="1136" y2="126" stroke="${INK}" stroke-width="1.5" opacity="0.75"/>
+  <text x="60" y="330" font-family="Fraunces" font-size="120" font-weight="600" fill="${INK}" letter-spacing="-2">Ritik Patni</text>
+  <text x="64" y="412" font-family="Newsreader" font-size="64" fill="${MOSS_DEEP}">frontend developer, field photographer.</text>
+  <rect x="64" y="462" width="120" height="5" fill="${MOSS}"/>
+  <text x="64" y="540" font-family="Newsreader" font-size="27" fill="${MUTED}">Product surfaces and shipping notes · wildlife, birds, and macro studies</text>
+  <text x="64" y="594" font-family="Plex Mono" font-size="19" fill="${MUTED}" letter-spacing="2">RITIKPATNI.ME</text>
 </svg>`;
 }
 
