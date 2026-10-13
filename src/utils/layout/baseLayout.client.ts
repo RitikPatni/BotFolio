@@ -43,17 +43,12 @@ const runThemeTransition = () => {
 };
 
 const readStoredPersona = (): PersonaMode => {
-  try {
-    return localStorage.getItem(personaStorageKey) === "field"
-      ? "field"
-      : "studio";
-  } catch {
-    return "studio";
-  }
+  /* Persona mode dissolved (Field Notes) — single identity. */
+  return "studio";
 };
 
 const applyPersona = (persona: PersonaMode) => {
-  document.documentElement.setAttribute("data-persona", persona);
+  document.documentElement.setAttribute("data-persona", "studio");
 };
 
 const clearPersonaTransitionClasses = () => {
@@ -117,24 +112,7 @@ const STUDIO_ROUTES = ["/coding", "/blog"];
 const FIELD_ROUTES = ["/photography"];
 
 const guardPersonaRoute = () => {
-  const persona = readStoredPersona();
-  const path = window.location.pathname.replace(/\/$/, "") || "/";
-  const isStudioOnly = STUDIO_ROUTES.some(
-    (r) => path === r || path.startsWith(`${r}/`),
-  );
-  const isFieldOnly = FIELD_ROUTES.some(
-    (r) => path === r || path.startsWith(`${r}/`),
-  );
-
-  if (persona === "field" && isStudioOnly) {
-    void navigateTo("/photography");
-    return;
-  }
-
-  if (persona === "studio" && isFieldOnly) {
-    void navigateTo("/");
-    return;
-  }
+  /* Persona routing dissolved (Field Notes): every route serves one identity. */
 };
 
 const updatePersonaUi = (persona: PersonaMode) => {

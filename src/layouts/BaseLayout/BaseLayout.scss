@@ -42,14 +42,7 @@
   background: var(--bg);
 
   [data-persona-slot] {
-    display: none;
-  }
-
-  html[data-persona="studio"] & [data-persona-slot="studio"] {
-    display: block;
-  }
-
-  html[data-persona="field"] & [data-persona-slot="field"] {
+    /* Persona slots dissolved (Field Notes): everything renders. */
     display: block;
   }
 
@@ -137,6 +130,15 @@
       max-width: 100%;
       overflow: hidden;            /* clip to viewport; nav scrolls inside */
     }
+  }
+
+  &__gallery-link {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 180ms ease;
+    &:hover { color: var(--accent-text); }
   }
 
   &__brand {

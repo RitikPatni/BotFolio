@@ -202,6 +202,17 @@
   transform: translateY(-2px);
 }
 
+.field-home__shot-img {
+  inline-size: 100%;
+  block-size: auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--bg-deep);
+}
+
 .field-home__shot-title {
   font-family: var(--font-display);
   font-weight: 400;
