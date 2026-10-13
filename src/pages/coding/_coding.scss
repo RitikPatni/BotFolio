@@ -3,11 +3,7 @@
   gap: var(--size-5);
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 0 2rem;
-
-  .page-hero {
-    padding-inline: 0;
-  }
+  padding: 0;
 
   &__hero {
     /* Shared geometry comes from .page-hero. */
