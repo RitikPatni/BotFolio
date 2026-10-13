@@ -3,7 +3,11 @@
 .uses-v2 {
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding-block: clamp(3rem, 8vw, 6rem);
+  padding: clamp(3rem, 8vw, 6rem) 0;
+
+  .uses-body {
+    padding: 0 2rem;
+  }
 }
 
 .uses-intro {

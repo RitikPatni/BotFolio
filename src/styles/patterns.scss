@@ -236,3 +236,13 @@
   padding: var(--size-2);
   text-align: left;
 }
+
+/* Field Notes: content lists align to their section's edge (no UA indent).
+   Prose lists keep their indent via %prose. */
+.coding__list,
+.library__list,
+.newsletter__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

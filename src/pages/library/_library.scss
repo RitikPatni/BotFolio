@@ -3,6 +3,13 @@
    ═════════════════════════════════════════════════════════════════ */
 
 .library {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  .page-hero {
+    padding-inline: 0;
+  }
   &__hero {
     /* Shared geometry comes from .page-hero. */
   }
@@ -173,10 +180,11 @@
   outline-offset: 0.35rem;
 }
 
-/* Section title */
+/* Section title — Field Notes editorial header */
 .library__section-title {
-  font-size: 1.5rem;
-  font-weight: 300;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.6rem, 2.6vw, 2rem);
+  font-weight: 530;
   letter-spacing: -0.01em;
   margin: 0 0 1.5rem;
 }
