@@ -24,12 +24,15 @@
 
 /* Prose content — 960px wide */
 .slug-prose {
-  max-width: 960px;
+  max-width: var(--layout-max-width);
   margin: 0 auto;
   padding: 2rem 2rem 6rem;
 
   /* Typography defaults */
   font-size: 1.1rem;
+  > * {
+    max-inline-size: 68ch;
+  }
   font-weight: 300;
   line-height: 1.8;
   color: var(--text);

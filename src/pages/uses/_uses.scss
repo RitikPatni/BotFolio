@@ -7,7 +7,7 @@
 }
 
 .uses-intro {
-  max-width: 44rem;
+  max-width: var(--layout-max-width);
   margin-block-end: clamp(3rem, 7vw, 5rem);
 }
 
