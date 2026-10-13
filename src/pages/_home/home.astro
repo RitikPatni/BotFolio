@@ -45,6 +45,17 @@ const featuredShots = photographyGalleryData
   .slice(0, 5);
 const categoryLabel = (id: string) =>
   photographyCategories.find((c) => c.id === id)?.label ?? id;
+
+// Hero signature frame: one warm, personal favorite.
+const heroFrameEntry = photographyGalleryData.find(
+  (img) => img.filename === "bulbul-golden-light.jpg",
+);
+const heroFrameAsset = heroFrameEntry
+  ? galleryAssets.get(`${heroFrameEntry.category}/${heroFrameEntry.filename}`)
+  : undefined;
+const heroFrame = heroFrameEntry && heroFrameAsset
+  ? { asset: heroFrameAsset, alt: heroFrameEntry.alt, title: heroFrameEntry.title, category: heroFrameEntry.category }
+  : null;
 ---
 
 <BaseLayout
@@ -60,6 +71,19 @@ const categoryLabel = (id: string) =>
       <span class="hero-accent">Frontend developer · wildlife photographer</span>
       <a class="hero-cta" href="/blog">Read the notes →</a>
     </div>
+    {heroFrame && (
+    <figure class="hero-frame">
+      <AstroImage
+        src={heroFrame.asset}
+        alt={heroFrame.alt}
+        widths={[480, 960]}
+        sizes="(max-width: 64rem) 92vw, 420px"
+        loading="eager"
+        class="hero-frame-img"
+      />
+      <figcaption class="hero-frame-cap">{heroFrame.title} · {categoryLabel(heroFrame.category)}</figcaption>
+    </figure>
+    )}
   </section>
 
   <!-- Recent frames: photography woven in -->
