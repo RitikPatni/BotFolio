@@ -42,31 +42,33 @@
   /* Cards: calm editorial surfaces, crisp 6px corners, hairline divider,
      generous internal padding, ultra-diffuse shadow only. */
   .post-card,
+  /* Field Notes: cards are not boxed. Surfaces stay quiet; separation comes
+     from whitespace + hairline dividers, with a quiet tint on hover. */
   .blog-card,
   .coding__card,
   .photography__card,
   .library__card,
   .uses-card,
   .about__card {
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-    background: var(--bg-soft);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    transition: border-color 200ms ease, transform 200ms ease;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    box-shadow: none;
+    transition: background-color 200ms ease, transform 200ms ease;
   }
 
   .post-card:hover,
   .blog-card:hover,
   .coding__card:hover,
   .about__card:hover {
-    border-color: color-mix(in srgb, var(--accent-start) 22%, var(--line));
-    transform: translateY(-2px);
+    background: color-mix(in srgb, var(--accent-wash) 16%, transparent);
+    transform: translateY(-1px);
   }
 
   /* Featured card: subtle accent wash, slightly more presence */
   .post-card--featured,
   .blog-card--featured {
-    background: color-mix(in srgb, var(--accent-start) 5%, var(--bg-soft));
+    background: var(--bg-soft);
     padding: clamp(1.5rem, 4vw, 2.5rem);
   }
 
@@ -487,4 +489,73 @@
 [data-persona="studio"] [data-persona-slot="studio"],
 [data-persona="field"] [data-persona-slot="field"] {
   display: block;
+}
+
+/* Field Notes: about prose measure */
+.about__description {
+  max-inline-size: 62ch;
+}
+
+
+/* ==========================================================================
+   Field Notes override — final word on card chrome (must stay LAST).
+   De-boxed: no left accent rules, no boxes; hairline top dividers only.
+   ========================================================================== */
+.post-card,
+.blog-card,
+.coding__card,
+.coding__item,
+.photography__card,
+.library__card,
+.library__item,
+.about__card,
+.uses-card,
+.uses-item,
+:where([data-persona]) .post-card,
+:where([data-persona]) .blog-card,
+:where([data-persona]) .coding__card,
+:where([data-persona]) .coding__item,
+:where([data-persona]) .photography__card,
+:where([data-persona]) .library__card,
+:where([data-persona]) .library__item,
+:where([data-persona]) .about__card,
+:where([data-persona]) .uses-card,
+:where([data-persona]) .uses-item {
+  border: none;
+  border-top: 1px solid var(--line);
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+/* Authoritative: kill every persona edge/rule variant regardless of specificity */
+.post-card,.blog-card,.coding__card,.coding__item,.photography__card,.library__card,.library__item,.about__card,.uses-card,.uses-item{border-left:none!important;border-right:none!important;border-bottom:none!important;border-top:1px solid var(--line)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+
+.post-card:hover,
+.blog-card:hover,
+.coding__card:hover,
+.coding__item:hover,
+.library__card:hover,
+.library__item:hover,
+.about__card:hover,
+.uses-card:hover,
+.uses-item:hover {
+  background: color-mix(in srgb, var(--accent-wash) 14%, transparent);
+  transform: none;
+}
+
+/* Featured keeps a raised-paper surface, no accent bar */
+.post-card--featured,
+.blog-card--featured {
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+}
+
+/* Book covers keep their frame (they frame imagery, not text) */
+.library__book-cover {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
 }

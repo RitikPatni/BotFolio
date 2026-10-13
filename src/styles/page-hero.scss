@@ -1,15 +1,15 @@
 /* Shared hero foundation. Route styles should only define content-specific
    details; layout, alignment, surfaces, and responsive rhythm live here. */
 .page-hero {
-  --page-hero-content-max: 60rem;
+  --page-hero-content-max: var(--layout-max-width);
   --page-hero-glow-opacity: 0.1;
   --page-hero-padding-block: clamp(3rem, 7vw, 4rem) clamp(2.25rem, 5vw, 3rem);
 
   position: relative;
   overflow: hidden;
   padding-block: var(--page-hero-padding-block);
-  padding-inline: 2rem;
-  text-align: center;
+  padding-inline: 0;
+  text-align: start; /* Field Notes: every header shares the content grid's left edge */
 
   &::before {
     content: '';
@@ -38,7 +38,7 @@
 
   &__lead {
     max-inline-size: 40rem;
-    margin: 0 auto;
+    margin: 0;
     color: var(--text-muted);
     font-size: 1.05rem;
     font-weight: 300;
@@ -65,8 +65,6 @@
   }
 
   &--standard {
-    text-align: start;
-
     .page-hero__lead {
       margin-inline: 0;
     }
@@ -101,11 +99,7 @@
   &--intro {
     padding-block: clamp(0.75rem, 2vw, 1.5rem) clamp(2rem, 4vw, 3rem);
     overflow: visible;
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--accent-start) 3%, transparent),
-      transparent 78%
-    );
+    background: transparent; /* Field Notes: flat paper, no wash bands */
     text-align: start;
 
     &::before {
@@ -113,7 +107,7 @@
     }
 
     > .page-hero__inner {
-      max-inline-size: 44rem;
+      max-inline-size: var(--layout-max-width);
       margin-inline: 0;
     }
 

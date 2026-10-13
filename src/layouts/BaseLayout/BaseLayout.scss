@@ -86,7 +86,7 @@
   &__container {
     inline-size: min(100%, var(--layout-max-width));
     margin-inline: auto;
-    padding: var(--layout-padding);
+    padding: var(--layout-padding) 2rem; /* gutter matches .page-hero 2rem: header shares the content grid edge */
   }
 
   &__header {
@@ -102,7 +102,7 @@
     .base-layout__container {
       display: grid;
       gap: 0.5rem;
-      padding: 0 var(--layout-padding);
+      padding: 0 2rem; /* same single gutter as main content */
     }
 
     @media (max-width: 48rem) {
@@ -481,7 +481,7 @@ html.is-theme-switching
   color: #4b4b57;
   &:hover { color: #0a0a0b; background: rgba(0, 0, 0, 0.05); }
   &.active {
-    color: #1e50c8;
+    color: var(--accent-text);
     background: color-mix(in srgb, var(--accent-start) 14%, #ffffff);
     border-color: color-mix(in srgb, var(--accent-start) 45%, var(--line));
   }

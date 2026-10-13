@@ -1,48 +1,80 @@
 /* ==========================================================================
-   V2 Typography — Geist body, fluid clamp scale
-   Stripe-inspired: weight-driven hierarchy, no serif
+   Field Notes typography — Fraunces display, Newsreader prose, Geist UI.
+   Weight-driven hierarchy gives way to typeface contrast: serif display
+   + serif prose against a sans/mono metadata layer.
    ========================================================================== */
 
 :root {
-  /* Matches the stack both personas actually render (studio sets this exact
-     stack; field overrides with Archivo). Inter never renders on the site —
-     it survives only in OG-image SVGs, by design. */
-  --font-body: "Geist", "Switzer", "Helvetica Neue", system-ui, sans-serif;
-  --font-mono: "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
+  /* Prose gets a serif (Newsreader, already loaded); Geist demoted to UI labels */
+  --font-body: "Newsreader", Georgia, serif;
+  --font-mono: "IBM Plex Mono", "Fira Code", ui-monospace, monospace;
+  --font-ui: "Geist", "Helvetica Neue", system-ui, sans-serif;
 }
 
-/* Heading weights — body sans (300) with negative tracking */
+/* Display headlines — Fraunces, tight, confident */
 h1 {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+  font-weight: 550;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  font-variation-settings: "opsz" 72;
 }
 
 h2 {
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 530;
+  letter-spacing: -0.01em;
+  line-height: 1.18;
 }
 
 h3 {
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  font-weight: 300;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 h4 {
-  font-size: clamp(1rem, 1.5vw, 1.25rem);
-  font-weight: 400;
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 600;
   line-height: 1.4;
 }
 
-/* Body */
+/* Prose body — Newsreader at reading size, generous leading */
 body,
 p,
 li {
-  font-weight: 300;
-  line-height: 1.8;
+  font-weight: 400;
+  line-height: 1.72;
+}
+
+/* Prose containers slightly larger + serif */
+.prose p,
+.slug-prose p,
+.slug-prose li {
+  font-size: 1.16rem;
+  line-height: 1.78;
+  color: var(--text);
+}
+
+/* Metadata layer — mono caps */
+.page-hero__meta,
+.blog-card-date,
+figure figcaption,
+.slug-hero-meta {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* Dates & counts: tabular numerals */
+.blog-card-date,
+.slug-hero-meta,
+.library__note-meta {
+  font-variant-numeric: tabular-nums;
 }

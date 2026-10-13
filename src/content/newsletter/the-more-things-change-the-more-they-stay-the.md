@@ -1,5 +1,5 @@
 ---
-title: "\\\\\\\\\\\\\\\"The more things change, the more they stay the same…\\\\\\\\\\\\\\\" - Jean-Baptiste Alphonse Karr"
+title: "The more things change, the more they stay the same… - Jean-Baptiste Alphonse Karr"
 description: "Re: Selling your extension, This Content Won’t Architect Itself, @TerribleMia, Stats Page, The sum of all knowledge, Where Do Memes Come From? The Top Platforms From 2010-2022"
 date: "2022-09-06"
 draft: false

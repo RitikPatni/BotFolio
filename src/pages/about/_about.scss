@@ -1,4 +1,8 @@
 .about {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0;
+
   &__hero {
     /* Shared geometry comes from .page-hero. */
   }
@@ -25,9 +29,10 @@
   }
 
   &__card {
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
+    border: none;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    padding: 1.5rem 0;
     &-title {
       margin-top: 0;
       font-family: var(--font-display);

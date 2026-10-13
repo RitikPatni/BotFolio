@@ -7,7 +7,7 @@
   &-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 1.5rem;
   }
 
@@ -20,7 +20,7 @@
   }
 
   &-tagline {
-    margin: 0 auto 2rem;
+    margin: 0 0 2rem;
   }
 
   &-accent {
@@ -71,14 +71,26 @@
 .posts {
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 4rem 1rem;
+  padding: 4rem 0;
 }
 
 .section-title {
-  font-size: clamp(1.75rem, 3vw, 2rem);
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  margin: 0 0 2rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.9rem, 3.2vw, 2.4rem);
+  font-weight: 530;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.75rem;
+}
+
+/* Shared editorial section header: mono kicker + serif title on one left edge */
+.section-kicker {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin: 0 0 0.6rem;
 }
 
 .post-grid {
@@ -88,20 +100,21 @@
 }
 
 .post-card {
-  padding: 2rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  transition: border-color 200ms;
+  padding: 2rem 0;
+  border: none;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  transition: background-color 200ms;
 
   &:hover {
-    border-color: color-mix(in srgb, var(--accent-start) 20%, var(--line));
+    background: color-mix(in srgb, var(--accent-wash) 14%, transparent);
   }
 
   &--featured {
     grid-column: 1 / -1;
-    padding: 2rem;
-    background: color-mix(in srgb, var(--accent-start) 4%, transparent);
-    border: 1px solid var(--line);
+    padding: 2.25rem 2rem;
+    background: var(--bg-soft);
+    border: none;
     border-radius: var(--radius-md);
     margin-bottom: 2rem;
 
@@ -177,17 +190,15 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 1.25rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--bg-soft);
+  padding: 0;
+  border: none;
+  background: transparent;
   text-decoration: none;
   color: var(--text);
-  transition: border-color 200ms ease, transform 200ms ease;
+  transition: transform 200ms ease;
 }
 
 .field-home__shot:hover {
-  border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
   transform: translateY(-2px);
 }
 
