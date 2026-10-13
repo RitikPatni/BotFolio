@@ -27,6 +27,10 @@
 .uses-kicker {
   margin-block-end: 1.25rem;
   color: var(--accent-text);
+  padding-bottom: 0.5rem;
+  border-left: 2px solid var(--accent-start);
+  padding-left: 0.75rem;
+  letter-spacing: 0.14em;
 }
 
 .uses-title {

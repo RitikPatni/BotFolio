@@ -42,31 +42,33 @@
   /* Cards: calm editorial surfaces, crisp 6px corners, hairline divider,
      generous internal padding, ultra-diffuse shadow only. */
   .post-card,
+  /* Field Notes: cards are not boxed. Surfaces stay quiet; separation comes
+     from whitespace + hairline dividers, with a quiet tint on hover. */
   .blog-card,
   .coding__card,
   .photography__card,
   .library__card,
   .uses-card,
   .about__card {
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-    background: var(--bg-soft);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    transition: border-color 200ms ease, transform 200ms ease;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    box-shadow: none;
+    transition: background-color 200ms ease, transform 200ms ease;
   }
 
   .post-card:hover,
   .blog-card:hover,
   .coding__card:hover,
   .about__card:hover {
-    border-color: color-mix(in srgb, var(--accent-start) 22%, var(--line));
-    transform: translateY(-2px);
+    background: color-mix(in srgb, var(--accent-wash) 16%, transparent);
+    transform: translateY(-1px);
   }
 
   /* Featured card: subtle accent wash, slightly more presence */
   .post-card--featured,
   .blog-card--featured {
-    background: color-mix(in srgb, var(--accent-start) 5%, var(--bg-soft));
+    background: var(--bg-soft);
     padding: clamp(1.5rem, 4vw, 2.5rem);
   }
 
@@ -487,4 +489,9 @@
 [data-persona="studio"] [data-persona-slot="studio"],
 [data-persona="field"] [data-persona-slot="field"] {
   display: block;
+}
+
+/* Field Notes: about prose measure */
+.about__description {
+  max-inline-size: 62ch;
 }

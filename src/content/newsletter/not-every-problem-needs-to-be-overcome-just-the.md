@@ -1,5 +1,5 @@
 ---
-title: "\\\\\\\\\\\\\\\"Not every problem needs to be overcome, just the ones stopping you from getting where you want to be.\\\\\\\\\\\\\\\" - Ann Hill"
+title: "Not every problem needs to be overcome, just the ones stopping you from getting where you want to be. - Ann Hill"
 description: "Some ways to get better at debugging, Julia Evans, Visit for a surprise, the joy and suffering of awareness, Why your website should work without Javascript."
 date: "2022-09-13"
 draft: false
