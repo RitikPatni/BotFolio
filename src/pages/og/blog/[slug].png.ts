@@ -100,7 +100,7 @@ export async function GET({ props }: { props: { post: any } }) {
 
   const png = new Resvg(blogSvg(post.data.title, post.data.description || "", date, `${min} min`, slug), {
     fitTo: { mode: "width", value: 1200 },
-    font: { loadSystemFonts: false, fontFiles: FONT_FILES, defaultFontFamily: "Inter" },
+    font: { loadSystemFonts: false, fontFiles: FONT_FILES, defaultFontFamily: "Fraunces" },
   }).render().asPng();
 
   return new Response(new Uint8Array(png), { headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=31536000, immutable" } });

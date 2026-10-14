@@ -46,13 +46,9 @@
     display: block;
   }
 
-  html[data-persona="studio"] & [data-persona-nav="field"] {
-    display: none;
-  }
 
-  html[data-persona="field"] & [data-persona-nav="studio"] {
-    display: none;
-  }
+
+
 
   & :where(a, button):focus-visible {
     outline: var(--border-size-2) solid var(--accent);
@@ -82,6 +78,11 @@
     padding: var(--layout-padding) 2rem; /* gutter matches .page-hero 2rem: header shares the content grid edge */
   }
 
+  /* rendered header height (measured: 103px desktop w/ 2 rows, 88px mobile) —
+     consumed by the full-bleed hero's under-nav pull */
+  --header-h: 103px;
+  @media (max-width: 48rem) { --header-h: 88px; }
+
   &__header {
     position: sticky;
     top: 0;
@@ -91,6 +92,28 @@
     backdrop-filter: blur(16px);
     border-bottom: var(--border-light);
     transition: background-color 180ms ease, box-shadow 180ms ease;
+
+    /* Field Notes: on the full-bleed hero page the nav floats transparent over the photo */
+    @supports selector(:has(*)) {
+      .base-layout:has([data-hero]) & {
+        position: fixed;
+        inset-inline: clamp(2rem, 5vw, 5rem);
+        background: transparent;
+        backdrop-filter: none;
+        border-bottom-color: transparent;
+
+        .base-layout__brand strong,
+        .nav-link,
+        .base-layout__gallery-link {
+          color: var(--bg);
+          text-shadow: 0 1px 2px rgba(29, 27, 22, 0.55);
+        }
+        .nav-link.is-active {
+          color: var(--bg);
+          text-shadow: 0 1px 3px rgba(29, 27, 22, 0.7);
+        }
+      }
+    }
 
     .base-layout__container {
       display: grid;

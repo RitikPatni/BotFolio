@@ -45,19 +45,14 @@ try {
     files.map(async (file) => [file, await readFile(file, "utf8")]),
   );
 
-  const studioNav = htmlDocuments.find(([, html]) =>
-    html.includes('data-persona-nav="studio"'),
-  )?.[1] ?? "";
-  const fieldNav = htmlDocuments.find(([, html]) =>
-    html.includes('data-persona-nav="field"'),
+  // Field Notes: persona navigation dissolved — one main navigation carries all routes.
+  const mainNav = htmlDocuments.find(([, html]) =>
+    html.includes("nav-links"),
   )?.[1] ?? "";
 
   for (const href of ["/library", "/uses"]) {
-    if (!studioNav.includes(`href=\"${href}\"`)) {
-      failures.push(`studio navigation is missing shared route ${href}`);
-    }
-    if (!fieldNav.includes(`href=\"${href}\"`)) {
-      failures.push(`field navigation is missing shared route ${href}`);
+    if (!mainNav.includes(`href=\"${href}\"`)) {
+      failures.push(`main navigation is missing shared route ${href}`);
     }
   }
 

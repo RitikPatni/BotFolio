@@ -231,7 +231,7 @@ const imageUrl = new URL(image, Astro.site).toString();
                 class="base-layout__brand"
                 href="/"
                 aria-label="Go to profile home"
-                data-persona-brand
+               
               >
                 <strong>{SITE_CONFIG.personName}</strong>
               </a>
@@ -239,16 +239,12 @@ const imageUrl = new URL(image, Astro.site).toString();
             <a class="base-layout__gallery-link" href="/photography" aria-label="Photography gallery">Gallery</a>
           </div>
           <div class="base-layout__menu-row">
-            <nav class="nav-links" aria-label="Studio navigation" data-persona-nav="studio">
+            <nav class="nav-links" aria-label="Main navigation">
               {navSets.studio.map(item => (
                 <a href={item.href} class={isNavLinkActive(item.href) ? 'nav-link active' : 'nav-link'} aria-current={isNavLinkActive(item.href) ? 'page' : undefined}>{item.label}</a>
               ))}
             </nav>
-            <nav class="nav-links" aria-label="Field navigation" data-persona-nav="field">
-              {navSets.field.map(item => (
-                <a href={item.href} class={isNavLinkActive(item.href) ? 'nav-link active' : 'nav-link'} aria-current={isNavLinkActive(item.href) ? 'page' : undefined}>{item.label}</a>
-              ))}
-            </nav>
+            
             <span class="nav-scroll-hint" data-nav-scroll-hint hidden aria-hidden="true">
               Swipe for more
             </span>

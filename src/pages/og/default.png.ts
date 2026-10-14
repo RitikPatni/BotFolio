@@ -33,7 +33,7 @@ function svg(): string {
 export async function GET() {
   const png = new Resvg(svg(), {
     fitTo: { mode: "width", value: 1200 },
-    font: { loadSystemFonts: false, fontFiles: FONT_FILES, defaultFontFamily: "Inter" },
+    font: { loadSystemFonts: false, fontFiles: FONT_FILES, defaultFontFamily: "Fraunces" },
   }).render().asPng();
   return new Response(new Uint8Array(png), { headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=31536000, immutable" } });
 }
