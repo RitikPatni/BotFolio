@@ -60,6 +60,7 @@ const posts = (await getCollection("blog"))
   path="/"
 >
   <section class="hero" data-hero="hzn" style={'--hz: 83.5dvh; --pos: 50% 100%'}>
+    {heroBleedAsset && (
     <figure class="hero-bleed" aria-hidden="true">
       <AstroImage
         src={heroBleedAsset}
@@ -70,6 +71,7 @@ const posts = (await getCollection("blog"))
         class="hero-bleed-img"
       />
     </figure>
+    )}
     <div class="hz-rule" aria-hidden="true"><span class="hz-right">field notes</span><span class="hz-below">dusk</span></div>
     <header class="hzn-mast">
       <h1 class="hero-name hzn-name">Storks</h1>
