@@ -112,10 +112,11 @@
 
   &--featured {
     grid-column: 1 / -1;
-    padding: 1.75rem 1.75rem;
-    background: var(--bg-soft);
+    padding: 1.75rem 0 1.5rem;
+    background: transparent; /* Field Notes: no inset panel — text sits on the grid edge */
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: 0;
+    border-bottom: 1px solid var(--line);
     margin-bottom: 1.25rem;
 
     .post-card-title {
