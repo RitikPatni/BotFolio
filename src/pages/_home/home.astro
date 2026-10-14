@@ -59,24 +59,25 @@ const posts = (await getCollection("blog"))
   description="I build thoughtful web experiences and document nature up close."
   path="/"
 >
-  <section class="hero" data-hero="hzn" style={'--hz: 83.5dvh; --pos: 50% 100%'}>
-    {heroBleedAsset && (
-    <figure class="hero-bleed" aria-hidden="true">
+  <section class="hero-fn" data-hero="bleed">
+    <figure class="hero-fn__photo" aria-hidden="true">
       <AstroImage
         src={heroBleedAsset}
         alt="Two storks silhouetted in golden dusk light over still water"
         widths={[960, 1600, 2400]}
         sizes="100vw"
         loading="eager"
-        class="hero-bleed-img"
+        class="hero-fn__img"
       />
     </figure>
-    )}
-    <div class="hz-rule" aria-hidden="true"><span class="hz-right">field notes</span><span class="hz-below">dusk</span></div>
-    <div class="hzn-panel">
-      <h1 class="hero-name hzn-name">Ritik <span class="fw-5">Patni</span></h1>
-      <p class="hero-tagline hzn-tagline">I build thoughtful product surfaces — and document nature up close, one frame at a time.</p>
-      <a class="hero-cta hzn-cta-inline" href="/blog">Read the notes →</a>
+    <div class="hero-fn__shore" aria-hidden="true">
+      <span class="hero-fn__tick">FIELD NOTES</span>
+      <span class="hero-fn__tick hero-fn__tick--sub">DUSK</span>
+    </div>
+    <div class="hero-fn__panel">
+      <h1 class="hero-fn__name">Ritik <span class="hero-fn__serif">Patni</span></h1>
+      <p class="hero-fn__tagline">I build thoughtful product surfaces — and document nature up close, one frame at a time.</p>
+      <a class="hero-fn__cta" href="/blog">Read the notes →</a>
     </div>
   </section>
 
