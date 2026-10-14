@@ -3,7 +3,7 @@
 .uses-v2 {
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: clamp(3rem, 8vw, 6rem) 0;
+  padding: clamp(2rem, 4vw, 3rem) 0;
 
   .uses-body {
     padding: 0;
@@ -12,7 +12,7 @@
 
 .uses-intro {
   max-width: var(--layout-max-width);
-  margin-block-end: clamp(3rem, 7vw, 5rem);
+  margin-block-end: clamp(2rem, 4vw, 3rem);
 }
 
 .uses-kicker,
@@ -170,7 +170,7 @@
   }
 
   .uses-intro {
-    margin-block-end: 3.5rem;
+    margin-block-end: 2.5rem;
   }
 
   .uses-cards {
