@@ -8,29 +8,22 @@ import { photographyCategories } from "../../data/photography/manifest";
 import { slugOf } from "../../utils/slug";
 import "./_home.scss";
 
-const posts = (await getCollection("blog"))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date))
-  .slice(0, 3)
-  .map((post) => ({
-    slug: slugOf(post),
-    title: post.data.title,
-    description: post.data.description,
-    date: post.data.date,
-  }));
-
-// Field Notes home: one hero, photography woven in as a visual strip.
 const galleryAssetModules = import.meta.glob(
   "../../assets/photography/**/*.{avif,gif,jpeg,jpg,png,webp}",
   { eager: true },
 ) as Record<string, { default: ImageMetadata }>;
+
 const galleryAssets = new Map(
   Object.entries(galleryAssetModules).map(([path, module]) => [
     path.replace("../../assets/photography/", ""),
     module.default,
   ]),
 );
-const heroBleedAsset = galleryAssets.get("wildlife/sunset-silhouette-storks.jpg");
+
+const heroBleedAsset = galleryAssets.get(
+  "wildlife/sunset-silhouette-storks.jpg",
+);
+
 const featuredShots = photographyGalleryData
   .map((img) => {
     const assetModule = galleryAssets.get(`${img.category}/${img.filename}`);
@@ -44,9 +37,21 @@ const featuredShots = photographyGalleryData
   })
   .filter((shot): shot is NonNullable<typeof shot> => shot !== null)
   .slice(0, 5);
+
+const panoAsset = galleryAssets.get("wildlife/flamingo-flock-panorama.jpg");
 const categoryLabel = (id: string) =>
   photographyCategories.find((c) => c.id === id)?.label ?? id;
 
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => dateTimestamp(b.data.date) - dateTimestamp(a.data.date))
+  .slice(0, 3)
+  .map((post) => ({
+    slug: slugOf(post),
+    title: post.data.title,
+    description: post.data.description,
+    date: post.data.date,
+  }));
 ---
 
 <BaseLayout
@@ -54,30 +59,29 @@ const categoryLabel = (id: string) =>
   description="I build thoughtful web experiences and document nature up close."
   path="/"
 >
-  <!-- Hero: Field Notes full-bleed — one frame, one line -->
-  <section class="hero page-hero page-hero--landing" data-hero="bleed">
+  <section class="hero" data-hero="hzn" style={'--hz: 83.5dvh; --pos: 50% 100%'}>
     <figure class="hero-bleed" aria-hidden="true">
-      {heroBleedAsset && (
       <AstroImage
         src={heroBleedAsset}
-        alt="Two storks silhouetted against a fiery orange sunset while standing in golden water"
+        alt="Two storks silhouetted in golden dusk light over still water"
         widths={[960, 1600, 2400]}
         sizes="100vw"
         loading="eager"
         class="hero-bleed-img"
       />
-      <div class="hero-veil" aria-hidden="true"></div>
-      )}
     </figure>
-    <div class="hero-content page-hero__inner">
-      <h1 class="hero-name page-hero__title">Ritik <span class="fw-500">Patni</span></h1>
-      <p class="hero-tagline page-hero__lead">I build thoughtful product surfaces — and document nature up close, one frame at a time.</p>
-      <span class="hero-accent">Frontend developer · wildlife photographer</span>
+    <div class="hz-rule" aria-hidden="true"><span class="hz-right">field notes</span><span class="hz-below">dusk</span></div>
+    <header class="hzn-mast">
+      <h1 class="hero-name hzn-name">Storks</h1>
+      <p class="hzn-lede">Ritik Patni — I build thoughtful product surfaces, and I document nature up close.</p>
+    </header>
+    <aside class="hzn-card">
       <a class="hero-cta" href="/blog">Read the notes →</a>
-    </div>
+      <p class="hzn-card-note">field notes · photography journal</p>
+    </aside>
   </section>
 
-  <!-- Recent frames: photography woven in -->
+  <!-- Recent frames -->
   <section class="posts field-home">
     <p class="section-kicker">Photography</p>
     <h2 class="section-title">Recent frames</h2>
