@@ -268,6 +268,7 @@
   position: absolute;
   inset: 0;
   background:
+    linear-gradient(180deg, rgba(247, 244, 237, 0.8) 0%, rgba(247, 244, 237, 0) 22%),
     linear-gradient(112deg,
       rgba(247, 244, 237, 0.96) 0%,
       rgba(247, 244, 237, 0.88) 30%,
@@ -300,12 +301,12 @@
 }
 
 .hero[data-hero="bleed"] .hero-cta {
-  background: var(--ink);
-  color: var(--paper, #f7f4ed);
+  background: var(--text); /* ink button on the light water */
+  color: var(--bg);
   border: none;
 }
 
 .hero[data-hero="bleed"] .hero-cta:hover {
-  background: var(--accent-end, #46573a);
+  background: var(--accent-end);
   color: #f0ede2;
 }

@@ -92,6 +92,17 @@
     border-bottom: var(--border-light);
     transition: background-color 180ms ease, box-shadow 180ms ease;
 
+    /* Field Notes: on the full-bleed hero page the nav floats transparent over the photo */
+    @supports selector(:has(*)) {
+      .base-layout:has(.hero[data-hero="bleed"]) & {
+        position: fixed;
+        inset-inline: 0;
+        background: transparent;
+        backdrop-filter: none;
+        border-bottom-color: transparent;
+      }
+    }
+
     .base-layout__container {
       display: grid;
       gap: 0.5rem;
