@@ -53,8 +53,19 @@ const categoryLabel = (id: string) =>
   description="I build thoughtful web experiences and document nature up close."
   path="/"
 >
-  <!-- Hero: one identity, dev + photography -->
-  <section class="hero page-hero page-hero--landing">
+  <!-- Hero: Field Notes full-bleed — one frame, one line -->
+  <section class="hero page-hero page-hero--landing" data-hero="bleed">
+    <figure class="hero-bleed" aria-hidden="true">
+      <AstroImage
+        src={galleryAssets.get("wildlife/sunset-silhouette-storks.jpg")}
+        alt=""
+        widths={[960, 1600, 2400]}
+        sizes="100vw"
+        loading="eager"
+        class="hero-bleed-img"
+      />
+      <div class="hero-veil" aria-hidden="true"></div>
+    </figure>
     <div class="hero-content page-hero__inner">
       <h1 class="hero-name page-hero__title">Ritik <span class="fw-500">Patni</span></h1>
       <p class="hero-tagline page-hero__lead">I build thoughtful product surfaces — and document nature up close, one frame at a time.</p>
