@@ -236,6 +236,12 @@
     grid-template-columns: minmax(0, 1fr) minmax(280px, 400px);
     gap: clamp(2rem, 5vw, 4rem);
     align-items: center;
+
+    .page-hero__inner,
+    .hero-content {
+      margin-inline: 0;
+      max-inline-size: none;
+    }
   }
 }
 

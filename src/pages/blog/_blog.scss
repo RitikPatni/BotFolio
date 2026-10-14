@@ -3,6 +3,9 @@
    ═════════════════════════════════════════════════════════════════ */
 
 .blog-hero {
+  /* Field Notes: hero text shares the +2rem gutter the pills/cards use */
+  padding-inline: 2rem;
+
   &-content {
     /* Shared positioning comes from .page-hero__inner. */
   }
@@ -30,7 +33,7 @@
 }
 
 .blog-card {
-  padding: 2rem 1rem;
+  padding: 2rem 0;
   border-bottom: 1px solid var(--line);
   transition: border-color 200ms;
 
@@ -40,7 +43,7 @@
 
   &--featured {
     grid-column: 1 / -1;
-    padding: 2rem;
+    padding: 2rem 0;
     background: color-mix(in srgb, var(--accent-start) 4%, transparent);
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
