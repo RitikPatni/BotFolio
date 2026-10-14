@@ -51,45 +51,10 @@ const applyPersona = (persona: PersonaMode) => {
   document.documentElement.setAttribute("data-persona", "studio");
 };
 
-const clearPersonaTransitionClasses = () => {
-  document.documentElement.classList.remove(personaSwitchClassName);
-  document.documentElement.classList.remove(personaEntryClassName);
-};
-
+const clearPersonaTransitionClasses = () => {};
 const applyPersonaEntryTransition = () => {
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  );
-
-  if (prefersReducedMotion.matches) {
-    try {
-      sessionStorage.removeItem(personaTransitionStorageKey);
-    } catch {
-      // Ignore storage write issues.
-    }
-    return;
-  }
-
-  let shouldAnimateEntry = false;
-
-  try {
-    shouldAnimateEntry =
-      sessionStorage.getItem(personaTransitionStorageKey) === "1";
-    sessionStorage.removeItem(personaTransitionStorageKey);
-  } catch {
-    shouldAnimateEntry = false;
-  }
-
-  if (!shouldAnimateEntry) {
-    return;
-  }
-
-  document.documentElement.classList.add(personaEntryClassName);
-  window.setTimeout(() => {
-    document.documentElement.classList.remove(personaEntryClassName);
-  }, personaEntryDurationMs);
+  /* persona mode dissolved — no entry transitions */
 };
-
 const navigateTo = async (targetPath: string) => {
   try {
     const transitionsClient = await import("astro:transitions/client");
@@ -341,38 +306,8 @@ const bindNavOverflow = () => {
 };
 
 const animateReveals = () => {
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  );
-
-  if (prefersReducedMotion.matches) {
-    return;
-  }
-
-  const revealTargets =
-    document.querySelectorAll<HTMLElement>(".motion-reveal");
-
-  revealTargets.forEach((element, index) => {
-    if (element.dataset.motionRevealDone === "true") {
-      return;
-    }
-
-    element.dataset.motionRevealDone = "true";
-    element.animate(
-      [
-        { opacity: 0, transform: "translateY(5px)" },
-        { opacity: 1, transform: "translateY(0px)" },
-      ],
-      {
-        duration: 520,
-        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-        delay: index * 75,
-        fill: "both",
-      },
-    );
-  });
+  /* Field Notes: per-page entry stagger removed — janky on navigation. */
 };
-
 export function initBaseLayoutClient(options: BaseLayoutInitOptions = {}) {
   const { animateReveals: shouldAnimateReveals = true } = options;
   const shell = document.querySelector<HTMLElement>("[data-page-shell]");
