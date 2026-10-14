@@ -132,3 +132,9 @@
   border-color: transparent !important;
   background: color-mix(in srgb, var(--accent-wash) 14%, transparent) !important;
 }
+
+.post-card--featured,
+.blog-card--featured {
+  padding-inline: 0 !important;
+  background: transparent !important;
+}
