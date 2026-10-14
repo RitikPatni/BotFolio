@@ -474,27 +474,6 @@
   font-family: var(--font-mono), monospace; font-size: 0.72rem; letter-spacing: 0.16em;
   color: var(--text-dim); text-transform: uppercase;
 }
-.hzn-mast {
-  position: absolute; left: 4vw; top: 9svh; z-index: 2;
-  max-inline-size: none; padding: 0 1.2rem 0.9rem;
-  background: rgba(247,244,237,0.42);
-  backdrop-filter: blur(3px);
-  border-radius: var(--radius-sm);
-}
-.hzn-card {
-  position: absolute; left: 3vw; bottom: 4.5dvh; z-index: 2;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 0.55rem;
-  padding: 1rem 1.3rem;
-  background: rgba(255, 253, 248, 0.94);
-  backdrop-filter: blur(3px);
-  border-radius: var(--radius-sm);
-  border-left: 3px solid var(--accent-start);
-}
-.hzn-card-note {
-  margin: 0; font-family: var(--font-mono), monospace; font-size: 0.68rem;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim);
-}
-.hzn-card-lede { margin: 0; color: var(--text); font-size: clamp(0.98rem, 1.7vw, 1.18rem); }
 /* soft cream wash above the waterline so ink lede/cta read over the amber sky */
 .hero[data-hero="hzn"]::before {
   content: ''; position: absolute; left: 0; right: 0; top: 0;
@@ -502,20 +481,49 @@
   background: linear-gradient(180deg, rgba(247,244,237,0.6) 0%, rgba(247,244,237,0.18) 30%, rgba(247,244,237,0) 55%);
   pointer-events: none; z-index: 0;
 }
-.hzn-name {
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(3.6rem, 9.5vw, 8.6rem);
-  font-weight: 560; letter-spacing: -0.02em; line-height: 1;
-  margin: 0; color: var(--text);
-}
-.hzn-lede {
-  margin: 0.7rem 0 0; font-size: clamp(0.98rem, 1.7vw, 1.16rem);
-  color: var(--text); max-inline-size: 32rem;
-}
 .hero[data-hero="hzn"] .hero-tagline {
   font-size: clamp(1rem, 1.8vw, 1.25rem); color: var(--text); max-inline-size: 30rem; margin: 0;
 }
 @media (max-width: 62rem) {
   .hero[data-hero="hzn"] { --hz: 62dvh; }
-  .hzn-name { font-size: clamp(3rem, 14vw, 6rem); }
+  }
+
+/* Field Notes R4.2: the bleed runs UNDER the transparent nav.
+   The fixed header still occupies layout space on this page -> pull the
+   hero up by its rendered height and extend the photo to keep the fold true. */
+@supports selector(:has(*)) {
+  .base-layout:has([data-hero]) [data-hero] {
+    margin-block-start: calc(-1 * var(--header-h, 103px));
+    block-size: calc(100vh + var(--header-h, 103px));
+    block-size: calc(100dvh + var(--header-h, 103px));
+  }
 }
+
+/* ═══ R4.2 — synced copy block, one unit, low-left over the water ═══ */
+.hzn-panel {
+  position: absolute; left: 4vw; bottom: clamp(3rem, 7vw, 5rem);
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.85rem;
+  padding: 1.4rem 1.7rem;
+  background: rgba(255, 253, 248, 0.93);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-start);
+  max-inline-size: 34rem;
+  z-index: 2;
+}
+.hzn-panel .hzn-name {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.6rem, 4.5vw, 4rem);
+  font-weight: 560; letter-spacing: -0.02em; line-height: 1.05;
+  margin: 0; color: var(--text);
+}
+.hzn-panel .hzn-tagline {
+  margin: 0; color: var(--text-muted);
+  font-size: clamp(1rem, 1.8vw, 1.2rem); line-height: 1.55;
+  max-inline-size: 30rem;
+}
+.hzn-cta-inline {
+  margin-top: 0.35rem;
+  background: var(--text); color: var(--bg); border: none;
+}
+.hzn-cta-inline:hover { background: var(--accent-end); color: #f0ede2; }
