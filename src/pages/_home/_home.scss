@@ -354,14 +354,14 @@
 .hero-fn::before {
   content: ""; position: absolute; inset: 0;
   background:
-    linear-gradient(180deg, rgba(247,244,237,0.66) 0%, rgba(247,244,237,0.18) 20%, rgba(247,244,237,0) 38%),
+    linear-gradient(180deg, rgba(247,244,237,0.66) 0%, rgba(247,244,237,0.18) 20%, rgba(247,244,237,0) 55%),
     linear-gradient(0deg, rgba(247,244,237,0.15) 0%, rgba(247,244,237,0) 34%),
     rgba(247, 244, 237, 0.1);
   z-index: 0;
 }
 /* shoreline ticks sit high-right, clear of the panel zone */
 .hero-fn__shore {
-  position: absolute; top: calc(9svh + var(--header-h, 103px)); /* the hero is pulled up under the nav */
+  position: absolute; top: calc(2 * var(--header-h, 103px) + 1.75rem); /* fixed header (103) + hero pull-up (103) + gap */
   display: flex; flex-direction: column; align-items: flex-end; gap: 0.45rem;
   z-index: 2; text-align: right;
 }
