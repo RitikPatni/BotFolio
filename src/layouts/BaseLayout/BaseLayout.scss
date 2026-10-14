@@ -46,13 +46,9 @@
     display: block;
   }
 
-  html[data-persona="studio"] & [data-persona-nav="field"] {
-    display: none;
-  }
 
-  html[data-persona="field"] & [data-persona-nav="studio"] {
-    display: none;
-  }
+
+
 
   & :where(a, button):focus-visible {
     outline: var(--border-size-2) solid var(--accent);

@@ -86,15 +86,6 @@
   --persona-btn-active-bg: color-mix(in srgb, var(--accent-start) 18%, var(--bg-soft));
 }
 
-/* Persona system kept temporarily for compat (P2 dissolves the toggle);
-   both personas resolve to the same moss family. */
-[data-persona="field"] {
-  --accent-start: #5f7350;
-  --accent-end: #46573a;
-}
-[data-persona="studio"][data-theme="light"],
-[data-persona="field"][data-theme="light"],
-[data-persona="studio"],
-[data-persona="field"] { --accent-text: #46573a; }
+/* Field Notes: persona compat stubs removed - single identity. */
 :root[data-theme="dark"],
 [data-theme="dark"] { --accent-text: #b3c7a0; }
