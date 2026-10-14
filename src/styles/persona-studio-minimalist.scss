@@ -95,3 +95,40 @@
 [data-persona="studio"] .page-hero::before {
   opacity: 0.05;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Field Notes: authoritative card chrome — LAST WORD in cascade.
+   No left rules, no boxes, no indents: whitespace + top hairlines only.
+   ═══════════════════════════════════════════════════════════════════ */
+.post-card,
+.blog-card,
+.coding__card,
+.coding__item,
+.photography__card,
+.library__card,
+.library__item,
+.library__note-item,
+.about__card,
+.uses-card,
+.uses-item {
+  border: none !important;
+  border-top: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.post-card--featured {
+  border-top: none !important;
+  padding-inline: 0 !important;
+}
+
+.post-card:hover,
+.blog-card:hover,
+.coding__card:hover,
+.library__card:hover,
+.about__card:hover,
+.uses-card:hover {
+  border-color: transparent !important;
+  background: color-mix(in srgb, var(--accent-wash) 14%, transparent) !important;
+}
