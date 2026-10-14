@@ -206,11 +206,16 @@
     }
   }
 
+  &__main {
+    /* Field Notes: section/hero padding owns vertical rhythm; container adds none */
+    padding-block: 0;
+  }
+
   &__footer {
     border-top: var(--border-light);
     color: var(--text-muted);
     padding: 2rem 0 3rem;
-    margin-top: 4rem;
+    margin-top: 2.5rem;
   }
 
   &__footer-content {
