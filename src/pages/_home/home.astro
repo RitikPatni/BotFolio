@@ -60,6 +60,7 @@ const posts = (await getCollection("blog"))
   path="/"
 >
   <section class="hero-fn" data-hero="bleed">
+    {heroBleedAsset && (
     <figure class="hero-fn__photo" aria-hidden="true">
       <AstroImage
         src={heroBleedAsset}
@@ -70,6 +71,7 @@ const posts = (await getCollection("blog"))
         class="hero-fn__img"
       />
     </figure>
+    )}
     <div class="hero-fn__shore" aria-hidden="true">
       <span class="hero-fn__tick">FIELD NOTES</span>
       <span class="hero-fn__tick hero-fn__tick--sub">DUSK</span>
