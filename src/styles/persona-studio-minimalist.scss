@@ -138,3 +138,8 @@
   padding-inline: 0 !important;
   background: transparent !important;
 }
+
+/* Field Notes: nav active underline = solid moss (kill any legacy gradient) */
+.nav-link.active:after {
+  background: var(--accent-start) !important;
+}

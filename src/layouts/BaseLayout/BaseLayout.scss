@@ -101,7 +101,7 @@
     @supports selector(:has(*)) {
       .base-layout:has([data-hero]) & {
         position: fixed;
-        inset-inline: 0;
+        inset-inline: clamp(2rem, 5vw, 5rem);
         background: transparent;
         backdrop-filter: none;
         border-bottom-color: transparent;
