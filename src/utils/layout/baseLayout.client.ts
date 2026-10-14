@@ -23,6 +23,23 @@ const readStoredTheme = (): "light" | "dark" | null => {
   }
 };
 
+
+const glassHeader = () => {
+  const header = document.querySelector<HTMLElement>(".base-layout__header");
+  if (!header) return;
+  const threshold = Math.round(window.innerHeight * 0.55);
+  header.classList.toggle("is-glassed", window.scrollY > threshold);
+};
+
+const bindGlassHeader = () => {
+  if (glassBound) return;
+  glassBound = true;
+  window.addEventListener("scroll", glassHeader, { passive: true });
+  glassHeader();
+};
+
+let glassBound = false;
+
 const applyTheme = (theme: "light" | "dark") => {
   document.documentElement.setAttribute("data-theme", theme);
 };
@@ -321,6 +338,7 @@ export function initBaseLayoutClient(options: BaseLayoutInitOptions = {}) {
   applyStoredTheme();
   applyStoredPersona();
   guardPersonaRoute();
+  bindGlassHeader();
   bindThemeToggle();
   bindPersonaToggle();
   bindNavOverflow();
