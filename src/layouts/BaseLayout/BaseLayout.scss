@@ -41,10 +41,12 @@
    hero's under-nav pull. These are static FALLBACKS only: baseLayout.client.ts
    measures the real header offsetHeight (ResizeObserver) and sets --header-h
    inline on <html>, which overrides these at runtime. Declared on :root (not
-   .base-layout) so that inline value is what descendants inherit. */
+   .base-layout) so that inline value is what descendants inherit. Values match
+   the measured rendered heights (desktop 103px, mobile 97px) so first paint
+   equals the hydrated value and the hero does not jump before JS runs. */
 :root {
   --header-h: 103px;
-  @media (max-width: 48rem) { --header-h: 88px; }
+  @media (max-width: 48rem) { --header-h: 97px; }
 }
 
 .base-layout {
@@ -132,11 +134,24 @@
            element-anchored band on the hero slides up with the photo, leaving the
            strip half-unscrimmed through almost the whole scroll range; the strip
            is only reliably photo-covered where THIS box is, so the coverage the
-           nav promises has to anchor here. Killed (opacity 0) in the solid state. */
+           nav promises has to anchor here. Killed (opacity 0) in the solid state.
+           Alignment contract: the band's inline extent == the hero PHOTO's left/right
+           edges at every viewport width, not the header's. The photo sits in the main
+           container's content box (min(100%, --layout-max-width) centered, 2rem gutter,
+           border-box), so its inset is max(0, (vw - max)/2) + 2rem, while the header's
+           is clamp(2rem, 5vw, 5rem) — they only coincide near 390px. With 50% = half
+           the header width, (photo inset - header inset) simplifies to
+           max(2rem - clamp(...), 50% - (max/2 - 2rem)): positive (band pulled inward)
+           above ~1200px where the photo is narrower than the header, negative (band
+           pushed outward) below it. */
         &::before {
           content: '';
           position: absolute;
-          inset: 0 0 auto 0;
+          inset-block: 0 auto;
+          inset-inline: max(
+            2rem - clamp(2rem, 5vw, 5rem),
+            50% - (var(--layout-max-width) / 2 - 2rem)
+          );
           block-size: calc(var(--header-h, 103px) + 80px);
           background: linear-gradient(
             180deg,
