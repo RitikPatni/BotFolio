@@ -456,8 +456,10 @@
 .hero[data-hero="hzn"] {
   position: relative; block-size: 100vh; block-size: 100dvh; min-block-size: 540px;
   overflow: hidden;
-  /* P1 SET 1: local stacking context so the layer order below is total and
-     cannot be perturbed by outside stacking contexts (view transitions). */
+  /* P1 SET 1: belt-and-braces only — a local stacking context so the layer
+     order below cannot be perturbed by outside stacking contexts (view
+     transitions). The operative stacking fix is z-index: 0 on .hero-bleed,
+     which makes the photo its own bottom layer under the z 1 veil. */
   isolation: isolate;
   display: block;
 }
@@ -473,7 +475,10 @@
 .hz-right {
   position: absolute; inset-inline-end: clamp(3rem, 6vw, 6rem); inset-block-start: -1.7rem;
   font-family: var(--font-mono), monospace; font-size: 0.72rem; letter-spacing: 0.16em;
-  color: var(--bg); text-transform: uppercase;
+  /* Pinned cream (was var(--bg)): the label sits over the photo in both themes, and
+     in dark var(--bg) resolves to near-black (measured rgb(23,24,18)) — same polarity
+     bug and same pinned value as the over-photo nav links (BaseLayout.scss). */
+  color: #f7f6f3; text-transform: uppercase;
   text-shadow: 0 1px 2px rgba(29, 27, 22, 0.55);
 }
 .hz-below {
@@ -482,7 +487,10 @@
   color: var(--text-dim); text-transform: uppercase;
 }
 /* Field Notes calm layer — 1a48dba's three-layer calibration, now actually painting:
-   paint order .hero-bleed (z 0) < veil ::before (z 1) < panel, annotations (z 2).
+   paint order .hero-bleed (z 0) < veil ::before (z 1) = .hz-rule (z 1) < panel (z 2).
+   The mono annotations are DOM children of .hz-rule, so they paint inside its z 1
+   layer; they clear the veil because .hz-rule follows ::before in tree order (equal
+   z-index, later paints on top) — not via a z 2 of their own.
    The hero's first --header-h sits under (and clipped behind) the fixed nav, so nav
    coverage is the header's own over-photo treatment (BaseLayout.scss), not veil pixels.
    The commit story's img grade (saturate .86 + brightness 1.04) was never shipped; chroma
