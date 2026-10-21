@@ -456,13 +456,19 @@
 .hero[data-hero="hzn"] {
   position: relative; block-size: 100vh; block-size: 100dvh; min-block-size: 540px;
   overflow: hidden;
+  /* P1 SET 1: local stacking context so the layer order below is total and
+     cannot be perturbed by outside stacking contexts (view transitions). */
+  isolation: isolate;
   display: block;
 }
-.hero[data-hero="hzn"] .hero-bleed { position: absolute; inset: 0; margin: 0; }
+.hero[data-hero="hzn"] .hero-bleed { position: absolute; inset: 0; margin: 0; z-index: 0; } /* P1 SET 1: photo is its own bottom layer */
 .hero[data-hero="hzn"] .hero-bleed-img { inline-size: 100%; block-size: 100%; object-fit: cover; object-position: var(--pos, 50% 30%); }
+/* Keep the horizon rule + its mono annotations above the calm layer, exactly as
+   they rendered over the un-veiled photo before this stacking fix. */
 .hz-rule {
   position: absolute; left: 0; right: 0; top: var(--hz, 83.5dvh);
   border-block-start: 1px solid rgba(29,27,22,.8);
+  z-index: 1; /* P1 SET 1: rule rides with the veil layer, never under it */
 }
 .hz-right {
   position: absolute; inset-inline-end: clamp(3rem, 6vw, 6rem); inset-block-start: -1.7rem;
@@ -475,23 +481,25 @@
   font-family: var(--font-mono), monospace; font-size: 0.72rem; letter-spacing: 0.16em;
   color: var(--text-dim); text-transform: uppercase;
 }
-/* Field Notes calm layer: even cream-linen wash over the whole frame + deeper top band for nav.
-   Photo reads through at ~70%, chroma tamed. */
+/* Field Notes calm layer — 1a48dba's three-layer calibration, now actually painting:
+   paint order .hero-bleed (z 0) < veil ::before (z 1) < panel, annotations (z 2).
+   The hero's first --header-h sits under (and clipped behind) the fixed nav, so nav
+   coverage is the header's own over-photo treatment (BaseLayout.scss), not veil pixels.
+   The commit story's img grade (saturate .86 + brightness 1.04) was never shipped; chroma
+   taming comes from the committed veil layers alone (left un-implemented on purpose —
+   Ritik-gate item in the P1 report: adding it is a design call, not a repair). */
 .hero[data-hero="hzn"]::before {
   content: ''; position: absolute; inset: 0;
   background:
     linear-gradient(180deg, rgba(247,244,237,0.72) 0%, rgba(247,244,237,0.2) 22%, rgba(247,244,237,0) 40%),
     linear-gradient(0deg, rgba(247,244,237,0.16) 0%, rgba(247,244,237,0) 42%),
     rgba(247, 244, 237, 0.1);
-  pointer-events: none; z-index: 0;
+  pointer-events: none; z-index: 1; /* P1 SET 1: veil composites ABOVE the photo layer (z 0), BELOW the panel (z 2) */
 }
-/* keep the birds' zone clearest: lighten the wash under the storks band so they stay vivid */
-.hero[data-hero="hzn"]::after {
-  content: ''; position: absolute;
-  left: 8%; right: 6%; top: 52dvh; bottom: 0;
-  background: linear-gradient(180deg, rgba(247,244,237,0) 0%, rgba(247,244,237,0) 100%);
-  pointer-events: none; z-index: 0;
-}
+/* P1 SET 1: the former ::after shipped linear-gradient(rgba(247,244,237,0) 0%,
+   rgba(247,244,237,0) 100%) — a literal no-op (0 alpha at both ends) — removed.
+   A birds'-zone veil treatment, if wanted, needs measured values (P1 report,
+   Ritik-gate), not invented ones. */
 .hero[data-hero="hzn"] .hero-tagline {
   font-size: clamp(1rem, 1.8vw, 1.25rem); color: var(--text); max-inline-size: 30rem; margin: 0;
 }
@@ -521,6 +529,13 @@
   border-left: 3px solid var(--accent-start);
   max-inline-size: 34rem;
   z-index: 2;
+}
+/* P1 SET 2 (C1): token-driven dark panel — charcoal --bg-soft surface, so the
+   panel follows the theme with its text tokens (bone --text on charcoal) and the
+   text can NEVER flip against its surface. Light keeps the committed cream
+   panel + ink text above; polarity is pinned by construction in both themes. */
+[data-theme="dark"] .hzn-panel {
+  background: color-mix(in srgb, var(--bg-soft) 93%, transparent);
 }
 .hzn-panel .hzn-name {
   font-family: var(--font-display), Georgia, serif;
