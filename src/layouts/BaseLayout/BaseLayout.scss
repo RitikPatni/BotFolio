@@ -93,7 +93,9 @@
     border-bottom: var(--border-light);
     transition: background-color 180ms ease, box-shadow 180ms ease;
 
-    /* Field Notes: on the full-bleed hero page the nav floats transparent over the photo */
+    /* Field Notes: on the full-bleed hero page the nav floats transparent over the photo.
+       P1 SET 2: link cream is PINNED (was var(--bg)) — in dark theme var(--bg) resolves to
+       near-black #171812 and the links measured 1.38–1.72:1 over the photo sky (audit C1). */
     @supports selector(:has(*)) {
       .base-layout:has([data-hero]) & {
         position: fixed;
@@ -105,12 +107,37 @@
         .base-layout__brand strong,
         .nav-link,
         .base-layout__gallery-link {
-          color: var(--bg);
+          color: #f7f6f3;
           text-shadow: 0 1px 2px rgba(29, 27, 22, 0.55);
         }
         .nav-link.is-active {
-          color: var(--bg);
+          color: #f7f6f3;
           text-shadow: 0 1px 3px rgba(29, 27, 22, 0.7);
+        }
+
+        /* P1 SET 2: nav scrim — ink band PINNED TO THE HEADER (α 0.72 +
+           hold box + 16px, fade over the next 64px; measured floor 5.25:1 at
+           the worst band pixel vs pinned cream — dark 1280 last-pre-flip; all
+           other cells ≥ 6.3:1). An
+           element-anchored band on the hero slides up with the photo, leaving the
+           strip half-unscrimmed through almost the whole scroll range; the strip
+           is only reliably photo-covered where THIS box is, so the coverage the
+           nav promises has to anchor here. Killed (opacity 0) in the solid state. */
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0 0 auto 0;
+          block-size: calc(var(--header-h, 103px) + 80px);
+          background: linear-gradient(
+            180deg,
+            rgba(29, 27, 22, 0.72) 0px,
+            rgba(29, 27, 22, 0.72) calc(var(--header-h, 103px) + 16px),
+            rgba(29, 27, 22, 0) calc(var(--header-h, 103px) + 80px)
+          );
+          pointer-events: none;
+          z-index: -1;
+          opacity: 1;
+          transition: opacity 180ms ease;
         }
       }
     }
@@ -518,4 +545,43 @@ html.is-theme-switching
 }
 [data-persona="field"][data-theme="light"] .nav-persona-btn.active {
   color: #9a5808;
+}
+
+/* ═════════════════════════════════════════════════════════════════
+   P1 SET 2 (C2) — scroll-aware header on hero pages.
+   While the full-bleed hero band FILLS the header's box the header keeps its
+   transparent over-photo look (above). Once the photo no longer fills that
+   box (baseLayout.client.ts flips html[data-header-solid] when the strip stops
+   being photo-covered), the header takes the standard hero-less look: solid
+   cream background, hairline border-bottom, ink links, moss active underline
+   (the !important moss rule in persona-studio-minimalist.scss persists).
+   position stays fixed in both states so nothing reflows at the toggle
+   boundary (the fixed slot == the sticky slot's geometry here).
+   ═════════════════════════════════════════════════════════════════ */
+@supports selector(:has(*)) {
+  html[data-header-solid] .base-layout:has([data-hero]) .base-layout__header {
+    position: fixed; /* unchanged state — geometry-stable toggle */
+    inset-inline: 0; /* solid bar spans the viewport like the non-hero sticky header */
+    background: var(--bg);
+    backdrop-filter: blur(16px);
+    border-bottom-color: var(--line);
+
+    &::before {
+      opacity: 0; /* over-photo nav scrim has nothing to cover under a solid bar */
+    }
+
+    .base-layout__brand strong,
+    .nav-link,
+    .base-layout__gallery-link {
+      color: var(--text-muted);
+      text-shadow: none;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+    }
+    .base-layout__gallery-link:hover {
+      color: var(--accent-text);
+    }
+  }
 }

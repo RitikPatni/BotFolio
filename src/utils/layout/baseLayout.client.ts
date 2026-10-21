@@ -308,6 +308,52 @@ const bindNavOverflow = () => {
 const animateReveals = () => {
   /* Field Notes: per-page entry stagger removed — janky on navigation. */
 };
+
+/* ═══ P1 SET 2 (C2) — scroll-aware header state ═══
+   On pages with a full-bleed hero ([data-hero]) the header is fixed and
+   transparent with pinned cream links while the photo band fills the header's
+   box. Once the photo stops filling it, html gets data-header-solid and the
+   header switches to the standard solid look (BaseLayout.scss). Non-hero pages
+   never get the attribute, so their existing sticky header is untouched;
+   scrolling back to the top removes the attribute and restores the transparent
+   over-photo state. */
+const syncHeaderSolid = () => {
+  const html = document.documentElement;
+  const hero = document.querySelector<HTMLElement>("[data-hero]");
+
+  if (!hero) {
+    html.removeAttribute("data-header-solid");
+    return;
+  }
+
+  /* P1 SET 2: the transparent look is only sound while the photo band FILLS the
+     header's box — the strip loses photo coverage from its bottom edge first (the
+     links row sits low in the box), and the former heroBottom <= 0 threshold kept
+     pinned cream links over the cream page across that split (a 1.0:1 ghost
+     window). Flip to the solid header exactly when the photo stops covering it. */
+  const headerH =
+    document.querySelector<HTMLElement>(".base-layout__header")?.offsetHeight ?? 0;
+  const pastPhotoBand = hero.getBoundingClientRect().bottom <= headerH;
+
+  if (pastPhotoBand) {
+    html.setAttribute("data-header-solid", "");
+  } else {
+    html.removeAttribute("data-header-solid");
+  }
+};
+
+let headerSolidBound = false;
+const bindHeaderSolid = () => {
+  if (!headerSolidBound) {
+    headerSolidBound = true;
+    window.addEventListener("scroll", syncHeaderSolid, { passive: true });
+    window.addEventListener("resize", syncHeaderSolid, { passive: true });
+  }
+  /* Re-sync on every init: covers navigations (astro:page-load), scroll
+     restoration on load, and hero-less pages (attribute must not leak). */
+  syncHeaderSolid();
+};
+
 export function initBaseLayoutClient(options: BaseLayoutInitOptions = {}) {
   const { animateReveals: shouldAnimateReveals = true } = options;
   const shell = document.querySelector<HTMLElement>("[data-page-shell]");
@@ -324,6 +370,7 @@ export function initBaseLayoutClient(options: BaseLayoutInitOptions = {}) {
   bindThemeToggle();
   bindPersonaToggle();
   bindNavOverflow();
+  bindHeaderSolid();
 
   if (shouldAnimateReveals) {
     animateReveals();
