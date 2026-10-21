@@ -118,6 +118,16 @@
           text-shadow: 0 1px 2px rgba(29, 27, 22, 0.55);
         }
 
+        /* Breathing room: header text never meets the photo edge. The photo's inset is
+           max(0, (vw - max)/2) + 2rem; this container's content edge is the header's
+           clamp inset + max(0, (header width - cap)/2) + 2rem. With the cap at max, the
+           two coincide (0px gap) above ~1333px. Capping at max - 3rem gives a floor of
+           1.5rem (24px) from the photo edges at every width — exactly the gap 1280 already
+           had — and changes nothing below 1280, where 100% still wins the min(). */
+        .base-layout__container {
+          inline-size: min(100%, var(--layout-max-width) - 3rem);
+        }
+
         /* Focus ring over the ink scrim: the base var(--accent) moss ring measures
            ~1.4:1 here (WCAG 1.4.11 needs 3:1) — pin it to the same cream as the links.
            Width/style/offset inherit from the base :focus-visible rule. */

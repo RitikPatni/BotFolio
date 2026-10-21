@@ -484,7 +484,16 @@
 .hz-below {
   position: absolute; inset-inline-start: 34vw; inset-block-start: 0.45rem;
   font-family: var(--font-mono), monospace; font-size: 0.72rem; letter-spacing: 0.16em;
-  color: var(--text-dim); text-transform: uppercase;
+  text-transform: uppercase;
+  /* Pinned on its own ink plate (was var(--text-dim): 1.37:1 light, 1.0:1 dark — the
+     "ghost" beside the panel at 1920). It sits on the water, which runs from specular
+     glints to deep orange across widths, so no bare pinned colour holds (cream bottoms
+     at 1.0:1 on glints, ink at 2.46:1 on darker water). Cream on the nav scrim's ink
+     α .72 stays >= ~6:1 even over pure white, in both themes, by construction. */
+  color: #f7f6f3;
+  background: rgba(29, 27, 22, 0.72);
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
 }
 /* Field Notes calm layer — 1a48dba's three-layer calibration, now actually painting:
    paint order .hero-bleed (z 0) < veil ::before (z 1) = .hz-rule (z 1) < panel (z 2).
@@ -527,8 +536,15 @@
 }
 
 /* ═══ R4.2 — synced copy block, one unit, low-left over the water ═══ */
+/* Horizontal breathing room on both sides: right 1.5rem keeps the panel off the photo's
+   right edge where it would otherwise shrink-to-fit flush against it (mobile: panel.right
+   was == photo.right at 390). The left floor drops 3rem -> 1.5rem so the panel keeps its
+   readable width there; 7vw still wins above ~686px, so desktop is unchanged (the 34rem
+   cap binds long before right does). fit-content keeps the old shrink-to-fit width —
+   with both left and right set, an abspos auto width would stretch instead. */
 .hzn-panel {
-  position: absolute; left: clamp(3rem, 7vw, 7rem); bottom: clamp(3rem, 7vw, 5rem);
+  position: absolute; left: clamp(1.5rem, 7vw, 7rem); right: 1.5rem; bottom: clamp(3rem, 7vw, 5rem);
+  inline-size: fit-content;
   display: flex; flex-direction: column; align-items: flex-start; gap: 0.85rem;
   padding: 1.4rem 1.7rem;
   background: rgba(255, 253, 248, 0.93);
