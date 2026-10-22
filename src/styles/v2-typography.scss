@@ -1,17 +1,10 @@
 /* ==========================================================================
-   Field Notes typography — Fraunces display, Newsreader prose, Geist UI.
-   Weight-driven hierarchy gives way to typeface contrast: serif display
-   + serif prose against a sans/mono metadata layer.
+   Field Notes typography — Newsreader headings, Geist body + UI, IBM Plex
+   Mono metadata. Font tokens live in v2-tokens.scss; the heading weight /
+   tracking that wins in the cascade lives in field-notes.scss.
    ========================================================================== */
 
-:root {
-  /* Prose gets a serif (Newsreader, already loaded); Geist demoted to UI labels */
-  --font-body: "Newsreader", Georgia, serif;
-  --font-mono: "IBM Plex Mono", "Fira Code", ui-monospace, monospace;
-  --font-ui: "Geist", "Helvetica Neue", system-ui, sans-serif;
-}
-
-/* Display headlines — Fraunces, tight, confident */
+/* Display headlines — Newsreader */
 h1 {
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(2.6rem, 5.5vw, 4.4rem);
@@ -21,9 +14,10 @@ h1 {
   font-variation-settings: "opsz" 72;
 }
 
+/* The only h2 size on the site: route styles must not set h2 font-size. */
 h2 {
   font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-size: var(--fs-h2);
   font-weight: 530;
   letter-spacing: -0.01em;
   line-height: 1.18;
@@ -31,7 +25,7 @@ h2 {
 
 h3 {
   font-family: var(--font-ui), system-ui, sans-serif;
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-size: var(--fs-h3);
   font-weight: 600;
   line-height: 1.35;
 }
@@ -43,7 +37,7 @@ h4 {
   line-height: 1.4;
 }
 
-/* Prose body — Newsreader at reading size, generous leading */
+/* Body — generous leading */
 body,
 p,
 li {
@@ -51,7 +45,7 @@ li {
   line-height: 1.72;
 }
 
-/* Prose containers slightly larger + serif */
+/* Prose containers slightly larger */
 .prose p,
 .slug-prose p,
 .slug-prose li {

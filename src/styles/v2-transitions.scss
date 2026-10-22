@@ -18,7 +18,6 @@
 
 /* ── General interaction motion ──
    Buttons, links, cards, images ease on state changes. */
-.nav-persona-btn,
 .nav-link,
 .page-hero::before,
 .hero::before,
@@ -34,20 +33,13 @@ select,
 textarea,
 .photo-strip img,
 .library__book-cover,
-.base-layout__theme-fab {
+.base-layout__theme-toggle {
   transition: background-color var(--dur-base) var(--ease-soft),
     border-color var(--dur-base) var(--ease-soft),
     color var(--dur-base) var(--ease-soft),
     opacity var(--dur-base) var(--ease-soft),
     transform var(--dur-base) var(--ease-out),
     box-shadow var(--dur-base) var(--ease-soft);
-}
-
-/* Card hover: border + color transitions */
-.blog-card:hover,
-.post-card:hover {
-  border-color: color-mix(in srgb, var(--accent-start) 25%, var(--line));
-  transform: translateY(-2px);
 }
 
 /* Nav: underline animated on page change */
@@ -66,8 +58,8 @@ textarea,
   transform: scale(1.02);
 }
 
-/* Theme FAB press feedback */
-.base-layout__theme-fab:active {
+/* Theme toggle press feedback */
+.base-layout__theme-toggle:active {
   transform: scale(0.92);
 }
 
