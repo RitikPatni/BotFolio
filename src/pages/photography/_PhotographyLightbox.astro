@@ -11,7 +11,6 @@ const { galleryLightboxItemsJson } = Astro.props;
 <dialog
   class="photography__lightbox"
   data-gallery-dialog
-  aria-hidden="true"
   aria-labelledby="galleryDialogTitle"
 >
   <div
@@ -20,101 +19,93 @@ const { galleryLightboxItemsJson } = Astro.props;
     data-metadata-visible="false"
     data-ui-visible="true"
   >
-    <div class="photography__lightbox-stage">
-      <p
-        class="photography__gallery-status"
-        data-gallery-status
-        role="status"
-        aria-live="polite"
-        hidden
-      ></p>
-      <div
-        class="photography__metadata-scrim"
-        data-gallery-metadata-scrim
-        aria-hidden="true"
-      ></div>
+    <p
+      class="photography__gallery-status"
+      data-gallery-status
+      role="status"
+      aria-live="polite"
+      hidden
+    ></p>
+    <div
+      class="photography__metadata-scrim"
+      data-gallery-metadata-scrim
+      aria-hidden="true"
+    ></div>
 
-      <div class="photography__lightbox-toolbar" data-gallery-chrome>
-        <p class="photography__lightbox-counter" data-gallery-counter></p>
-        <div class="photography__lightbox-actions">
-          <button
-            class="photography__lightbox-action"
-            type="button"
-            data-gallery-fullscreen-toggle
-            aria-pressed="false"
-            aria-label="Full screen"
-            data-tooltip="Full screen"
-          >
-            <UiIcon name="expand" class="photography__inline-icon" />
-          </button>
-          <button
-            class="photography__lightbox-action"
-            type="button"
-            data-gallery-metadata-toggle
-            aria-expanded="false"
-            aria-controls="galleryMetadata"
-            aria-label="Show metadata"
-            data-tooltip="Show metadata"
-          >
-            <UiIcon name="info" class="photography__inline-icon" />
-          </button>
-          <button
-            class="photography__lightbox-close"
-            type="button"
-            data-gallery-close
-            aria-label="Close gallery"
-            data-tooltip="Close gallery"
-          >
-            <UiIcon name="close" class="photography__inline-icon" />
-          </button>
-        </div>
-      </div>
+    <div class="photography__lightbox-frame" data-gallery-frame>
+      <!-- impeccable-disable broken-image -- lightbox placeholder: src is set at runtime by the gallery script -->
+      <img
+        class="photography__lightbox-image"
+        data-gallery-image
+        alt=""
+        decoding="async"
+        draggable="false"
+      />
+    </div>
 
-      <div class="photography__lightbox-frame" data-gallery-frame>
+    <button
+      class="photography__lightbox-nav photography__lightbox-nav--prev"
+      type="button"
+      data-gallery-prev
+      aria-label="Previous image"
+    >
+      <UiIcon name="chevron-left" class="photography__nav-icon" />
+    </button>
+    <button
+      class="photography__lightbox-nav photography__lightbox-nav--next"
+      type="button"
+      data-gallery-next
+      aria-label="Next image"
+    >
+      <UiIcon name="chevron-right" class="photography__nav-icon" />
+    </button>
+
+    <div class="photography__lightbox-topbar">
+      <p class="photography__lightbox-counter" data-gallery-counter></p>
+      <div class="photography__lightbox-actions">
         <button
-          class="photography__lightbox-nav"
+          class="photography__lightbox-action"
           type="button"
-          data-gallery-prev
-          aria-label="Previous image"
-          data-tooltip="Previous image"
+          data-gallery-fullscreen-toggle
+          aria-pressed="false"
+          aria-label="Full screen"
+          data-tooltip="Full screen"
         >
-          <UiIcon name="chevron-left" class="photography__nav-icon" />
+          <UiIcon name="expand" class="photography__inline-icon" />
         </button>
-        <!-- impeccable-disable broken-image -- lightbox placeholder: src is set at runtime by the gallery script -->
-        <img
-          class="photography__lightbox-image"
-          data-gallery-image
-          alt=""
-          decoding="async"
-        />
         <button
-          class="photography__lightbox-nav"
+          class="photography__lightbox-action"
           type="button"
-          data-gallery-next
-          aria-label="Next image"
-          data-tooltip="Next image"
+          data-gallery-metadata-toggle
+          aria-expanded="false"
+          aria-controls="galleryMetadata"
+          aria-label="Show metadata"
+          data-tooltip="Show metadata"
         >
-          <UiIcon name="chevron-right" class="photography__nav-icon" />
+          <UiIcon name="info" class="photography__inline-icon" />
+        </button>
+        <button
+          class="photography__lightbox-close"
+          type="button"
+          data-gallery-close
+          aria-label="Close gallery"
+          data-tooltip="Close gallery"
+          autofocus
+        >
+          <UiIcon name="close" class="photography__inline-icon" />
         </button>
       </div>
+    </div>
 
-      <div class="photography__lightbox-summary" data-gallery-chrome>
-        <div>
-          <p class="photography__lightbox-category">
-            <UiIcon name="stack" class="photography__inline-icon" />
-            <span data-gallery-category></span>
-          </p>
-          <h2
-            class="photography__lightbox-title"
-            id="galleryDialogTitle"
-            data-gallery-title
-          >
-          </h2>
-        </div>
-        <p class="photography__lightbox-date" data-gallery-date hidden>
-          <UiIcon name="calendar" class="photography__inline-icon" />
-        </p>
-      </div>
+    <!-- Journal caption: the contact-sheet tag (serif title, mono EXIF) on ink. -->
+    <div class="photography__lightbox-caption" data-gallery-caption>
+      <h2
+        class="photography__lightbox-title"
+        id="galleryDialogTitle"
+        data-gallery-title
+      >
+      </h2>
+      <p class="photography__lightbox-caption-meta" data-gallery-caption-meta></p>
     </div>
 
     <aside
@@ -169,7 +160,7 @@ const { galleryLightboxItemsJson } = Astro.props;
 />
 
 <script>
-  import { initPhotographyLightbox } from "../../utils/photography/photographyLightbox.client";
+  import { bindPhotographyLightbox } from "../../utils/photography/photographyLightbox.client";
 
-  initPhotographyLightbox();
+  bindPhotographyLightbox();
 </script>

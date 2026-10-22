@@ -3,7 +3,8 @@
 /* Gallery — a contact sheet in the home strip's language: frames at their
    natural shapes on paper, one shared row height per row (justified rows: each
    frame grows in proportion to its aspect ratio), generous whitespace, mono
-   exposure captions, moss index links. The lightbox is untouched. */
+   exposure captions, moss index links. The lightbox reuses the same caption
+   language on ink (_photography.lightbox.shell.scss). */
 .photography {
   --photography-icon-size: var(--size-3);
   --photography-tooltip-gap: var(--size-2);
@@ -180,8 +181,7 @@
   /* ─── Tooltip (lightbox actions) ───────────────────────────── */
 
   &__lightbox-action[data-tooltip],
-  &__lightbox-close[data-tooltip],
-  &__lightbox-nav[data-tooltip] {
+  &__lightbox-close[data-tooltip] {
     position: relative;
 
     &::after {

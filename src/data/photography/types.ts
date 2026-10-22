@@ -1,5 +1,4 @@
 export type PhotoMetadata = {
-  location?: string;
   camera?: string;
   lens?: string;
   focalLength?: string;

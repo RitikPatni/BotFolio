@@ -10,37 +10,13 @@ import {
   type PhotoMetadata,
 } from "../../data/photography";
 import { photographyCategories } from "../../data/photography/manifest";
+import type {
+  GalleryDialogImage,
+  GalleryLightboxMetadata,
+} from "../../utils/photography/photographyLightbox.types";
 
 type GalleryAssetModule = {
   default: ImageMetadata;
-};
-
-type GalleryLightboxMetadata = {
-  date?: string;
-  location?: string;
-  camera?: string;
-  lens?: string;
-  focalLength?: string;
-  aperture?: string;
-  shutterSpeed?: string;
-  iso?: string;
-  category: string;
-  resolution: string;
-};
-
-type GalleryLightboxItem = {
-  index: number;
-  title: string;
-  alt: string;
-  category: string;
-  date: string;
-  src: string;
-  srcSet: string;
-  thumbSrc: string;
-  width: number;
-  height: number;
-  metadata: GalleryLightboxMetadata;
-  tags: string[];
 };
 
 type CategoryGalleryImage = {
@@ -88,7 +64,6 @@ const createLightboxMetadata = (
 ) => {
   return {
     date: image.date || undefined,
-    location: image.metadata?.location,
     camera: image.metadata?.camera,
     lens: image.metadata?.lens,
     focalLength: image.metadata?.focalLength,
@@ -102,7 +77,8 @@ const createLightboxMetadata = (
 
 let lightboxIndex = 0;
 const imagesByCategory: CategoryGallerySection[] = [];
-const galleryLightboxItems: GalleryLightboxItem[] = [];
+const galleryLightboxItems: GalleryDialogImage[] = [];
+const frameSlugs = new Set<string>();
 
 for (const category of photographyCategories) {
   const categoryImages = typedGallery.filter(
@@ -121,7 +97,7 @@ for (const category of photographyCategories) {
     const lightboxImage = await getImage({
       src: asset,
       widths: [960, 1440, 1920],
-      sizes: "(max-width: 60rem) 100vw, 75vw",
+      sizes: "92vw",
       quality: "high",
     });
 
@@ -131,6 +107,15 @@ for (const category of photographyCategories) {
       quality: "high",
     });
 
+    /* Deep-link id (/photography#<slug>): the asset filename sans extension. */
+    const slug = image.filename.replace(/\.[^.]+$/, "");
+
+    if (frameSlugs.has(slug)) {
+      throw new Error(`Duplicate photography frame slug: ${slug}`);
+    }
+    frameSlugs.add(slug);
+
+    const exposure = exposureOf(image.metadata);
     const metadataEntries = createLightboxMetadata(
       image,
       category.label,
@@ -138,6 +123,7 @@ for (const category of photographyCategories) {
     );
     const galleryItem = {
       index: lightboxIndex,
+      slug,
       title: image.title,
       alt: image.alt,
       category: category.label,
@@ -147,9 +133,10 @@ for (const category of photographyCategories) {
       thumbSrc: relatedThumb.src,
       width: Number(lightboxImage.attributes.width),
       height: Number(lightboxImage.attributes.height),
+      exposure,
       metadata: metadataEntries,
       tags: image.tags,
-    } satisfies GalleryLightboxItem;
+    } satisfies GalleryDialogImage;
 
     galleryLightboxItems.push(galleryItem);
     images.push({
@@ -159,7 +146,7 @@ for (const category of photographyCategories) {
       tags: image.tags,
       lightboxIndex,
       ratio: asset.width / asset.height,
-      exposure: exposureOf(image.metadata),
+      exposure,
     });
 
     lightboxIndex += 1;
