@@ -37,6 +37,18 @@
   }
 }
 
+/* Header height — consumed by the over-photo nav scrim hold and the full-bleed
+   hero's under-nav pull. These are static FALLBACKS only: baseLayout.client.ts
+   measures the real header offsetHeight (ResizeObserver) and sets --header-h
+   inline on <html>, which overrides these at runtime. Declared on :root (not
+   .base-layout) so that inline value is what descendants inherit. Values match
+   the measured rendered heights (desktop 103px, mobile 97px) so first paint
+   equals the hydrated value and the hero does not jump before JS runs. */
+:root {
+  --header-h: 103px;
+  @media (max-width: 48rem) { --header-h: 97px; }
+}
+
 .base-layout {
   min-block-size: 100dvb;
   background: var(--bg);
@@ -78,11 +90,6 @@
     padding: var(--layout-padding) 2rem; /* gutter matches .page-hero 2rem: header shares the content grid edge */
   }
 
-  /* rendered header height (measured: 103px desktop w/ 2 rows, 88px mobile) —
-     consumed by the full-bleed hero's under-nav pull */
-  --header-h: 103px;
-  @media (max-width: 48rem) { --header-h: 88px; }
-
   &__header {
     position: sticky;
     top: 0;
@@ -93,7 +100,9 @@
     border-bottom: var(--border-light);
     transition: background-color 180ms ease, box-shadow 180ms ease;
 
-    /* Field Notes: on the full-bleed hero page the nav floats transparent over the photo */
+    /* Field Notes: on the full-bleed hero page the nav floats transparent over the photo.
+       P1 SET 2: link cream is PINNED (was var(--bg)) — in dark theme var(--bg) resolves to
+       near-black #171812 and the links measured 1.38–1.72:1 over the photo sky (audit C1). */
     @supports selector(:has(*)) {
       .base-layout:has([data-hero]) & {
         position: fixed;
@@ -105,12 +114,82 @@
         .base-layout__brand strong,
         .nav-link,
         .base-layout__gallery-link {
-          color: var(--bg);
+          color: #f7f6f3;
           text-shadow: 0 1px 2px rgba(29, 27, 22, 0.55);
         }
-        .nav-link.is-active {
-          color: var(--bg);
-          text-shadow: 0 1px 3px rgba(29, 27, 22, 0.7);
+
+        /* Breathing room: header text never meets the photo edge. The photo's inset is
+           max(0, (vw - max)/2) + 2rem; this container's content edge is the header's
+           clamp inset + max(0, (header width - cap)/2) + 2rem. With the cap at max, the
+           two coincide (0px gap) above ~1333px. Capping at max - 3rem gives a floor of
+           1.5rem (24px) from the photo edges at every width — exactly the gap 1280 already
+           had — and changes nothing below 1280, where 100% still wins the min(). */
+        .base-layout__container {
+          inline-size: min(100%, var(--layout-max-width) - 3rem);
+        }
+
+        /* Focus ring over the ink scrim: the base var(--accent) moss ring measures
+           ~1.4:1 here (WCAG 1.4.11 needs 3:1) — pin it to the same cream as the links.
+           Width/style/offset inherit from the base :focus-visible rule. */
+        .base-layout__brand:focus-visible,
+        .nav-link:focus-visible,
+        .base-layout__gallery-link:focus-visible {
+          outline-color: #f7f6f3;
+        }
+
+        /* P1 SET 2: nav scrim — ink band PINNED TO THE HEADER (α 0.72 +
+           hold box + 16px, fade over the next 64px; measured floor 5.25:1 at
+           the worst band pixel vs pinned cream — dark 1280 last-pre-flip; all
+           other cells ≥ 6.3:1). An
+           element-anchored band on the hero slides up with the photo, leaving the
+           strip half-unscrimmed through almost the whole scroll range; the strip
+           is only reliably photo-covered where THIS box is, so the coverage the
+           nav promises has to anchor here. Killed (opacity 0) in the solid state.
+           Alignment contract: the band's inline extent == the hero PHOTO's left/right
+           edges at every viewport width, not the header's. The photo sits in the main
+           container's content box (min(100%, --layout-max-width) centered, 2rem gutter,
+           border-box), so its inset is max(0, (vw - max)/2) + 2rem, while the header's
+           is clamp(2rem, 5vw, 5rem) — they only coincide near 390px. With 50% = half
+           the header width, (photo inset - header inset) simplifies to
+           max(2rem - clamp(...), 50% - (max/2 - 2rem)): positive (band pulled inward)
+           above ~1200px where the photo is narrower than the header, negative (band
+           pushed outward) below it. */
+        &::before {
+          content: '';
+          position: absolute;
+          inset-block: 0 auto;
+          inset-inline: max(
+            2rem - clamp(2rem, 5vw, 5rem),
+            50% - (var(--layout-max-width) / 2 - 2rem)
+          );
+          block-size: calc(var(--header-h, 103px) + 80px);
+          background: linear-gradient(
+            180deg,
+            rgba(29, 27, 22, 0.72) 0px,
+            rgba(29, 27, 22, 0.72) calc(var(--header-h, 103px) + 16px),
+            rgba(29, 27, 22, 0) calc(var(--header-h, 103px) + 80px)
+          );
+          pointer-events: none;
+          z-index: -1;
+          opacity: 1;
+          transition: opacity 180ms ease;
+        }
+
+        /* Solid-state surface (see the scroll-aware block at the end of this file):
+           a full-bleed bar painted OUTSIDE the header's clamp inset, so the header box
+           itself never changes geometry between states. Hidden while over the photo. */
+        &::after {
+          content: '';
+          position: absolute;
+          inset-block: 0 calc(-1 * var(--border-size-1, 1px)); /* cover the header's own (transparent) border row */
+          inset-inline: calc(-1 * clamp(2rem, 5vw, 5rem));
+          background: var(--bg);
+          backdrop-filter: blur(16px);
+          border-bottom: var(--border-light);
+          pointer-events: none;
+          z-index: -1;
+          opacity: 0;
+          transition: opacity 180ms ease;
         }
       }
     }
@@ -518,4 +597,55 @@ html.is-theme-switching
 }
 [data-persona="field"][data-theme="light"] .nav-persona-btn.active {
   color: #9a5808;
+}
+
+/* ═════════════════════════════════════════════════════════════════
+   P1 SET 2 (C2) — scroll-aware header on hero pages.
+   While the full-bleed hero band FILLS the header's box the header keeps its
+   transparent over-photo look (above). Once the photo no longer fills that
+   box (baseLayout.client.ts flips html[data-header-solid] when the strip stops
+   being photo-covered), the header takes the standard hero-less look: solid
+   cream background, hairline border-bottom, ink links, moss active underline
+   (the !important moss rule in persona-studio-minimalist.scss persists).
+   Geometry is PINNED across the toggle: the header box keeps position: fixed
+   and the over-photo clamp inset-inline in both states, so brand and links do
+   not move at the flip. Only paint changes — the header element stays
+   transparent and borderless, and its ::after (defined in the over-photo block)
+   fades in as the full-bleed solid surface: it extends the clamp inset outward
+   on both sides to span the viewport and carries the bg, blur and hairline.
+   ═════════════════════════════════════════════════════════════════ */
+@supports selector(:has(*)) {
+  html[data-header-solid] .base-layout:has([data-hero]) .base-layout__header {
+    /* position, inset-inline, background, border: inherited unchanged from the
+       over-photo state on purpose — the ::after paints the solid bar. */
+
+    &::before {
+      opacity: 0; /* over-photo nav scrim has nothing to cover under a solid bar */
+    }
+
+    &::after {
+      opacity: 1; /* full-bleed solid surface: var(--bg) + blur + hairline */
+    }
+
+    .base-layout__brand strong,
+    .nav-link,
+    .base-layout__gallery-link {
+      color: var(--text-muted);
+      text-shadow: none;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+    }
+    .base-layout__gallery-link:hover {
+      color: var(--accent-text);
+    }
+
+    /* back on the solid cream/charcoal bar: the base moss ring is legible again */
+    .base-layout__brand:focus-visible,
+    .nav-link:focus-visible,
+    .base-layout__gallery-link:focus-visible {
+      outline-color: var(--accent);
+    }
+  }
 }

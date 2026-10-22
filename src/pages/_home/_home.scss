@@ -456,42 +456,67 @@
 .hero[data-hero="hzn"] {
   position: relative; block-size: 100vh; block-size: 100dvh; min-block-size: 540px;
   overflow: hidden;
+  /* P1 SET 1: belt-and-braces only — a local stacking context so the layer
+     order below cannot be perturbed by outside stacking contexts (view
+     transitions). The operative stacking fix is z-index: 0 on .hero-bleed,
+     which makes the photo its own bottom layer under the z 1 veil. */
+  isolation: isolate;
   display: block;
 }
-.hero[data-hero="hzn"] .hero-bleed { position: absolute; inset: 0; margin: 0; }
+.hero[data-hero="hzn"] .hero-bleed { position: absolute; inset: 0; margin: 0; z-index: 0; } /* P1 SET 1: photo is its own bottom layer */
 .hero[data-hero="hzn"] .hero-bleed-img { inline-size: 100%; block-size: 100%; object-fit: cover; object-position: var(--pos, 50% 30%); }
+/* Keep the horizon rule + its mono annotations above the calm layer, exactly as
+   they rendered over the un-veiled photo before this stacking fix. */
 .hz-rule {
   position: absolute; left: 0; right: 0; top: var(--hz, 83.5dvh);
   border-block-start: 1px solid rgba(29,27,22,.8);
+  z-index: 1; /* P1 SET 1: rule rides with the veil layer, never under it */
 }
 .hz-right {
   position: absolute; inset-inline-end: clamp(3rem, 6vw, 6rem); inset-block-start: -1.7rem;
   font-family: var(--font-mono), monospace; font-size: 0.72rem; letter-spacing: 0.16em;
-  color: var(--bg); text-transform: uppercase;
+  /* Pinned cream (was var(--bg)): the label sits over the photo in both themes, and
+     in dark var(--bg) resolves to near-black (measured rgb(23,24,18)) — same polarity
+     bug and same pinned value as the over-photo nav links (BaseLayout.scss). */
+  color: #f7f6f3; text-transform: uppercase;
   text-shadow: 0 1px 2px rgba(29, 27, 22, 0.55);
 }
 .hz-below {
   position: absolute; inset-inline-start: 34vw; inset-block-start: 0.45rem;
   font-family: var(--font-mono), monospace; font-size: 0.72rem; letter-spacing: 0.16em;
-  color: var(--text-dim); text-transform: uppercase;
+  text-transform: uppercase;
+  /* Pinned on its own ink plate (was var(--text-dim): 1.37:1 light, 1.0:1 dark — the
+     "ghost" beside the panel at 1920). It sits on the water, which runs from specular
+     glints to deep orange across widths, so no bare pinned colour holds (cream bottoms
+     at 1.0:1 on glints, ink at 2.46:1 on darker water). Cream on the nav scrim's ink
+     α .72 stays >= ~6:1 even over pure white, in both themes, by construction. */
+  color: #f7f6f3;
+  background: rgba(29, 27, 22, 0.72);
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
 }
-/* Field Notes calm layer: even cream-linen wash over the whole frame + deeper top band for nav.
-   Photo reads through at ~70%, chroma tamed. */
+/* Field Notes calm layer — 1a48dba's three-layer calibration, now actually painting:
+   paint order .hero-bleed (z 0) < veil ::before (z 1) = .hz-rule (z 1) < panel (z 2).
+   The mono annotations are DOM children of .hz-rule, so they paint inside its z 1
+   layer; they clear the veil because .hz-rule follows ::before in tree order (equal
+   z-index, later paints on top) — not via a z 2 of their own.
+   The hero's first --header-h sits under (and clipped behind) the fixed nav, so nav
+   coverage is the header's own over-photo treatment (BaseLayout.scss), not veil pixels.
+   The commit story's img grade (saturate .86 + brightness 1.04) was never shipped; chroma
+   taming comes from the committed veil layers alone (left un-implemented on purpose —
+   Ritik-gate item in the P1 report: adding it is a design call, not a repair). */
 .hero[data-hero="hzn"]::before {
   content: ''; position: absolute; inset: 0;
   background:
     linear-gradient(180deg, rgba(247,244,237,0.72) 0%, rgba(247,244,237,0.2) 22%, rgba(247,244,237,0) 40%),
     linear-gradient(0deg, rgba(247,244,237,0.16) 0%, rgba(247,244,237,0) 42%),
     rgba(247, 244, 237, 0.1);
-  pointer-events: none; z-index: 0;
+  pointer-events: none; z-index: 1; /* P1 SET 1: veil composites ABOVE the photo layer (z 0), BELOW the panel (z 2) */
 }
-/* keep the birds' zone clearest: lighten the wash under the storks band so they stay vivid */
-.hero[data-hero="hzn"]::after {
-  content: ''; position: absolute;
-  left: 8%; right: 6%; top: 52dvh; bottom: 0;
-  background: linear-gradient(180deg, rgba(247,244,237,0) 0%, rgba(247,244,237,0) 100%);
-  pointer-events: none; z-index: 0;
-}
+/* P1 SET 1: the former ::after shipped linear-gradient(rgba(247,244,237,0) 0%,
+   rgba(247,244,237,0) 100%) — a literal no-op (0 alpha at both ends) — removed.
+   A birds'-zone veil treatment, if wanted, needs measured values (P1 report,
+   Ritik-gate), not invented ones. */
 .hero[data-hero="hzn"] .hero-tagline {
   font-size: clamp(1rem, 1.8vw, 1.25rem); color: var(--text); max-inline-size: 30rem; margin: 0;
 }
@@ -511,8 +536,15 @@
 }
 
 /* ═══ R4.2 — synced copy block, one unit, low-left over the water ═══ */
+/* Horizontal breathing room on both sides: right 1.5rem keeps the panel off the photo's
+   right edge where it would otherwise shrink-to-fit flush against it (mobile: panel.right
+   was == photo.right at 390). The left floor drops 3rem -> 1.5rem so the panel keeps its
+   readable width there; 7vw still wins above ~686px, so desktop is unchanged (the 34rem
+   cap binds long before right does). fit-content keeps the old shrink-to-fit width —
+   with both left and right set, an abspos auto width would stretch instead. */
 .hzn-panel {
-  position: absolute; left: clamp(3rem, 7vw, 7rem); bottom: clamp(3rem, 7vw, 5rem);
+  position: absolute; left: clamp(1.5rem, 7vw, 7rem); right: 1.5rem; bottom: clamp(3rem, 7vw, 5rem);
+  inline-size: fit-content;
   display: flex; flex-direction: column; align-items: flex-start; gap: 0.85rem;
   padding: 1.4rem 1.7rem;
   background: rgba(255, 253, 248, 0.93);
@@ -521,6 +553,13 @@
   border-left: 3px solid var(--accent-start);
   max-inline-size: 34rem;
   z-index: 2;
+}
+/* P1 SET 2 (C1): token-driven dark panel — charcoal --bg-soft surface, so the
+   panel follows the theme with its text tokens (bone --text on charcoal) and the
+   text can NEVER flip against its surface. Light keeps the committed cream
+   panel + ink text above; polarity is pinned by construction in both themes. */
+[data-theme="dark"] .hzn-panel {
+  background: color-mix(in srgb, var(--bg-soft) 93%, transparent);
 }
 .hzn-panel .hzn-name {
   font-family: var(--font-display), Georgia, serif;
