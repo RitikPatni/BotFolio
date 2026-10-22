@@ -13,5 +13,5 @@ It's an awesome new thing in JS where you can write numbers as 1_000_000_000 and
 ---
 **Source**: [Tweet Link](https://twitter.com/cassidoo/status/1405952703143059465?s=20) 
 [Blog Link](https://davidwalsh.name/numeric-separators)
-Shared by [[🧔 Private/People/@cassidoo]]
-**Learned on** : [[🧔 Private/Planners/Day Planners/Archives/June 2021/18-Jun-2021]]
+Shared by @cassidoo
+**Learned on** : 18-Jun-2021

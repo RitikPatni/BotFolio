@@ -1,0 +1,62 @@
+.not-found {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0;
+
+  &__kicker {
+    margin: 0 0 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  &__lead {
+    max-width: 32rem;
+    color: var(--text-muted);
+  }
+
+  /* Ruled list, top hairlines only — same chrome as the Field Notes cards */
+  &__links {
+    display: grid;
+    margin-block-end: clamp(3rem, 8vw, 6rem);
+  }
+
+  &__link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--line);
+    transition: background-color 180ms ease;
+
+    &:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    &:hover {
+      background: color-mix(in srgb, var(--accent-wash) 14%, transparent);
+    }
+
+    &:hover .not-found__link-title {
+      color: var(--accent-text);
+    }
+  }
+
+  &__link-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+    line-height: 1.2;
+    color: var(--text);
+  }
+
+  &__link-meta {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+  }
+}

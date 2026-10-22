@@ -11,5 +11,5 @@ category: "blog"
 Nomophobia is the fancy term for the fear of being without Cell Phone
 
 ---
-**Learned on** : [[🧔 Private/Planners/Day Planners/08-Jul-2021]]
-**Source** : [[NYC Mini	]]
+**Learned on** : 08-Jul-2021
+**Source** : NYC Mini

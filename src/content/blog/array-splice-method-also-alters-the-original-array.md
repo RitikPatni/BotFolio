@@ -18,5 +18,5 @@ const firstEightArrayKeys = clonedArray.splice(0,8);
 ```
 
 ---
-**Learned on** : [10-Jul-2021](🧔%20Private/Planners/Day%20Planners/10-Jul-2021.md)
+**Learned on** : 10-Jul-2021
 **Source** :
