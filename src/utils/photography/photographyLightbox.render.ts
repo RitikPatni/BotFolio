@@ -1,5 +1,8 @@
 import type { GalleryDialogImage, GalleryElements, GalleryLightboxMetadata } from "./photographyLightbox.types";
 
+/* Matches the getImage() sizes in pages/photography/index.astro. */
+const LIGHTBOX_SIZES = "92vw";
+
 export type LightboxRenderState = {
   activeIndex: number;
   activeTag: string | null;
@@ -21,9 +24,8 @@ export function createLightboxRenderer({
   const {
     imageElement,
     counterElement,
-    categoryElement,
     titleElement,
-    dateElement,
+    captionMetaElement,
     metadataListElement,
     tagsSectionElement,
     tagListElement,
@@ -48,7 +50,6 @@ export function createLightboxRenderer({
 
     const entries = [
       ["Date", formattedDate],
-      ["Location", metadata.location],
       ["Camera", metadata.camera],
       ["Lens", metadata.lens],
       ["Focal length", metadata.focalLength],
@@ -97,6 +98,50 @@ export function createLightboxRenderer({
       return undefined;
     }
     return `${((width * height) / 1_000_000).toFixed(1)} MP`;
+  };
+
+  /* Journal caption under the title: exposure line, then date · camera · lens.
+     Only the frame's own fields — anything missing is left out, never filled. */
+  const renderCaption = (image: GalleryDialogImage) => {
+    const lines = [
+      image.exposure,
+      [
+        image.date ? formatGalleryDate(image.date) : undefined,
+        image.metadata.camera,
+        image.metadata.lens,
+      ]
+        .filter(Boolean)
+        .join(" · "),
+    ].filter(Boolean);
+
+    captionMetaElement.replaceChildren(
+      ...lines.map((text) => {
+        const line = document.createElement("span");
+        line.className = "photography__lightbox-caption-line";
+        line.textContent = text;
+        return line;
+      }),
+    );
+  };
+
+  /* Warm the cache for the frames either side so prev/next swap instantly. */
+  const preloaded = new Set<number>();
+  const preloadNeighbors = (index: number) => {
+    [index - 1, index + 1].forEach((offset) => {
+      const neighborIndex = (offset + images.length) % images.length;
+      const neighbor = images[neighborIndex];
+
+      if (!neighbor || preloaded.has(neighborIndex)) {
+        return;
+      }
+
+      preloaded.add(neighborIndex);
+      const preload = new Image();
+      preload.decoding = "async";
+      preload.sizes = LIGHTBOX_SIZES;
+      preload.srcset = neighbor.srcSet;
+      preload.src = neighbor.src;
+    });
   };
 
   const clearRelated = () => {
@@ -200,10 +245,8 @@ export function createLightboxRenderer({
       }
 
       counterElement.textContent = `${index + 1} / ${images.length}`;
-      categoryElement.textContent = image.category;
       titleElement.textContent = image.title;
-      dateElement.hidden = !image.date;
-      dateElement.textContent = image.date || "";
+      renderCaption(image);
       renderMetadata(image.metadata);
       renderTags(image.tags);
 
@@ -218,6 +261,7 @@ export function createLightboxRenderer({
       nextButton.disabled = images.length <= 1;
 
       imageElement.classList.remove("is-swapping");
+      preloadNeighbors(index);
     };
 
     onImageState?.("loading");
@@ -226,7 +270,7 @@ export function createLightboxRenderer({
     // Point the element at the new source first.
     imageElement.src = image.src;
     imageElement.srcset = image.srcSet;
-    imageElement.sizes = "(max-width: 60rem) 100vw, 75vw";
+    imageElement.sizes = LIGHTBOX_SIZES;
     imageElement.width = image.width;
     imageElement.height = image.height;
     imageElement.alt = image.alt;

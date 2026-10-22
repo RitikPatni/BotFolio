@@ -1,6 +1,5 @@
 export type GalleryLightboxMetadata = {
   date?: string;
-  location?: string;
   camera?: string;
   lens?: string;
   focalLength?: string;
@@ -13,6 +12,8 @@ export type GalleryLightboxMetadata = {
 
 export type GalleryDialogImage = {
   index: number;
+  /* Deep-link id: /photography#<slug> opens this frame. */
+  slug: string;
   title: string;
   alt: string;
   category: string;
@@ -22,6 +23,8 @@ export type GalleryDialogImage = {
   thumbSrc: string;
   width: number;
   height: number;
+  /* Contact-sheet exposure line (aperture · shutter · ISO); empty when no EXIF. */
+  exposure: string;
   metadata: GalleryLightboxMetadata;
   tags: string[];
 };
@@ -32,9 +35,8 @@ export type GalleryElements = {
   triggers: HTMLElement[];
   imageElement: HTMLImageElement;
   counterElement: HTMLElement;
-  categoryElement: HTMLElement;
   titleElement: HTMLElement;
-  dateElement: HTMLElement;
+  captionMetaElement: HTMLElement;
   metadataElement: HTMLElement;
   metadataListElement: HTMLElement;
   tagsSectionElement: HTMLElement;
@@ -58,9 +60,8 @@ export function resolveElements(root: HTMLElement): GalleryElements | null {
   const triggers = Array.from(root.querySelectorAll<HTMLElement>("[data-gallery-trigger]"));
   const imageElement = root.querySelector("[data-gallery-image]");
   const counterElement = root.querySelector("[data-gallery-counter]");
-  const categoryElement = root.querySelector("[data-gallery-category]");
   const titleElement = root.querySelector("[data-gallery-title]");
-  const dateElement = root.querySelector("[data-gallery-date]");
+  const captionMetaElement = root.querySelector("[data-gallery-caption-meta]");
   const metadataElement = root.querySelector("[data-gallery-metadata]");
   const metadataListElement = root.querySelector("[data-gallery-metadata-list]");
   const tagsSectionElement = root.querySelector("[data-gallery-tags-section]");
@@ -82,9 +83,8 @@ export function resolveElements(root: HTMLElement): GalleryElements | null {
     !(lightboxShell instanceof HTMLElement) ||
     !(imageElement instanceof HTMLImageElement) ||
     !(counterElement instanceof HTMLElement) ||
-    !(categoryElement instanceof HTMLElement) ||
     !(titleElement instanceof HTMLElement) ||
-    !(dateElement instanceof HTMLElement) ||
+    !(captionMetaElement instanceof HTMLElement) ||
     !(metadataElement instanceof HTMLElement) ||
     !(metadataListElement instanceof HTMLElement) ||
     !(tagsSectionElement instanceof HTMLElement) ||
@@ -110,9 +110,8 @@ export function resolveElements(root: HTMLElement): GalleryElements | null {
     triggers,
     imageElement,
     counterElement,
-    categoryElement,
     titleElement,
-    dateElement,
+    captionMetaElement,
     metadataElement,
     metadataListElement,
     tagsSectionElement,
