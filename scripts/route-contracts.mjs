@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { access, readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import process from "node:process";
@@ -23,9 +24,12 @@ const walk = async (directory) => {
 
 const routeFile = (pathname) => {
   const cleanPath = pathname.replace(/\/$/, "") || "/";
-  return cleanPath === "/"
-    ? join(distRoot, "index.html")
-    : join(distRoot, cleanPath.slice(1), "index.html");
+  if (cleanPath === "/") {
+    return join(distRoot, "index.html");
+  }
+  // build.format: 'file' emits dist/<path>.html; fall back to dist/<path>/index.html.
+  const fileForm = join(distRoot, `${cleanPath.slice(1)}.html`);
+  return existsSync(fileForm) ? fileForm : join(distRoot, cleanPath.slice(1), "index.html");
 };
 
 const staticFile = (pathname) => join(distRoot, pathname.replace(/^\//, ""));
