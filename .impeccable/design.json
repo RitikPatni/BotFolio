@@ -229,7 +229,7 @@
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Geist 400, 1rem / 1.65; prose 1.16rem / 1.78 at 60ch."
+        "purpose": "Geist 400, 1rem / 1.65; prose 1.16rem / 1.65 (field-notes.scss leading wins over the 1.78 in v2-typography.scss)."
       },
       "label": {
         "displayName": "Label",
@@ -240,7 +240,7 @@
       {
         "name": "none-on-content",
         "value": "none",
-        "purpose": "Cards, list rows, header and heroes carry no shadow. Shadows are reserved for floating layers (lightbox chrome, gallery tooltips) and book covers."
+        "purpose": "Cards, list rows, header and heroes carry no shadow. Shadows are reserved for floating layers (lightbox chrome and metadata sheet, gallery loading-status pill, lightbox tooltips) and book covers."
       }
     ],
     "motion": [
@@ -258,6 +258,11 @@
         "name": "dur-base",
         "value": "0.24s",
         "purpose": "Standard transition duration; reduced-motion collapses all to 0.01ms."
+      },
+      {
+        "name": "dur-slow",
+        "value": "0.36s",
+        "purpose": "The main content-rise entrance (fade from 10px below) on each page load; collapses under reduced motion."
       }
     ],
     "breakpoints": [

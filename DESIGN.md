@@ -87,11 +87,11 @@ typography:
     fontFamily: "Geist, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1.16rem"
     fontWeight: 400
-    lineHeight: 1.78
+    lineHeight: 1.65
   lede:
     fontFamily: "Geist, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1.05rem"
-    lineHeight: 1.5
+    lineHeight: 1.65
   ledger:
     fontFamily: "Geist, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1rem"
@@ -158,7 +158,7 @@ components:
 
 This file is the design law for the shipped site. It is written in the present tense: every rule describes what the site does now, and every authority claim points at the code that enforces it. When this file and the code disagree, the code is what ships. File the gap as a bug in one or the other; don't quietly follow either side.
 
-Measured evidence for each factual claim (computed styles from the built site, both themes, 1440 and 390 widths) is in `design/docs-round/measurements.json`. Claim IDs `C01`–`C36` are cited inline below.
+Each factual claim was measured against the built site (computed styles, both themes, 1440 and 390 widths). Claim IDs `C01`–`C36` and gap-pass IDs `G01`–`G26` are cited inline below. The evidence (`measurements.json` and the probe scripts) lives in the local `design/docs-round/` directory. `/design/` is gitignored, so that directory is not in the repository. Re-measure before you trust a number that looks stale.
 
 ## Overview
 
@@ -214,13 +214,13 @@ All eleven values match the computed `:root` in both themes (`C03`, `C04`). `bod
 
 ### Text hierarchy and contrast
 
-Three text tiers exist. Each has a measured floor in both themes (`C07`, `C08`):
+There are three text tiers plus accent text. Each has a measured floor in both themes (`C07`, `C08`):
 
 | Tier | Light on `--bg` / `--bg-soft` | Dark on `--bg` / `--bg-soft` | Use |
 |---|---|---|---|
 | `--text` | 15.66 / 16.92 | 15.24 / 13.89 | headings, body, prose, caption titles |
-| `--text-muted` | 7.34 / 7.93 | 7.09 / 6.46 | ledger counts, strip and gallery captions, nav links at rest, page-hero lead, footer |
-| `--text-dim` | 4.62 / 4.99 | 5.05 / 4.61 | the mono metadata layer (dates, hero meta, figcaptions), page-hero meta |
+| `--text-muted` | 7.34 / 7.93 | 7.09 / 6.46 | ledger counts, strip and gallery captions, nav links at rest, page-hero lead |
+| `--text-dim` | 4.62 / 4.99 | 5.05 / 4.61 | the mono metadata layer (dates, hero meta, figcaptions), page-hero meta, footer copy and social links (`BaseLayout.scss:151`, `:167`; `G08`) |
 | `--accent-text` | 7.12 / 7.69 | 9.86 / 8.99 | moss italic, section kickers, gallery index links |
 
 Rules:
@@ -271,7 +271,7 @@ Rules:
 
 ### Type ramp
 
-All font sizes come from this ramp. Ramp tokens live in `v2-tokens.scss:48-54`. The rendered values are at 1440 / 390 wide.
+Shared type sizes come from this ramp. The ramp tokens live in `v2-tokens.scss:48-54`. Rendered values are given at 1440 / 390 wide. Some component title sizes are still set locally. They are listed under Known deviations below.
 
 | Level | Token / value | Rendered | Face | Where |
 |---|---|---|---|---|
@@ -280,8 +280,8 @@ All font sizes come from this ramp. Ramp tokens live in `v2-tokens.scss:48-54`. 
 | H1 | `--fs-h1` `clamp(2.5rem, 6vw, 4rem)` | 64 / 40px | Newsreader 400, lh 1.08, −0.02em | every page-hero title (`page-hero.scss:30-37`) |
 | **H2** | `--fs-h2` `clamp(1.5rem, 2.4vw, 1.875rem)` | **30 / 24px** | Newsreader 400, lh 1.08 | **every h2 on every route** (`v2-typography.scss:18-24`) |
 | H3 | `--fs-h3` `clamp(1.05rem, 1.8vw, 1.35rem)` | 21.6px at 1440 | Newsreader 400, −0.01em | base h3 (`v2-typography.scss:26-31`, family and weight from `field-notes.scss:19-23`) |
-| Prose | 1.16rem / 1.78 | | Geist 400 | `.prose`, `.slug-prose` paragraphs and lists (`v2-typography.scss:49-55`) |
-| Lede | 1.05rem / 1.5 | | Geist | `.page-hero__lead` |
+| Prose | 1.16rem / 1.65 | 18.56px / 30.6px | Geist 400 | `.prose`, `.slug-prose` paragraphs and lists (size from `v2-typography.scss:49-55`; that rule's 1.78 leading loses to `field-notes.scss:25-30`; `G13`) |
+| Lede | 1.05rem / 1.65 (landing heroes `clamp(1.05rem, 2vw, 1.4rem)`) | 16.8px; 19.2px on `/uses` at 1440 | Geist 400, `--text-muted` | `.page-hero__lead` (`page-hero.scss:39-47`, `:60-64`; `G12`) |
 | Body | 1rem / 1.65 | 16px / 26.4px | Geist 400 | `body`, `p`, `li` (`field-notes.scss:25-30`) |
 | Ledger | 1rem | 16px | Geist 400 | home ledger links |
 | Caption title | 0.95rem | 15.2px | Newsreader 500 | strip and gallery captions |
@@ -299,6 +299,13 @@ Rules:
 - **Case.** Headings, ledger and captions use sentence case. Only the mono label layer uppercases: the strip label, "Open the gallery →", the gallery index and the metadata layer. EXIF lines are never uppercased, so "f/6.3" stays lowercase (`_photography.scss:129-137`).
 - **Tabular figures** are on site-wide (`field-notes.scss:33-35`) and set explicitly on counts, dates and captions.
 - **Italic** is the second voice. Use it only for the moss clause of the home statement, and never as decoration elsewhere.
+
+### Known deviations (open bugs, measured `G20`–`G24`)
+
+The built site breaks the rules above in these places. Each one is a bug to fix in the code. None of them is a pattern to copy.
+- **Off-ramp title sizes.** Card and list h3 titles set their own sizes. Post-card titles render 32 / 24px featured and 24 / 17.6px regular (`_home.scss:251`, `:263`). Journal item titles render 24px, Uses card titles 24 / 18.4px, Library item titles 15.2px and the lightbox metadata title 16px.
+- **Below the 0.75rem floor.** Three labels on `/uses` (kicker, section index, card badge) render at 0.72rem, which is 11.52px (`uses/_uses.scss:25`). The lightbox metadata labels (`_photography.lightbox.metadata.scss:119`) and book detail labels (`library/books/_slug.scss:126`) are also declared at 0.72rem.
+- **Weights outside the requested faces.** The header brand is a `<strong>`, so it computes Geist 700 and renders the 600 face. Many route styles still declare `font-weight: 300`, which Geist doesn't ship, so the text renders at 400. These include the page-hero title and lead, card descriptions, the footer copy, newsletter and library text, and lightbox text. Where a `:root p` / `li` rule applies, 400 wins outright. Prose `em` and `code em` synthesize italics, because Geist and Plex Mono have no italic face requested.
 
 ## Layout
 
@@ -326,12 +333,12 @@ Sources: `src/pages/_home/home.astro:26-124` and `src/pages/_home/_home.scss:1-1
 
 1. **The sentence is the hero.** An `h1`: "**Ritik Patni** builds thoughtful product surfaces — *and documents nature up close, one frame at a time.*" (`C28`). It is set at `--fs-display` with max 22ch. The name is weight 500 and the second clause is italic in `--accent-text` (`C21`, `C11`).
 2. **The ledger is the doors.** A ruled row of links: Notes · *n* posts, Gallery · *n* frames, Library · *n* books, About →. **Every count is computed at build time** from the same data the destination page lists: non-draft blog plus newsletter entries, the gallery manifest length, and non-draft books (`home.astro:26-33`). It currently renders 66 / 39 / 86 (`C29`). Never type a count in by hand.
-3. **The contact sheet closes the first viewport.** A `--bg-deep` band with a top hairline paints edge to edge via `border-image` outset, which adds no page scroll (`_home.scss:84-87`). Inside it:
+3. **The contact sheet closes the hero.** A `--bg-deep` band with a top hairline paints edge to edge via `border-image` outset, which adds no page scroll (`_home.scss:84-87`). Inside it:
    - a mono label, "Contact sheet · recent frames";
    - a row of the **8 most recent frames by date** (ties keep manifest order; `home.astro:42-50`), at one shared height and natural aspect ratios, 4px radius, all `loading="lazy"`. The height is `clamp(8.5rem, 22svh, 13rem)` (208px cap) on desktop and 11rem (176px) at ≤48rem (`C30`). The row scrolls and scroll-snaps inside the content column and fades at its right edge;
    - **Journal-style captions** under each frame: the frame title in Newsreader 0.95rem/500, then one mono exposure line, `aperture · shutter · ISO`, taken from the frame's own EXIF. Missing fields are dropped, and a frame with no EXIF shows only its title (`home.astro:35-40`);
    - **"Open the gallery →"**, the closing link under the row on the right, in the mono label style (uppercase via CSS; `_home.scss:171-182`).
-4. The hero height is `100svh − --header-h` (`_home.scss:11`). Below it, "Latest posts" uses the shared section header: a mono moss kicker plus an h2 on the ramp.
+4. The hero's **minimum** height is `100svh − --header-h` (`_home.scss:11`). It grows with its content: at 1440×900 it measures 922px against an 839px minimum, and at 390×844 it measures 841px against 783px. On both, the bottom of the strip (about 60–80px) falls below the fold (`G15`). Below the hero, "Latest posts" uses the shared section header: a mono moss kicker plus an h2 on the ramp.
 
 ### Gallery: the contact sheet
 
@@ -348,13 +355,13 @@ Sources: `src/pages/photography/index.astro` and `_photography.scss:1-221`.
 
 - **Page heroes** share one block: mono meta, an H1 at `--fs-h1`, and a lede in `--text-muted` (`page-hero.scss`).
 - **Cards and lists** are flat. There is no box, no left rule, no radius and no shadow, only a top hairline and whitespace (`field-notes.scss:56-77`; `C33`). Hover is a 14% `--accent-wash` tint (`:79-90`).
-- **404.** Unknown URLs return HTTP 404 with `src/pages/404.astro`: a mono "404 · page not found" kicker, an H1 at the ramp, one lede sentence, and three ruled doors (Home, Notes, Gallery). It is `noindex, follow` with no canonical (`BaseLayout.astro:166`; `C34`).
+- **404.** Unknown URLs return HTTP 404 with `src/pages/404.astro`: a mono "404 · page not found" kicker, an H1 at the ramp, one lede sentence, and three ruled doors (Home, Notes, Gallery). It is `noindex, follow` with no canonical (`BaseLayout.astro:166`; `C34`, `G25`).
 
 ### URLs
 
 - **Canonical URLs are slashless.** `trailingSlash: 'never'` plus `build.format: 'file'` (`astro.config.mjs:6-11`) emit `/about.html`, which Cloudflare Pages serves at `/about`. `/about/` and `/about.html` 308 to `/about`, and every canonical has no trailing slash (`C35`).
 - Internal links are always written slashless (`/blog`, `/about#connect`).
-- `/contact` is a `noindex` redirect stub to `/about#connect`, and it is not listed in the sitemap (`src/pages/sitemap.xml.ts:24`).
+- `/contact` is a `noindex` redirect stub to `/about#connect`, and it is not listed in the sitemap (`src/pages/sitemap.xml.ts:24`; `G26`).
 
 ### Breakpoint
 
@@ -364,7 +371,7 @@ There is one breakpoint, `48rem`. At or below it: the display statement switches
 
 The page is flat. Depth comes from tonal layering (`--bg` → `--bg-soft` → `--bg-deep`) and 1px hairlines, not shadows.
 - Cards, list items, the header and heroes carry **no shadow**.
-- Shadows exist only on layers that genuinely float above the page: the photography lightbox chrome and metadata sheet (`_photography.lightbox.shell.scss:60`, `_photography.lightbox.metadata.scss:16`) and gallery tooltips (`_photography.scss:175`). Book covers also get a hover lift (`library/_library.scss:160`) and a flat moss offset on the book detail page (`library/books/_slug.scss:25`).
+- Shadows exist only on layers that genuinely float above the page: the photography lightbox chrome and metadata sheet (`_photography.lightbox.shell.scss:60`, `_photography.lightbox.metadata.scss:16`) the gallery loading-status pill (`_photography.scss:175`) and the lightbox action tooltips (`_photography.scss:201`). Book covers also get a hover lift (`library/_library.scss:160`) and a flat moss offset on the book detail page (`library/books/_slug.scss:25`).
 - Page-hero glow is capped by the Whisper Rule (0.04–0.05).
 
 ## Shapes
@@ -401,7 +408,7 @@ Every link and button shows a 2px `--accent` outline with a `--size-1` offset on
 
 - The tokens are `--ease-out` `cubic-bezier(.22,1,.36,1)`, `--ease-soft` `cubic-bezier(.4,0,.2,1)`, `--dur-fast` 160ms, `--dur-base` 240ms and `--dur-slow` 360ms (`v2-transitions.scss:7-11`).
 - Under `prefers-reduced-motion: reduce`, every duration collapses to 0.01ms (`v2-transitions.scss:76-81`), and smooth scrolling is only enabled for `no-preference` (`global.scss:41-45`).
-- Motion is limited to colour, border and outline transitions. Nothing slides, zooms or autoplays.
+- Interaction motion is mostly colour, border and outline transitions. There are three exceptions. `main` plays a one-off `content-rise` entrance on every page load: it fades in from 10px below over `--dur-slow` (`v2-transitions.scss:67-74`; `G18`). The theme toggle presses to `scale(0.92)` (`:62-64`). Lightbox tooltips lift 0.25rem on reveal (`_photography.scss:205-214`). Nothing autoplays, and reduced motion collapses all three (`G19`).
 
 ## Do's and don'ts
 

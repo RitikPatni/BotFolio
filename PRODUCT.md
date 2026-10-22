@@ -49,7 +49,7 @@ Real content only: 35 blog posts (24 published, 11 drafts), 42 newsletter issues
 
 ## Accessibility & Inclusion
 
-WCAG AA for all functional text: every text tier (text, muted, dim) clears 4.6:1 on page and raised surfaces in both themes (measured in `design/docs-round/measurements.json`); reduced-motion respected across animations; logical heading order in authored content.
+WCAG AA for all functional text: every text tier (text, muted, dim) clears 4.6:1 on page and raised surfaces in both themes (measured against the built site; ratios recorded in DESIGN.md); reduced-motion respected across animations; logical heading order in authored content.
 
 ## Open Decisions
 
