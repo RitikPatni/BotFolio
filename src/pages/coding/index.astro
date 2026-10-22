@@ -44,23 +44,23 @@ const latestNewsletter = (await getCollection("newsletter"))
       <article class="coding__card">
         <h2 class="coding__card-title">Primary areas</h2>
         <div class="coding__grid coding__grid--two">
-          <article class="coding__item">
-            <h3 class="coding__item-title"><a href="/blog">Notes</a></h3>
+          <article class="coding__item card-link">
+            <h3 class="coding__item-title"><a class="card-link__target" href="/blog">Notes</a></h3>
             <p class="coding__description">
               Long-form notes on frontend architecture and product delivery.
             </p>
           </article>
-          <article class="coding__item">
+          <article class="coding__item card-link">
             <h3 class="coding__item-title">
-              <a href="/newsletter">Dispatches</a>
+              <a class="card-link__target" href="/newsletter">Dispatches</a>
             </h3>
             <p class="coding__description">
               Shorter updates, learnings, and workflow observations.
             </p>
           </article>
-          <article class="coding__item">
+          <article class="coding__item card-link">
             <h3 class="coding__item-title">
-              <a href="/resources">Resources</a>
+              <a class="card-link__target" href="/resources">Resources</a>
             </h3>
             <p class="coding__description">
               A curated directory of tools, assets, and references worth keeping.
@@ -79,9 +79,9 @@ const latestNewsletter = (await getCollection("newsletter"))
               </li>
             ) : (
               latestPosts.map((post) => (
-                <li class="coding__item">
+                <li class="coding__item card-link">
                   <h3 class="coding__item-title">
-                    <a href={`/blog/${post.slug}`}>{post.title}</a>
+                    <a class="card-link__target" href={`/blog/${post.slug}`}>{post.title}</a>
                   </h3>
                   <p class="coding__meta coding__meta--spaced">
                     {formatDisplayDate(post.date)}
@@ -104,9 +104,9 @@ const latestNewsletter = (await getCollection("newsletter"))
               </li>
             ) : (
               latestNewsletter.map((entry) => (
-                <li class="coding__item">
+                <li class="coding__item card-link">
                   <h3 class="coding__item-title">
-                    <a href={`/newsletter/${entry.slug}`}>{entry.title}</a>
+                    <a class="card-link__target" href={`/newsletter/${entry.slug}`}>{entry.title}</a>
                   </h3>
                   <p class="coding__meta coding__meta--spaced">
                     {formatDisplayDate(entry.date)}

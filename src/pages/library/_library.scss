@@ -104,8 +104,9 @@
     backdrop-filter: blur(2px);
     border-radius: var(--radius-sm);
     opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 200ms var(--ease-out, ease), transform 200ms var(--ease-out, ease);
+    /* Fade only: a transform here would offset the stretched title link
+       (its ::after resolves against this box) off the card edges. */
+    transition: opacity 200ms var(--ease-out, ease);
     pointer-events: none;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -137,7 +138,6 @@
   &:focus-within {
     .library__overlay {
       opacity: 1;
-      transform: translateY(0);
       pointer-events: auto;
     }
   }
@@ -151,13 +151,10 @@
   object-fit: cover;
   border-radius: var(--radius-sm);
   border: 1px solid var(--line);
-  transition: transform 200ms ease, border-color 200ms ease,
-    box-shadow 200ms ease;
+  transition: border-color 200ms ease;
 
-  &:hover {
-    transform: scale(1.03);
-    border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  .library__item:hover & {
+    border-color: color-mix(in srgb, var(--accent-start) 45%, var(--line));
   }
 }
 
@@ -167,8 +164,13 @@
   opacity: 0.82;
 }
 
-.library__book-cover-link {
+.library__book-cover-wrap {
   display: block;
+}
+
+/* The shelf scrolls (and clips), so draw the card ring inside the card. */
+.library__item.card-link:has(.card-link__target:focus-visible) {
+  outline-offset: calc(var(--border-size-2) * -1);
 }
 
 .library__books-grid:focus-visible {

@@ -159,16 +159,13 @@ import "./_library.scss";
             >
               {booksWithNotes.map((item) => (
                 <article
-                  class="library__item"
+                  class="library__item card-link"
                   data-book-item
                   data-book-genre={item.genre}
                   data-book-language={item.language}
                   data-book-has-notes={item.linkedHighlight ? "true" : "false"}
                 >
-                  <a
-                    class="library__book-cover-link"
-                    href={`/library/books/${slugOf(item)}`}
-                  >
+                  <div class="library__book-cover-wrap">
                     <img
                       class:list={["library__book-cover", !item.coverImage && "library__book-cover--placeholder"]}
                       src={item.coverImage || "/book-cover-placeholder.svg"}
@@ -180,11 +177,14 @@ import "./_library.scss";
                       data-book-cover
                       data-cover-fallback="/book-cover-placeholder.svg"
                     />
-                  </a>
+                  </div>
 
                   <div class="library__overlay">
                     <h3 class="library__item-title">
-                      <a href={`/library/books/${slugOf(item)}`}>
+                      <a
+                        class="card-link__target"
+                        href={`/library/books/${slugOf(item)}`}
+                      >
                         {item.displayTitle}
                       </a>
                     </h3>
@@ -233,9 +233,12 @@ import "./_library.scss";
               </article>
             ) : (
               recentHighlights.map((item) => (
-                <article class="library__note-item">
+                <article class="library__note-item card-link">
                   <h3 class="library__note-title">
-                    <a href={`/library/highlights/${slugOf(item)}`}>
+                    <a
+                      class="card-link__target"
+                      href={`/library/highlights/${slugOf(item)}`}
+                    >
                       {item.data.title}
                     </a>
                   </h3>

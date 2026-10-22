@@ -76,16 +76,61 @@
   padding-inline: 0 !important;
 }
 
-.post-card:hover,
-.blog-card:hover,
-.coding__card:hover,
-.coding__item:hover,
-.library__card:hover,
-.library__item:hover,
-.about__card:hover,
-.uses-card:hover,
-.uses-item:hover {
-  border-color: transparent !important;
+/* ═══════════════════════════════════════════════════════════════════
+   Clickable cards. The card carries .card-link; its one title link (or
+   button) carries .card-link__target and stretches over the card with an
+   inset-0 ::after. Other links/buttons inside the card sit above it and
+   stay independently clickable. Assistive tech still sees a single link
+   named by the title; the rest of the card reads as plain text.
+   Hover is a hairline accent plus the existing wash: colour only, so the
+   card box never moves. Cards without a .card-link get no hover state.
+   ═══════════════════════════════════════════════════════════════════ */
+.card-link {
+  position: relative;
+}
+
+.card-link__target::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Clickable even when an ancestor hides content with pointer-events:none
+     (the library shelf overlay before it is revealed). */
+  pointer-events: auto;
+}
+
+.card-link :where(a, button):not(.card-link__target) {
+  position: relative;
+  z-index: 2;
+}
+
+/* The focus ring wraps the card, not the title text. */
+.base-layout .card-link__target:focus-visible {
+  outline: none;
+}
+
+.card-link:has(.card-link__target:focus-visible) {
+  outline: var(--border-size-2) solid var(--accent);
+  outline-offset: var(--size-1);
+}
+
+.post-card.card-link,
+.blog-card.card-link,
+.coding__item.card-link,
+.library__item.card-link,
+.library__note-item.card-link,
+.newsletter__item.card-link {
+  transition: border-color var(--dur-base) var(--ease-soft),
+    background-color var(--dur-base) var(--ease-soft);
+}
+
+.post-card.card-link:hover,
+.blog-card.card-link:hover,
+.coding__item.card-link:hover,
+.library__item.card-link:hover,
+.library__note-item.card-link:hover,
+.newsletter__item.card-link:hover {
+  border-top-color: color-mix(in srgb, var(--accent-start) 55%, var(--line)) !important;
   background: color-mix(in srgb, var(--accent-wash) 14%, transparent) !important;
 }
 
