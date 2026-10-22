@@ -16,41 +16,42 @@ A dual-identity personal site: frontend engineering and wildlife/macro photograp
 
 ## Positioning
 
-Dual identity — engineer and photographer — executed with craft-level detail in every corner (captions, type rhythm, persona-specific systems). A neighboring portfolio can truthfully claim one of those things; not both at this fidelity.
+Dual identity — engineer and photographer — executed with craft-level detail in every corner (captions, type rhythm, measured contrast, real EXIF). Both subjects live in one Field Notes identity. A neighboring portfolio can truthfully claim one of those things; not both at this fidelity.
 
 ## Operating Context
 
 - Astro static site (RitikPatni/BotFolio), built and shipped primarily through AI agents (Hermes, Codex) opening PRs from the `notritikpatni` fork; Ritik reviews and merges.
 - Content workflow: weekly newsletter cadence, reading-list curation, photography added via `src/assets/photography`.
-- Deployed to Cloudflare; ~219 static pages per build.
+- Deployed to Cloudflare Pages; ~220 static pages per build, emitted as files (`build.format: 'file'`) so canonical URLs are slashless.
 
 ## Capabilities and Constraints
 
-- Dual-persona switching (studio/field): separate navigation, content slots, themes, and design languages per persona; light/dark per persona.
+- One identity, one navigation: a single-row sticky header (brand · Home, Journal, Notes, Gallery, Library, Uses, About · theme toggle) on every route. Light/dark theme toggle; light is the default, and `/photography` opens in dark unless the reader has chosen otherwise.
 - Content collections with frontmatter parity checks: blog, newsletter (weekly notes), books, highlights.
-- Static build; no client framework beyond Astro islands and vanilla JS interactions (lightbox, persona switcher, theme toggle).
+- Static build; no client framework beyond Astro islands and vanilla JS interactions (lightbox, nav overflow hint, theme toggle).
+- Archive counts shown on the home page are computed at build time from the same data the linked pages list.
 
 ## Brand Commitments
 
-- **Studio and field personas stay visually separate — never merge.** This is binding for all future design work: no shared visual language, no cross-persona homogenization.
+- **One Field Notes identity (cream paper, moss accent) for both subjects.** Engineering and photography share one visual language; the difference shows in voice (the home statement's roman → moss-italic turn), not in separate systems. This replaces the earlier "studio and field personas never merge" commitment, which was retired when the persona system was dissolved (PR #83). DESIGN.md is the design law.
 
 ## Evidence on Hand
 
-Real content only: 34 blog posts, 42 newsletter issues, 86 books, 56 highlights (collection counts from frontmatter parity check), plus a real wildlife/macro photo gallery. Nothing here may be fabricated — no invented testimonials, metrics, or placeholders presented as real.
+Real content only: 35 blog posts (24 published, 11 drafts), 42 newsletter issues, 86 books, 56 highlights (collection file counts), plus a real 39-frame wildlife/macro photo gallery. The published Notes stream (blog + newsletter) is 66 entries, which is the count the home page renders. Nothing here may be fabricated — no invented testimonials, metrics, or placeholders presented as real.
 
 ## Product Principles
 
 1. **Archive truth first.** Real content, accurately presented; never fabricate.
-2. **Two worlds, one site.** Persona separation is structural, not cosmetic.
+2. **Two subjects, one notebook.** Engineering and photography share one identity; they differ in voice, not in system.
 3. **Craft shows in the details.** Captions, spacing, heading order, contrast — the small things are the signature.
 4. **Ship calm.** Quiet, considered changes over loud redesigns.
 5. **Agents build, Ritik decides.** PR-based workflow with a human merge gate.
 
 ## Accessibility & Inclusion
 
-WCAG AA for body and muted text (verified against token pairs in the Sep 2026 audit); reduced-motion respected across animations; logical heading order in authored content.
+WCAG AA for all functional text: every text tier (text, muted, dim) clears 4.6:1 on page and raised surfaces in both themes (measured against the built site; ratios recorded in DESIGN.md); reduced-motion respected across animations; logical heading order in authored content.
 
 ## Open Decisions
 
-- Body font: Inter today, but not a binding commitment (future type explorations allowed).
-- Token system: current dual-persona tokens are incumbent authority, but not pinned as a frozen contract — evolution allowed with intent.
+- Body font: Geist today (with Newsreader for headings and IBM Plex Mono for metadata), but not a binding commitment (future type explorations allowed).
+- Token system: the Field Notes tokens in `src/styles/v2-tokens.scss` are incumbent authority, but not pinned as a frozen contract — evolution allowed with intent.
