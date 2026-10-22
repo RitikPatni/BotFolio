@@ -3,15 +3,6 @@
   margin: 0 auto;
   padding: 0;
 
-  &__kicker {
-    margin: 0 0 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
   &__lead {
     max-width: 32rem;
     color: var(--text-muted);

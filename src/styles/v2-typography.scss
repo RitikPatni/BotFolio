@@ -6,7 +6,7 @@
 
 /* Display headlines — Newsreader */
 h1 {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(2.6rem, 5.5vw, 4.4rem);
   font-weight: 550;
   letter-spacing: -0.015em;
@@ -16,7 +16,7 @@ h1 {
 
 /* The only h2 size on the site: route styles must not set h2 font-size. */
 h2 {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: 530;
   letter-spacing: -0.01em;
@@ -24,14 +24,14 @@ h2 {
 }
 
 h3 {
-  font-family: var(--font-ui), system-ui, sans-serif;
+  font-family: var(--font-ui);
   font-size: var(--fs-h3);
   font-weight: 600;
   line-height: 1.35;
 }
 
 h4 {
-  font-family: var(--font-ui), system-ui, sans-serif;
+  font-family: var(--font-ui);
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   font-weight: 600;
   line-height: 1.4;
@@ -59,9 +59,9 @@ li {
 .blog-card-date,
 figure figcaption,
 .slug-hero-meta {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-mono);
   font-size: 0.82rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-dim);
 }

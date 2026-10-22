@@ -16,18 +16,19 @@
     max-width: 500px;
   }
 
-  /* Section index: jump links with build-time counts. */
+  /* Section index: jump links with build-time counts. A ledger row of nav
+     text, so sentence case with mono's own spacing — no tracked caps. */
   &__index {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     gap: 0.5rem 1.75rem;
-    padding-block: 0.75rem;
-    border-block: 1px solid var(--line);
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0;
   }
 
   &__index-total {
@@ -142,7 +143,7 @@
 
   &__caption-title {
     display: block;
-    font-family: var(--font-display), Georgia, serif;
+    font-family: var(--font-display);
     font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0;
