@@ -15,26 +15,15 @@
   margin-block-end: clamp(2rem, 4vw, 3rem);
 }
 
-.uses-kicker,
 .uses-card__badge,
-.uses-section__meta,
 .uses-section__index {
   margin: 0;
   color: var(--text-dim);
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   line-height: 1.4;
   text-transform: uppercase;
-}
-
-.uses-kicker {
-  margin-block-end: 1.25rem;
-  color: var(--accent-text);
-  padding-bottom: 0.5rem;
-  border-left: 2px solid var(--accent-start);
-  padding-left: 0.75rem;
-  letter-spacing: 0.14em;
 }
 
 .uses-title {
@@ -59,8 +48,8 @@
 }
 
 .uses-section {
-  padding-block-start: 1.5rem;
-  border-block-start: 1px solid var(--line);
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--line);
 }
 
 .uses-section__head {
@@ -80,11 +69,6 @@
   margin: 0;
   font-weight: 400;
   letter-spacing: -0.03em;
-}
-
-.uses-section__meta {
-  margin-block-start: 0.4rem;
-  letter-spacing: 0.05em;
 }
 
 .uses-cards {
@@ -141,8 +125,8 @@
   gap: 0.25rem 0.6rem;
   align-items: baseline;
   min-width: 0;
-  padding-block: 0.75rem;
-  border-block-start: 1px solid var(--line);
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--line);
   color: var(--text-muted);
   font-size: 0.92rem;
   line-height: 1.5;

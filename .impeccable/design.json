@@ -4,243 +4,79 @@
   "title": "Design System: BotFolio — Ritik Patni",
   "extensions": {
     "colorMeta": {
-      "cream": {
-        "role": "neutral",
-        "displayName": "Cream (--bg, light)",
-        "canonical": "#f7f4ed"
-      },
-      "paper": {
-        "role": "neutral",
-        "displayName": "Paper (--bg-soft, light)",
-        "canonical": "#fffdf8"
-      },
-      "paper-deep": {
-        "role": "neutral",
-        "displayName": "Paper Deep (--bg-deep, light)",
-        "canonical": "#eee9dd"
-      },
-      "ink": {
-        "role": "neutral",
-        "displayName": "Ink (--text, light; 15.66:1 on --bg)",
-        "canonical": "#1d1b16"
-      },
-      "ink-muted": {
-        "role": "neutral",
-        "displayName": "Ink Muted (--text-muted, light; 7.34:1 on --bg)",
-        "canonical": "#55503f"
-      },
-      "ink-dim": {
-        "role": "neutral",
-        "displayName": "Ink Dim (--text-dim, light; 4.62:1 on --bg, 4.99:1 on --bg-soft)",
-        "canonical": "#746e5f"
-      },
-      "line": {
-        "role": "neutral",
-        "displayName": "Hairline (--line, light)",
-        "canonical": "rgba(29, 27, 22, 0.14)"
-      },
-      "moss": {
-        "role": "primary",
-        "displayName": "Moss (--accent-start, light)",
-        "canonical": "#5f7350"
-      },
-      "moss-deep": {
-        "role": "primary",
-        "displayName": "Moss Deep (--accent-end / --accent-text, light; 7.12:1 on --bg)",
-        "canonical": "#46573a"
-      },
-      "moss-wash": {
-        "role": "primary",
-        "displayName": "Moss Wash (--accent-wash, light)",
-        "canonical": "#c2cdb2"
-      },
-      "charcoal": {
-        "role": "neutral",
-        "displayName": "Charcoal (--bg, dark)",
-        "canonical": "#171812"
-      },
-      "charcoal-soft": {
-        "role": "neutral",
-        "displayName": "Charcoal Soft (--bg-soft, dark)",
-        "canonical": "#1f2119"
-      },
-      "charcoal-deep": {
-        "role": "neutral",
-        "displayName": "Charcoal Deep (--bg-deep, dark)",
-        "canonical": "#10110c"
-      },
-      "bone": {
-        "role": "neutral",
-        "displayName": "Bone (--text, dark; 15.24:1 on --bg)",
-        "canonical": "#f0ede2"
-      },
-      "bone-muted": {
-        "role": "neutral",
-        "displayName": "Bone Muted (--text-muted, dark; 7.09:1 on --bg)",
-        "canonical": "#a8a394"
-      },
-      "bone-dim": {
-        "role": "neutral",
-        "displayName": "Bone Dim (--text-dim, dark; 5.05:1 on --bg, 4.61:1 on --bg-soft)",
-        "canonical": "#8e8878"
-      },
-      "line-dark": {
-        "role": "neutral",
-        "displayName": "Hairline (--line, dark)",
-        "canonical": "rgba(240, 237, 226, 0.10)"
-      },
-      "moss-dark": {
-        "role": "primary",
-        "displayName": "Moss (--accent-start, dark)",
-        "canonical": "#9db38a"
-      },
-      "moss-dark-end": {
-        "role": "primary",
-        "displayName": "Moss End (--accent-end, dark)",
-        "canonical": "#7d9468"
-      },
-      "moss-dark-text": {
-        "role": "primary",
-        "displayName": "Moss Text (--accent-text, dark; 9.86:1 on --bg)",
-        "canonical": "#b3c7a0"
-      },
-      "moss-dark-wash": {
-        "role": "primary",
-        "displayName": "Moss Wash (--accent-wash, dark)",
-        "canonical": "#2a3325"
-      },
-      "night-owl-bg": {
-        "role": "neutral",
-        "displayName": "Night Owl BG",
-        "canonical": "#011627"
-      },
-      "night-owl-text": {
-        "role": "neutral",
-        "displayName": "Night Owl Text",
-        "canonical": "#d6deeb"
-      },
-      "night-owl-punct": {
-        "role": "neutral",
-        "displayName": "Night Owl Punctuation",
-        "canonical": "#d9f5dd"
-      },
-      "night-owl-punct-dim": {
-        "role": "neutral",
-        "displayName": "Night Owl Punctuation Dim",
-        "canonical": "#5f7e97"
-      },
-      "night-owl-comment": {
-        "role": "neutral",
-        "displayName": "Night Owl Comment",
-        "canonical": "#637777"
-      },
-      "night-owl-slate": {
-        "role": "neutral",
-        "displayName": "Night Owl Slate",
-        "canonical": "#b2ccd6"
-      },
-      "night-owl-variable": {
-        "role": "neutral",
-        "displayName": "Night Owl Variable",
-        "canonical": "#d7dbe0"
-      },
-      "night-owl-tag": {
-        "role": "neutral",
-        "displayName": "Night Owl Tag",
-        "canonical": "#80cbc4"
-      },
-      "night-owl-attr": {
-        "role": "neutral",
-        "displayName": "Night Owl Attribute",
-        "canonical": "#7fdbca"
-      },
-      "night-owl-attr-alt": {
-        "role": "neutral",
-        "displayName": "Night Owl Attribute Alt",
-        "canonical": "#caece6"
-      },
-      "night-owl-function": {
-        "role": "neutral",
-        "displayName": "Night Owl Keyword/Function",
-        "canonical": "#c792ea"
-      },
-      "night-owl-name": {
-        "role": "neutral",
-        "displayName": "Night Owl Identifier",
-        "canonical": "#82aaff"
-      },
-      "night-owl-import": {
-        "role": "neutral",
-        "displayName": "Night Owl Import",
-        "canonical": "#c5e378"
-      },
-      "night-owl-string": {
-        "role": "neutral",
-        "displayName": "Night Owl String",
-        "canonical": "#ecc48d"
-      },
-      "night-owl-number": {
-        "role": "neutral",
-        "displayName": "Night Owl Number",
-        "canonical": "#f78c6c"
-      },
-      "night-owl-string-alt": {
-        "role": "neutral",
-        "displayName": "Night Owl String Alt",
-        "canonical": "#ffeb95"
-      },
-      "night-owl-title": {
-        "role": "neutral",
-        "displayName": "Night Owl Title",
-        "canonical": "#baebe2"
-      },
-      "night-owl-alert": {
-        "role": "neutral",
-        "displayName": "Night Owl Alert",
-        "canonical": "#ff6363"
-      },
-      "night-owl-accent": {
-        "role": "neutral",
-        "displayName": "Night Owl Accent",
-        "canonical": "#faf39f"
-      },
-      "scroll-mask-black": {
-        "role": "neutral",
-        "displayName": "Scroll Mask Black",
-        "canonical": "#000"
-      }
+      "stone": { "role": "neutral", "displayName": "Stone (--bg, light)", "canonical": "#eeefed" },
+      "stone-soft": { "role": "neutral", "displayName": "Stone Soft (--bg-soft, light)", "canonical": "#f8f8f7" },
+      "stone-deep": { "role": "neutral", "displayName": "Stone Deep (--bg-deep, light)", "canonical": "#e2e3e0" },
+      "graphite": { "role": "neutral", "displayName": "Graphite (--text, light; 15.26:1 on --bg)", "canonical": "#18191a" },
+      "graphite-muted": { "role": "neutral", "displayName": "Graphite Muted (--text-muted, light; 8.13:1 on --bg)", "canonical": "#43474a" },
+      "graphite-dim": { "role": "neutral", "displayName": "Graphite Dim (--text-dim, light; 5.59:1 on --bg, 5.00:1 on --bg-deep)", "canonical": "#5b5f62" },
+      "line": { "role": "neutral", "displayName": "Hairline (--line, light)", "canonical": "rgba(24, 25, 26, 0.18)" },
+      "rust": { "role": "primary", "displayName": "Rust (--accent-start, light; 5.33:1 on --bg)", "canonical": "#a8401e" },
+      "rust-deep": { "role": "primary", "displayName": "Rust Deep (--accent-end / --accent-text, light; 7.14:1 on --bg)", "canonical": "#8a3216" },
+      "rust-wash": { "role": "primary", "displayName": "Rust Wash (--accent-wash, light)", "canonical": "#efc9b8" },
+      "slate": { "role": "neutral", "displayName": "Slate (--bg, dark)", "canonical": "#141516" },
+      "slate-soft": { "role": "neutral", "displayName": "Slate Soft (--bg-soft, dark)", "canonical": "#1b1d1e" },
+      "slate-deep": { "role": "neutral", "displayName": "Slate Deep (--bg-deep, dark)", "canonical": "#0d0e0f" },
+      "chalk": { "role": "neutral", "displayName": "Chalk (--text, dark; 15.31:1 on --bg)", "canonical": "#ebebe8" },
+      "chalk-muted": { "role": "neutral", "displayName": "Chalk Muted (--text-muted, dark; 8.57:1 on --bg)", "canonical": "#b0b2b1" },
+      "chalk-dim": { "role": "neutral", "displayName": "Chalk Dim (--text-dim, dark; 5.97:1 on --bg, 5.53:1 on --bg-soft)", "canonical": "#919493" },
+      "line-dark": { "role": "neutral", "displayName": "Hairline (--line, dark)", "canonical": "rgba(235, 235, 232, 0.12)" },
+      "rust-dark": { "role": "primary", "displayName": "Rust (--accent-start, dark)", "canonical": "#ef8f68" },
+      "rust-dark-end": { "role": "primary", "displayName": "Rust End (--accent-end, dark)", "canonical": "#d97650" },
+      "rust-dark-text": { "role": "primary", "displayName": "Rust Text (--accent-text, dark; 9.41:1 on --bg)", "canonical": "#f4a888" },
+      "rust-dark-wash": { "role": "primary", "displayName": "Rust Wash (--accent-wash, dark)", "canonical": "#3a2219" },
+      "night-owl-bg": { "role": "neutral", "displayName": "Night Owl BG", "canonical": "#011627" },
+      "night-owl-text": { "role": "neutral", "displayName": "Night Owl Text", "canonical": "#d6deeb" },
+      "night-owl-punct": { "role": "neutral", "displayName": "Night Owl Punctuation", "canonical": "#d9f5dd" },
+      "night-owl-punct-dim": { "role": "neutral", "displayName": "Night Owl Punctuation Dim", "canonical": "#5f7e97" },
+      "night-owl-comment": { "role": "neutral", "displayName": "Night Owl Comment (retuned to Ledger chalk-dim; 5.99:1 on #011627)", "canonical": "#919493" },
+      "night-owl-slate": { "role": "neutral", "displayName": "Night Owl Slate", "canonical": "#b2ccd6" },
+      "night-owl-variable": { "role": "neutral", "displayName": "Night Owl Variable", "canonical": "#d7dbe0" },
+      "night-owl-tag": { "role": "neutral", "displayName": "Night Owl Tag", "canonical": "#80cbc4" },
+      "night-owl-attr": { "role": "neutral", "displayName": "Night Owl Attribute", "canonical": "#7fdbca" },
+      "night-owl-attr-alt": { "role": "neutral", "displayName": "Night Owl Attribute Alt", "canonical": "#caece6" },
+      "night-owl-function": { "role": "neutral", "displayName": "Night Owl Keyword/Function", "canonical": "#c792ea" },
+      "night-owl-name": { "role": "neutral", "displayName": "Night Owl Identifier", "canonical": "#82aaff" },
+      "night-owl-import": { "role": "neutral", "displayName": "Night Owl Import", "canonical": "#c5e378" },
+      "night-owl-string": { "role": "neutral", "displayName": "Night Owl String", "canonical": "#ecc48d" },
+      "night-owl-number": { "role": "neutral", "displayName": "Night Owl Number", "canonical": "#f78c6c" },
+      "night-owl-string-alt": { "role": "neutral", "displayName": "Night Owl String Alt", "canonical": "#ffeb95" },
+      "night-owl-title": { "role": "neutral", "displayName": "Night Owl Title", "canonical": "#baebe2" },
+      "night-owl-alert": { "role": "neutral", "displayName": "Night Owl Alert", "canonical": "#ff6363" },
+      "night-owl-accent": { "role": "neutral", "displayName": "Night Owl Accent", "canonical": "#faf39f" },
+      "scroll-mask-black": { "role": "neutral", "displayName": "Scroll Mask Black", "canonical": "#000" }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Home statement only. Newsreader 400, opsz 72, --fs-display clamp(2.3rem, 5.4vw, 4.9rem) (77.76px at 1440); --fs-display-sm clamp(2.1rem, 9.6vw, 3rem) at <=48rem. Name weight 500; second clause italic in --accent-text."
+        "purpose": "Home statement only. Schibsted Grotesk 400, --fs-display clamp(2.3rem, 5.4vw, 4.9rem) (77.76px at 1440); --fs-display-sm clamp(2.1rem, 9.6vw, 3rem) at <=48rem. Accent clause italic in --accent-text."
       },
       "h1": {
         "displayName": "H1",
-        "purpose": "Page-hero titles. Newsreader 400, --fs-h1 clamp(2.5rem, 6vw, 4rem): 64px at 1440, 40px at 390."
+        "purpose": "Page-hero titles. Schibsted Grotesk 400, --fs-h1 clamp(2.5rem, 6vw, 4rem): 64px at 1440, 40px at 390. No eyebrow chip above it."
       },
       "h2": {
         "displayName": "H2",
-        "purpose": "Every h2 on every route. Newsreader 400, --fs-h2 clamp(1.5rem, 2.4vw, 1.875rem): 30px at 1440, 24px at 390. Route styles never set an h2 size."
+        "purpose": "Every h2 on every route. Schibsted Grotesk 400, --fs-h2 clamp(1.5rem, 2.4vw, 1.875rem): 30px at 1440, 24px at 390. Route styles never set an h2 size."
       },
       "h3": {
         "displayName": "H3",
-        "purpose": "Base h3. Newsreader 400, --fs-h3 clamp(1.05rem, 1.8vw, 1.35rem)."
+        "purpose": "Base h3. Schibsted Grotesk 400, --fs-h3 clamp(1.05rem, 1.8vw, 1.35rem)."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Geist 400, 1rem / 1.65; prose 1.16rem / 1.65 (field-notes.scss leading wins over the 1.78 in v2-typography.scss)."
+        "purpose": "Schibsted Grotesk 400, 1rem / 1.65; prose 1.16rem / 1.65. Running text is never positively tracked."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "IBM Plex Mono: metadata 0.82rem uppercase in --text-dim; counts 0.78rem; labels and EXIF captions 0.75rem (the functional floor). Tabular figures."
+        "purpose": "IBM Plex Mono: metadata 0.82rem uppercase +0.08em in --text-dim; counts 0.78rem +0.06em; labels 0.75rem +0.1em; EXIF captions 0.75rem +0.02em (the functional floor); gallery index 0.8rem sentence case, untracked."
       }
     },
     "shadows": [
       {
         "name": "none-on-content",
         "value": "none",
-        "purpose": "Cards, list rows, header and heroes carry no shadow. Shadows are reserved for floating layers: the lightbox metadata sheet, the gallery loading-status pill and lightbox tooltips. The rest of the lightbox chrome is shadowless on its ink backdrop. Shelf book covers get no shadow or lift (accent border on hover only). The book detail cover keeps a flat moss offset."
+        "purpose": "Cards, list rows, header and heroes carry no shadow. Shadows are reserved for floating layers: the lightbox metadata sheet, the gallery loading-status pill and lightbox tooltips. The rest of the lightbox chrome is shadowless on its ink backdrop. Shelf book covers get no shadow or lift (accent border on hover only). The book detail cover keeps a flat rust offset."
       }
     ],
     "motion": [
@@ -273,36 +109,18 @@
     ],
     "fonts": [
       {
-        "family": "Geist",
-        "weights": [
-          400,
-          500,
-          600
-        ],
-        "token": "--font-body",
-        "role": "body, UI, nav, ledger"
-      },
-      {
-        "family": "Newsreader",
-        "weights": [
-          400,
-          500
-        ],
-        "italic": [
-          400
-        ],
-        "opsz": "6..72",
-        "token": "--font-display",
-        "role": "h1-h3, home statement, caption titles"
+        "family": "Schibsted Grotesk",
+        "weights": [400, 500, 600, 700],
+        "italic": [400],
+        "axis": "wght 400..700",
+        "token": "--font-body / --font-display / --font-sans",
+        "role": "headings, home statement, body, prose, nav, ledger, caption titles"
       },
       {
         "family": "IBM Plex Mono",
-        "weights": [
-          400,
-          500
-        ],
-        "token": "--font-mono",
-        "role": "dates, counts, labels, captions, code"
+        "weights": [400, 500, 600],
+        "token": "--font-mono / --font-ui",
+        "role": "dates, counts, labels, captions, gallery index, code"
       }
     ],
     "layout": [
@@ -320,6 +138,11 @@
         "name": "header-h",
         "value": "61px",
         "purpose": "Single-row sticky solid header (brand · nav · theme toggle)."
+      },
+      {
+        "name": "row-inset",
+        "value": "1rem",
+        "purpose": "Top inset of a ruled list row below its hairline (border-top + padding: 1rem 0); 1.5rem for cards and sections, 0.75rem for /uses inventory rows. Text never sits flush on a hairline."
       }
     ]
   },
@@ -328,65 +151,66 @@
       "name": "Ledger Link",
       "kind": "button",
       "refersTo": "ledger-link",
-      "description": "Home hero door: Geist label with a build-time mono count, ruled hairline that turns moss on hover.",
+      "description": "Home hero door: Schibsted label with a build-time mono count, ruled hairline that turns rust on hover.",
       "html": "<a class=\"ds-ledger\" href=\"#\">Gallery <span>39 frames</span></a>",
-      "css": ".ds-ledger { display: inline-flex; align-items: baseline; gap: 0.6rem; padding-block: 0.35rem; border-bottom: 1px solid rgba(29, 27, 22, 0.14); font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif; font-size: 1rem; color: #1d1b16; text-decoration: none; transition: border-color 0.24s cubic-bezier(0.4,0,0.2,1), color 0.24s cubic-bezier(0.4,0,0.2,1); } .ds-ledger span { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.06em; color: #55503f; font-variant-numeric: tabular-nums; } .ds-ledger:hover { border-color: #5f7350; color: #46573a; } .ds-ledger:focus-visible { outline: 2px solid #5f7350; outline-offset: 4px; }"
+      "css": ".ds-ledger { display: inline-flex; align-items: baseline; gap: 0.6rem; padding-block: 0.35rem; border-bottom: 1px solid rgba(24, 25, 26, 0.18); font-family: 'Schibsted Grotesk', 'Helvetica Neue', system-ui, sans-serif; font-size: 1rem; color: #18191a; text-decoration: none; transition: border-color 0.24s cubic-bezier(0.4,0,0.2,1), color 0.24s cubic-bezier(0.4,0,0.2,1); } .ds-ledger span { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.06em; color: #43474a; font-variant-numeric: tabular-nums; } .ds-ledger:hover { border-color: #a8401e; color: #8a3216; } .ds-ledger:focus-visible { outline: 2px solid #a8401e; outline-offset: 4px; }"
     },
     {
       "name": "Card",
       "kind": "card",
       "refersTo": "card",
-      "description": "Flat list card: top hairline and whitespace only; no box, radius, left rule or shadow. Clickable cards (.card-link): the whole card is the hit area; hover turns the top hairline moss (55% mix into --line) and adds a 14% moss wash, colour only, 0px movement; focus draws the 2px ring around the card.",
+      "description": "Flat list card: top hairline plus a top inset (padding: 1.5rem 0; list rows 1rem 0) and whitespace only; no box, radius, left rule or shadow. Clickable cards (.card-link): the whole card is the hit area; hover turns the top hairline rust (55% mix into --line) and adds a 14% rust wash, colour only, 0px movement; focus draws the 2px ring around the card.",
       "html": "<article class=\"ds-card\"><div class=\"ds-card-date\">12 OCT 2026</div><h3>Title</h3><p>Whitespace and a top hairline do the structuring.</p></article>",
-      "css": ".ds-card { padding: 1.5rem 0; border-top: 1px solid rgba(29, 27, 22, 0.14); border-radius: 0; background: transparent; color: #1d1b16; } .ds-card:hover { border-top-color: color-mix(in srgb, #5f7350 55%, rgba(29, 27, 22, 0.14)); background: color-mix(in srgb, #c2cdb2 14%, transparent); } .ds-card-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.08em; color: #746e5f; } .ds-card h3 { margin: 0.5rem 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; letter-spacing: -0.01em; } .ds-card p { margin: 0; font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif; line-height: 1.65; }"
+      "css": ".ds-card { padding: 1.5rem 0; border-top: 1px solid rgba(24, 25, 26, 0.18); border-radius: 0; background: transparent; color: #18191a; } .ds-card:hover { border-top-color: color-mix(in srgb, #a8401e 55%, rgba(24, 25, 26, 0.18)); background: color-mix(in srgb, #efc9b8 14%, transparent); } .ds-card-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5b5f62; } .ds-card h3 { margin: 0.5rem 0; font-family: 'Schibsted Grotesk', 'Helvetica Neue', system-ui, sans-serif; font-weight: 400; letter-spacing: -0.01em; } .ds-card p { margin: 0; font-family: 'Schibsted Grotesk', 'Helvetica Neue', system-ui, sans-serif; line-height: 1.65; }"
     },
     {
       "name": "Contact-sheet Frame",
       "kind": "card",
       "refersTo": "strip-frame",
-      "description": "Natural-ratio photo at 4px radius with a Journal-style caption: Newsreader title, mono exposure line.",
+      "description": "Natural-ratio photo at 4px radius with a Journal-style caption: Schibsted title, mono exposure line.",
       "html": "<figure class=\"ds-frame\"><div class=\"ds-frame-img\"></div><figcaption><b>Common Kingfisher</b><span>f/6.3 · 1/2500s · ISO 1600</span></figcaption></figure>",
-      "css": ".ds-frame { margin: 0; inline-size: 12rem; } .ds-frame-img { block-size: 8rem; border-radius: 4px; background: #eee9dd; outline: 1px solid transparent; outline-offset: 3px; } .ds-frame:hover .ds-frame-img { outline-color: #5f7350; } .ds-frame figcaption { margin-top: 0.55rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; line-height: 1.45; letter-spacing: 0.02em; color: #55503f; text-transform: none; } .ds-frame b { display: block; font-family: 'Newsreader', Georgia, serif; font-size: 0.95rem; font-weight: 500; color: #1d1b16; } .ds-frame span { display: block; }"
+      "css": ".ds-frame { margin: 0; inline-size: 12rem; } .ds-frame-img { block-size: 8rem; border-radius: 4px; background: #e2e3e0; outline: 1px solid transparent; outline-offset: 3px; } .ds-frame:hover .ds-frame-img { outline-color: #a8401e; } .ds-frame figcaption { margin-top: 0.55rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; line-height: 1.45; letter-spacing: 0.02em; color: #43474a; text-transform: none; } .ds-frame b { display: block; font-family: 'Schibsted Grotesk', 'Helvetica Neue', system-ui, sans-serif; font-size: 0.95rem; font-weight: 500; color: #18191a; } .ds-frame span { display: block; }"
     },
     {
       "name": "Mono Label Link",
       "kind": "button",
       "refersTo": null,
-      "description": "Closing strip link (OPEN THE GALLERY →): mono 0.75rem uppercase, moss on hover.",
+      "description": "Closing strip link (OPEN THE GALLERY →): mono 0.75rem uppercase, rust on hover.",
       "html": "<a class=\"ds-more\" href=\"#\">Open the gallery →</a>",
-      "css": ".ds-more { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #1d1b16; text-decoration: none; } .ds-more:hover { color: #46573a; } .ds-more:focus-visible { outline: 2px solid #5f7350; outline-offset: 4px; }"
+      "css": ".ds-more { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #18191a; text-decoration: none; } .ds-more:hover { color: #8a3216; } .ds-more:focus-visible { outline: 2px solid #a8401e; outline-offset: 4px; }"
     },
     {
       "name": "Theme Toggle",
       "kind": "button",
       "refersTo": "theme-toggle",
-      "description": "Round 2.25rem toggle in the header bar; moss border on hover.",
+      "description": "Round 2.25rem toggle in the header bar; rust border on hover.",
       "html": "<button class=\"ds-toggle\" type=\"button\" aria-label=\"Toggle light and dark theme\" aria-pressed=\"false\">☼</button>",
-      "css": ".ds-toggle { inline-size: 2.25rem; block-size: 2.25rem; display: grid; place-items: center; padding: 0; border: 1px solid color-mix(in srgb, #1d1b16 45%, transparent); border-radius: 999px; background: #fffdf8; color: #1d1b16; font-size: 1rem; line-height: 1; cursor: pointer; } .ds-toggle:hover { border-color: #5f7350; } .ds-toggle:focus-visible { outline: 2px solid #5f7350; outline-offset: 4px; }"
+      "css": ".ds-toggle { inline-size: 2.25rem; block-size: 2.25rem; display: grid; place-items: center; padding: 0; border: 1px solid color-mix(in srgb, #18191a 45%, transparent); border-radius: 999px; background: #f8f8f7; color: #18191a; font-size: 1rem; line-height: 1; cursor: pointer; } .ds-toggle:hover { border-color: #a8401e; } .ds-toggle:focus-visible { outline: 2px solid #a8401e; outline-offset: 4px; }"
     },
     {
       "name": "Navigation",
       "kind": "nav",
       "refersTo": "nav-link",
-      "description": "Single-row sticky solid bar: brand · nav · theme toggle; active link = 6% ink wash + 2px moss underline.",
+      "description": "Single-row sticky solid bar: brand · nav · theme toggle; active link = 6% ink wash + 2px rust underline.",
       "html": "<nav class=\"ds-nav\"><strong>Ritik Patni</strong><span class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-link active\" aria-current=\"page\">Home</a><a href=\"#\" class=\"ds-nav-link\">Journal</a><a href=\"#\" class=\"ds-nav-link\">Notes</a><a href=\"#\" class=\"ds-nav-link\">Gallery</a></span></nav>",
-      "css": ".ds-nav { display: flex; align-items: center; gap: 1rem; min-block-size: 3.75rem; padding-inline: clamp(1rem, 3vw, 2rem); background: #f7f4ed; border-bottom: 1px solid rgba(29, 27, 22, 0.14); font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif; } .ds-nav strong { color: #1d1b16; font-weight: 600; } .ds-nav-links { display: flex; gap: 0.125rem; margin-inline-start: auto; } .ds-nav-link { position: relative; padding: 0.5rem 0.75rem; font-size: 0.875rem; color: #55503f; text-decoration: none; border-radius: 6px; } .ds-nav-link:hover { color: #1d1b16; background: color-mix(in srgb, #1d1b16 4%, transparent); } .ds-nav-link.active { color: #1d1b16; background: color-mix(in srgb, #1d1b16 6%, transparent); } .ds-nav-link.active::after { content: ''; position: absolute; bottom: 2px; left: 0.75rem; right: 0.75rem; height: 2px; border-radius: 1px; background: #5f7350; }"
+      "css": ".ds-nav { display: flex; align-items: center; gap: 1rem; min-block-size: 3.75rem; padding-inline: clamp(1rem, 3vw, 2rem); background: #eeefed; border-bottom: 1px solid rgba(24, 25, 26, 0.18); font-family: 'Schibsted Grotesk', 'Helvetica Neue', system-ui, sans-serif; } .ds-nav strong { color: #18191a; font-weight: 600; } .ds-nav-links { display: flex; gap: 0.125rem; margin-inline-start: auto; } .ds-nav-link { position: relative; padding: 0.5rem 0.75rem; font-size: 0.875rem; color: #43474a; text-decoration: none; border-radius: 6px; } .ds-nav-link:hover { color: #18191a; background: color-mix(in srgb, #18191a 4%, transparent); } .ds-nav-link.active { color: #18191a; background: color-mix(in srgb, #18191a 6%, transparent); } .ds-nav-link.active::after { content: ''; position: absolute; bottom: 2px; left: 0.75rem; right: 0.75rem; height: 2px; border-radius: 1px; background: #a8401e; }"
     }
   ],
   "narrative": {
-    "northStar": "Field Notes — a naturalist's notebook kept by an engineer",
-    "overview": "One identity: cream paper, ink and a single moss accent, light first (and the no-JS fallback) with a warm charcoal dark theme; the theme follows the stored choice, then the system preference, never the page. Newsreader speaks (titles, the home statement), Geist reads and operates (prose, nav), IBM Plex Mono records (dates, counts, EXIF). Engineering and photography share one notebook; the two subjects appear as two voices in one sentence, not two visual systems.",
+    "northStar": "Ledger — an engineer's working ledger that also keeps the photographs",
+    "overview": "One identity: stone-grey paper, graphite ink and a single rust accent, light first (and the no-JS fallback) with a neutral slate dark theme; the theme follows the stored choice, then the system preference, never the page. Schibsted Grotesk speaks and reads (titles, the home statement, prose, nav), IBM Plex Mono records (dates, counts, EXIF, labels). Engineering and photography share one ledger, not two visual systems.",
     "keyCharacteristics": [
-      "One identity, one accent: moss in both themes, at both ends of every gradient token",
-      "Text hierarchy dim < muted < text with a 4.6:1 floor in both themes",
-      "Serif/sans/mono voice split; one H2 size (--fs-h2) everywhere",
-      "Flat: top hairlines and whitespace, no card boxes or shadows",
+      "One identity, one accent: rust in both themes, at both ends of every gradient token",
+      "Text hierarchy dim < muted < text with a 4.5:1 floor in both themes on every ground",
+      "Grotesque/mono voice split; one H2 size (--fs-h2) everywhere",
+      "Flat: top hairlines with a top inset and whitespace, no card boxes, left rules or shadows",
+      "Page heroes are H1 + lede only: no eyebrow chips",
       "Truth in details: build-time counts, real EXIF captions, measured contrast"
     ],
     "rules": [
       {
         "name": "The One Accent Rule",
-        "body": "Moss is the only accent hue in both themes. If a second accent hue appears in chrome, one of them is wrong.",
+        "body": "Rust is the only accent hue in both themes. If a second accent hue appears in chrome, one of them is wrong.",
         "section": "colors"
       },
       {
@@ -406,7 +230,12 @@
       },
       {
         "name": "The Floor Rule",
-        "body": "Functional text is at least 0.75rem (12px) and at least 4.6:1 against its ground.",
+        "body": "Functional text is at least 0.75rem (12px) and at least 4.5:1 against its ground, code tokens included.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tracking Rule",
+        "body": "Positive tracking >= 0.05em is only for uppercase mono labels (meta, count, label). Running text, nav rows and the gallery index are untracked.",
         "section": "typography"
       },
       {
@@ -417,8 +246,10 @@
     ],
     "dos": [
       "Do take every colour, size and font from v2-tokens.scss; add a token there before using a new value.",
-      "Do keep dim < muted < text and the 4.6:1 floor in both themes; never use --text-dim on --bg-deep in light (4.19:1).",
-      "Do use --accent-text for moss text and --accent-start for moss strokes.",
+      "Do write font-family: var(--font-*) with no appended fallbacks; the tokens carry their own stacks.",
+      "Do keep dim < muted < text and the 4.5:1 floor in both themes.",
+      "Do use --accent-text for rust text and --accent-start for rust strokes.",
+      "Do give every ruled row a top inset below its hairline.",
       "Do compute every count from the collection or manifest the linked page renders.",
       "Do caption photographs with their real title and EXIF; drop missing fields.",
       "Do write internal URLs slashless."
@@ -426,7 +257,8 @@
     "donts": [
       "Don't reintroduce a dual-identity theme switch or a second accent hue.",
       "Don't set an h2 size in a route stylesheet or a size off the ramp.",
-      "Don't load a family other than Geist, Newsreader and IBM Plex Mono, or a weight outside the requested faces.",
+      "Don't load a family other than Schibsted Grotesk and IBM Plex Mono, or a weight outside the requested faces.",
+      "Don't put an eyebrow chip above a page-hero H1, or a left rule on a label.",
       "Don't put text on a photograph or crop a frame to fit a grid.",
       "Don't make the header transparent, blurred, two-row or scroll-aware.",
       "Don't fabricate content, counts, testimonials or EXIF."

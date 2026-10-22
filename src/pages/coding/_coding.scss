@@ -69,12 +69,12 @@
     }
   }
 
+  /* Same ruled-row chrome as .newsletter__item: top hairline, 1rem top inset. */
   &__item {
     border: none;
     border-top: 1px solid var(--line);
     border-radius: 0;
-    padding-block: var(--size-3);
-    padding-inline: 0;
+    padding: 1rem 0;
     background: transparent;
 
     block-size: 100%;
