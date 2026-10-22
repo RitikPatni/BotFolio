@@ -1,66 +1,17 @@
 @use "open-props/style";
 
-@keyframes nav-link-settle {
-  from {
-    transform: translateY(calc(var(--size-1) * -0.25));
-    opacity: 0.88;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes persona-shell-out {
-  from {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(var(--size-2)) scale(0.985);
-    filter: blur(3px);
-  }
-}
-
-@keyframes persona-shell-in {
-  from {
-    opacity: 0;
-    transform: translateY(var(--size-3)) scale(0.99);
-    filter: blur(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-  }
-}
-
-/* Header height — consumed by the over-photo nav scrim hold and the full-bleed
-   hero's under-nav pull. These are static FALLBACKS only: baseLayout.client.ts
-   measures the real header offsetHeight (ResizeObserver) and sets --header-h
-   inline on <html>, which overrides these at runtime. Declared on :root (not
-   .base-layout) so that inline value is what descendants inherit. Values match
-   the measured rendered heights (desktop 103px, mobile 97px) so first paint
-   equals the hydrated value and the hero does not jump before JS runs. */
+/* Header height. Static fallback only: baseLayout.client.ts measures the real
+   header offsetHeight (ResizeObserver) and sets --header-h inline on <html>.
+   Consumers: scroll-padding (anchor jumps clear the sticky bar) and the home
+   hero's first-viewport height. 3.75rem bar + 1px hairline. */
 :root {
-  --header-h: 103px;
-  @media (max-width: 48rem) { --header-h: 97px; }
+  --header-h: 61px;
+  scroll-padding-block-start: var(--header-h);
 }
 
 .base-layout {
   min-block-size: 100dvb;
   background: var(--bg);
-
-  [data-persona-slot] {
-    /* Persona slots dissolved (Field Notes): everything renders. */
-    display: block;
-  }
-
-
-
-
 
   & :where(a, button):focus-visible {
     outline: var(--border-size-2) solid var(--accent);
@@ -84,169 +35,41 @@
     }
   }
 
+  /* Header, main and footer share this box, so every route's content starts
+     on the same x: (viewport - max) / 2 + --gutter. */
   &__container {
     inline-size: min(100%, var(--layout-max-width));
     margin-inline: auto;
-    padding: var(--layout-padding) 2rem; /* gutter matches .page-hero 2rem: header shares the content grid edge */
+    padding: var(--layout-padding) var(--gutter);
   }
 
   &__header {
     position: sticky;
     top: 0;
     z-index: 50;
-    padding-block: 0.625rem;
     background: var(--bg);
-    backdrop-filter: blur(16px);
+    color: var(--text);
     border-bottom: var(--border-light);
-    transition: background-color 180ms ease, box-shadow 180ms ease;
-
-    /* Field Notes: on the full-bleed hero page the nav floats transparent over the photo.
-       P1 SET 2: link cream is PINNED (was var(--bg)) — in dark theme var(--bg) resolves to
-       near-black #171812 and the links measured 1.38–1.72:1 over the photo sky (audit C1). */
-    @supports selector(:has(*)) {
-      .base-layout:has([data-hero]) & {
-        position: fixed;
-        inset-inline: clamp(2rem, 5vw, 5rem);
-        background: transparent;
-        backdrop-filter: none;
-        border-bottom-color: transparent;
-
-        .base-layout__brand strong,
-        .nav-link,
-        .base-layout__gallery-link {
-          color: #f7f6f3;
-          text-shadow: 0 1px 2px rgba(29, 27, 22, 0.55);
-        }
-
-        /* Breathing room: header text never meets the photo edge. The photo's inset is
-           max(0, (vw - max)/2) + 2rem; this container's content edge is the header's
-           clamp inset + max(0, (header width - cap)/2) + 2rem. With the cap at max, the
-           two coincide (0px gap) above ~1333px. Capping at max - 3rem gives a floor of
-           1.5rem (24px) from the photo edges at every width — exactly the gap 1280 already
-           had — and changes nothing below 1280, where 100% still wins the min(). */
-        .base-layout__container {
-          inline-size: min(100%, var(--layout-max-width) - 3rem);
-        }
-
-        /* Focus ring over the ink scrim: the base var(--accent) moss ring measures
-           ~1.4:1 here (WCAG 1.4.11 needs 3:1) — pin it to the same cream as the links.
-           Width/style/offset inherit from the base :focus-visible rule. */
-        .base-layout__brand:focus-visible,
-        .nav-link:focus-visible,
-        .base-layout__gallery-link:focus-visible {
-          outline-color: #f7f6f3;
-        }
-
-        /* P1 SET 2: nav scrim — ink band PINNED TO THE HEADER (α 0.72 +
-           hold box + 16px, fade over the next 64px; measured floor 5.25:1 at
-           the worst band pixel vs pinned cream — dark 1280 last-pre-flip; all
-           other cells ≥ 6.3:1). An
-           element-anchored band on the hero slides up with the photo, leaving the
-           strip half-unscrimmed through almost the whole scroll range; the strip
-           is only reliably photo-covered where THIS box is, so the coverage the
-           nav promises has to anchor here. Killed (opacity 0) in the solid state.
-           Alignment contract: the band's inline extent == the hero PHOTO's left/right
-           edges at every viewport width, not the header's. The photo sits in the main
-           container's content box (min(100%, --layout-max-width) centered, 2rem gutter,
-           border-box), so its inset is max(0, (vw - max)/2) + 2rem, while the header's
-           is clamp(2rem, 5vw, 5rem) — they only coincide near 390px. With 50% = half
-           the header width, (photo inset - header inset) simplifies to
-           max(2rem - clamp(...), 50% - (max/2 - 2rem)): positive (band pulled inward)
-           above ~1200px where the photo is narrower than the header, negative (band
-           pushed outward) below it. */
-        &::before {
-          content: '';
-          position: absolute;
-          inset-block: 0 auto;
-          inset-inline: max(
-            2rem - clamp(2rem, 5vw, 5rem),
-            50% - (var(--layout-max-width) / 2 - 2rem)
-          );
-          block-size: calc(var(--header-h, 103px) + 80px);
-          background: linear-gradient(
-            180deg,
-            rgba(29, 27, 22, 0.72) 0px,
-            rgba(29, 27, 22, 0.72) calc(var(--header-h, 103px) + 16px),
-            rgba(29, 27, 22, 0) calc(var(--header-h, 103px) + 80px)
-          );
-          pointer-events: none;
-          z-index: -1;
-          opacity: 1;
-          transition: opacity 180ms ease;
-        }
-
-        /* Solid-state surface (see the scroll-aware block at the end of this file):
-           a full-bleed bar painted OUTSIDE the header's clamp inset, so the header box
-           itself never changes geometry between states. Hidden while over the photo. */
-        &::after {
-          content: '';
-          position: absolute;
-          inset-block: 0 calc(-1 * var(--border-size-1, 1px)); /* cover the header's own (transparent) border row */
-          inset-inline: calc(-1 * clamp(2rem, 5vw, 5rem));
-          background: var(--bg);
-          backdrop-filter: blur(16px);
-          border-bottom: var(--border-light);
-          pointer-events: none;
-          z-index: -1;
-          opacity: 0;
-          transition: opacity 180ms ease;
-        }
-      }
-    }
 
     .base-layout__container {
-      display: grid;
-      gap: 0.5rem;
-      padding: 0 2rem; /* same single gutter as main content */
-    }
-
-    @media (max-width: 48rem) {
-      padding-block: 0.5rem;
+      padding-block: 0;
     }
   }
 
-  &__nav {
+  /* Single row: brand · nav · theme toggle (solid paper bar on every route). */
+  &__bar {
     display: flex;
     align-items: center;
-    gap: var(--size-2);
-  }
-
-  &__topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-
-  &__menu-row {
-    position: relative;
-    border-top: var(--border-light);
-    padding-top: 0.5rem;
-  }
-
-  /* Mobile: constrain the menu row to the viewport so the inner nav
-     scrolls horizontally instead of pushing page-level overflow. */
-  @media (max-width: 48rem) {
-    &__menu-row {
-      min-width: 0;
-      max-width: 100%;
-      overflow: hidden;            /* clip to viewport; nav scrolls inside */
-    }
-  }
-
-  &__gallery-link {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    text-decoration: none;
-    letter-spacing: 0.01em;
-    transition: color 180ms ease;
-    &:hover { color: var(--accent-text); }
+    gap: 1rem;
+    min-block-size: 3.75rem;
   }
 
   &__brand {
+    flex: none;
     font-size: 1rem;
     font-weight: 400;
     letter-spacing: -0.01em;
+    white-space: nowrap;
     color: var(--text);
     transition: opacity 180ms ease;
 
@@ -255,45 +78,33 @@
     }
   }
 
-  /* ═════════════════════════════════════════════════════════════════
-    V1 BEM nav selectors removed — V2 uses .nav-links / .nav-link
-    ═════════════════════════════════════════════════════════════════ */
+  /* Nav slot: takes the remaining width and lets the links scroll inside it
+     (narrow screens) instead of widening the page. */
+  &__nav-wrap {
+    position: relative;
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
 
-  &__theme-fab {
-    position: fixed;
-    right: 1rem;
-    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-    z-index: 40;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: var(--radius-round);
-    border: 1px solid color-mix(in srgb, var(--text) 45%, transparent);
-    background: var(--bg-soft);
-    color: var(--text);
-    font-size: 1.125rem;
-    cursor: pointer;
+  &__theme-toggle {
+    flex: none;
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
     display: grid;
     place-items: center;
-    transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--text) 45%, transparent);
+    border-radius: var(--radius-round);
+    background: var(--bg-soft);
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
 
     &:hover {
-      border-color: color-mix(in srgb, var(--text) 20%, transparent);
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    @media (max-width: 48rem) {
-      right: 0.75rem;
-      bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
-      width: 2.25rem;
-      height: 2.25rem;
-      font-size: 1rem;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      &:hover {
-        transform: none;
-      }
+      border-color: var(--accent-start);
     }
   }
 
@@ -325,7 +136,7 @@
     grid-template-columns: 1fr auto;
     align-items: center;
     gap: 1rem;
-    padding: 0 var(--layout-padding);
+    padding-block: 0;
 
     @media (max-width: 48rem) {
       grid-template-columns: 1fr;
@@ -382,70 +193,55 @@
     width: 0.875rem;
     height: 0.875rem;
   }
-
-  /* ═════════════════════════════════════════════════════════════════
-    Old persona toggle CSS removed — V2 uses .nav-persona-toggle / .nav-persona-btn
-    ═════════════════════════════════════════════════════════════════ */
 }
 
-html.is-persona-routing body {
-  visibility: hidden;
+/* Theme flips are atomic: surfaces and text swap in the same frame. If either
+   transitioned while the other snapped, text would sit on the wrong-polarity
+   surface mid-flip. baseLayout.client.ts sets the attribute for two frames. */
+html[data-theme-switching] *,
+html[data-theme-switching] *::before,
+html[data-theme-switching] *::after {
+  transition: none !important;
 }
 
-html.is-persona-switching .base-layout__main,
-html.is-persona-switching .base-layout__footer {
-  animation: persona-shell-out 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  pointer-events: none;
-}
-
-html.is-persona-entering .base-layout__main,
-html.is-persona-entering .base-layout__footer {
-  animation: persona-shell-in 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.is-persona-switching .base-layout__main,
-  html.is-persona-switching .base-layout__footer,
-  html.is-persona-entering .base-layout__main,
-  html.is-persona-entering .base-layout__footer {
-    animation: none;
-  }
-}
-
-html.is-theme-switching .base-layout,
-html.is-theme-switching
-  .base-layout
-  :where(main, section, article, nav, a, button, p, h1, h2, h3, h4, li) {
-  transition:
-    background-color 220ms var(--ease-2),
-    color 220ms var(--ease-2),
-    border-color 220ms var(--ease-2),
-    box-shadow 220ms var(--ease-2);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.is-theme-switching .base-layout,
-  html.is-theme-switching
-    .base-layout
-    :where(main, section, article, nav, a, button, p, h1, h2, h3, h4, li) {
-    transition: none;
-  }
-}
-
-/* ═════════════════════════════════════════════════════════════════
-   V2 Navigation — Stripe-inspired gradient underline
-   ═════════════════════════════════════════════════════════════════ */
-
+/* Nav. The links scroll sideways when they outgrow the bar (measured: below
+   ~700px). baseLayout.client.ts flags [data-nav-scroller] with overflow /
+   scrolled / at-end state; the mask fades whichever edge hides links, and the
+   hint sits on the faded (transparent) right edge while links remain there. */
 .nav-links {
   display: flex;
+  flex-wrap: nowrap;
   gap: 0.125rem;
+  min-inline-size: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &[data-nav-overflowing="true"][data-nav-at-end="false"] {
+    padding-inline-end: 4.5rem;
+    mask-image: linear-gradient(to left, transparent 0, transparent 3.75rem, black 5.5rem);
+  }
+
+  &[data-nav-overflowing="true"][data-nav-scrolled="true"] {
+    mask-image: linear-gradient(to right, transparent 0, black 1.5rem);
+  }
+
+  &[data-nav-overflowing="true"][data-nav-scrolled="true"][data-nav-at-end="false"] {
+    mask-image: linear-gradient(to right, transparent 0, black 1.5rem, black calc(100% - 5.5rem), transparent calc(100% - 3.75rem));
+  }
 }
 
 .nav-link {
   position: relative;
+  flex: 0 0 auto;
   padding: 0.5rem 0.75rem;
   font-size: 0.875rem;
   font-weight: 400;
+  white-space: nowrap;
   color: var(--text-muted);
   text-decoration: none;
   border-radius: 6px;
@@ -468,184 +264,37 @@ html.is-theme-switching
       right: 0.75rem;
       height: 2px;
       border-radius: 1px;
-      background: var(--gradient-underline);
+      background: var(--accent-start);
     }
   }
 }
 
-/* Persona toggle pill buttons */
-.nav-persona-toggle {
+.nav-scroll-hint:not([hidden]) {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
   display: flex;
-  gap: 0;
-  padding: 2px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-round);
-  background: var(--bg);
-}
-
-.nav-persona-btn {
-  padding: 0.35rem 0.875rem;
-  border: none;
-  border-radius: var(--radius-round);
-  background: transparent;
+  align-items: center;
   color: var(--text-muted);
-  font-family: inherit;
-  font-size: 0.8125rem;
-  font-weight: 400;
-  cursor: pointer;
-  transition: color 180ms ease, background-color 180ms ease;
-
-  &:hover {
-    color: var(--text);
-    background: color-mix(in srgb, var(--text) 4%, transparent);
-  }
-
-  &.active {
-    color: var(--accent-text);
-    background: var(--persona-btn-active-bg, color-mix(in srgb, var(--accent-start) 16%, var(--bg)));
-    border: 1px solid color-mix(in srgb, var(--accent-start) 45%, var(--line));
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-start) 25%, transparent),
-      0 0 12px color-mix(in srgb, var(--accent-start) 22%, transparent);
-  }
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
-/* Mobile nav: 7 studio links don't fit one row. Keep a single horizontal
-   row and let it scroll (swipe) instead of wrapping onto two lines. */
 @media (max-width: 48rem) {
-  .nav-links {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 0.25rem 0.5rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;          /* Firefox */
-    -ms-overflow-style: none;        /* old Edge */
-    padding-bottom: 0.125rem;        /* breathing room for the scroll track */
-    min-width: 0;                    /* let it shrink to parent so inner scroll engages */
-    max-width: 100%;
-  }
-
-  .nav-links[data-nav-overflowing="true"] {
-    padding-inline-end: 2.25rem;
-    mask-image: linear-gradient(
-      to right,
-      black 0,
-      black calc(100% - 2.25rem),
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      black 0,
-      black calc(100% - 2.25rem),
-      transparent 100%
-    );
-
-    &[data-nav-scrolled="true"] {
-      padding-inline: 2.25rem;
-      mask-image: linear-gradient(
-        to right,
-        transparent 0,
-        black 2.25rem,
-        black calc(100% - 2.25rem),
-        transparent 100%
-      );
-      -webkit-mask-image: linear-gradient(
-        to right,
-        transparent 0,
-        black 2.25rem,
-        black calc(100% - 2.25rem),
-        transparent 100%
-      );
-    }
-  }
-
-  .nav-scroll-hint:not([hidden]) {
-    position: absolute;
-    inset-block-start: 0.65rem;
-    inset-inline-end: 0.15rem;
-    padding-inline-start: 0.5rem;
-    background: linear-gradient(to right, transparent, var(--bg) 35%);
-    color: var(--text-dim);
-    font-size: 0.68rem;
-    letter-spacing: 0.04em;
-    line-height: 1.5;
-    pointer-events: none;
-  }
-
-  .nav-links::-webkit-scrollbar {
-    display: none;                  /* Chrome/Safari */
+  .base-layout__bar {
+    gap: 0.5rem;
   }
 
   .nav-link {
-    white-space: nowrap;
-    flex: 0 0 auto;                  /* don't shrink — keep tappable width */
-    padding: 0.4rem 0.65rem;
+    padding: 0.4rem 0.6rem;
     font-size: 0.8125rem;
-  }
-}
 
-/* Light-mode persona switcher: pinned dark text so it never inherits a leaked
-   dark --text-muted. Inactive = #4b4b57 (AA on light); active uses accent-text. */
-[data-theme="light"] .nav-persona-btn {
-  color: #4b4b57;
-  &:hover { color: #0a0a0b; background: rgba(0, 0, 0, 0.05); }
-  &.active {
-    color: var(--accent-text);
-    background: color-mix(in srgb, var(--accent-start) 14%, #ffffff);
-    border-color: color-mix(in srgb, var(--accent-start) 45%, var(--line));
-  }
-}
-[data-persona="field"][data-theme="light"] .nav-persona-btn.active {
-  color: #9a5808;
-}
-
-/* ═════════════════════════════════════════════════════════════════
-   P1 SET 2 (C2) — scroll-aware header on hero pages.
-   While the full-bleed hero band FILLS the header's box the header keeps its
-   transparent over-photo look (above). Once the photo no longer fills that
-   box (baseLayout.client.ts flips html[data-header-solid] when the strip stops
-   being photo-covered), the header takes the standard hero-less look: solid
-   cream background, hairline border-bottom, ink links, moss active underline
-   (the !important moss rule in persona-studio-minimalist.scss persists).
-   Geometry is PINNED across the toggle: the header box keeps position: fixed
-   and the over-photo clamp inset-inline in both states, so brand and links do
-   not move at the flip. Only paint changes — the header element stays
-   transparent and borderless, and its ::after (defined in the over-photo block)
-   fades in as the full-bleed solid surface: it extends the clamp inset outward
-   on both sides to span the viewport and carries the bg, blur and hairline.
-   ═════════════════════════════════════════════════════════════════ */
-@supports selector(:has(*)) {
-  html[data-header-solid] .base-layout:has([data-hero]) .base-layout__header {
-    /* position, inset-inline, background, border: inherited unchanged from the
-       over-photo state on purpose — the ::after paints the solid bar. */
-
-    &::before {
-      opacity: 0; /* over-photo nav scrim has nothing to cover under a solid bar */
-    }
-
-    &::after {
-      opacity: 1; /* full-bleed solid surface: var(--bg) + blur + hairline */
-    }
-
-    .base-layout__brand strong,
-    .nav-link,
-    .base-layout__gallery-link {
-      color: var(--text-muted);
-      text-shadow: none;
-    }
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--text);
-    }
-    .base-layout__gallery-link:hover {
-      color: var(--accent-text);
-    }
-
-    /* back on the solid cream/charcoal bar: the base moss ring is legible again */
-    .base-layout__brand:focus-visible,
-    .nav-link:focus-visible,
-    .base-layout__gallery-link:focus-visible {
-      outline-color: var(--accent);
+    &.active::after {
+      left: 0.6rem;
+      right: 0.6rem;
     }
   }
 }

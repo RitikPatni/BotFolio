@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { Image, getImage } from "astro:assets";
-import UiIcon from "../../components/UiIcon.astro";
-import PhotographyLightbox from "./PhotographyLightbox.astro";
+import PhotographyLightbox from "./_PhotographyLightbox.astro";
 import "./_photography.scss";
 
 import {
   photographyGalleryData,
   type GalleryImage,
+  type PhotoMetadata,
 } from "../../data/photography";
 import { photographyCategories } from "../../data/photography/manifest";
 
@@ -49,6 +49,8 @@ type CategoryGalleryImage = {
   title: string;
   tags: string[];
   lightboxIndex: number;
+  ratio: number;
+  exposure: string;
 };
 
 type CategoryGallerySection = {
@@ -71,6 +73,13 @@ const galleryAssets = new Map(
     module.default,
   ]),
 );
+
+/* Contact-sheet caption: one exposure line from the frame's own EXIF (same
+   rule as the home strip); missing fields are omitted, never filled in. */
+const exposureOf = (meta?: PhotoMetadata) =>
+  [meta?.aperture, meta?.shutterSpeed, meta?.iso != null ? `ISO ${meta.iso}` : undefined]
+    .filter(Boolean)
+    .join(" · ");
 
 const createLightboxMetadata = (
   image: GalleryImage,
@@ -149,6 +158,8 @@ for (const category of photographyCategories) {
       title: image.title,
       tags: image.tags,
       lightboxIndex,
+      ratio: asset.width / asset.height,
+      exposure: exposureOf(image.metadata),
     });
 
     lightboxIndex += 1;
@@ -164,11 +175,11 @@ const totalImages = typedGallery.length;
 const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
 ---
 
-<BaseLayout title="Photography — Ritik Patni" path="/photography">
+<BaseLayout title="Gallery — Ritik Patni" path="/photography">
   <div class="photography" data-gallery-root>
     <section class="photography__hero page-hero page-hero--standard">
       <div class="page-hero__inner">
-        <h1 class="photography__title page-hero__title">Photography</h1>
+        <h1 class="photography__title page-hero__title">Gallery</h1>
         <p class="photography__lead page-hero__lead">
           Field notes in frames. Wildlife, birds, and macro studies from recent
           sessions.
@@ -176,46 +187,25 @@ const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
       </div>
     </section>
 
-    <div class="photography__tags photography__tags--spaced">
-      {
-        visibleCategories.map((category: CategoryGallerySection) => (
-          <a class="photography__tag" href={`#${category.id}`}>
-            {category.label}
-            <span class="photography__tag-count">
-              ({category.images.length})
-            </span>
-          </a>
-        ))
-      }
-    </div>
+    {
+      visibleCategories.length > 0 && (
+        <nav class="photography__index" aria-label="Gallery sections">
+          <span class="photography__index-total">{totalImages} frames</span>
+          {visibleCategories.map((category: CategoryGallerySection) => (
+            <a class="photography__index-link" href={`#${category.id}`}>
+              {category.label} <span class="photography__index-count">{category.images.length}</span>
+            </a>
+          ))}
+        </nav>
+      )
+    }
 
     {
       totalImages === 0 && (
-        <section class="photography__card" aria-label="How to add photos">
-          <h2 class="photography__card-title">Add your first batch</h2>
-          <p class="photography__description">
-            Drop images in category folders under{" "}
-            <code>/src/assets/photography</code>:
-          </p>
-          <ul class="photography__list photography__list--offset">
-            <li class="photography__item">
-              <p class="photography__item-title">Birds</p>
-              <p class="photography__meta">/src/assets/photography/birds</p>
-            </li>
-            <li class="photography__item">
-              <p class="photography__item-title">Wildlife</p>
-              <p class="photography__meta">/src/assets/photography/wildlife</p>
-            </li>
-            <li class="photography__item">
-              <p class="photography__item-title">Macro</p>
-              <p class="photography__meta">/src/assets/photography/macro</p>
-            </li>
-            <li class="photography__item">
-              <p class="photography__item-title">Landscape</p>
-              <p class="photography__meta">/src/assets/photography/landscape</p>
-            </li>
-          </ul>
-        </section>
+        <p class="photography__empty">
+          No frames yet. Add images under <code>src/assets/photography/&lt;category&gt;</code>
+          and their entries in <code>src/data/photography</code>.
+        </p>
       )
     }
 
@@ -227,25 +217,19 @@ const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
             id={category.id}
             aria-labelledby={`${category.id}-title`}
           >
-            <div class="photography__category-head">
-              <h2
-                class="photography__section-title"
-                id={`${category.id}-title`}
-              >
+            <header class="photography__category-head">
+              <h2 class="photography__section-title" id={`${category.id}-title`}>
                 {category.label}
               </h2>
               <p class="photography__meta">
-                {category.description}{" "}
-                {category.images.length > 0
-                  ? `${category.images.length} photos.`
-                  : "No photos yet."}
+                {category.images.length} {category.images.length === 1 ? "frame" : "frames"} · {category.description}
               </p>
-            </div>
+            </header>
 
-            {category.images.length > 0 && (
-              <div class="photography__gallery">
-                {category.images.map(
-                  (image: CategoryGalleryImage, imageIndex: number) => (
+            <ul class="photography__sheet">
+              {category.images.map(
+                (image: CategoryGalleryImage, imageIndex: number) => (
+                  <li class="photography__frame" style={`--ar: ${image.ratio.toFixed(4)}`}>
                     <figure class="photography__shot">
                       <button
                         class="photography__shot-link"
@@ -260,7 +244,7 @@ const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
                           src={image.asset}
                           alt={image.alt}
                           widths={[480, 720, 1080]}
-                          sizes="(max-width: 48rem) 100vw, (max-width: 80rem) 50vw, 33vw"
+                          sizes={`(max-width: 48rem) 100vw, ${Math.ceil(image.ratio * 360)}px`}
                           quality="high"
                           loading={
                             categoryIndex === 0 && imageIndex < 2
@@ -275,29 +259,16 @@ const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
                         />
                       </button>
                       <figcaption class="photography__caption">
-                        <span class="photography__caption-title">
-                          {image.title}
-                        </span>
-                        <button
-                          class="photography__caption-link"
-                          type="button"
-                          data-gallery-trigger
-                          data-gallery-index={String(image.lightboxIndex)}
-                          aria-haspopup="dialog"
-                          aria-label="Open gallery view"
-                          data-tooltip="Open gallery view"
-                        >
-                          <UiIcon
-                            name="image"
-                            class="photography__inline-icon"
-                          />
-                        </button>
+                        <span class="photography__caption-title">{image.title}</span>
+                        {image.exposure && (
+                          <span class="photography__caption-exif">{image.exposure}</span>
+                        )}
                       </figcaption>
                     </figure>
-                  ),
-                )}
-              </div>
-            )}
+                  </li>
+                ),
+              )}
+            </ul>
           </section>
         ),
       )

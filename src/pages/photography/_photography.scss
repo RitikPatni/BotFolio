@@ -1,153 +1,155 @@
 @use "./_photography.lightbox.scss";
 
+/* Gallery — a contact sheet in the home strip's language: frames at their
+   natural shapes on paper, one shared row height per row (justified rows: each
+   frame grows in proportion to its aspect ratio), generous whitespace, mono
+   exposure captions, moss index links. The lightbox is untouched. */
 .photography {
-  /* ─── Custom props ──────────────────────────────────────────── */
   --photography-icon-size: var(--size-3);
-  --photography-gallery-min-column: var(--size-14);
-  --photography-caption-action-size: var(--size-8);
-  --photography-control-size: var(--size-8);
-  --photography-close-size: var(--size-7);
   --photography-tooltip-gap: var(--size-2);
   --photography-tooltip-padding-block: var(--size-2);
   --photography-tooltip-padding-inline: var(--size-3);
-  /* Exception: no single Open Props token maps to this intended max width. */
-  --photography-lightbox-max-inline: calc(
-    var(--size-15) + var(--size-15) + var(--size-13) + var(--size-9) +
-      var(--size-8) + var(--size-7)
-  );
-  /* Exception: no single Open Props token maps to this intended max height. */
-  --photography-image-max-block: calc(
-    var(--size-15) + var(--size-13) + var(--size-10) + var(--size-8) +
-      var(--size-7) + var(--size-3)
-  );
-  --photography-fullscreen-image-offset: var(--size-12);
-  --photography-panel-inline-size: var(--size-14);
-  --photography-related-grid-min: var(--size-10);
-  --photography-related-max-block: var(--size-14);
-  --photography-metadata-mobile-max-block: var(--size-13);
-  --photography-metadata-fullscreen-mobile-max-block: var(--size-15);
-  --photography-related-mobile-max-block: var(--size-13);
-
-  /* ─── Pattern styles ───────────────────────────────────────── */
-
-  &__hero {
-    /* Shared geometry comes from .page-hero. */
-  }
-
-  &__title {
-  }
+  --sheet-row-h: clamp(10rem, 17vw, 15rem);
 
   &__lead {
     max-width: 500px;
   }
 
-  &__section-title {
-    font-size: 1.5rem;
-    font-weight: 300;
-    letter-spacing: -0.01em;
-    margin: 0 0 1.5rem;
-  }
-
-  &__grid {
-    display: grid;
-    gap: 1.5rem;
-    &--two {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  &__card {
-    border: 1px solid var(--line);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    &-title {
-      margin-top: 0;
-      font-family: inherit;
-      font-size: 1.25rem;
-    }
-    &--offset {
-      margin-block-start: var(--size-4);
-    }
-  }
-
-  &__tags {
+  /* Section index: jump links with build-time counts. */
+  &__index {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--size-2);
-    &--spaced {
-      margin-block-end: var(--size-4);
-    }
+    align-items: baseline;
+    gap: 0.5rem 1.75rem;
+    padding-block: 0.75rem;
+    border-block: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  &__tag {
-    display: inline-block;
-    padding: 0.35rem 0.85rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-round);
-    font-size: 0.85rem;
-    font-weight: 400;
+  &__index-total {
     color: var(--text-muted);
+  }
+
+  &__index-link {
+    color: var(--accent-text);
     text-decoration: none;
-    transition: background-color 200ms ease, border-color 200ms ease,
-      color 200ms ease;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--dur-base) var(--ease-soft);
 
     &:hover {
-      color: var(--text);
-      border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
+      border-bottom-color: var(--accent-start);
     }
   }
 
-  &__tag-count {
-    font-size: var(--font-size-0);
-    color: var(--text-dim);
+  &__index-count {
+    color: var(--text-muted);
     font-variant-numeric: tabular-nums;
   }
 
-  &__list {
-    display: grid;
-    gap: var(--size-3);
-    &--offset {
-      margin-block-start: var(--size-5);
-    }
+  &__empty {
+    color: var(--text-muted);
   }
-
-  &__item {
-    border: var(--border-light);
-    border-radius: var(--radius-2);
-    padding-block: var(--size-3);
-    padding-inline: var(--size-4);
-    background: var(--bg-soft);
-    &-title {
-      margin: 0;
-      margin-block-end: var(--size-2);
-      font-family: inherit;
-      font-size: var(--font-size-4);
-    }
-  }
-
-  &__meta {
-    margin: 0;
-    color: var(--text-dim);
-    font-size: var(--font-size-1);
-    &--spaced {
-      margin-block-end: var(--size-2);
-    }
-  }
-
-  &__description {
-    margin: 0;
-  }
-
-  /* ─── Photography-specific ──────────────────────────────────── */
 
   &__category {
-    margin-block-start: var(--size-7);
+    margin-block-start: clamp(3rem, 6vw, 4.5rem);
   }
 
   &__category-head {
     display: grid;
-    gap: var(--size-2);
-    margin-block-end: var(--size-4);
+    gap: 0.35rem;
+    margin-block-end: 1.5rem;
+  }
+
+  &__section-title {
+    margin: 0;
+    font-weight: 400;
+  }
+
+  &__meta {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+  }
+
+  /* Justified rows: flex-grow = aspect ratio keeps every frame in a row at one
+     height; the ::after filler stops the last row from stretching. */
+  &__sheet {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem clamp(0.75rem, 1.4vw, 1.25rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &::after {
+      content: "";
+      flex-grow: 999999;
+    }
+  }
+
+  &__frame {
+    flex: var(--ar) 1 calc(var(--ar) * var(--sheet-row-h));
+    min-inline-size: 0;
+  }
+
+  &__shot {
+    margin: 0;
+  }
+
+  &__shot-link {
+    display: block;
+    inline-size: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--bg-deep);
+    cursor: zoom-in;
+    outline: 1px solid transparent;
+    outline-offset: 3px;
+    transition: outline-color var(--dur-base) var(--ease-soft);
+
+    &:hover {
+      outline-color: var(--accent-start);
+    }
+  }
+
+  &__image {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Caption: title, then the exposure line in mono (same as the home strip). */
+  /* text-transform: none — the global `figure figcaption` metadata rule
+     uppercases, which would turn "f/6.3 · 1/2500s" into "F/6.3 · 1/2500S". */
+  &__caption {
+    margin-block-start: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__caption-title {
+    display: block;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--text);
+  }
+
+  &__caption-exif {
+    display: block;
   }
 
   &__inline-icon,
@@ -155,18 +157,6 @@
     inline-size: var(--photography-icon-size);
     block-size: var(--photography-icon-size);
     flex: none;
-  }
-
-  &__gallery {
-    columns: 3;
-    column-gap: 1rem;
-
-    @media (max-width: 48rem) {
-      columns: 1;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
   }
 
   &__gallery-status {
@@ -187,82 +177,8 @@
     text-align: center;
   }
 
-  &__shot {
-    break-inside: avoid;
-    margin-bottom: 1rem;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--accent-start) 15%, transparent);
-    transition: border-color 200ms ease;
+  /* ─── Tooltip (lightbox actions) ───────────────────────────── */
 
-    &:hover {
-      border-color: color-mix(in srgb, var(--accent-start) 40%, transparent);
-    }
-  }
-
-  &__shot-link {
-    display: block;
-    inline-size: 100%;
-    padding: 0;
-    border: 0;
-    background: var(--bg-soft);
-    cursor: zoom-in;
-
-    &:hover .photography__image,
-    &:focus-visible .photography__image {
-      transform: scale(1.02);
-    }
-  }
-
-  &__image {
-    display: block;
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
-    transition: transform 180ms ease;
-  }
-
-  &__caption {
-    padding: 0.75rem 0.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &__caption-title {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: var(--text-muted);
-  }
-
-  &__caption-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--size-2);
-    inline-size: var(--photography-caption-action-size);
-    block-size: var(--photography-caption-action-size);
-    padding: 0;
-    border: 0;
-    border-radius: var(--radius-round);
-    background: transparent;
-    color: var(--accent-text);
-    font-size: var(--font-size-0);
-    text-underline-offset: 0.25ch;
-    cursor: pointer;
-
-    @media (max-width: 48rem) {
-      & {
-        inline-size: auto;
-        min-block-size: var(--photography-caption-action-size);
-        padding-inline: var(--size-3);
-      }
-    }
-  }
-
-  /* ─── Tooltip (shared by caption-link, lightbox actions) ─────── */
-
-  &__caption-link[data-tooltip],
   &__lightbox-action[data-tooltip],
   &__lightbox-close[data-tooltip],
   &__lightbox-nav[data-tooltip] {
@@ -300,15 +216,8 @@
   }
 }
 
-/* Mobile: let gallery + sections use full container width */
 @media (max-width: 48rem) {
-  .photography__hero,
-  .photography__category,
-  [class$="__section"] {
-    padding-inline: 0;
-  }
-
-  .photography__shot {
-    margin-inline: 0;
+  .photography {
+    --sheet-row-h: 9rem;
   }
 }

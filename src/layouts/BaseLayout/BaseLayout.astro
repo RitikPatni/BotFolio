@@ -1,7 +1,7 @@
 ---
 import "../../styles/global.scss";
 import "./BaseLayout.scss";
-import { SITE_CONFIG, NAV_LINKS_BY_PERSONA } from "../../config/site";
+import { SITE_CONFIG, NAV_LINKS } from "../../config/site";
 import { ClientRouter } from "astro:transitions";
 import SocialIcon from "../../components/SocialIcon.astro";
 
@@ -12,6 +12,8 @@ interface Props {
   image?: string;
   ogType?: string;
   theme?: "light" | "dark";
+  /** Error pages: robots noindex and no canonical. */
+  noindex?: boolean;
 }
 
 const {
@@ -20,12 +22,12 @@ const {
   path = "/",
   image = "/og/default.png",
   ogType = "website",
+  noindex = false,
   /* Field Notes: photography gallery keeps a dark viewing frame */
   theme = path.startsWith("/photography") ? ("dark" as const) : ("light" as const),
 } = Astro.props;
 
 const socials = SITE_CONFIG.socials;
-const navSets = NAV_LINKS_BY_PERSONA;
 const normalizedPath = path.replace(/\/$/, "") || "/";
 const isNavLinkActive = (href: string) =>
   href === "/"
@@ -39,7 +41,6 @@ const imageUrl = new URL(image, Astro.site).toString();
 <html
   lang="en"
   data-theme={theme}
-  data-persona="studio"
   transition:name="page-root"
   transition:animate="none"
 >
@@ -49,7 +50,6 @@ const imageUrl = new URL(image, Astro.site).toString();
     <script is:inline>
       (() => {
         const THEME_STORAGE_KEY = "rp-theme";
-        const PERSONA_STORAGE_KEY = "rp-persona";
 
         const applySavedTheme = () => {
           try {
@@ -63,18 +63,7 @@ const imageUrl = new URL(image, Astro.site).toString();
           }
         };
 
-        const applySavedPersona = () => {
-          /* Persona mode dissolved (Field Notes): single identity. */
-          document.documentElement.setAttribute("data-persona", "studio");
-        };
-
-                const guardSavedPersonaRoute = () => {
-          /* no persona routing — single identity */
-        };
-
         applySavedTheme();
-        applySavedPersona();
-        guardSavedPersonaRoute();
 
         if (!window.__rpGalleryFeedbackBound) {
           document.addEventListener(
@@ -126,17 +115,8 @@ const imageUrl = new URL(image, Astro.site).toString();
           window.__rpGalleryFeedbackBound = true;
         }
 
-        try {
-          if (sessionStorage.getItem("rp-persona-transition") === "1") {
-            document.documentElement.classList.add("is-persona-entering");
-          }
-        } catch {
-          // Ignore storage access errors; entry animation is optional.
-        }
-
         if (!window.__rpThemeSwapHookBound) {
           document.addEventListener("astro:after-swap", applySavedTheme);
-          document.addEventListener("astro:after-swap", applySavedPersona);
           window.__rpThemeSwapHookBound = true;
         }
       })();
@@ -145,7 +125,7 @@ const imageUrl = new URL(image, Astro.site).toString();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,550;9..144,600&family=Geist:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Fira+Code:wght@400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
     />
     <link
       rel="icon"
@@ -183,7 +163,7 @@ const imageUrl = new URL(image, Astro.site).toString();
     />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={imageUrl} />
@@ -194,16 +174,16 @@ const imageUrl = new URL(image, Astro.site).toString();
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
     <meta name="color-scheme" content="dark light" />
     <meta
       name="theme-color"
-      content="#f8f7f4"
+      content="#f7f4ed"
       media="(prefers-color-scheme: light)"
     />
     <meta
       name="theme-color"
-      content="#030507"
+      content="#171812"
       media="(prefers-color-scheme: dark)"
     />
     <ClientRouter />
@@ -224,31 +204,28 @@ const imageUrl = new URL(image, Astro.site).toString();
     <div class="base-layout" data-page-shell>
       <a class="base-layout__skip-link" href="#main-content">Skip to content</a>
       <header class="base-layout__header">
-        <div class="base-layout__container">
-          <div class="base-layout__topbar">
-            <div class="base-layout__nav">
-              <a
-                class="base-layout__brand"
-                href="/"
-                aria-label="Go to profile home"
-               
-              >
-                <strong>{SITE_CONFIG.personName}</strong>
-              </a>
-            </div>
-            <a class="base-layout__gallery-link" href="/photography" aria-label="Photography gallery">Gallery</a>
-          </div>
-          <div class="base-layout__menu-row">
-            <nav class="nav-links" aria-label="Main navigation">
-              {navSets.studio.map(item => (
+        <div class="base-layout__container base-layout__bar">
+          <a class="base-layout__brand" href="/" aria-label="Go to profile home">
+            <strong>{SITE_CONFIG.personName}</strong>
+          </a>
+          <div class="base-layout__nav-wrap">
+            <nav class="nav-links" aria-label="Main navigation" data-nav-scroller>
+              {NAV_LINKS.map(item => (
                 <a href={item.href} class={isNavLinkActive(item.href) ? 'nav-link active' : 'nav-link'} aria-current={isNavLinkActive(item.href) ? 'page' : undefined}>{item.label}</a>
               ))}
             </nav>
-            
-            <span class="nav-scroll-hint" data-nav-scroll-hint hidden aria-hidden="true">
-              Swipe for more
-            </span>
+            <span class="nav-scroll-hint" data-nav-scroll-hint hidden aria-hidden="true">More →</span>
           </div>
+          <button
+            class="base-layout__theme-toggle"
+            type="button"
+            id="themeToggle"
+            aria-label="Toggle light and dark theme"
+            aria-pressed="false"
+            title="Toggle theme"
+          >
+            <span class="base-layout__theme-icon" aria-hidden="true">☼</span>
+          </button>
         </div>
       </header>
 
@@ -289,17 +266,6 @@ const imageUrl = new URL(image, Astro.site).toString();
           </nav>
         </div>
       </footer>
-
-      <button
-        class="base-layout__theme-fab"
-        type="button"
-        id="themeFab"
-        aria-label="Toggle light and dark theme"
-        aria-pressed="false"
-        title="Toggle theme"
-      >
-        <span class="base-layout__theme-fab-icon" aria-hidden="true">☼</span>
-      </button>
     </div>
 
     <script>

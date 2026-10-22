@@ -1,15 +1,14 @@
 # Ritik Patni
 
-> Frontend developer and wildlife/macro photographer. This is a two-persona site: a "studio" developer profile (engineering notes, blog, journal) and a "field" photography profile (gallery, book library). Switch personas via the Dev/Photo toggle in the header.
+> Frontend developer and wildlife/macro photographer. One site, one set of sections: engineering notes and a newsletter, a photography gallery, a reading library, and an about page.
 
-## Studio (Developer)
-- Journal: https://ritikpatni.me/coding/
-- Notes (blog): https://ritikpatni.me/blog/
-- About: https://ritikpatni.me/about/
-
-## Field (Photography)
-- Gallery: https://ritikpatni.me/photography/
-- Library / Archive: https://ritikpatni.me/library/
+## Sections
+- Journal (engineering overview, recent notes and dispatches): https://ritikpatni.me/coding
+- Notes (blog posts and newsletter issues): https://ritikpatni.me/blog
+- Gallery (wildlife, bird and macro photography): https://ritikpatni.me/photography
+- Library (books and reading highlights): https://ritikpatni.me/library
+- Uses (tools and gear): https://ritikpatni.me/uses
+- About (background and contact links): https://ritikpatni.me/about
 
 ## Resources
 - Full content (all posts, notes, books, highlights): https://ritikpatni.me/llms-full.txt

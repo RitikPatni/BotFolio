@@ -1,11 +1,7 @@
-/* ═════════════════════════════════════════════════════════════════
-   V2 Blog Listing — Stripe-inspired
-   ═════════════════════════════════════════════════════════════════ */
+/* Notes listing. Hero, filters and list carry no inline padding: they sit on
+   the main container's content edge like every other route. */
 
 .blog-hero {
-  /* Field Notes: hero text shares the +2rem gutter the pills/cards use */
-  padding-inline: 2rem;
-
   &-content {
     /* Shared positioning comes from .page-hero__inner. */
   }
@@ -22,7 +18,7 @@
 .blog-posts {
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 2rem 2rem 4rem;
+  padding: 2rem 0 4rem;
 }
 
 .blog-grid {
@@ -48,10 +44,6 @@
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
     margin-bottom: 2rem;
-
-    .blog-card-title {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-    }
   }
 
   &-date {
@@ -62,7 +54,6 @@
   }
 
   &-title {
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
     font-weight: 300;
     letter-spacing: -0.01em;
     line-height: 1.3;
@@ -99,7 +90,7 @@
   display: flex;
   justify-content: flex-start;
   gap: 0.5rem;
-  padding: 0 2rem 2rem;
+  padding: 0 0 2rem;
 }
 
 .blog-filter-pill {
@@ -122,11 +113,5 @@
     color: var(--text);
     background: color-mix(in srgb, var(--accent-start) 8%, transparent);
     border-color: color-mix(in srgb, var(--accent-start) 40%, var(--line));
-  }
-}
-
-@media (max-width: 48rem) {
-  .blog-posts {
-    padding-inline: 0;
   }
 }
