@@ -79,11 +79,11 @@ import "./_blog.scss";
         <div class="blog-grid">
           {visiblePosts.map((post, i) => (
             <article
-              class={i === 0 ? "blog-card blog-card--featured" : "blog-card"}
+              class={i === 0 ? "blog-card blog-card--featured card-link" : "blog-card card-link"}
               data-blog-card-category={post.category}
             >
               <div class="blog-card-date">{formatDisplayDate(post.date)}</div>
-              <h2 class="blog-card-title"><a href={post.slug}>{post.title}</a></h2>
+              <h2 class="blog-card-title"><a class="card-link__target" href={post.slug}>{post.title}</a></h2>
               <p class="blog-card-desc">{post.description}</p>
               <p class="blog-card-meta">{post.readingTime} min read</p>
             </article>

@@ -230,9 +230,9 @@ const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
               {category.images.map(
                 (image: CategoryGalleryImage, imageIndex: number) => (
                   <li class="photography__frame" style={`--ar: ${image.ratio.toFixed(4)}`}>
-                    <figure class="photography__shot">
+                    <figure class="photography__shot card-link">
                       <button
-                        class="photography__shot-link"
+                        class="photography__shot-link card-link__target"
                         type="button"
                         data-gallery-trigger
                         data-gallery-index={String(image.lightboxIndex)}

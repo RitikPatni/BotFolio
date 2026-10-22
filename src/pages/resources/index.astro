@@ -36,10 +36,10 @@ import "../blog/_blog.scss";
       ) : (
         <div class="blog-grid">
           {resources.map((item, i) => (
-            <article class={i === 0 ? "blog-card blog-card--featured" : "blog-card"}>
+            <article class={i === 0 ? "blog-card blog-card--featured card-link" : "blog-card card-link"}>
               <div class="blog-card-date">{formatDisplayDate(item.date)}</div>
               <h2 class="blog-card-title">
-                <a href={item.slug}>{item.title}</a>
+                <a class="card-link__target" href={item.slug}>{item.title}</a>
               </h2>
               <p class="blog-card-desc">{item.description}</p>
               <p class="blog-card-meta">

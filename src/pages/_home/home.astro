@@ -132,9 +132,9 @@ const posts = (await getCollection("blog"))
       ) : (
         <div class="post-grid">
           {posts.map((post, i) => (
-            <article class={i === 0 ? "post-card post-card--featured" : "post-card"}>
+            <article class={i === 0 ? "post-card post-card--featured card-link" : "post-card card-link"}>
               <div class="post-card-date">{formatDisplayDate(post.date)}</div>
-              <h3 class="post-card-title"><a href={`/blog/${post.slug}`}>{post.title}</a></h3>
+              <h3 class="post-card-title"><a class="card-link__target" href={`/blog/${post.slug}`}>{post.title}</a></h3>
               <p class="post-card-desc">{post.description}</p>
             </article>
           ))}

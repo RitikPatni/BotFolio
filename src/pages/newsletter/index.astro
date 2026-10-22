@@ -38,9 +38,9 @@ import "./_newsletter.scss";
           </article>
         ) : (
           entries.map((item) => (
-            <article class="newsletter__item">
+            <article class="newsletter__item card-link">
               <h2 class="newsletter__item-title">
-                <a href={`/newsletter/${item.slug}`}>{item.title}</a>
+                <a class="card-link__target" href={`/newsletter/${item.slug}`}>{item.title}</a>
               </h2>
               <p class="newsletter__meta newsletter__meta--spaced">
                 {formatDisplayDate(item.date)} · {item.readingTime} min read
