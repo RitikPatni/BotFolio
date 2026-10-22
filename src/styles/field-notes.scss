@@ -31,7 +31,7 @@
 
 /* Tabular figures for dates, counts and other data */
 :root {
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: normal; /* ledger: Schibsted tnum widens punctuation */
 }
 
 /* Flat calm on shared page heroes */
