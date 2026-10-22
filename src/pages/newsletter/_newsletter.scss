@@ -42,6 +42,29 @@
     &-title { margin: 0; margin-block-end: 0.5rem; font-weight: 400; }
   }
 
+  /* The hover wash bleeds --size-4 into the gutter (--size-2 at the breakpoint,
+     inside the 1rem mobile gutter) from a ::before, so text and hairline stay
+     on the shared content edge. isolation keeps the wash under the text. */
+  &__item.card-link {
+    --newsletter-wash-inset: var(--size-4);
+    isolation: isolate;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      inset-inline: calc(var(--newsletter-wash-inset) * -1);
+      z-index: -1;
+      pointer-events: none;
+      transition: background-color var(--dur-base) var(--ease-soft);
+    }
+
+    &:hover { background: transparent !important; }
+    &:hover::before { background: color-mix(in srgb, var(--accent-wash) 14%, transparent); }
+
+    @media (max-width: 48rem) { --newsletter-wash-inset: var(--size-2); }
+  }
+
   &__meta {
     margin: 0; color: var(--text-dim); font-size: 0.85rem;
     &--spaced { margin-block-end: 0.5rem; }

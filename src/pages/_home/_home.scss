@@ -99,11 +99,18 @@
   color: var(--text-muted);
 }
 
+/* --strip-ink is room for ink the scroll box would otherwise clip: the hover
+   hairline (1px at 3px offset) and the focus ring (2px at 4px offset). The
+   negative margins cancel it, so frames keep their place and the row its
+   geometry. */
 .index-strip__row {
+  --strip-ink: 6px;
+
   display: flex;
   gap: clamp(0.75rem, 1.4vw, 1.25rem);
-  margin: 0;
-  padding: 0 3rem 0.75rem 0;
+  margin: calc(var(--strip-ink) * -1) 0 0 calc(var(--strip-ink) * -1);
+  padding: var(--strip-ink) 3rem 0.75rem var(--strip-ink);
+  scroll-padding-inline-start: var(--strip-ink);
   list-style: none;
   overflow-x: auto;
   overscroll-behavior-x: contain;
