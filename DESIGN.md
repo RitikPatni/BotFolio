@@ -1,60 +1,31 @@
 ---
 name: BotFolio — Ritik Patni
-description: Dual-identity personal site — frontend engineering and wildlife/macro photography under one roof
+description: Personal archive of a frontend engineer and wildlife/macro photographer, set in one Field Notes identity (cream paper, moss accent)
 colors:
-  studio-ink-blue: "#8aa6c8"
-  studio-ink-blue-light: "#1e50c8"
-  studio-ink-fade: "#b8c4d4"
-  studio-ink-fade-light: "#4a73d6"
-  field-hazard-red: "#ff2a2a"
-  field-hazard-deep: "#e61919"
-  field-hazard-print: "#b81414"
-  studio-carbon: "#0c0c0e"
-  studio-carbon-soft: "#141416"
-  studio-bone: "#f4f2ee"
-  studio-paper: "#f7f6f3"
-  studio-paper-soft: "#fbfbfa"
-  studio-ink: "#1c1b19"
-  field-carbon: "#0b0b0c"
-  field-carbon-soft: "#131314"
-  field-snow: "#f2f2f0"
-  field-newsprint: "#eae8e3"
-  field-newsprint-soft: "#f4f4f0"
-  field-ink: "#0a0a0a"
-  neutral-bg: "#0a0a0b"
-  neutral-bg-soft: "#121214"
-  neutral-text: "#fafafa"
-  # Persona muted text (element-level computed values)
-  studio-text-muted: "#9a958c"
-  studio-text-dim: "#857f75"
-  studio-text-muted-light: "#6b6660"
-  studio-text-dim-light: "#56564f"
-  field-text-muted: "#8c8c88"
-  field-text-dim: "#7f7f7a"
-  field-text-muted-light: "#4a4a46"
-  field-text-dim-light: "#676760"
-  # Base (pre-persona) layer — fallback only, fully overridden by both personas
-  base-text-muted: "#888896"
-  base-text-dim: "#7e7e88"
-  base-text-muted-light: "#5c5c6e"
-  base-text-dim-light: "#56566a"
-  base-studio-start: "#82aaff"
-  base-studio-end: "#c792ea"
-  base-field-start: "#f59e0b"
-  base-field-end: "#ef4444"
-  base-accent-text-light: "#9a5808"
-  base-line-light: "#00000014"
-  base-bg-light: "#fafafa"
-  base-bg-soft-light: "#f0f0f3"
-  og-ground-dark: "#030507"
-  og-ground-light: "#f8f7f4"
-  # Persona switcher — derived values (computed color-mix results, dark theme)
-  persona-switcher-active-bg: "#292e36"
-  switcher-active-border: "rgba(147,173,203,0.493)"
-  switcher-active-border-alt: "rgba(146,172,203,0.539)"
-  tag-active-border: "rgba(149,174,204,0.447)"
-  cover-accent-border: "rgba(161,183,208,0.281)"
-  # Night Owl code-highlight theme (preserved deliberately for code readability)
+  # Light theme (the default) — src/styles/v2-tokens.scss:8-33
+  cream: "#f7f4ed"
+  paper: "#fffdf8"
+  paper-deep: "#eee9dd"
+  ink: "#1d1b16"
+  ink-muted: "#55503f"
+  ink-dim: "#746e5f"
+  line: "rgba(29, 27, 22, 0.14)"
+  moss: "#5f7350"
+  moss-deep: "#46573a"
+  moss-wash: "#c2cdb2"
+  # Dark theme (scoped: /photography default, or the reader's stored choice) — src/styles/v2-tokens.scss:88-102
+  charcoal: "#171812"
+  charcoal-soft: "#1f2119"
+  charcoal-deep: "#10110c"
+  bone: "#f0ede2"
+  bone-muted: "#a8a394"
+  bone-dim: "#8e8878"
+  line-dark: "rgba(240, 237, 226, 0.10)"
+  moss-dark: "#9db38a"
+  moss-dark-end: "#7d9468"
+  moss-dark-text: "#b3c7a0"
+  moss-dark-wash: "#2a3325"
+  # Night Owl code-highlight theme (Shiki, astro.config.mjs:13-16) — content styling, never chrome
   night-owl-bg: "#011627"
   night-owl-text: "#d6deeb"
   night-owl-punct: "#d9f5dd"
@@ -78,400 +49,378 @@ colors:
   scroll-mask-black: "#000"
 typography:
   display:
-    fontFamily: "Newsreader, Playfair Display, Instrument Serif, Georgia, serif"
-    fontSize: "clamp(2.5rem, 6vw, 5rem)"
+    fontFamily: "Newsreader, Georgia, serif"
+    fontSize: "clamp(2.3rem, 5.4vw, 4.9rem)"
     fontWeight: 400
-    lineHeight: 1.08
-    letterSpacing: "-0.02em"
-  display-field:
-    fontFamily: "Archivo Black, Archivo, Arial Black, sans-serif"
-    fontSize: "clamp(2.5rem, 9vw, 7rem)"
-    fontWeight: 800
-    lineHeight: 0.9
-    letterSpacing: "-0.03em"
-  display-field-mobile:
-    fontFamily: "Archivo Black, Archivo, Arial Black, sans-serif"
-    fontSize: "clamp(1.75rem, 10vw, 3rem)"
-    fontWeight: 800
-    lineHeight: 0.9
-  display-uses:
-    fontFamily: "Archivo Black, Archivo, Arial Black, sans-serif"
-    fontSize: "clamp(3rem, 9vw, 6.5rem)"
-    fontWeight: 800
-    lineHeight: 0.9
-  display-alt:
-    fontFamily: "Newsreader, Playfair Display, Georgia, serif"
-    fontSize: "clamp(2.5rem, 7vw, 6rem)"
+    lineHeight: 1.04
+    letterSpacing: "-0.022em"
+  display-sm:
+    fontFamily: "Newsreader, Georgia, serif"
+    fontSize: "clamp(2.1rem, 9.6vw, 3rem)"
     fontWeight: 400
-    lineHeight: 1.08
-  hero-title:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
+    lineHeight: 1.04
+    letterSpacing: "-0.022em"
+  h1:
+    fontFamily: "Newsreader, Georgia, serif"
     fontSize: "clamp(2.5rem, 6vw, 4rem)"
     fontWeight: 400
-    lineHeight: 1.1
+    lineHeight: 1.08
     letterSpacing: "-0.02em"
-  headline:
-    fontFamily: "Newsreader, Playfair Display, Instrument Serif, Georgia, serif"
-    fontSize: "clamp(1.75rem, 3vw, 2.5rem)"
+  h2:
+    fontFamily: "Newsreader, Georgia, serif"
+    fontSize: "clamp(1.5rem, 2.4vw, 1.875rem)"
     fontWeight: 400
     lineHeight: 1.08
     letterSpacing: "-0.02em"
-  headline-home:
-    fontFamily: "Newsreader, Playfair Display, Georgia, serif"
-    fontSize: "clamp(1.75rem, 3vw, 2rem)"
-    fontWeight: 400
-    lineHeight: 1.1
-  section-title:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "clamp(1.5rem, 3vw, 2rem)"
-    fontWeight: 300
-    lineHeight: 1.2
-  section-title-alt:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "clamp(1.4rem, 3vw, 2rem)"
-    fontWeight: 400
-    letterSpacing: "-0.03em"
-  section-title-uses:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "clamp(1.15rem, 2.5vw, 1.5rem)"
-    fontWeight: 400
-  title:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "clamp(1.1rem, 2vw, 1.5rem)"
-    fontWeight: 400
-    lineHeight: 1.3
-    letterSpacing: "-0.01em"
-  title-field:
-    fontFamily: "Archivo, Archivo Black, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "1.1rem"
-    fontWeight: 700
-    lineHeight: 1.3
-    letterSpacing: "0.02em"
-  prose-h2:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "1.75rem"
-    fontWeight: 400
-    lineHeight: 1.25
-  prose-h3:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "1.35rem"
-    fontWeight: 400
-    lineHeight: 1.3
-  prose-h4:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "1.15rem"
+  h3:
+    fontFamily: "Newsreader, Georgia, serif"
+    fontSize: "clamp(1.05rem, 1.8vw, 1.35rem)"
     fontWeight: 400
     lineHeight: 1.35
-  section-title-lg:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "1.5rem"
-    fontWeight: 300
+    letterSpacing: "-0.01em"
   body:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.65
-  body-base:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 300
-    lineHeight: 1.8
-  body-field:
-    fontFamily: "Archivo, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "1rem"
+  prose:
+    fontFamily: "Geist, Helvetica Neue, system-ui, sans-serif"
+    fontSize: "1.16rem"
     fontWeight: 400
-    lineHeight: 1.5
+    lineHeight: 1.78
   lede:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "clamp(1rem, 1.5vw, 1.25rem)"
-    fontWeight: 400
-    lineHeight: 1.6
-  lede-uses:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "clamp(1rem, 2vw, 1.2rem)"
-    lineHeight: 1.6
-  intro:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Helvetica Neue, system-ui, sans-serif"
     fontSize: "1.05rem"
-    fontWeight: 400
-    lineHeight: 1.65
-  item-title:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.95rem"
-    fontWeight: 400
-    lineHeight: 1.4
-  body-sm:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.95rem"
-    fontWeight: 300
-    lineHeight: 1.6
-  body-sm-field:
-    fontFamily: "Archivo, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.95rem"
     lineHeight: 1.5
-  prose-sm:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.98rem"
-    lineHeight: 1.65
-  meta:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.85rem"
+  ledger:
+    fontFamily: "Geist, Helvetica Neue, system-ui, sans-serif"
+    fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.5
-  meta-field:
-    fontFamily: "Archivo, JetBrains Mono, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.85rem"
-  meta-sm:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.8rem"
-    lineHeight: 1.5
   nav:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
+    fontFamily: "Geist, Helvetica Neue, system-ui, sans-serif"
     fontSize: "0.875rem"
     fontWeight: 400
-  cta-field:
-    fontFamily: "JetBrains Mono, Geist Mono, ui-monospace, monospace"
-    fontSize: "0.8rem"
-    letterSpacing: "0.06em"
-  meta-lg:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.9rem"
-  uses-meta:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.92rem"
-  caption:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.78rem"
-    lineHeight: 1.5
-  meta-xs:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.76rem"
-  lightbox-counter:
-    fontFamily: "Geist Mono, JetBrains Mono, ui-monospace, monospace"
-    fontSize: "1.25rem"
-  code-inline:
-    fontFamily: "Fira Code, Geist Mono, JetBrains Mono, ui-monospace, monospace"
-    fontSize: "0.875rem"
-  code-inline-sm:
-    fontFamily: "Fira Code, Geist Mono, JetBrains Mono, ui-monospace, monospace"
-    fontSize: "0.8125rem"
-  mono-base:
-    fontFamily: "Fira Code, ui-monospace, monospace"
-    fontSize: "0.875rem"
-  label:
-    fontFamily: "Geist Mono, JetBrains Mono, ui-monospace, monospace"
-    fontSize: "0.72rem"
+  caption-title:
+    fontFamily: "Newsreader, Georgia, serif"
+    fontSize: "0.95rem"
+    fontWeight: 500
+  meta:
+    fontFamily: "IBM Plex Mono, monospace"
+    fontSize: "0.82rem"
     letterSpacing: "0.08em"
-  tag-sm:
-    fontFamily: "JetBrains Mono, Geist Mono, ui-monospace, monospace"
-    fontSize: "0.7rem"
+  count:
+    fontFamily: "IBM Plex Mono, monospace"
+    fontSize: "0.78rem"
     letterSpacing: "0.06em"
-  micro:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
+  label:
+    fontFamily: "IBM Plex Mono, monospace"
     fontSize: "0.75rem"
-    lineHeight: 1.5
-  scroll-hint:
-    fontFamily: "Geist, Switzer, Helvetica Neue, system-ui, sans-serif"
-    fontSize: "0.68rem"
-    letterSpacing: "0.04em"
-    lineHeight: 1.5
+    letterSpacing: "0.1em"
+  caption:
+    fontFamily: "IBM Plex Mono, monospace"
+    fontSize: "0.75rem"
+    lineHeight: 1.45
+    letterSpacing: "0.02em"
+  code:
+    fontFamily: "IBM Plex Mono, monospace"
+    fontSize: "0.875rem"
 rounded:
-  sm: "8px"
-  md: "12px"
-  round: "100px"
-  sm-studio: "4px"
-  md-studio: "6px"
-  skip-link: "5px"
-  underline: "1px"
-  social: "1rem"
-  lightbox-sheet: "20px"
-  pill: "999px"
-  field: "0px"
+  sm: "4px"
+  md: "6px"
+  round: "999px"
+  card: "0px"
 spacing:
-  layout: "clamp(1rem, 3vw, 1.5rem)"
-  card: "2rem"
-  shot: "1.25rem"
+  gutter: "clamp(1rem, 3vw, 2rem)"
+  layout-padding: "clamp(1rem, 3vw, 1.5rem)"
+  layout-max: "75rem"
+  content-max: "60rem"
+  header-h: "61px"
 components:
-  card:
-    backgroundColor: "{colors.neutral-bg-soft}"
-    rounded: "{rounded.md}"
-  button-primary:
-    backgroundColor: "{colors.neutral-bg-soft}"
-    textColor: "{colors.neutral-text}"
-    rounded: "{rounded.round}"
-  chip-accent:
-    textColor: "{colors.studio-ink-blue}"
-  persona-switcher-active:
-    backgroundColor: "{colors.persona-switcher-active-bg}"
-    textColor: "{colors.studio-ink-blue}"
-    rounded: "{rounded.md-studio}"
   nav-link:
     typography: "{typography.nav}"
-    rounded: "{rounded.md-studio}"
-  tag-filter:
-    typography: "{typography.meta}"
-    rounded: "{rounded.pill}"
+    textColor: "{colors.ink-muted}"
+    rounded: "{rounded.md}"
+  card:
+    backgroundColor: "transparent"
+    rounded: "{rounded.card}"
+  theme-toggle:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.round}"
+  ledger-link:
+    typography: "{typography.ledger}"
+    textColor: "{colors.ink}"
+  strip-frame:
+    rounded: "{rounded.sm}"
 ---
 
 # Design System: BotFolio — Ritik Patni
 
+This file is the design law for the shipped site. It is written in the present tense: every rule describes what the site does now, and every authority claim points at the code that enforces it. When this file and the code disagree, the code is what ships. File the gap as a bug in one or the other; don't quietly follow either side.
+
+Measured evidence for each factual claim (computed styles from the built site, both themes, 1440 and 390 widths) is in `design/docs-round/measurements.json`. Claim IDs `C01`–`C36` are cited inline below.
+
 ## Overview
 
-**Creative North Star: "Ink & Hazard — warm editorial ink meets Swiss hazard printing."**
+**Creative North Star: "Field Notes": a naturalist's notebook kept by an engineer.**
 
-This is one site with two deliberately separate design languages, never merged. The **studio** persona is warm editorial ink: carbon and bone surfaces, a serif display voice (Newsreader), a single desaturated ink-blue accent, crisp small radii, flat-calm atmosphere. The **field** persona is Swiss hazard printing: carbon and newsprint, massive uppercase Archivo Black macro headlines, a single hazard-red accent, zero radius, hard visible dividers. A visitor can stand in either room and know which one they're in instantly — that recognition is the system working.
+There is one identity: cream paper, ink, and one moss accent. A serif voice (Newsreader) carries the headings, a quiet grotesque (Geist) carries reading and UI, and a mono hand (IBM Plex Mono) carries dates, counts and exposure data. Engineering and photography live in the same notebook and share the same surfaces, type and accent. The two subjects show up as two voices in one sentence (the home statement switches from roman to moss italic), not as two visual systems.
 
-Persona separation is structural, not cosmetic: separate navigation, content slots, themes, tokens, and type systems per persona (`[data-persona="studio"]` / `[data-persona="field"]`), each with its own dark and light theme. Shared infrastructure (the base `:root` token layer) exists only as a fallback and is fully overridden by both personas.
+The earlier dual-persona system (separate "studio" and "field" rooms, each with its own accent, type and radius) is dissolved. No route renders a persona attribute and the header has no persona switch (`C01`, `C02`).
 
-**Key Characteristics:**
-- Two rooms, one archive — studio (editorial minimalism) and field (Swiss brutalism) never share visual language
-- One accent per persona at a time: ink-blue or hazard-red, never both, never blended
-- Weight- and case-driven hierarchy; gradients are whispers, never banners
-- Tabular figures everywhere data appears; flat surfaces; borders over shadows
-- Craft lives in the details: caption sizes, heading order, contrast — all audited
+**Key characteristics**
+- Paper first. Light is the default theme. Dark is a warm charcoal theme, used by default on `/photography` or when the reader chooses it.
+- One accent, moss, in both themes and at both ends of every gradient token.
+- Hierarchy comes from the serif/sans/mono split and from size, not from colour or weight theatrics.
+- Flat: whitespace and top hairlines structure the page. Cards have no boxes, no left rules and no shadows.
+- Truth in the details: counts are computed at build time, captions come from real EXIF, and contrast floors are measured.
+
+### Token authority chain
+
+Styles load in exactly this order (`src/styles/global.scss:1-7`, imported by `src/layouts/BaseLayout/BaseLayout.astro:2`):
+
+1. `open-props/style`: stock scales (`--size-*`, `--font-size-*`, `--border-size-*`). These are utility only, and nothing visual is decided here.
+2. `primitives.scss`: surface/stack primitives that read the tokens.
+3. **`v2-tokens.scss`: the single token authority.** Every colour, radius, layout measure, type-ramp size and font stack is defined here (`:root` light at `:8-84`, dark override at `:88-102`).
+4. `v2-typography.scss`: base element sizes (`h2` takes `--fs-h2` at `:18-24`, `h3` takes `--fs-h3`) and the mono metadata layer (`:57-67`).
+5. `page-hero.scss`: the shared page hero (`.page-hero__title` takes `--fs-h1`, `:30-37`).
+6. `v2-transitions.scss`: motion tokens (`--ease-out`, `--ease-soft`, `--dur-fast/base/slow` at `:7-11`) and the reduced-motion collapse (`:76-81`).
+7. **`field-notes.scss`: the rules layer, and the last word in the cascade.** It sets heading family, weight and tracking (`:11-23`), body leading (`:25-30`), tabular figures (`:33-35`), hero glow (`:38-50`) and the authoritative card chrome (`:56-96`).
+
+Rules:
+- New colours, sizes and font stacks go into `v2-tokens.scss` only. Component styles consume `var(--token)`. They never hardcode a hex that already has a token.
+- `field-notes.scss` wins ties. Its `:root h1/h2/h3` selectors (specificity 0,1,1) outrank single-class component rules and the bare element rules in `v2-typography.scss`. To override heading weight or tracking in a component, you need specificity of (0,2,0) or more, as `_home.scss:23` does deliberately.
+- Route stylesheets must not set an `h2` font-size (`v2-typography.scss:17`).
 
 ## Colors
 
-The palette is dual-branded: warm monochrome plus one ink accent (studio), or unbleached paper plus one hazard accent (field). Shared neutrals exist only beneath both.
+The palette is cream and ink plus one moss accent, retuned for dark.
 
-### Primary
-- **Ink Blue** (`{colors.studio-ink-blue}` dark / `{colors.studio-ink-blue-light}` light): the studio persona's single accent — links, active states, card left-border signatures, focus rings. Desaturated and calm in dark; deepened for AA contrast on paper in light.
-- **Hazard Red** (`{colors.field-hazard-red}` dark / `{colors.field-hazard-deep}` light): the field persona's single accent — the only color that ever screams. Used for active states, stamps, and accent borders; in light theme it prints deeper (`{colors.field-hazard-print}` for gradient ends).
+| Role | Token | Light | Dark | Source |
+|---|---|---|---|---|
+| Page ground | `--bg` | `#f7f4ed` cream | `#171812` charcoal | `v2-tokens.scss:10`, `:90` |
+| Raised surface | `--bg-soft` | `#fffdf8` paper | `#1f2119` | `:11`, `:91` |
+| Deep band | `--bg-deep` | `#eee9dd` | `#10110c` | `:12`, `:92` |
+| Text | `--text` | `#1d1b16` ink | `#f0ede2` bone | `:15`, `:93` |
+| Muted text | `--text-muted` | `#55503f` | `#a8a394` | `:16`, `:94` |
+| Dim text | `--text-dim` | `#746e5f` | `#8e8878` | `:20`, `:97` |
+| Hairline | `--line` | `rgba(29,27,22,.14)` | `rgba(240,237,226,.10)` | `:21`, `:98` |
+| Accent | `--accent-start` | `#5f7350` moss | `#9db38a` | `:24`, `:99` |
+| Accent end | `--accent-end` | `#46573a` | `#7d9468` | `:25`, `:100` |
+| Accent text | `--accent-text` | `#46573a` | `#b3c7a0` | `:27`, `:102` |
+| Accent wash | `--accent-wash` | `#c2cdb2` | `#2a3325` | `:26`, `:101` |
 
-### Secondary
-- **Ink Fade** (`{colors.studio-ink-fade}` dark / `{colors.studio-ink-fade-light}` light): studio's gradient partner — accent gradients run ink-blue → ink-fade. Field has no secondary: hazard red gradients to its own deeper print, never to another hue.
+All eleven values match the computed `:root` in both themes (`C03`, `C04`). `body` paints `--bg` and `--text` (`global.scss:24-31`; `C05`, `C06`).
 
-### Tertiary
-- None. One accent per persona is doctrine.
+### Text hierarchy and contrast
 
-### Neutral
-- **Warm Carbon** (`{colors.studio-carbon}` / `{colors.studio-carbon-soft}`): studio dark surfaces — never pure black.
-- **Bone** (`{colors.studio-bone}`): studio dark text — warm white, never pure white.
-- **Studio Paper** (`{colors.studio-paper}` / `{colors.studio-paper-soft}`): studio light surfaces — warm bone paper.
-- **Studio Ink** (`{colors.studio-ink}`): studio light text — charcoal ink.
-- **Carbon** (`{colors.field-carbon}` / `{colors.field-carbon-soft}`): field dark surfaces — matte near-black.
-- **Snow** (`{colors.field-snow}`): field dark text — cooler than studio bone.
-- **Newsprint** (`{colors.field-newsprint}` / `{colors.field-newsprint-soft}`): field light surfaces — unbleached paper.
-- **Field Ink** (`{colors.field-ink}`): field light text — carbon ink on newsprint.
-- **Shared Base** (`{colors.neutral-bg}` / `{colors.neutral-bg-soft}` / `{colors.neutral-text}`): pre-persona fallback and OG image ground; both personas override all three.
+Three text tiers exist. Each has a measured floor in both themes (`C07`, `C08`):
 
-### Muted Text (per persona)
-Metadata is a first-class citizen in both rooms, carried by dedicated muted tokens rather than opacity tricks:
-- **Studio Muted / Dim** (`{colors.studio-text-muted}` / `{colors.studio-text-dim}` dark; `{colors.studio-text-muted-light}` / `{colors.studio-text-dim-light}` light): warm greys for dates, captions, and telemetry. Body prose always uses full-contrast bone/ink — muted tokens are for supporting metadata only.
-- **Field Muted / Dim** (`{colors.field-text-muted}` / `{colors.field-text-dim}` dark; `{colors.field-text-muted-light}` / `{colors.field-text-dim-light}` light): cooler greys on carbon/newsprint, same supporting role.
+| Tier | Light on `--bg` / `--bg-soft` | Dark on `--bg` / `--bg-soft` | Use |
+|---|---|---|---|
+| `--text` | 15.66 / 16.92 | 15.24 / 13.89 | headings, body, prose, caption titles |
+| `--text-muted` | 7.34 / 7.93 | 7.09 / 6.46 | ledger counts, strip and gallery captions, nav links at rest, page-hero lead, footer |
+| `--text-dim` | 4.62 / 4.99 | 5.05 / 4.61 | the mono metadata layer (dates, hero meta, figcaptions), page-hero meta |
+| `--accent-text` | 7.12 / 7.69 | 9.86 / 8.99 | moss italic, section kickers, gallery index links |
 
-### Base Layer (pre-persona fallback)
-The shared `:root` beneath both personas — a fallback safety net, never a visual voice. Documented so the layer stays intentional: base muted/dim greys (`{colors.base-text-muted}` / `{colors.base-text-dim}` dark, `{colors.base-text-muted-light}` / `{colors.base-text-dim-light}` light), base light surfaces (`{colors.base-bg-light}` / `{colors.base-bg-soft-light}`) with hairline `{colors.base-line-light}`, and pre-persona accent anchors `{colors.base-studio-start}` / `{colors.base-studio-end}` / `{colors.base-field-start}` / `{colors.base-field-end}` (both personas override the accent ramp with their own ink-blue/hazard values; `{colors.base-studio-start}` survives visibly only inside the code-highlight theme). Light-theme field accent text anchors at `{colors.base-accent-text-light}`; OG image grounds at `{colors.og-ground-dark}` / `{colors.og-ground-light}`.
+Rules:
+- **dim < muted < text, always.** A new grey must fit between two existing tiers or it doesn't ship. Don't use opacity to make a fourth tier.
+- **4.6:1 is the floor for any functional text** in both themes. `--text-dim` was retuned to clear it on both `--bg` and `--bg-soft` (`v2-tokens.scss:17-20`, `:95-97`).
+- **`--text-dim` never sits on `--bg-deep` in light.** It measures 4.19:1 there (`C09`). On the deep band (the home contact strip, the gallery frame wells), use `--text-muted` or stronger, as `_home.scss:99` and `:154` do.
+- Body prose is always `--text` (`v2-typography.scss:49-55`). The muted tiers are for supporting metadata only.
 
-### Persona Switcher — Derived Values
-The Dev/Photo toggle's active state is pinned per-theme via computed color-mix values so a theme leak can never break its contrast. In dark studio the active button resolves to `{colors.persona-switcher-active-bg}` (ink-blue mixed 18% into bg-soft — deliberately #292e36, verified channel math) with an ink-blue border mix at ~49% alpha (`{colors.switcher-active-border}`, pressed variant `{colors.switcher-active-border-alt}`). Filter tags reuse the same construction (`{colors.tag-active-border}`), and book covers carry a softer accent border mix (`{colors.cover-accent-border}`). These are derived, not freehand: each is the documented accent-mix doctrine computed onto its surface.
+### Accent
 
-### Code Blocks (Night Owl)
-Prose code samples render in the Night Owl syntax theme, preserved deliberately for code readability: deep navy ground `{colors.night-owl-bg}` (#011627) with the theme's canonical syntax colors — default text `{colors.night-owl-text}`, punctuation `{colors.night-owl-punct}` / dim `{colors.night-owl-punct-dim}`, variables `{colors.night-owl-variable}`, tags `{colors.night-owl-tag}`, attributes `{colors.night-owl-attr}` / `{colors.night-owl-attr-alt}`, keywords and functions `{colors.night-owl-function}`, identifiers `{colors.night-owl-name}`, imports `{colors.night-owl-import}`, strings `{colors.night-owl-string}` / `{colors.night-owl-string-alt}`, numbers `{colors.night-owl-number}`, titles `{colors.night-owl-title}`, accents `{colors.night-owl-accent}`, and alerts/deletions `{colors.night-owl-alert}`. Night Owl is content styling (like photography in a gallery), not persona chrome — it never appears outside `<pre>`/`<code>` blocks.
+Moss is the only accent hue. Every accent token in both themes sits in one green family (`C10`).
+- `--accent-start` is for strokes and marks: the active nav underline (`BaseLayout.scss:259-268`), hover hairlines on the ledger and frames, focus outlines (`BaseLayout.scss:15-18`, via `--accent`), and the theme-toggle hover border.
+- `--accent-text` is for accent-coloured text: the italic clause of the home statement (`_home.scss:40-44`; `C11`), section kickers (`_home.scss:214-222`), and gallery index links (`_photography.scss:36-45`).
+- `--accent-wash` is for the 14% hover wash on list cards (`field-notes.scss:79-90`).
+- The gradient tokens are kept for compatibility only, and both ends are moss, so they read as a flat moss rule. `--gradient-hero` is `none` (`v2-tokens.scss:29-33`).
+
+### Code blocks (Night Owl)
+
+Markdown code renders through Shiki's Night Owl theme (`astro.config.mjs:13-16`): ground `{colors.night-owl-bg}` (#011627) and the theme's canonical syntax colours, listed in the frontmatter, set in IBM Plex Mono (`global.scss:59`; `C12`). Night Owl is content styling, like a photograph on the wall. It appears only inside `<pre>`/`<code>` and is exempt from the one-accent rule.
 
 ### Utility
-`{colors.scroll-mask-black}` is the opaque mask color for horizontal scroll-fade masks (mask-image gradients use black by convention; it never renders as ink).
 
-### Named Rules
-**The Two Rooms Rule.** Studio and field never share accent language. An element that works in both rooms must earn it in each persona's tokens separately — no cross-persona homogenization, ever (binding commitment from PRODUCT.md).
+`{colors.scroll-mask-black}` is the mask colour for scroll-fade `mask-image` gradients (`_home.scss:113`). By convention it never renders as ink.
 
-**The Whisper Rule.** Gradients are whispers, never banners: hero glow lands at 4–5% opacity (studio 0.04–0.05, field 0). Nothing larger than a hint.
+### Named rules
 
-**The One Accent Rule.** Each persona carries exactly one accent hue at a time. If a second accent color appears in a persona, one of them is wrong.
+**The One Accent Rule.** Moss is the only accent hue in both themes. If a second accent hue appears in chrome, one of them is wrong.
+
+**The Whisper Rule.** Gradients are whispers, never banners. `--gradient-hero` is `none`. Page-hero glow is capped at 0.04–0.05 opacity (`field-notes.scss:38-50`). No gradient text and no gradient fills on paper.
+
+**The Paper Rule.** Text never sits on a photograph. Every caption, control and heading sits on `--bg`, `--bg-soft` or `--bg-deep`, so contrast comes from the tokens, never from photo measurements.
 
 ## Typography
 
-**Display Font:** Newsreader (studio) / Archivo Black (field), per persona — with Georgia / Arial Black fallbacks
-**Body Font:** Geist (studio) / Archivo (field) — with Helvetica Neue fallbacks; the shared base stack is Geist ("Geist", "Switzer", "Helvetica Neue", system-ui). OG images render Inter by design.
-**Label/Mono Font:** Geist Mono (studio) / JetBrains Mono (field); shared base mono is Fira Code; inline code ships Fira Code
+**Fonts loaded:** exactly three families, from one Google Fonts request (`BaseLayout.astro:128`; `C13`):
 
-**Character:** Studio types like an editor — serif display at weight 400 with tight tracking, sentence case, comfortable 1.65 leading. Field types like a printing press — uppercase grotesque at 800, negative tracking, compressed 0.9–0.95 leading, with monospace telemetry for metadata. The shared base (Geist, weight-driven hierarchy) exists beneath both; studio sets it natively, field overrides with Archivo.
+| Family | Faces requested | Token | Role |
+|---|---|---|---|
+| **Geist** | 400, 500, 600 | `--font-body` = `--font-ui` = `--font-sans` (`v2-tokens.scss:77-80`) | body, UI, nav, ledger |
+| **Newsreader** | roman 400 and 500, italic 400; opsz 6–72 | `--font-display` (`v2-tokens.scss:78`) | h1–h3, the home statement, caption titles |
+| **IBM Plex Mono** | 400, 500 | `--font-mono` (`v2-tokens.scss:81`) | dates, counts, labels, captions, code |
 
-### Hierarchy
-- **Display** (studio: 400, clamp(2.5rem, 6vw, 5rem), 1.08 / field: 800, clamp(2.5rem, 9vw, 7rem), 0.9, uppercase): studio = serif page titles; field = macro headlines sized so PHOTOGRAPHY fits without mid-word breaks (mobile: clamp(1.75rem, 10vw, 3rem), measured not guessed). The uses page carries its own macro clamp(3rem, 9vw, 6.5rem); studio's oversized hero variant clamps to 6rem.
-- **Headline** (studio: 400, clamp(1.75rem, 3vw, 2.5rem) / field: 800, uppercase, -0.03em): section titles.
-- **Title** (studio: serif 400 h3 / field: Archivo 700 uppercase +0.02em h3): card and item titles.
-- **Body** (400 weight both personas; studio 1.65 leading / field 1.5; shared base 300 at 1.8): prose holds to ~70ch max.
-- **Label** (mono, 0.72rem, +0.08em, uppercase): field metadata telemetry and studio mono accents. Floor for any functional text is 0.75rem (12px) — cover captions were bumped to meet it.
+No other family ships. Fraunces, Fira Code, Archivo, JetBrains Mono, Geist Mono and Switzer appear nowhere in the build (`C14`). OG images render Newsreader and IBM Plex Mono from bundled TTFs (`src/assets/og-fonts/`).
 
-### Type Ramp
-The full shipped ramp, named by use — every size the build emits is one of these:
-- **Display/macro:** clamp(2.5rem,6vw,5rem) · clamp(2.5rem,9vw,7rem) · clamp(3rem,9vw,6.5rem) · clamp(2.5rem,7vw,6rem) · clamp(1.75rem,10vw,3rem) mobile macro
-- **Headings:** clamp(1.75rem,3vw,2.5rem) · clamp(1.75rem,3vw,2rem) home headline · clamp(1.5rem,3vw,2rem) section · clamp(1.4rem,3vw,2rem) uses section · clamp(1.15rem,2.5vw,1.5rem) uses section sm · 1.75rem prose h2 · 1.35rem prose h3 · 1.15rem prose h4 · 1.5rem section lg
-- **Titles/lede:** clamp(1.1rem,2vw,1.5rem) title · 1.1rem card/note titles · clamp(1rem,1.5vw,1.25rem) lede · clamp(1rem,2vw,1.2rem) uses lede · 1.05rem intro · 1rem body
-- **Supporting:** 0.98rem prose sm · 0.95rem item titles / body-sm · 0.92rem uses meta · 0.9rem meta lg · 0.875rem nav links / inline code · 0.85rem meta/eyebrow · 0.8rem meta sm / field CTA
-- **Micro:** 0.78rem captions · 0.76rem uses meta xs · 0.75rem functional floor · 0.72rem mono labels · 0.7rem field tags · 0.68rem nav scroll hint (decorative, pointer-events none)
-Tabular figures (`font-variant-numeric: tabular-nums`) apply across the ramp wherever data appears.
+Rules:
+- Use only the requested faces. Newsreader has no 600, and Geist has no 300. A weight outside the table above is a bug: it synthesizes or snaps to the nearest face.
+- Form controls inherit the body family (`global.scss:54-56`). `code`, `kbd`, `samp` and `pre` use `--font-mono` (`global.scss:58-61`).
 
-### Named Rules
-**The Case Boundary Rule.** Field shouts in uppercase; studio keeps sentence case. A studio headline in all-caps is a persona leak.
+### Type ramp
 
-**The Measured Macro Rule.** Field's giant type is sized from measurement (PHOTOGRAPHY ≈ 8.1em wide in Archivo Black), never guesswork — no mid-word breaks, no right-edge clipping, ever.
+All font sizes come from this ramp. Ramp tokens live in `v2-tokens.scss:48-54`. The rendered values are at 1440 / 390 wide.
+
+| Level | Token / value | Rendered | Face | Where |
+|---|---|---|---|---|
+| Display | `--fs-display` `clamp(2.3rem, 5.4vw, 4.9rem)` | 77.76px at 1440 | Newsreader 400, opsz 72, lh 1.04, −0.022em | home statement (`_home.scss:23-34`) |
+| Display sm | `--fs-display-sm` `clamp(2.1rem, 9.6vw, 3rem)` | 37.44px at 390 | same | home statement at ≤48rem (`_home.scss:189-192`) |
+| H1 | `--fs-h1` `clamp(2.5rem, 6vw, 4rem)` | 64 / 40px | Newsreader 400, lh 1.08, −0.02em | every page-hero title (`page-hero.scss:30-37`) |
+| **H2** | `--fs-h2` `clamp(1.5rem, 2.4vw, 1.875rem)` | **30 / 24px** | Newsreader 400, lh 1.08 | **every h2 on every route** (`v2-typography.scss:18-24`) |
+| H3 | `--fs-h3` `clamp(1.05rem, 1.8vw, 1.35rem)` | 21.6px at 1440 | Newsreader 400, −0.01em | base h3 (`v2-typography.scss:26-31`, family and weight from `field-notes.scss:19-23`) |
+| Prose | 1.16rem / 1.78 | | Geist 400 | `.prose`, `.slug-prose` paragraphs and lists (`v2-typography.scss:49-55`) |
+| Lede | 1.05rem / 1.5 | | Geist | `.page-hero__lead` |
+| Body | 1rem / 1.65 | 16px / 26.4px | Geist 400 | `body`, `p`, `li` (`field-notes.scss:25-30`) |
+| Ledger | 1rem | 16px | Geist 400 | home ledger links |
+| Caption title | 0.95rem | 15.2px | Newsreader 500 | strip and gallery captions |
+| Nav | 0.875rem (0.8125rem at ≤48rem) | | Geist 400 | header links (`BaseLayout.scss:238-248`, `:291-294`) |
+| Meta | 0.82rem base, +0.08em, uppercase, `--text-dim` | 12.8–13.6px (route steps 0.8–0.85rem) | IBM Plex Mono | metadata layer (`v2-typography.scss:57-67`; `C24`) |
+| Count | 0.78rem, +0.06em | 12.48px | IBM Plex Mono, tabular | ledger counts, section kickers |
+| Label / caption | **0.75rem** (the floor) | 12px | IBM Plex Mono | strip label, "Open the gallery →", exposure captions, gallery index, nav "More →" hint |
+
+Measured: one H2 size everywhere, 30px at 1440 and 24px at 390 on every sampled route and theme (`C16`, `C17`). H1 is 64 / 40px (`C18`), H3 is 21.6px (`C19`), the display sizes match (`C20`), and body is 16 / 1.65 (`C15`). The hero supporting sizes match too (`C22`, `C23`).
+
+Rules:
+- **The One H2 Rule.** `h2` has a single size, `--fs-h2`. Route styles must not set an h2 font-size, line-height or weight.
+- **The Floor Rule.** Functional text is at least 0.75rem (12px). 0.75rem is a floor, not a default, and is reserved for mono labels and captions.
+- **The Voice Split.** Newsreader speaks (titles, the statement, names of things). Geist reads and operates (prose, nav, links). Plex Mono records (dates, counts, EXIF, labels). Don't set a date in Newsreader or a heading in mono.
+- **Case.** Headings, ledger and captions use sentence case. Only the mono label layer uppercases: the strip label, "Open the gallery →", the gallery index and the metadata layer. EXIF lines are never uppercased, so "f/6.3" stays lowercase (`_photography.scss:129-137`).
+- **Tabular figures** are on site-wide (`field-notes.scss:33-35`) and set explicitly on counts, dates and captions.
+- **Italic** is the second voice. Use it only for the moss clause of the home statement, and never as decoration elsewhere.
 
 ## Layout
 
-Single centered column, max 75rem, with fluid page padding of clamp(1rem, 3vw, 1.5rem). Content rhythm: generous section padding driven by persona (studio: clamp(3.5rem, 8vw, 6.5rem) top, slightly larger bottom — bottom > top is doctrine; field: clamp(3rem, 7vw, 5.5rem)). Post grids auto-fit at minmax(min(100%, 380px), 1fr) shared / 360px field; gallery masonry at 3 columns in field, bordered shots in studio. Mobile breakpoint at 48rem: nav collapses to horizontal scroll, field headlines step down to measured mobile clamps, post cards span full width with zero inline padding.
+### One content edge
 
-## Elevation & Depth
+- Header, main and footer share one container: `inline-size: min(100%, var(--layout-max-width))`, centered, inline padding `--gutter` (`BaseLayout.scss:38-44`).
+- **`--gutter: clamp(1rem, 3vw, 2rem)` is the one inline inset** (`v2-tokens.scss:44-46`). Nothing inside the container adds its own inline padding. Below 48rem, section padding is zeroed so content uses the container width (`global.scss:81-92`).
+- Result: brand, page H1 and footer copy share the same x on every route. That is 152px at 1440 and 16px at 390 (`C26`). A new section that starts anywhere else is a bug.
+- `--layout-max-width: 75rem` sets the page measure. `--content-max: 60rem` is the shared hero/section measure (`v2-tokens.scss:41-42`). `--prose-max-width: 60ch` sets reading width.
+- No route scrolls horizontally at either width (`C36`).
 
-Flat by default; depth comes from borders and tonal layering, not shadows. Studio permits exactly one shadow — a diffuse `0 1px 2px rgba(0,0,0,0.04)` on cards — as a whisper of lift on its soft surfaces. Field permits none: structure is expressed with 1px solid dividers at elevated line contrast (field lines run ~0.14–0.18 alpha, roughly double studio's), and cards are flat `--bg-soft` rectangles. Hero glow gradients (the only depth-adjacent effect) are damped per the Whisper Rule.
+### Header
 
-### Shadow Vocabulary
-- **Studio Card Lift** (`box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04)`): the only shadow in the system; studio surfaces at rest. Never stack, never darken.
+- **There is one solid row: brand · nav · theme toggle** (`BaseLayout.astro:206-230`, `BaseLayout.scss:46-64`).
+- It is sticky at `top: 0` with a `--bg` ground and a 1px `--line` bottom hairline. There is no transparency, no backdrop blur, no overlay mode and no scroll-aware state.
+- It is 61px tall on every route, theme and width (`C25`). `--header-h` (fallback 61px, measured by ResizeObserver) feeds `scroll-padding-block-start` so anchor jumps clear the bar, and it feeds the home hero height (`BaseLayout.scss:1-10`).
+- Nav labels are Home, Journal, Notes, Gallery, Library, Uses, About, from one `NAV_LINKS` list (`src/config/site.ts:14-22`; `C27`). The active link gets `aria-current="page"`, `--text`, a 6% ink wash and a 2px `--accent-start` underline (`BaseLayout.scss:255-269`).
+- When the links outgrow the bar (below about 700px), they scroll sideways inside the nav slot with edge masks. A mono "More →" hint shows while links remain hidden and disappears at the end. The page itself never widens.
+- The theme toggle is a 2.25rem round button inside the bar (`BaseLayout.scss:91-109`). There is no floating toggle.
+- Theme flips are atomic: `html[data-theme-switching]` suspends all transitions for two frames (`BaseLayout.scss:198-205`), so text never shows on the wrong-polarity surface mid-flip.
+
+### Home: the Index hero
+
+Sources: `src/pages/_home/home.astro:26-124` and `src/pages/_home/_home.scss:1-197`.
+
+1. **The sentence is the hero.** An `h1`: "**Ritik Patni** builds thoughtful product surfaces — *and documents nature up close, one frame at a time.*" (`C28`). It is set at `--fs-display` with max 22ch. The name is weight 500 and the second clause is italic in `--accent-text` (`C21`, `C11`).
+2. **The ledger is the doors.** A ruled row of links: Notes · *n* posts, Gallery · *n* frames, Library · *n* books, About →. **Every count is computed at build time** from the same data the destination page lists: non-draft blog plus newsletter entries, the gallery manifest length, and non-draft books (`home.astro:26-33`). It currently renders 66 / 39 / 86 (`C29`). Never type a count in by hand.
+3. **The contact sheet closes the first viewport.** A `--bg-deep` band with a top hairline paints edge to edge via `border-image` outset, which adds no page scroll (`_home.scss:84-87`). Inside it:
+   - a mono label, "Contact sheet · recent frames";
+   - a row of the **8 most recent frames by date** (ties keep manifest order; `home.astro:42-50`), at one shared height and natural aspect ratios, 4px radius, all `loading="lazy"`. The height is `clamp(8.5rem, 22svh, 13rem)` (208px cap) on desktop and 11rem (176px) at ≤48rem (`C30`). The row scrolls and scroll-snaps inside the content column and fades at its right edge;
+   - **Journal-style captions** under each frame: the frame title in Newsreader 0.95rem/500, then one mono exposure line, `aperture · shutter · ISO`, taken from the frame's own EXIF. Missing fields are dropped, and a frame with no EXIF shows only its title (`home.astro:35-40`);
+   - **"Open the gallery →"**, the closing link under the row on the right, in the mono label style (uppercase via CSS; `_home.scss:171-182`).
+4. The hero height is `100svh − --header-h` (`_home.scss:11`). Below it, "Latest posts" uses the shared section header: a mono moss kicker plus an h2 on the ramp.
+
+### Gallery: the contact sheet
+
+Sources: `src/pages/photography/index.astro` and `_photography.scss:1-221`.
+
+- **Justified rows.** Each frame is `flex: <aspect> 1 calc(<aspect> × --sheet-row-h)`, so every frame in a row shares one height at its natural shape. An `::after` filler stops the last row from stretching (`_photography.scss:81-97`). The row-height basis is `clamp(10rem, 17vw, 15rem)`, or 9rem at ≤48rem.
+- Frames are 4px radius on a `--bg-deep` well. Hover shows a 1px `--accent-start` outline at 3px offset. The frame itself is the lightbox trigger, and there is no separate icon button (`C31`).
+- Captions use the same language as the home strip: a Newsreader title, then a mono exposure line, never uppercased.
+- A **ruled mono index** sits at the top: an uppercase 0.75rem row of moss jump links with build-time counts ("39 frames · Birds 21 · …"). Each category section has a sentence-case h2 on the ramp and a mono meta line.
+- `/photography` defaults to the dark theme. A stored reader choice still wins (`BaseLayout.astro:27`; `C32`).
+- Never crop a frame to fit a grid, and never set text on a frame.
+
+### Other pages
+
+- **Page heroes** share one block: mono meta, an H1 at `--fs-h1`, and a lede in `--text-muted` (`page-hero.scss`).
+- **Cards and lists** are flat. There is no box, no left rule, no radius and no shadow, only a top hairline and whitespace (`field-notes.scss:56-77`; `C33`). Hover is a 14% `--accent-wash` tint (`:79-90`).
+- **404.** Unknown URLs return HTTP 404 with `src/pages/404.astro`: a mono "404 · page not found" kicker, an H1 at the ramp, one lede sentence, and three ruled doors (Home, Notes, Gallery). It is `noindex, follow` with no canonical (`BaseLayout.astro:166`; `C34`).
+
+### URLs
+
+- **Canonical URLs are slashless.** `trailingSlash: 'never'` plus `build.format: 'file'` (`astro.config.mjs:6-11`) emit `/about.html`, which Cloudflare Pages serves at `/about`. `/about/` and `/about.html` 308 to `/about`, and every canonical has no trailing slash (`C35`).
+- Internal links are always written slashless (`/blog`, `/about#connect`).
+- `/contact` is a `noindex` redirect stub to `/about#connect`, and it is not listed in the sitemap (`src/pages/sitemap.xml.ts:24`).
+
+### Breakpoint
+
+There is one breakpoint, `48rem`. At or below it: the display statement switches to `--fs-display-sm`, nav links tighten, the strip height becomes 176px, the gallery row basis becomes 9rem, and section inline padding is zeroed.
+
+## Elevation and depth
+
+The page is flat. Depth comes from tonal layering (`--bg` → `--bg-soft` → `--bg-deep`) and 1px hairlines, not shadows.
+- Cards, list items, the header and heroes carry **no shadow**.
+- Shadows exist only on layers that genuinely float above the page: the photography lightbox chrome and metadata sheet (`_photography.lightbox.shell.scss:60`, `_photography.lightbox.metadata.scss:16`) and gallery tooltips (`_photography.scss:175`). Book covers also get a hover lift (`library/_library.scss:160`) and a flat moss offset on the book detail page (`library/books/_slug.scss:25`).
+- Page-hero glow is capped by the Whisper Rule (0.04–0.05).
 
 ## Shapes
 
-Radius is persona doctrine. Studio is crisp and small: 4px (sm) / 6px (md), with 999px round reserved for pills and the theme FAB — never on containers. Field is absolute zero: every radius token (including inherited Open Props steps) is pinned to 0 — cards, shots, tags, buttons are hard rectangles. Borders are the shared structural voice: 1px solid `--line` everywhere, with studio adding its 2px accent left-border signature on cards (0.45 alpha accent mix; 3px in field on featured items). object-fit cover imagery, hard crops, no clipped corners, no blob geometry anywhere.
-
-### Radius Scale (complete)
-The build emits exactly these radii: **8px / 12px / 100px** base layer (fallback `--radius-sm/md/round`), **4px / 6px / 999px** studio persona (`--radius-sm/md/round`, plus 4px on inline code), **0** everywhere in field, **5px** skip-link and inputs, **1px** on the nav gradient underline, **1rem** social icon links, and **20px** top corners on the photography lightbox metadata sheet. Nothing else may introduce a radius.
+- **Radii come from three tokens: 4px `--radius-sm`, 6px `--radius-md`, 999px `--radius-round`** (`v2-tokens.scss:36-38`).
+  - 4px: photographs (strip, gallery, covers) and inline code.
+  - 6px: nav links and surface primitives (`--surface-radius`).
+  - 999px: the theme toggle and pills only, never containers.
+- Cards and list rows are **0** (`field-notes.scss:69`).
+- Borders are 1px `--line` everywhere. Accent borders appear only as hover and focus states.
+- There are no clipped corners and no blob geometry. Photographs keep their native aspect ratio.
 
 ## Components
 
-Philosophy: **tailored in the studio, stamped in the field** — the same components, tailored with serif calm in one room and stamped with hazard urgency in the other.
+### Theme toggle
+A round 2.25rem button in the header bar with a `--bg-soft` ground and a 45% `--text` border, which turns `--accent-start` on hover. `aria-pressed` reflects state. The stored key is `rp-theme`.
 
-### Buttons
-- **Shape:** studio = pill (radius-round, 999px); field = hard rectangle (0)
-- **Primary:** bg-soft surface, `--text` label, 1px `--line` border, padding 0.75rem 1.75rem; field swaps to uppercase mono micro-type
-- **Hover / Focus:** accent border bloom (30% accent mix into line), subtle accent-tinted background (8%), translateY(-1px) lift with reduced-motion kill; focus-visible = 2px accent outline with offset
-- **Ghost:** nav links — muted text, 4% text-tint hover wash; active link gains 2px gradient underline (studio) or accent wash (field)
+### Nav link
+Geist 0.875rem in `--text-muted`, 6px radius, and a 4% `--text` wash on hover. The active link gets `--text`, a 6% wash and a 2px moss underline.
 
-### Chips
-- **Style:** studio = accent pill (radius-round, 15% accent tint bg, accent-text label); field = bordered mono tag (radius 0, 1px line, uppercase 0.7rem)
-- **State:** selected = stronger accent border + tinted bg + `--text` label (`aria-pressed=true`)
+### Ledger link
+Geist 1rem in `--text` with a 1px `--line` underline that turns `--accent-start` on hover, while the label turns `--accent-text`. The count is mono 0.78rem in `--text-muted`.
 
-### Cards / Containers
-- **Corner Style:** studio 6px / field 0
-- **Background:** bg-soft in both rooms
-- **Shadow Strategy:** studio 1px lift only (see Elevation); field none
-- **Border:** studio = 1px line + 2px accent left signature (45% accent mix); field = 1px line at higher alpha, 3px accent left on featured
-- **Internal Padding:** 2rem standard; studio featured cards clamp(1.5rem, 4vw, 2.5rem) with 5% accent-tinted bg
+### Contact-sheet frame (home strip and gallery)
+A natural-ratio image at 4px radius, with a transparent 1px outline at 3px offset that turns moss on hover and focus. The caption is a Newsreader title plus a mono exposure line in `--text-muted`.
 
-### Inputs / Fields
-- **Style:** 1px `--line` stroke on bg, small radius (studio 5px inherited / field 0), full inline size
-- **Focus:** 2px accent outline with `--size-1` offset (focus-visible doctrine)
+### Section header
+A mono uppercase kicker in `--accent-text` (0.78rem, +0.14em), then an h2 on the ramp, on the shared left edge.
 
-### Navigation
-- Sticky header, bg with 16px backdrop blur, bottom hairline. Brand left, persona toggle (Dev/Photo) right — the toggle is the two-rooms hinge: pill track (studio rounding) with active button in accent tint + 45% accent border + glow ring in dark. Links: 0.875rem, muted → text on hover with 4% wash; active link = gradient underline (2px, accent-start → accent-end, bottom 2px). Mobile: single horizontal scroll row, hidden scrollbar.
+### Focus
+Every link and button shows a 2px `--accent` outline with a `--size-1` offset on `:focus-visible` (`BaseLayout.scss:15-18`).
 
-### Signature Component: The Persona Switcher
-The Dev/Photo toggle is the system's keystone — the one place both rooms are visible at once, and the only component whose active state is pinned per-theme (`--persona-btn-active-bg`) so a theme leak can never break its contrast. Its dark-theme active surface and border are the derived values documented under Colors (#292e36 ground, ~49% ink-blue border mix).
+## Motion
 
-## Do's and Don'ts
+- The tokens are `--ease-out` `cubic-bezier(.22,1,.36,1)`, `--ease-soft` `cubic-bezier(.4,0,.2,1)`, `--dur-fast` 160ms, `--dur-base` 240ms and `--dur-slow` 360ms (`v2-transitions.scss:7-11`).
+- Under `prefers-reduced-motion: reduce`, every duration collapses to 0.01ms (`v2-transitions.scss:76-81`), and smooth scrolling is only enabled for `no-preference` (`global.scss:41-45`).
+- Motion is limited to colour, border and outline transitions. Nothing slides, zooms or autoplays.
 
-### Do:
-- **Do** scope every accent decision through the active persona's tokens (`--accent-start/-end/-text`) — never hardcode a persona's hex outside its layer.
-- **Do** keep accent-colored text AA-safe: light theme uses the deepened per-persona `--accent-text` (that's what it's for).
-- **Do** use tabular figures (`font-variant-numeric: tabular-nums`) for any data, both personas.
-- **Do** keep functional micro-text at or above 0.75rem (12px).
-- **Do** verify heading order (no skipped levels) in authored content.
-- **Do** pick type sizes from the Type Ramp — a size not on the ramp is a bug in one direction or the other.
-- **Do** keep Night Owl colors inside code blocks; they are content styling, not persona chrome.
+## Do's and don'ts
 
-### Don't:
-- **Don't** merge, blend, or cross-pollinate the studio and field visual languages — the Two Rooms Rule is binding (PRODUCT.md).
-- **Don't** let a gradient exceed a whisper — hero glow caps at 4–5% opacity; a gradient banner or gradient text is a violation.
-- **Don't** introduce a second accent hue into either persona.
-- **Don't** stack or darken shadows beyond the studio 1px lift; field gets none.
-- **Don't** fabricate content, testimonials, or metrics — the archive is real or it doesn't ship.
-- **Don't** invent a radius outside the Radius Scale; field stays at absolute zero.
+### Do
+- **Do** take every colour, size and font from `v2-tokens.scss`. If something you need is missing, add a token there first.
+- **Do** keep the hierarchy dim < muted < text and the 4.6:1 floor in both themes. Re-measure when you touch a grey.
+- **Do** use `--accent-text` for moss text and `--accent-start` for moss strokes.
+- **Do** start every section on the shared content edge (`--gutter` inside the container).
+- **Do** compute every count from the collection or manifest the linked page renders.
+- **Do** caption photographs with their real title and EXIF, and drop missing fields.
+- **Do** keep functional text at or above 0.75rem, and use tabular figures for data.
+- **Do** write internal URLs slashless.
+
+### Don't
+- **Don't** reintroduce personas, a persona switch, or a second accent hue.
+- **Don't** set an h2 size in a route stylesheet, or a font size off the ramp.
+- **Don't** load or reference a family other than Geist, Newsreader and IBM Plex Mono, or a weight outside the requested faces.
+- **Don't** put text on a photograph, crop a frame to fit a grid, or bleed an image to the viewport edge.
+- **Don't** make the header transparent, blurred, two-row or scroll-aware.
+- **Don't** box, left-rule, round or shadow a card.
+- **Don't** let a gradient exceed a whisper, and never use gradient text.
+- **Don't** fabricate content, counts, testimonials or EXIF. The archive is real or it doesn't ship.

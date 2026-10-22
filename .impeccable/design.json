@@ -1,199 +1,430 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-22T11:20:00Z",
+  "generatedAt": "2026-10-22T00:00:00Z",
   "title": "Design System: BotFolio — Ritik Patni",
   "extensions": {
     "colorMeta": {
-      "studio-ink-blue": { "role": "primary", "displayName": "Ink Blue", "canonical": "#8aa6c8" },
-      "studio-ink-blue-light": { "role": "primary", "displayName": "Ink Blue (Light)", "canonical": "#1e50c8" },
-      "studio-ink-fade": { "role": "secondary", "displayName": "Ink Fade", "canonical": "#b8c4d4" },
-      "fieldnotes-cream": { "role": "neutral", "displayName": "Field Notes Cream (--bg, light)", "canonical": "#f7f4ed" },
-      "fieldnotes-paper": { "role": "neutral", "displayName": "Field Notes Paper (--bg-soft, light)", "canonical": "#fffdf8" },
-      "fieldnotes-ink": { "role": "neutral", "displayName": "Field Notes Ink (--text, light)", "canonical": "#1d1b16" },
-      "fieldnotes-muted": { "role": "neutral", "displayName": "Field Notes Muted (--text-muted, light)", "canonical": "#55503f" },
-      "fieldnotes-dim": { "role": "neutral", "displayName": "Field Notes Dim (--text-dim, light; 4.62:1 on --bg)", "canonical": "#746e5f" },
-      "fieldnotes-charcoal": { "role": "neutral", "displayName": "Field Notes Charcoal (--bg, dark)", "canonical": "#171812" },
-      "fieldnotes-charcoal-soft": { "role": "neutral", "displayName": "Field Notes Charcoal Soft (--bg-soft, dark)", "canonical": "#1f2119" },
-      "fieldnotes-dim-dark": { "role": "neutral", "displayName": "Field Notes Dim (--text-dim, dark; 4.61:1 on --bg-soft)", "canonical": "#8e8878" },
-      "fieldnotes-moss": { "role": "primary", "displayName": "Moss (--accent-start, light)", "canonical": "#5f7350" },
-      "fieldnotes-moss-deep": { "role": "primary", "displayName": "Moss Deep (--accent-end / --accent-text, light)", "canonical": "#46573a" },
-      "fieldnotes-moss-dark": { "role": "primary", "displayName": "Moss (--accent-start, dark)", "canonical": "#9db38a" },
-      "field-hazard-red": { "role": "primary", "displayName": "Hazard Red", "canonical": "#ff2a2a" },
-      "field-hazard-deep": { "role": "primary", "displayName": "Hazard Deep", "canonical": "#e61919" },
-      "field-hazard-print": { "role": "primary", "displayName": "Hazard Print", "canonical": "#b81414" },
-      "studio-carbon": { "role": "neutral", "displayName": "Warm Carbon", "canonical": "#0c0c0e" },
-      "studio-carbon-soft": { "role": "neutral", "displayName": "Warm Carbon Soft", "canonical": "#141416" },
-      "studio-bone": { "role": "neutral", "displayName": "Bone", "canonical": "#f4f2ee" },
-      "field-carbon": { "role": "neutral", "displayName": "Carbon", "canonical": "#0b0b0c" },
-      "field-carbon-soft": { "role": "neutral", "displayName": "Carbon Soft", "canonical": "#131314" },
-      "field-snow": { "role": "neutral", "displayName": "Snow", "canonical": "#f2f2f0" },
-      "field-newsprint": { "role": "neutral", "displayName": "Newsprint", "canonical": "#eae8e3" },
-      "field-newsprint-soft": { "role": "neutral", "displayName": "Newsprint Soft", "canonical": "#f4f4f0" },
-      "field-ink": { "role": "neutral", "displayName": "Field Ink", "canonical": "#0a0a0a" },
-      "neutral-bg": { "role": "neutral", "displayName": "Shared Base BG", "canonical": "#0a0a0b" },
-      "neutral-bg-soft": { "role": "neutral", "displayName": "Shared Base BG Soft", "canonical": "#121214" },
-      "neutral-text": { "role": "neutral", "displayName": "Shared Base Text", "canonical": "#fafafa" },
-      "studio-text-muted": { "role": "neutral", "displayName": "Studio Muted", "canonical": "#9a958c" },
-      "studio-text-dim": { "role": "neutral", "displayName": "Studio Dim", "canonical": "#857f75" },
-      "field-text-muted": { "role": "neutral", "displayName": "Field Muted", "canonical": "#8c8c88" },
-      "field-text-dim": { "role": "neutral", "displayName": "Field Dim", "canonical": "#7f7f7a" },
-      "field-text-muted-light": { "role": "neutral", "displayName": "Field Muted (Light)", "canonical": "#4a4a46" },
-      "field-text-dim-light": { "role": "neutral", "displayName": "Field Dim (Light)", "canonical": "#676760" },
-      "base-text-muted": { "role": "neutral", "displayName": "Base Muted", "canonical": "#888896" },
-      "base-text-dim": { "role": "neutral", "displayName": "Base Dim", "canonical": "#7e7e88" },
-      "base-text-muted-light": { "role": "neutral", "displayName": "Base Muted (Light)", "canonical": "#5c5c6e" },
-      "base-text-dim-light": { "role": "neutral", "displayName": "Base Dim (Light)", "canonical": "#56566a" },
-      "base-studio-start": { "role": "primary", "displayName": "Base Studio Anchor", "canonical": "#82aaff" },
-      "base-studio-end": { "role": "secondary", "displayName": "Base Studio Fade", "canonical": "#c792ea" },
-      "base-field-start": { "role": "primary", "displayName": "Base Field Anchor", "canonical": "#f59e0b" },
-      "base-field-end": { "role": "primary", "displayName": "Base Field End", "canonical": "#ef4444" },
-      "base-accent-text-light": { "role": "primary", "displayName": "Base Accent Text (Light)", "canonical": "#9a5808" },
-      "base-line-light": { "role": "neutral", "displayName": "Base Line (Light)", "canonical": "#00000014" },
-      "base-bg-light": { "role": "neutral", "displayName": "Base BG (Light)", "canonical": "#fafafa" },
-      "base-bg-soft-light": { "role": "neutral", "displayName": "Base BG Soft (Light)", "canonical": "#f0f0f3" },
-      "og-ground-dark": { "role": "neutral", "displayName": "OG Ground (Dark)", "canonical": "#030507" },
-      "og-ground-light": { "role": "neutral", "displayName": "OG Ground (Light)", "canonical": "#f8f7f4" },
-      "persona-switcher-active-bg": { "role": "neutral", "displayName": "Persona Switcher Active BG", "canonical": "#292e36" },
-      "switcher-active-border": { "role": "primary", "displayName": "Switcher Active Border", "canonical": "rgba(147,173,203,0.493)" },
-      "switcher-active-border-alt": { "role": "primary", "displayName": "Switcher Active Border (Pressed)", "canonical": "rgba(146,172,203,0.539)" },
-      "tag-active-border": { "role": "primary", "displayName": "Tag Active Border", "canonical": "rgba(149,174,204,0.447)" },
-      "cover-accent-border": { "role": "primary", "displayName": "Cover Accent Border", "canonical": "rgba(161,183,208,0.281)" },
-      "night-owl-bg": { "role": "neutral", "displayName": "Night Owl BG", "canonical": "#011627" },
-      "night-owl-text": { "role": "neutral", "displayName": "Night Owl Text", "canonical": "#d6deeb" },
-      "night-owl-punct": { "role": "neutral", "displayName": "Night Owl Punctuation", "canonical": "#d9f5dd" },
-      "night-owl-punct-dim": { "role": "neutral", "displayName": "Night Owl Punctuation Dim", "canonical": "#5f7e97" },
-      "night-owl-comment": { "role": "neutral", "displayName": "Night Owl Comment", "canonical": "#637777" },
-      "night-owl-slate": { "role": "neutral", "displayName": "Night Owl Slate", "canonical": "#b2ccd6" },
-      "night-owl-variable": { "role": "neutral", "displayName": "Night Owl Variable", "canonical": "#d7dbe0" },
-      "night-owl-tag": { "role": "neutral", "displayName": "Night Owl Tag", "canonical": "#80cbc4" },
-      "night-owl-attr": { "role": "neutral", "displayName": "Night Owl Attribute", "canonical": "#7fdbca" },
-      "night-owl-attr-alt": { "role": "neutral", "displayName": "Night Owl Attribute Alt", "canonical": "#caece6" },
-      "night-owl-function": { "role": "neutral", "displayName": "Night Owl Keyword/Function", "canonical": "#c792ea" },
-      "night-owl-name": { "role": "neutral", "displayName": "Night Owl Identifier", "canonical": "#82aaff" },
-      "night-owl-import": { "role": "neutral", "displayName": "Night Owl Import", "canonical": "#c5e378" },
-      "night-owl-string": { "role": "neutral", "displayName": "Night Owl String", "canonical": "#ecc48d" },
-      "night-owl-number": { "role": "neutral", "displayName": "Night Owl Number", "canonical": "#f78c6c" },
-      "night-owl-string-alt": { "role": "neutral", "displayName": "Night Owl String Alt", "canonical": "#ffeb95" },
-      "night-owl-title": { "role": "neutral", "displayName": "Night Owl Title", "canonical": "#baebe2" },
-      "night-owl-alert": { "role": "neutral", "displayName": "Night Owl Alert", "canonical": "#ff6363" },
-      "night-owl-accent": { "role": "neutral", "displayName": "Night Owl Accent", "canonical": "#faf39f" },
-      "scroll-mask-black": { "role": "neutral", "displayName": "Scroll Mask Black", "canonical": "#000" }
+      "cream": {
+        "role": "neutral",
+        "displayName": "Cream (--bg, light)",
+        "canonical": "#f7f4ed"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper (--bg-soft, light)",
+        "canonical": "#fffdf8"
+      },
+      "paper-deep": {
+        "role": "neutral",
+        "displayName": "Paper Deep (--bg-deep, light)",
+        "canonical": "#eee9dd"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink (--text, light; 15.66:1 on --bg)",
+        "canonical": "#1d1b16"
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Ink Muted (--text-muted, light; 7.34:1 on --bg)",
+        "canonical": "#55503f"
+      },
+      "ink-dim": {
+        "role": "neutral",
+        "displayName": "Ink Dim (--text-dim, light; 4.62:1 on --bg, 4.99:1 on --bg-soft)",
+        "canonical": "#746e5f"
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline (--line, light)",
+        "canonical": "rgba(29, 27, 22, 0.14)"
+      },
+      "moss": {
+        "role": "primary",
+        "displayName": "Moss (--accent-start, light)",
+        "canonical": "#5f7350"
+      },
+      "moss-deep": {
+        "role": "primary",
+        "displayName": "Moss Deep (--accent-end / --accent-text, light; 7.12:1 on --bg)",
+        "canonical": "#46573a"
+      },
+      "moss-wash": {
+        "role": "primary",
+        "displayName": "Moss Wash (--accent-wash, light)",
+        "canonical": "#c2cdb2"
+      },
+      "charcoal": {
+        "role": "neutral",
+        "displayName": "Charcoal (--bg, dark)",
+        "canonical": "#171812"
+      },
+      "charcoal-soft": {
+        "role": "neutral",
+        "displayName": "Charcoal Soft (--bg-soft, dark)",
+        "canonical": "#1f2119"
+      },
+      "charcoal-deep": {
+        "role": "neutral",
+        "displayName": "Charcoal Deep (--bg-deep, dark)",
+        "canonical": "#10110c"
+      },
+      "bone": {
+        "role": "neutral",
+        "displayName": "Bone (--text, dark; 15.24:1 on --bg)",
+        "canonical": "#f0ede2"
+      },
+      "bone-muted": {
+        "role": "neutral",
+        "displayName": "Bone Muted (--text-muted, dark; 7.09:1 on --bg)",
+        "canonical": "#a8a394"
+      },
+      "bone-dim": {
+        "role": "neutral",
+        "displayName": "Bone Dim (--text-dim, dark; 5.05:1 on --bg, 4.61:1 on --bg-soft)",
+        "canonical": "#8e8878"
+      },
+      "line-dark": {
+        "role": "neutral",
+        "displayName": "Hairline (--line, dark)",
+        "canonical": "rgba(240, 237, 226, 0.10)"
+      },
+      "moss-dark": {
+        "role": "primary",
+        "displayName": "Moss (--accent-start, dark)",
+        "canonical": "#9db38a"
+      },
+      "moss-dark-end": {
+        "role": "primary",
+        "displayName": "Moss End (--accent-end, dark)",
+        "canonical": "#7d9468"
+      },
+      "moss-dark-text": {
+        "role": "primary",
+        "displayName": "Moss Text (--accent-text, dark; 9.86:1 on --bg)",
+        "canonical": "#b3c7a0"
+      },
+      "moss-dark-wash": {
+        "role": "primary",
+        "displayName": "Moss Wash (--accent-wash, dark)",
+        "canonical": "#2a3325"
+      },
+      "night-owl-bg": {
+        "role": "neutral",
+        "displayName": "Night Owl BG",
+        "canonical": "#011627"
+      },
+      "night-owl-text": {
+        "role": "neutral",
+        "displayName": "Night Owl Text",
+        "canonical": "#d6deeb"
+      },
+      "night-owl-punct": {
+        "role": "neutral",
+        "displayName": "Night Owl Punctuation",
+        "canonical": "#d9f5dd"
+      },
+      "night-owl-punct-dim": {
+        "role": "neutral",
+        "displayName": "Night Owl Punctuation Dim",
+        "canonical": "#5f7e97"
+      },
+      "night-owl-comment": {
+        "role": "neutral",
+        "displayName": "Night Owl Comment",
+        "canonical": "#637777"
+      },
+      "night-owl-slate": {
+        "role": "neutral",
+        "displayName": "Night Owl Slate",
+        "canonical": "#b2ccd6"
+      },
+      "night-owl-variable": {
+        "role": "neutral",
+        "displayName": "Night Owl Variable",
+        "canonical": "#d7dbe0"
+      },
+      "night-owl-tag": {
+        "role": "neutral",
+        "displayName": "Night Owl Tag",
+        "canonical": "#80cbc4"
+      },
+      "night-owl-attr": {
+        "role": "neutral",
+        "displayName": "Night Owl Attribute",
+        "canonical": "#7fdbca"
+      },
+      "night-owl-attr-alt": {
+        "role": "neutral",
+        "displayName": "Night Owl Attribute Alt",
+        "canonical": "#caece6"
+      },
+      "night-owl-function": {
+        "role": "neutral",
+        "displayName": "Night Owl Keyword/Function",
+        "canonical": "#c792ea"
+      },
+      "night-owl-name": {
+        "role": "neutral",
+        "displayName": "Night Owl Identifier",
+        "canonical": "#82aaff"
+      },
+      "night-owl-import": {
+        "role": "neutral",
+        "displayName": "Night Owl Import",
+        "canonical": "#c5e378"
+      },
+      "night-owl-string": {
+        "role": "neutral",
+        "displayName": "Night Owl String",
+        "canonical": "#ecc48d"
+      },
+      "night-owl-number": {
+        "role": "neutral",
+        "displayName": "Night Owl Number",
+        "canonical": "#f78c6c"
+      },
+      "night-owl-string-alt": {
+        "role": "neutral",
+        "displayName": "Night Owl String Alt",
+        "canonical": "#ffeb95"
+      },
+      "night-owl-title": {
+        "role": "neutral",
+        "displayName": "Night Owl Title",
+        "canonical": "#baebe2"
+      },
+      "night-owl-alert": {
+        "role": "neutral",
+        "displayName": "Night Owl Alert",
+        "canonical": "#ff6363"
+      },
+      "night-owl-accent": {
+        "role": "neutral",
+        "displayName": "Night Owl Accent",
+        "canonical": "#faf39f"
+      },
+      "scroll-mask-black": {
+        "role": "neutral",
+        "displayName": "Scroll Mask Black",
+        "canonical": "#000"
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Hero/page titles. Studio: Newsreader serif 400. Field: Archivo Black 800 uppercase macro." },
-      "headline": { "displayName": "Headline", "purpose": "Section titles, persona-styled per room." },
-      "title": { "displayName": "Title", "purpose": "Card and item titles." },
-      "body": { "displayName": "Body", "purpose": "Prose at ~70ch. Studio 1.65 leading, field 1.5." },
-      "label": { "displayName": "Label", "purpose": "Mono uppercase metadata/telemetry. Floor 0.75rem for functional text." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home statement only. Newsreader 400, opsz 72, --fs-display clamp(2.3rem, 5.4vw, 4.9rem) (77.76px at 1440); --fs-display-sm clamp(2.1rem, 9.6vw, 3rem) at <=48rem. Name weight 500; second clause italic in --accent-text."
+      },
+      "h1": {
+        "displayName": "H1",
+        "purpose": "Page-hero titles. Newsreader 400, --fs-h1 clamp(2.5rem, 6vw, 4rem): 64px at 1440, 40px at 390."
+      },
+      "h2": {
+        "displayName": "H2",
+        "purpose": "Every h2 on every route. Newsreader 400, --fs-h2 clamp(1.5rem, 2.4vw, 1.875rem): 30px at 1440, 24px at 390. Route styles never set an h2 size."
+      },
+      "h3": {
+        "displayName": "H3",
+        "purpose": "Base h3. Newsreader 400, --fs-h3 clamp(1.05rem, 1.8vw, 1.35rem)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Geist 400, 1rem / 1.65; prose 1.16rem / 1.78 at 60ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "IBM Plex Mono: metadata 0.82rem uppercase in --text-dim; counts 0.78rem; labels and EXIF captions 0.75rem (the functional floor). Tabular figures."
+      }
     },
     "shadows": [
-      { "name": "studio-card-lift", "value": "0 1px 2px rgba(0, 0, 0, 0.04)", "purpose": "The only shadow in the system. Studio surfaces at rest. Never stack, never darken; field gets none." }
+      {
+        "name": "none-on-content",
+        "value": "none",
+        "purpose": "Cards, list rows, header and heroes carry no shadow. Shadows are reserved for floating layers (lightbox chrome, gallery tooltips) and book covers."
+      }
     ],
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default deceleration for transforms and reveals." },
-      { "name": "ease-soft", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Background/border/color transitions." },
-      { "name": "dur-base", "value": "0.24s", "purpose": "Standard transition duration; reduced-motion collapses all to 0.01ms." }
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Default deceleration for transforms and reveals."
+      },
+      {
+        "name": "ease-soft",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Background/border/color transitions."
+      },
+      {
+        "name": "dur-base",
+        "value": "0.24s",
+        "purpose": "Standard transition duration; reduced-motion collapses all to 0.01ms."
+      }
     ],
     "breakpoints": [
-      { "name": "mobile", "value": "48rem" }
+      {
+        "name": "mobile",
+        "value": "48rem"
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Geist",
+        "weights": [
+          400,
+          500,
+          600
+        ],
+        "token": "--font-body",
+        "role": "body, UI, nav, ledger"
+      },
+      {
+        "family": "Newsreader",
+        "weights": [
+          400,
+          500
+        ],
+        "italic": [
+          400
+        ],
+        "opsz": "6..72",
+        "token": "--font-display",
+        "role": "h1-h3, home statement, caption titles"
+      },
+      {
+        "family": "IBM Plex Mono",
+        "weights": [
+          400,
+          500
+        ],
+        "token": "--font-mono",
+        "role": "dates, counts, labels, captions, code"
+      }
+    ],
+    "layout": [
+      {
+        "name": "gutter",
+        "value": "clamp(1rem, 3vw, 2rem)",
+        "purpose": "The one inline inset for header, main and footer; shared left edge x=152 at 1440, x=16 at 390."
+      },
+      {
+        "name": "layout-max-width",
+        "value": "75rem",
+        "purpose": "Container measure."
+      },
+      {
+        "name": "header-h",
+        "value": "61px",
+        "purpose": "Single-row sticky solid header (brand · nav · theme toggle)."
+      }
     ]
   },
   "components": [
     {
-      "name": "Primary Button (Studio)",
+      "name": "Ledger Link",
       "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Tailored pill: soft surface, quiet border, accent bloom on hover.",
-      "html": "<a class=\"ds-btn-studio\" href=\"#\">Read my notes →</a>",
-      "css": ".ds-btn-studio { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 999px; font-size: 0.95rem; font-weight: 400; color: #f4f2ee; background: #141416; border: 1px solid rgba(244, 242, 238, 0.08); text-decoration: none; transition: border-color 0.18s, background-color 0.18s, transform 0.12s; } .ds-btn-studio:hover { border-color: color-mix(in srgb, #8aa6c8 30%, rgba(244,242,238,0.08)); background: color-mix(in srgb, #8aa6c8 8%, #141416); transform: translateY(-1px); } .ds-btn-studio:focus-visible { outline: 2px solid #8aa6c8; outline-offset: 2px; }"
+      "refersTo": "ledger-link",
+      "description": "Home hero door: Geist label with a build-time mono count, ruled hairline that turns moss on hover.",
+      "html": "<a class=\"ds-ledger\" href=\"#\">Gallery <span>39 frames</span></a>",
+      "css": ".ds-ledger { display: inline-flex; align-items: baseline; gap: 0.6rem; padding-block: 0.35rem; border-bottom: 1px solid rgba(29, 27, 22, 0.14); font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif; font-size: 1rem; color: #1d1b16; text-decoration: none; transition: border-color 0.24s cubic-bezier(0.4,0,0.2,1), color 0.24s cubic-bezier(0.4,0,0.2,1); } .ds-ledger span { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.06em; color: #55503f; font-variant-numeric: tabular-nums; } .ds-ledger:hover { border-color: #5f7350; color: #46573a; } .ds-ledger:focus-visible { outline: 2px solid #5f7350; outline-offset: 4px; }"
     },
     {
-      "name": "Primary Button (Field)",
-      "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Stamped rectangle: hard edges, uppercase mono, hazard border on hover.",
-      "html": "<a class=\"ds-btn-field\" href=\"#\">OPEN THE GALLERY →</a>",
-      "css": ".ds-btn-field { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: 0; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: #f2f2f0; background: #131314; border: 1px solid rgba(242, 242, 240, 0.14); text-decoration: none; transition: border-color 0.18s, background-color 0.18s; } .ds-btn-field:hover { border-color: #ff2a2a; background: color-mix(in srgb, #ff2a2a 8%, #131314); } .ds-btn-field:focus-visible { outline: 2px solid #ff2a2a; outline-offset: 2px; }"
-    },
-    {
-      "name": "Card (Studio)",
+      "name": "Card",
       "kind": "card",
       "refersTo": "card",
-      "description": "Editorial surface with the accent left-border signature.",
-      "html": "<article class=\"ds-card-studio\"><h3>Title</h3><p>Quiet, tailored surface with a 2px ink accent.</p></article>",
-      "css": ".ds-card-studio { background: #141416; border: 1px solid rgba(244, 242, 238, 0.08); border-left: 2px solid color-mix(in srgb, #8aa6c8 45%, rgba(244,242,238,0.08)); border-radius: 6px; padding: 2rem; box-shadow: 0 1px 2px rgba(0,0,0,0.04); color: #f4f2ee; } .ds-card-studio h3 { margin: 0 0 0.5rem; font-weight: 400; } .ds-card-studio p { margin: 0; line-height: 1.65; font-weight: 400; }"
+      "description": "Flat list card: top hairline and whitespace only; no box, radius, left rule or shadow. Moss wash on hover.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-date\">12 OCT 2026</div><h3>Title</h3><p>Whitespace and a top hairline do the structuring.</p></article>",
+      "css": ".ds-card { padding: 1.5rem 0; border-top: 1px solid rgba(29, 27, 22, 0.14); border-radius: 0; background: transparent; color: #1d1b16; } .ds-card:hover { background: color-mix(in srgb, #c2cdb2 14%, transparent); } .ds-card-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.08em; color: #746e5f; } .ds-card h3 { margin: 0.5rem 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; letter-spacing: -0.01em; } .ds-card p { margin: 0; font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif; line-height: 1.65; }"
     },
     {
-      "name": "Card (Field)",
+      "name": "Contact-sheet Frame",
       "kind": "card",
-      "refersTo": "card",
-      "description": "Hard rectangle: visible divider, zero radius, no shadow.",
-      "html": "<article class=\"ds-card-field\"><h3>TITLE</h3><p>Hard structure. Visible dividers. No softness.</p></article>",
-      "css": ".ds-card-field { background: #131314; border: 1px solid rgba(242, 242, 240, 0.14); border-radius: 0; padding: 2rem; color: #f2f2f0; } .ds-card-field h3 { margin: 0 0 0.5rem; font-family: 'Archivo', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; } .ds-card-field p { margin: 0; line-height: 1.5; }"
+      "refersTo": "strip-frame",
+      "description": "Natural-ratio photo at 4px radius with a Journal-style caption: Newsreader title, mono exposure line.",
+      "html": "<figure class=\"ds-frame\"><div class=\"ds-frame-img\"></div><figcaption><b>Common Kingfisher</b><span>f/6.3 · 1/2500s · ISO 1600</span></figcaption></figure>",
+      "css": ".ds-frame { margin: 0; inline-size: 12rem; } .ds-frame-img { block-size: 8rem; border-radius: 4px; background: #eee9dd; outline: 1px solid transparent; outline-offset: 3px; } .ds-frame:hover .ds-frame-img { outline-color: #5f7350; } .ds-frame figcaption { margin-top: 0.55rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; line-height: 1.45; letter-spacing: 0.02em; color: #55503f; text-transform: none; } .ds-frame b { display: block; font-family: 'Newsreader', Georgia, serif; font-size: 0.95rem; font-weight: 500; color: #1d1b16; } .ds-frame span { display: block; }"
     },
     {
-      "name": "Chip / Tag (Studio)",
-      "kind": "chip",
-      "refersTo": "chip-accent",
-      "description": "Accent pill badge with tinted ground.",
-      "html": "<span class=\"ds-chip-studio\">Frontend Developer</span>",
-      "css": ".ds-chip-studio { display: inline-block; padding: 0.15em 0.75em; border-radius: 999px; font-size: 0.9rem; font-weight: 400; background: color-mix(in srgb, #8aa6c8 15%, transparent); color: #8aa6c8; }"
-    },
-    {
-      "name": "Chip / Tag (Field)",
-      "kind": "chip",
-      "refersTo": "chip-accent",
-      "description": "Bordered mono telemetry tag.",
-      "html": "<span class=\"ds-chip-field\">BIRDS</span>",
-      "css": ".ds-chip-field { display: inline-block; padding: 0.15em 0.6em; border-radius: 0; border: 1px solid rgba(242, 242, 240, 0.14); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; color: #8c8c88; }"
-    },
-    {
-      "name": "Input (Base)",
-      "kind": "input",
+      "name": "Mono Label Link",
+      "kind": "button",
       "refersTo": null,
-      "description": "Quiet field, accent focus ring.",
-      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Search the archive\" />",
-      "css": ".ds-input { inline-size: 100%; padding: 0.5rem 0.75rem; border-radius: 5px; border: 1px solid rgba(250, 250, 250, 0.06); background: #0a0a0b; color: #fafafa; font: inherit; } .ds-input:focus-visible { outline: 2px solid #8aa6c8; outline-offset: 2px; }"
+      "description": "Closing strip link (OPEN THE GALLERY →): mono 0.75rem uppercase, moss on hover.",
+      "html": "<a class=\"ds-more\" href=\"#\">Open the gallery →</a>",
+      "css": ".ds-more { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #1d1b16; text-decoration: none; } .ds-more:hover { color: #46573a; } .ds-more:focus-visible { outline: 2px solid #5f7350; outline-offset: 4px; }"
+    },
+    {
+      "name": "Theme Toggle",
+      "kind": "button",
+      "refersTo": "theme-toggle",
+      "description": "Round 2.25rem toggle in the header bar; moss border on hover.",
+      "html": "<button class=\"ds-toggle\" type=\"button\" aria-label=\"Toggle light and dark theme\" aria-pressed=\"false\">☼</button>",
+      "css": ".ds-toggle { inline-size: 2.25rem; block-size: 2.25rem; display: grid; place-items: center; padding: 0; border: 1px solid color-mix(in srgb, #1d1b16 45%, transparent); border-radius: 999px; background: #fffdf8; color: #1d1b16; font-size: 1rem; line-height: 1; cursor: pointer; } .ds-toggle:hover { border-color: #5f7350; } .ds-toggle:focus-visible { outline: 2px solid #5f7350; outline-offset: 4px; }"
     },
     {
       "name": "Navigation",
       "kind": "nav",
-      "refersTo": null,
-      "description": "Sticky bar with brand, persona toggle, active gradient underline.",
-      "html": "<nav class=\"ds-nav\"><strong>Ritik Patni</strong><span class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-link active\">Home</a><a href=\"#\" class=\"ds-nav-link\">Notes</a></span></nav>",
-      "css": ".ds-nav { display: flex; justify-content: space-between; align-items: center; padding: 0.625rem 1rem; background: #0c0c0e; border-bottom: 1px solid rgba(244, 242, 238, 0.08); } .ds-nav strong { color: #f4f2ee; font-weight: 400; } .ds-nav-links { display: flex; gap: 0.125rem; } .ds-nav-link { color: #9a958c; text-decoration: none; padding: 0.5rem 0.75rem; font-size: 0.875rem; border-radius: 6px; position: relative; } .ds-nav-link:hover { color: #f4f2ee; background: color-mix(in srgb, #f4f2ee 4%, transparent); } .ds-nav-link.active { color: #f4f2ee; } .ds-nav-link.active::after { content: ''; position: absolute; bottom: 2px; left: 0.75rem; right: 0.75rem; height: 2px; border-radius: 1px; background: linear-gradient(90deg, #8aa6c8, #b8c4d4); }"
+      "refersTo": "nav-link",
+      "description": "Single-row sticky solid bar: brand · nav · theme toggle; active link = 6% ink wash + 2px moss underline.",
+      "html": "<nav class=\"ds-nav\"><strong>Ritik Patni</strong><span class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-link active\" aria-current=\"page\">Home</a><a href=\"#\" class=\"ds-nav-link\">Journal</a><a href=\"#\" class=\"ds-nav-link\">Notes</a><a href=\"#\" class=\"ds-nav-link\">Gallery</a></span></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 1rem; min-block-size: 3.75rem; padding-inline: clamp(1rem, 3vw, 2rem); background: #f7f4ed; border-bottom: 1px solid rgba(29, 27, 22, 0.14); font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif; } .ds-nav strong { color: #1d1b16; font-weight: 600; } .ds-nav-links { display: flex; gap: 0.125rem; margin-inline-start: auto; } .ds-nav-link { position: relative; padding: 0.5rem 0.75rem; font-size: 0.875rem; color: #55503f; text-decoration: none; border-radius: 6px; } .ds-nav-link:hover { color: #1d1b16; background: color-mix(in srgb, #1d1b16 4%, transparent); } .ds-nav-link.active { color: #1d1b16; background: color-mix(in srgb, #1d1b16 6%, transparent); } .ds-nav-link.active::after { content: ''; position: absolute; bottom: 2px; left: 0.75rem; right: 0.75rem; height: 2px; border-radius: 1px; background: #5f7350; }"
     }
   ],
   "narrative": {
-    "northStar": "Ink & Hazard — warm editorial ink meets Swiss hazard printing",
-    "overview": "One site with two deliberately separate design languages, never merged. Studio is warm editorial ink: carbon and bone, serif display, single desaturated ink-blue accent, crisp radii, flat calm. Field is Swiss hazard printing: carbon and newsprint, massive uppercase Archivo Black, single hazard-red accent, zero radius, hard dividers. A visitor knows which room they're in instantly — that recognition is the system working.",
+    "northStar": "Field Notes — a naturalist's notebook kept by an engineer",
+    "overview": "One identity: cream paper, ink and a single moss accent, light by default with a warm charcoal dark theme. Newsreader speaks (titles, the home statement), Geist reads and operates (prose, nav), IBM Plex Mono records (dates, counts, EXIF). Engineering and photography share one notebook; the two subjects appear as two voices in one sentence, not two visual systems.",
     "keyCharacteristics": [
-      "Two rooms, one archive — personas never share visual language",
-      "One accent per persona at a time: ink-blue or hazard-red, never both",
-      "Weight- and case-driven hierarchy; gradients are whispers (4–5% opacity max)",
-      "Tabular figures everywhere data appears; flat surfaces; borders over shadows",
-      "Craft lives in the details: captions, heading order, contrast — audited"
+      "One identity, one accent: moss in both themes, at both ends of every gradient token",
+      "Text hierarchy dim < muted < text with a 4.6:1 floor in both themes",
+      "Serif/sans/mono voice split; one H2 size (--fs-h2) everywhere",
+      "Flat: top hairlines and whitespace, no card boxes or shadows",
+      "Truth in details: build-time counts, real EXIF captions, measured contrast"
     ],
     "rules": [
-      { "name": "The Two Rooms Rule", "body": "Studio and field never share accent language. An element that works in both rooms must earn it in each persona's tokens separately — no cross-persona homogenization, ever.", "section": "colors" },
-      { "name": "The Whisper Rule", "body": "Gradients are whispers, never banners: hero glow lands at 4–5% opacity. Nothing larger than a hint.", "section": "colors" },
-      { "name": "The One Accent Rule", "body": "Each persona carries exactly one accent hue at a time. If a second accent color appears in a persona, one of them is wrong.", "section": "colors" },
-      { "name": "The Case Boundary Rule", "body": "Field shouts in uppercase; studio keeps sentence case. A studio headline in all-caps is a persona leak.", "section": "typography" },
-      { "name": "The Measured Macro Rule", "body": "Field's giant type is sized from measurement (PHOTOGRAPHY ≈ 8.1em wide in Archivo Black), never guesswork — no mid-word breaks, no right-edge clipping, ever.", "section": "typography" }
+      {
+        "name": "The One Accent Rule",
+        "body": "Moss is the only accent hue in both themes. If a second accent hue appears in chrome, one of them is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Whisper Rule",
+        "body": "Gradients are whispers, never banners: --gradient-hero is none and page-hero glow caps at 0.04-0.05 opacity. No gradient text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Paper Rule",
+        "body": "Text never sits on a photograph; contrast comes from tokens, never from photo measurements.",
+        "section": "colors"
+      },
+      {
+        "name": "The One H2 Rule",
+        "body": "Every h2 is --fs-h2 (30px at 1440, 24px at 390). Route styles never set an h2 size.",
+        "section": "typography"
+      },
+      {
+        "name": "The Floor Rule",
+        "body": "Functional text is at least 0.75rem (12px) and at least 4.6:1 against its ground.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Edge Rule",
+        "body": "Header, main and footer share one container inset by --gutter; nothing inside adds inline padding.",
+        "section": "layout"
+      }
     ],
     "dos": [
-      "Do scope every accent decision through the active persona's tokens (--accent-start/-end/-text) — never hardcode a persona's hex outside its layer.",
-      "Do keep accent-colored text AA-safe: light theme uses the deepened per-persona --accent-text.",
-      "Do use tabular figures (font-variant-numeric: tabular-nums) for any data, both personas.",
-      "Do keep functional micro-text at or above 0.75rem (12px).",
-      "Do verify heading order (no skipped levels) in authored content."
+      "Do take every colour, size and font from v2-tokens.scss; add a token there before using a new value.",
+      "Do keep dim < muted < text and the 4.6:1 floor in both themes; never use --text-dim on --bg-deep in light (4.19:1).",
+      "Do use --accent-text for moss text and --accent-start for moss strokes.",
+      "Do compute every count from the collection or manifest the linked page renders.",
+      "Do caption photographs with their real title and EXIF; drop missing fields.",
+      "Do write internal URLs slashless."
     ],
     "donts": [
-      "Don't merge, blend, or cross-pollinate the studio and field visual languages — the Two Rooms Rule is binding (PRODUCT.md).",
-      "Don't let a gradient exceed a whisper — hero glow caps at 4–5% opacity; a gradient banner or gradient text is a violation.",
-      "Don't introduce a second accent hue into either persona.",
-      "Don't stack or darken shadows beyond the studio 1px lift; field gets none.",
-      "Don't fabricate content, testimonials, or metrics — the archive is real or it doesn't ship."
+      "Don't reintroduce a dual-identity theme switch or a second accent hue.",
+      "Don't set an h2 size in a route stylesheet or a size off the ramp.",
+      "Don't load a family other than Geist, Newsreader and IBM Plex Mono, or a weight outside the requested faces.",
+      "Don't put text on a photograph or crop a frame to fit a grid.",
+      "Don't make the header transparent, blurred, two-row or scroll-aware.",
+      "Don't fabricate content, counts, testimonials or EXIF."
     ]
   }
 }
