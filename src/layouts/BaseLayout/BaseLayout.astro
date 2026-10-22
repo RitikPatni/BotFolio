@@ -234,7 +234,7 @@ const imageUrl = new URL(image, Astro.site).toString();
                 <a href={item.href} class={isNavLinkActive(item.href) ? 'nav-link active' : 'nav-link'} aria-current={isNavLinkActive(item.href) ? 'page' : undefined}>{item.label}</a>
               ))}
             </nav>
-            <span class="nav-scroll-hint" data-nav-scroll-hint hidden aria-hidden="true">More →</span>
+            <button class="nav-scroll-hint" type="button" data-nav-scroll-hint hidden aria-label="Show more navigation links">More <span aria-hidden="true">→</span></button>
           </div>
           <button
             class="base-layout__theme-toggle"

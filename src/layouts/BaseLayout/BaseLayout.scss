@@ -269,18 +269,45 @@ html[data-theme-switching] *::after {
   }
 }
 
+/* "More →" is a real button, not a pass-through label: it sits over the
+   masked right edge, captures the tap (so it can never land on the link
+   underneath) and scrolls the nav to its end. Once there, the client script
+   hides it and the revealed links are tappable directly. Absolutely
+   positioned and vertically centred, so its 44px tap box causes no shift. */
 .nav-scroll-hint:not([hidden]) {
   position: absolute;
-  inset-block: 0;
+  inset-block-start: 50%;
   inset-inline-end: 0;
+  translate: 0 -50%;
   display: flex;
   align-items: center;
+  min-block-size: 2.75rem;
+  min-inline-size: 2.75rem;
+  margin: 0;
+  padding: 0 0.25rem 0 0.5rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
+  line-height: 1;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  pointer-events: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: color 180ms ease;
+
+  &:hover {
+    color: var(--text);
+  }
+
+  /* Overrides the shell's outset ring so it stays inside the header. */
+  &:focus-visible {
+    color: var(--text);
+    outline-offset: -2px;
+  }
 }
 
 @media (max-width: 48rem) {

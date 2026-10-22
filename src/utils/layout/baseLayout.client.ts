@@ -125,7 +125,13 @@ const bindThemeToggle = () => {
 
 /* Nav overflow: the single-row nav scrolls sideways when its links outgrow
    the bar (narrow screens). Flags drive the edge masks; the hint shows only
-   while links remain hidden to the right. */
+   while links remain hidden to the right. The hint is a real <button>: it
+   captures the tap (never the link beneath it) and smooth-scrolls the nav
+   to its end, so every hidden link is revealed in one step. The scroll
+   events then land here, hide the hint at the end, and hand keyboard focus
+   to the first link that was hidden. */
+let navHintFocusTarget: HTMLElement | null = null;
+
 const syncNavOverflow = () => {
   const nav = document.querySelector<HTMLElement>("[data-nav-scroller]");
   const hint = document.querySelector<HTMLElement>("[data-nav-scroll-hint]");
@@ -141,12 +147,32 @@ const syncNavOverflow = () => {
   nav.dataset.navAtEnd = String(atEnd);
 
   if (hint) {
-    hint.hidden = !overflowing || atEnd;
+    const hide = !overflowing || atEnd;
+    if (hide && document.activeElement === hint && navHintFocusTarget) {
+      navHintFocusTarget.focus({ preventScroll: true });
+    }
+    if (hide) navHintFocusTarget = null;
+    hint.hidden = hide;
   }
+};
+
+const scrollNavToEnd = () => {
+  const nav = document.querySelector<HTMLElement>("[data-nav-scroller]");
+  if (!nav) return;
+
+  const visibleRight = nav.getBoundingClientRect().right;
+  navHintFocusTarget =
+    Array.from(nav.querySelectorAll<HTMLElement>("a")).find(
+      (link) => link.getBoundingClientRect().right > visibleRight - 1,
+    ) ?? null;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  nav.scrollTo({ left: nav.scrollWidth, behavior: reduceMotion ? "auto" : "smooth" });
 };
 
 const bindNavOverflow = () => {
   const nav = document.querySelector<HTMLElement>("[data-nav-scroller]");
+  const hint = document.querySelector<HTMLElement>("[data-nav-scroll-hint]");
 
   if (nav && nav.dataset.overflowBound !== "true") {
     nav.dataset.overflowBound = "true";
@@ -154,6 +180,11 @@ const bindNavOverflow = () => {
     if (typeof ResizeObserver !== "undefined") {
       new ResizeObserver(syncNavOverflow).observe(nav);
     }
+  }
+
+  if (hint && hint.dataset.jsBound !== "true") {
+    hint.dataset.jsBound = "true";
+    hint.addEventListener("click", scrollNavToEnd);
   }
 
   syncNavOverflow();
