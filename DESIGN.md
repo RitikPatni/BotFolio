@@ -13,7 +13,7 @@ colors:
   moss: "#5f7350"
   moss-deep: "#46573a"
   moss-wash: "#c2cdb2"
-  # Dark theme (scoped: /photography default, or the reader's stored choice) — src/styles/v2-tokens.scss:88-102
+  # Dark theme (the reader's system preference or stored choice; no route forces it) — src/styles/v2-tokens.scss:88-102
   charcoal: "#171812"
   charcoal-soft: "#1f2119"
   charcoal-deep: "#10110c"
@@ -158,7 +158,7 @@ components:
 
 This file is the design law for the shipped site. It is written in the present tense: every rule describes what the site does now, and every authority claim points at the code that enforces it. When this file and the code disagree, the code is what ships. File the gap as a bug in one or the other; don't quietly follow either side.
 
-Each factual claim was measured against the built site (computed styles, both themes, 1440 and 390 widths). Claim IDs `C01`–`C36` and gap-pass IDs `G01`–`G26` are cited inline below. The evidence (`measurements.json` and the probe scripts) lives in the local `design/docs-round/` directory. `/design/` is gitignored, so that directory is not in the repository. Re-measure before you trust a number that looks stale.
+Each factual claim was measured against the built site (computed styles, both themes, 1440 and 390 widths). Claim IDs `C01`–`C36`, gap-pass IDs `G01`–`G26` and true-up IDs `T01`–`T11` (re-measured after the clickable-cards, lightbox v2 and theme-system merges) are cited inline below. Where a `T` claim supersedes an older one, the older one is noted. The evidence (`measurements.json` and the probe scripts) lives in the local `design/docs-round/` directory. `/design/` is gitignored, so that directory is not in the repository. Re-measure before you trust a number that looks stale.
 
 ## Overview
 
@@ -169,7 +169,7 @@ There is one identity: cream paper, ink, and one moss accent. A serif voice (New
 The earlier dual-persona system (separate "studio" and "field" rooms, each with its own accent, type and radius) is dissolved. No route renders a persona attribute and the header has no persona switch (`C01`, `C02`).
 
 **Key characteristics**
-- Paper first. Light is the default theme. Dark is a warm charcoal theme, used by default on `/photography` or when the reader chooses it.
+- Paper first. Light is the designed-first theme and the no-JS fallback. Dark is a warm charcoal theme. The theme belongs to the visitor, not the page: a stored toggle choice wins, otherwise the system `prefers-color-scheme` decides, and no route forces a theme (`BaseLayout.astro:51-75`; `T08`).
 - One accent, moss, in both themes and at both ends of every gradient token.
 - Hierarchy comes from the serif/sans/mono split and from size, not from colour or weight theatrics.
 - Flat: whitespace and top hairlines structure the page. Cards have no boxes, no left rules and no shadows.
@@ -185,7 +185,7 @@ Styles load in exactly this order (`src/styles/global.scss:1-7`, imported by `sr
 4. `v2-typography.scss`: base element sizes (`h2` takes `--fs-h2` at `:18-24`, `h3` takes `--fs-h3`) and the mono metadata layer (`:57-67`).
 5. `page-hero.scss`: the shared page hero (`.page-hero__title` takes `--fs-h1`, `:30-37`).
 6. `v2-transitions.scss`: motion tokens (`--ease-out`, `--ease-soft`, `--dur-fast/base/slow` at `:7-11`) and the reduced-motion collapse (`:76-81`).
-7. **`field-notes.scss`: the rules layer, and the last word in the cascade.** It sets heading family, weight and tracking (`:11-23`), body leading (`:25-30`), tabular figures (`:33-35`), hero glow (`:38-50`) and the authoritative card chrome (`:56-96`).
+7. **`field-notes.scss`: the rules layer, and the last word in the cascade.** It sets heading family, weight and tracking (`:11-23`), body leading (`:25-30`), tabular figures (`:33-35`), hero glow (`:38-41`, `:47-50`), the standard page-hero padding ramp (`:43-45`), the authoritative card chrome (`:56-77`) and the clickable-card stretch, focus ring and hover (`:79-135`).
 
 Rules:
 - New colours, sizes and font stacks go into `v2-tokens.scss` only. Component styles consume `var(--token)`. They never hardcode a hex that already has a token.
@@ -232,9 +232,9 @@ Rules:
 ### Accent
 
 Moss is the only accent hue. Every accent token in both themes sits in one green family (`C10`).
-- `--accent-start` is for strokes and marks: the active nav underline (`BaseLayout.scss:259-268`), hover hairlines on the ledger and frames, focus outlines (`BaseLayout.scss:15-18`, via `--accent`), and the theme-toggle hover border.
-- `--accent-text` is for accent-coloured text: the italic clause of the home statement (`_home.scss:40-44`; `C11`), section kickers (`_home.scss:214-222`), and gallery index links (`_photography.scss:36-45`).
-- `--accent-wash` is for the 14% hover wash on list cards (`field-notes.scss:79-90`).
+- `--accent-start` is for strokes and marks: the active nav underline (`BaseLayout.scss:259-268`), hover hairlines on the ledger, frames, clickable cards and book covers, focus outlines (`BaseLayout.scss:15-18`, via `--accent`), and the theme-toggle hover border.
+- `--accent-text` is for accent-coloured text: the italic clause of the home statement (`_home.scss:40-44`; `C11`), section kickers (`_home.scss:214-222`), and gallery index links (`_photography.scss:37-46`).
+- `--accent-wash` is for the 14% hover wash on clickable cards (`field-notes.scss:127-135`; `T01`).
 - The gradient tokens are kept for compatibility only, and both ends are moss, so they read as a flat moss rule. `--gradient-hero` is `none` (`v2-tokens.scss:29-33`).
 
 ### Code blocks (Night Owl)
@@ -249,9 +249,9 @@ Markdown code renders through Shiki's Night Owl theme (`astro.config.mjs:13-16`)
 
 **The One Accent Rule.** Moss is the only accent hue in both themes. If a second accent hue appears in chrome, one of them is wrong.
 
-**The Whisper Rule.** Gradients are whispers, never banners. `--gradient-hero` is `none`. Page-hero glow is capped at 0.04–0.05 opacity (`field-notes.scss:38-50`). No gradient text and no gradient fills on paper.
+**The Whisper Rule.** Gradients are whispers, never banners. `--gradient-hero` is `none`. Page-hero glow is capped at 0.04–0.05 opacity (`field-notes.scss:38-41`, `:47-50`). No gradient text and no gradient fills on paper.
 
-**The Paper Rule.** Text never sits on a photograph. Every caption, control and heading sits on `--bg`, `--bg-soft` or `--bg-deep`, so contrast comes from the tokens, never from photo measurements.
+**The Paper Rule.** Text never sits on a photograph. Every caption, control and heading sits on `--bg`, `--bg-soft` or `--bg-deep`, so contrast comes from the tokens, never from photo measurements. The one exception is the lightbox, an ink room. Its caption, counter and actions sit on a fixed ink tag (`--lb-tag`, rgb(29 27 22 / 0.78)) over the 92% ink backdrop, in the bands above and below the photo and never on it. Its colours are fixed lightbox-local values, not theme tokens (`_photography.lightbox.shell.scss:7-16`, `:265-277`; `T06`).
 
 ## Typography
 
@@ -296,15 +296,15 @@ Rules:
 - **The One H2 Rule.** `h2` has a single size, `--fs-h2`. Route styles must not set an h2 font-size, line-height or weight.
 - **The Floor Rule.** Functional text is at least 0.75rem (12px). 0.75rem is a floor, not a default, and is reserved for mono labels and captions.
 - **The Voice Split.** Newsreader speaks (titles, the statement, names of things). Geist reads and operates (prose, nav, links). Plex Mono records (dates, counts, EXIF, labels). Don't set a date in Newsreader or a heading in mono.
-- **Case.** Headings, ledger and captions use sentence case. Only the mono label layer uppercases: the strip label, "Open the gallery →", the gallery index and the metadata layer. EXIF lines are never uppercased, so "f/6.3" stays lowercase (`_photography.scss:129-137`).
+- **Case.** Headings, ledger and captions use sentence case. Only the mono label layer uppercases: the strip label, "Open the gallery →", the gallery index and the metadata layer. EXIF lines are never uppercased, so "f/6.3" stays lowercase (`_photography.scss:129-138`, and the lightbox caption at `_photography.lightbox.shell.scss:289-296`; `T06`).
 - **Tabular figures** are on site-wide (`field-notes.scss:33-35`) and set explicitly on counts, dates and captions.
 - **Italic** is the second voice. Use it only for the moss clause of the home statement, and never as decoration elsewhere.
 
 ### Known deviations (open bugs, measured `G20`–`G24`)
 
 The built site breaks the rules above in these places. Each one is a bug to fix in the code. None of them is a pattern to copy.
-- **Off-ramp title sizes.** Card and list h3 titles set their own sizes. Post-card titles render 32 / 24px featured and 24 / 17.6px regular (`_home.scss:251`, `:263`). Journal item titles render 24px, Uses card titles 24 / 18.4px, Library item titles 15.2px and the lightbox metadata title 16px.
-- **Below the 0.75rem floor.** Three labels on `/uses` (kicker, section index, card badge) render at 0.72rem, which is 11.52px (`uses/_uses.scss:25`). The lightbox metadata labels (`_photography.lightbox.metadata.scss:119`) and book detail labels (`library/books/_slug.scss:126`) are also declared at 0.72rem.
+- **Off-ramp title sizes.** Card and list h3 titles set their own sizes. Post-card titles render 32 / 24px featured and 24 / 17.6px regular (`_home.scss:251`, `:263`). Journal item titles render 24px, Uses card titles 24 / 18.4px, Library item titles 15.2px and the lightbox metadata title 16px. The lightbox caption title is an `h2` sized locally to 1.05rem, which is 16.8px (`_photography.lightbox.shell.scss:279-287`; `T06`). It is the one h2 off the ramp. `C16`/`C17` sampled only the page, not the open dialog.
+- **Below the 0.75rem floor.** Three labels on `/uses` (kicker, section index, card badge) render at 0.72rem, which is 11.52px (`uses/_uses.scss:25`). The lightbox metadata labels (`_photography.lightbox.metadata.scss:126`, 11.52px; `T05`) and book detail labels (`library/books/_slug.scss:126`) are also declared at 0.72rem.
 - **Weights outside the requested faces.** The header brand is a `<strong>`, so it computes Geist 700 and renders the 600 face. Many route styles still declare `font-weight: 300`, which Geist doesn't ship, so the text renders at 400. These include the page-hero title and lead, card descriptions, the footer copy, newsletter and library text, and lightbox text. Where a `:root p` / `li` rule applies, 400 wins outright. Prose `em` and `code em` synthesize italics, because Geist and Plex Mono have no italic face requested.
 
 ## Layout
@@ -342,19 +342,22 @@ Sources: `src/pages/_home/home.astro:26-124` and `src/pages/_home/_home.scss:1-1
 
 ### Gallery: the contact sheet
 
-Sources: `src/pages/photography/index.astro` and `_photography.scss:1-221`.
+Sources: `src/pages/photography/index.astro`, `_photography.scss:1-223` and the lightbox in `_PhotographyLightbox.astro` with `_photography.lightbox.shell.scss` and `_photography.lightbox.metadata.scss`.
 
-- **Justified rows.** Each frame is `flex: <aspect> 1 calc(<aspect> × --sheet-row-h)`, so every frame in a row shares one height at its natural shape. An `::after` filler stops the last row from stretching (`_photography.scss:81-97`). The row-height basis is `clamp(10rem, 17vw, 15rem)`, or 9rem at ≤48rem.
-- Frames are 4px radius on a `--bg-deep` well. Hover shows a 1px `--accent-start` outline at 3px offset. The frame itself is the lightbox trigger, and there is no separate icon button (`C31`).
+- **Justified rows.** Each frame is `flex: <aspect> 1 calc(<aspect> × --sheet-row-h)`, so every frame in a row shares one height at its natural shape. An `::after` filler stops the last row from stretching (`_photography.scss:80-99`). The row-height basis is `clamp(10rem, 17vw, 15rem)`, or 9rem at ≤48rem.
+- Frames are 4px radius on a `--bg-deep` well. Hover shows a 1px `--accent-start` outline at 3px offset (`_photography.scss:105-120`). The frame itself is the lightbox trigger, and there is no separate icon button (`C31`). Each `figure` is a `.card-link`, so keyboard focus draws the 2px `--accent` ring around the whole frame and its caption, not around the button (`field-notes.scss:107-115`; `T09`).
 - Captions use the same language as the home strip: a Newsreader title, then a mono exposure line, never uppercased.
 - A **ruled mono index** sits at the top: an uppercase 0.75rem row of moss jump links with build-time counts ("39 frames · Birds 21 · …"). Each category section has a sentence-case h2 on the ramp and a mono meta line.
-- `/photography` defaults to the dark theme. A stored reader choice still wins (`BaseLayout.astro:27`; `C32`).
+- `/photography` has no theme of its own. It resolves like every route: stored choice, then system preference, then light (`BaseLayout.astro:51-75`; `T08`, which supersedes `C32`).
+- **The lightbox is an ink room** in both themes: a `::backdrop` of rgb(12 12 10 / 0.92) with an 8px blur (`_photography.lightbox.shell.scss:37-42`). A top bar on the right holds the counter chip and 44px round actions on the ink tag. Prev/next become tall edge click-zones on fine pointers (`:173-220`) and join the counter as one ‹ n / 39 › chip in the top bar on touch (`:222-263`). A bottom-left caption tag repeats the contact-sheet language (a Newsreader 1.05rem title over the mono exposure line, never uppercased; `:265-296`). The title is declared 500 but renders 400, because it is an `h2` and `:root h2` in `field-notes.scss` wins. Tapping the photo fades the actions, arrows and caption, but the counter stays (`:308-322`). "Show metadata" slides in a sheet: a 340px `--bg-soft` panel on the right on desktop, and a bottom sheet with 20px top corners at ≤48rem (`_photography.lightbox.metadata.scss:5-33`, `:51-74`; `T04`–`T06`).
 - Never crop a frame to fit a grid, and never set text on a frame.
 
 ### Other pages
 
-- **Page heroes** share one block: mono meta, an H1 at `--fs-h1`, and a lede in `--text-muted` (`page-hero.scss`).
-- **Cards and lists** are flat. There is no box, no left rule, no radius and no shadow, only a top hairline and whitespace (`field-notes.scss:56-77`; `C33`). Hover is a 14% `--accent-wash` tint (`:79-90`).
+- **Page heroes** share one block: mono meta, an H1 at `--fs-h1`, and a lede in `--text-muted` (`page-hero.scss`). They also share one block rhythm. Landing and listing pages (`/blog`, `/coding`, `/library`, `/newsletter`, `/photography`, `/about`, 404) all use `page-hero--standard`, whose padding ramp is `clamp(3rem, 7vw, 6rem)` top and `clamp(3.5rem, 8vw, 7rem)` bottom, or 96 / 112px at 1440 (`field-notes.scss:43-45`; `T10`). There is no compact listing variant: a listing page gets the same hero rhythm as its siblings. Detail pages (post, book, highlight, issue) use their own `--detail`, `--media` and `--compact` heroes. Two known outliers remain. `/resources` still carries the older `page-hero--listing` (44 / 28px), and `/uses` uses `page-hero--intro` (24 / 48px). Neither is a pattern to copy.
+- **Cards and lists** are flat. There is no box, no left rule, no radius and no shadow, only a top hairline and whitespace (`field-notes.scss:56-77`; `C33`).
+- **Clickable cards.** Six card families carry `.card-link`: `.post-card` (home), `.blog-card`, `.coding__item`, `.library__item`, `.library__note-item` and `.newsletter__item`. Their one title link stretches over the whole card with an inset-0 `::after`, so the whole card is the hit area, while other links inside it stay clickable on top (`field-notes.scss:79-105`). Hover is colour only. The top hairline turns `--accent-start` mixed 55% into `--line`, and a 14% `--accent-wash` tint fills the card. Nothing moves: the card box shifts 0px in both themes (`:117-135`; `T01`). The featured post has no hairline, so it shows only the wash. Uses and About cards are not links and have no hover state.
+- **Book covers** on the library shelf keep a 1px `--line` border at 4px radius. On card hover the border turns `--accent-start` mixed 45% into `--line`. There is no lift, scale or shadow, and the cover moves 0px (`library/_library.scss:146-159`; `T03`).
 - **404.** Unknown URLs return HTTP 404 with `src/pages/404.astro`: a mono "404 · page not found" kicker, an H1 at the ramp, one lede sentence, and three ruled doors (Home, Notes, Gallery). It is `noindex, follow` with no canonical (`BaseLayout.astro:166`; `C34`, `G25`).
 
 ### URLs
@@ -371,7 +374,8 @@ There is one breakpoint, `48rem`. At or below it: the display statement switches
 
 The page is flat. Depth comes from tonal layering (`--bg` → `--bg-soft` → `--bg-deep`) and 1px hairlines, not shadows.
 - Cards, list items, the header and heroes carry **no shadow**.
-- Shadows exist only on layers that genuinely float above the page: the photography lightbox chrome and metadata sheet (`_photography.lightbox.shell.scss:60`, `_photography.lightbox.metadata.scss:16`) the gallery loading-status pill (`_photography.scss:175`) and the lightbox action tooltips (`_photography.scss:201`). Book covers also get a hover lift (`library/_library.scss:160`) and a flat moss offset on the book detail page (`library/books/_slug.scss:25`).
+- Shadows exist only on layers that genuinely float above the page: the lightbox metadata sheet (`0 20px 60px` at 55% black, `_photography.lightbox.metadata.scss:16`; `0 -16px 50px` as the ≤48rem bottom sheet, `:66`), the gallery loading-status pill (`_photography.scss:176`) and the lightbox action tooltips (`_photography.scss:201`). The rest of the lightbox chrome (counter, actions, caption tag) has no shadow. It reads against the ink backdrop by tone alone (`T04`).
+- Book covers on the shelf get no shadow and no lift, only an accent border on hover (`T03`). The book detail page keeps a flat moss offset behind its cover (`library/books/_slug.scss:25`).
 - Page-hero glow is capped by the Whisper Rule (0.04–0.05).
 
 ## Shapes
@@ -396,19 +400,20 @@ Geist 0.875rem in `--text-muted`, 6px radius, and a 4% `--text` wash on hover. T
 Geist 1rem in `--text` with a 1px `--line` underline that turns `--accent-start` on hover, while the label turns `--accent-text`. The count is mono 0.78rem in `--text-muted`.
 
 ### Contact-sheet frame (home strip and gallery)
-A natural-ratio image at 4px radius, with a transparent 1px outline at 3px offset that turns moss on hover and focus. The caption is a Newsreader title plus a mono exposure line in `--text-muted`.
+A natural-ratio image at 4px radius, with a transparent 1px outline at 3px offset that turns moss on hover. Keyboard focus shows the standard 2px ring. On the home strip it wraps the link, and in the gallery it wraps the whole figure, frame and caption together, through `.card-link` (`T09`). The caption is a Newsreader title plus a mono exposure line in `--text-muted`.
 
 ### Section header
 A mono uppercase kicker in `--accent-text` (0.78rem, +0.14em), then an h2 on the ramp, on the shared left edge.
 
 ### Focus
-Every link and button shows a 2px `--accent` outline with a `--size-1` offset on `:focus-visible` (`BaseLayout.scss:15-18`).
+Every link and button shows a 2px `--accent` outline with a `--size-1` offset on `:focus-visible` (`BaseLayout.scss:15-18`). Inside a `.card-link`, the title link drops its own outline and the same ring is drawn around the whole card instead (`field-notes.scss:107-115`; `T02`). On the scrolling library shelf, the ring is inset so it isn't clipped (`library/_library.scss:171-174`).
 
 ## Motion
 
 - The tokens are `--ease-out` `cubic-bezier(.22,1,.36,1)`, `--ease-soft` `cubic-bezier(.4,0,.2,1)`, `--dur-fast` 160ms, `--dur-base` 240ms and `--dur-slow` 360ms (`v2-transitions.scss:7-11`).
 - Under `prefers-reduced-motion: reduce`, every duration collapses to 0.01ms (`v2-transitions.scss:76-81`), and smooth scrolling is only enabled for `no-preference` (`global.scss:41-45`).
-- Interaction motion is mostly colour, border and outline transitions. There are three exceptions. `main` plays a one-off `content-rise` entrance on every page load: it fades in from 10px below over `--dur-slow` (`v2-transitions.scss:67-74`; `G18`). The theme toggle presses to `scale(0.92)` (`:62-64`). Lightbox tooltips lift 0.25rem on reveal (`_photography.scss:205-214`). Nothing autoplays, and reduced motion collapses all three (`G19`).
+- Interaction motion is mostly colour, border and outline transitions. Cards never move on hover (`T01`). There are three page-level exceptions. `main` plays a one-off `content-rise` entrance on every page load: it fades in from 10px below over `--dur-slow` (`v2-transitions.scss:67-74`; `G18`). The theme toggle presses to `scale(0.92)` (`:62-64`). Lightbox tooltips lift 0.25rem on reveal (`_photography.scss:205-214`). Nothing autoplays, and reduced motion collapses all three (`G19`).
+- Inside the lightbox, the photo follows a drag and settles with a 220ms `--ease-out`-shaped transform (`_photography.lightbox.shell.scss:77-79`). The chrome fades over 240ms when the photo is tapped (`:313`), and the metadata sheet slides in over 240ms (`_photography.lightbox.metadata.scss:20-31`). Under reduced motion, all of these compute to a 0.01ms duration (`T07`).
 
 ## Do's and don'ts
 

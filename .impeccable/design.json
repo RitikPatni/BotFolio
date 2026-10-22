@@ -240,7 +240,7 @@
       {
         "name": "none-on-content",
         "value": "none",
-        "purpose": "Cards, list rows, header and heroes carry no shadow. Shadows are reserved for floating layers (lightbox chrome and metadata sheet, gallery loading-status pill, lightbox tooltips) and book covers."
+        "purpose": "Cards, list rows, header and heroes carry no shadow. Shadows are reserved for floating layers: the lightbox metadata sheet, the gallery loading-status pill and lightbox tooltips. The rest of the lightbox chrome is shadowless on its ink backdrop. Shelf book covers get no shadow or lift (accent border on hover only). The book detail cover keeps a flat moss offset."
       }
     ],
     "motion": [
@@ -336,9 +336,9 @@
       "name": "Card",
       "kind": "card",
       "refersTo": "card",
-      "description": "Flat list card: top hairline and whitespace only; no box, radius, left rule or shadow. Moss wash on hover.",
+      "description": "Flat list card: top hairline and whitespace only; no box, radius, left rule or shadow. Clickable cards (.card-link): the whole card is the hit area; hover turns the top hairline moss (55% mix into --line) and adds a 14% moss wash, colour only, 0px movement; focus draws the 2px ring around the card.",
       "html": "<article class=\"ds-card\"><div class=\"ds-card-date\">12 OCT 2026</div><h3>Title</h3><p>Whitespace and a top hairline do the structuring.</p></article>",
-      "css": ".ds-card { padding: 1.5rem 0; border-top: 1px solid rgba(29, 27, 22, 0.14); border-radius: 0; background: transparent; color: #1d1b16; } .ds-card:hover { background: color-mix(in srgb, #c2cdb2 14%, transparent); } .ds-card-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.08em; color: #746e5f; } .ds-card h3 { margin: 0.5rem 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; letter-spacing: -0.01em; } .ds-card p { margin: 0; font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif; line-height: 1.65; }"
+      "css": ".ds-card { padding: 1.5rem 0; border-top: 1px solid rgba(29, 27, 22, 0.14); border-radius: 0; background: transparent; color: #1d1b16; } .ds-card:hover { border-top-color: color-mix(in srgb, #5f7350 55%, rgba(29, 27, 22, 0.14)); background: color-mix(in srgb, #c2cdb2 14%, transparent); } .ds-card-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.08em; color: #746e5f; } .ds-card h3 { margin: 0.5rem 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; letter-spacing: -0.01em; } .ds-card p { margin: 0; font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif; line-height: 1.65; }"
     },
     {
       "name": "Contact-sheet Frame",
@@ -375,7 +375,7 @@
   ],
   "narrative": {
     "northStar": "Field Notes — a naturalist's notebook kept by an engineer",
-    "overview": "One identity: cream paper, ink and a single moss accent, light by default with a warm charcoal dark theme. Newsreader speaks (titles, the home statement), Geist reads and operates (prose, nav), IBM Plex Mono records (dates, counts, EXIF). Engineering and photography share one notebook; the two subjects appear as two voices in one sentence, not two visual systems.",
+    "overview": "One identity: cream paper, ink and a single moss accent, light first (and the no-JS fallback) with a warm charcoal dark theme; the theme follows the stored choice, then the system preference, never the page. Newsreader speaks (titles, the home statement), Geist reads and operates (prose, nav), IBM Plex Mono records (dates, counts, EXIF). Engineering and photography share one notebook; the two subjects appear as two voices in one sentence, not two visual systems.",
     "keyCharacteristics": [
       "One identity, one accent: moss in both themes, at both ends of every gradient token",
       "Text hierarchy dim < muted < text with a 4.6:1 floor in both themes",

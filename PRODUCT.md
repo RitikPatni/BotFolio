@@ -26,7 +26,7 @@ Dual identity — engineer and photographer — executed with craft-level detail
 
 ## Capabilities and Constraints
 
-- One identity, one navigation: a single-row sticky header (brand · Home, Journal, Notes, Gallery, Library, Uses, About · theme toggle) on every route. Light/dark theme toggle; light is the default, and `/photography` opens in dark unless the reader has chosen otherwise.
+- One identity, one navigation: a single-row sticky header (brand · Home, Journal, Notes, Gallery, Library, Uses, About · theme toggle) on every route. Light/dark theme toggle. The theme belongs to the visitor: a stored choice wins, then the system preference, with light as the no-JS fallback. No route, including `/photography`, forces a theme.
 - Content collections with frontmatter parity checks: blog, newsletter (weekly notes), books, highlights.
 - Static build; no client framework beyond Astro islands and vanilla JS interactions (lightbox, nav overflow hint, theme toggle).
 - Archive counts shown on the home page are computed at build time from the same data the linked pages list.
