@@ -14,7 +14,10 @@
   /* Ink */
   --text: #1d1b16;
   --text-muted: #55503f;
-  --text-dim: #8a8371;
+  /* Retuned from #8a8371 (3.5:1 on cream). Same hue, lightness stepped down
+     until it clears 4.6:1 on BOTH --bg (4.62) and --bg-soft (4.99), and stays
+     lighter than --text-muted (7.34) so text > muted > dim still reads. */
+  --text-dim: #746e5f;
   --line: rgba(29, 27, 22, 0.14);
 
   /* Moss accent family */
@@ -23,7 +26,8 @@
   --accent-wash: #c2cdb2;
   --accent-text: #46573a;
 
-  /* Gradient assets retained for compat; near-invisible tints on paper */
+  /* Gradient assets retained for compat; both ends are moss, so these read as
+     a flat moss rule on paper */
   --gradient-underline: linear-gradient(90deg, var(--accent-start), var(--accent-end));
   --gradient-hero: none;
   --gradient-border: linear-gradient(135deg, var(--accent-start), var(--accent-end));
@@ -31,12 +35,23 @@
   /* Radii */
   --radius-sm: 4px;
   --radius-md: 6px;
-  --radius-round: 100px;
+  --radius-round: 999px;
 
   /* Layout */
   --layout-max-width: 75rem;
   --content-max: 60rem; /* shared measure: heroes + sections share one left edge */
   --layout-padding: clamp(1rem, 3vw, 1.5rem);
+  /* The one content edge: header, main and footer containers inset by this
+     gutter and nothing inside them adds its own inline padding. */
+  --gutter: clamp(1rem, 3vw, 2rem);
+
+  /* Type ramp (font-size only). Display = the home statement; H1 = page
+     titles; H2 = the single section-heading size, used by every h2. */
+  --fs-display: clamp(2.3rem, 5.4vw, 4.9rem);
+  --fs-display-sm: clamp(2.1rem, 9.6vw, 3rem);
+  --fs-h1: clamp(2.5rem, 6vw, 4rem);
+  --fs-h2: clamp(1.5rem, 2.4vw, 1.875rem);
+  --fs-h3: clamp(1.05rem, 1.8vw, 1.35rem);
 
   /* Borders */
   --border-light: 1px solid var(--line);
@@ -57,15 +72,15 @@
   --fs-code: var(--font-size-1);
   --prose-max-width: 60ch;
   --accent: var(--accent-start);
-  /* Display face: Fraunces (already loaded) finally assigned; Geist stays for UI labels */
-  --font-display: "Fraunces", Georgia, serif;
-  --font-sans: "Geist", "Helvetica Neue", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* One font system (the only three families requested from Google Fonts):
+     Geist = body + UI, Newsreader = headings, IBM Plex Mono = dates/labels. */
+  --font-body: "Geist", "Helvetica Neue", system-ui, sans-serif;
+  --font-display: "Newsreader", Georgia, serif;
+  --font-sans: var(--font-body);
+  --font-ui: var(--font-body);
+  --font-mono: "IBM Plex Mono", monospace;
   --fs-subheading: 1.25rem;
   --font-weight-6: 500;
-  /* Active persona-switcher button background — pinned so it never inherits a
-     theme-leaked --bg. */
-  --persona-btn-active-bg: color-mix(in srgb, var(--accent-start) 14%, #ffffff);
 }
 
 /* Dark theme — scoped (photography gallery / explicit opt-in).
@@ -77,15 +92,12 @@
   --bg-deep: #10110c;
   --text: #f0ede2;
   --text-muted: #a8a394;
-  --text-dim: #7d7869;
+  /* Retuned from #7d7869 (4.05:1 / 3.69:1). Same hue, lightness stepped up to
+     5.05:1 on --bg and 4.61:1 on --bg-soft; still dimmer than --text-muted. */
+  --text-dim: #8e8878;
   --line: rgba(240, 237, 226, 0.1);
   --accent-start: #9db38a;
   --accent-end: #7d9468;
   --accent-wash: #2a3325;
   --accent-text: #b3c7a0;
-  --persona-btn-active-bg: color-mix(in srgb, var(--accent-start) 18%, var(--bg-soft));
 }
-
-/* Field Notes: persona compat stubs removed - single identity. */
-:root[data-theme="dark"],
-[data-theme="dark"] { --accent-text: #b3c7a0; }

@@ -3,8 +3,6 @@ export type NavLink = {
   label: string;
 };
 
-export type PersonaMode = "studio" | "field";
-
 export type SocialProfile = {
   label: string;
   href: string;
@@ -12,23 +10,16 @@ export type SocialProfile = {
   iconSource: "iconsvg.xyz";
 };
 
-export const NAV_LINKS_BY_PERSONA: Record<PersonaMode, NavLink[]> = {
-  studio: [
-    { href: "/", label: "Home" },
-    { href: "/coding", label: "Journal" },
-    { href: "/blog", label: "Notes" },
-    { href: "/library", label: "Library" },
-    { href: "/uses", label: "Uses" },
-    { href: "/about", label: "About" },
-  ],
-  field: [
-    { href: "/", label: "Home" },
-    { href: "/photography", label: "Gallery" },
-    { href: "/library", label: "Library" },
-    { href: "/uses", label: "Uses" },
-    { href: "/about", label: "About" },
-  ],
-};
+/* One nav. Each label is also its page's <h1> and <title> prefix. */
+export const NAV_LINKS: NavLink[] = [
+  { href: "/", label: "Home" },
+  { href: "/coding", label: "Journal" },
+  { href: "/blog", label: "Notes" },
+  { href: "/photography", label: "Gallery" },
+  { href: "/library", label: "Library" },
+  { href: "/uses", label: "Uses" },
+  { href: "/about", label: "About" },
+];
 
 export const SITE_CONFIG = {
   personName: "Ritik Patni",

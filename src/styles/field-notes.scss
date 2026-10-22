@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Field Notes — element and component rules that the retired
+   persona-studio-minimalist.scss used to carry. Tokens live in v2-tokens.scss;
+   this layer is rules only. global.scss loads it in the persona file's old
+   cascade slot (after v2-transitions), and each selector keeps the
+   specificity it had there ((0,1,1) for `:root h1` was `[data-persona] h1`),
+   so nothing re-orders.
+   ========================================================================== */
+
+/* Headings: Newsreader, tight tracking, regular weight */
+:root h1,
+:root h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+:root h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+:root body,
+:root p,
+:root li {
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Tabular figures for dates, counts and other data */
+:root {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Flat calm on shared page heroes */
+:root [class$="__section"],
+:root .page-hero {
+  --page-hero-glow-opacity: 0.04;
+}
+
+:root .page-hero--standard {
+  --page-hero-padding-block: clamp(3rem, 7vw, 6rem) clamp(3.5rem, 8vw, 7rem);
+}
+
+:root .photography__hero::before,
+:root .page-hero::before {
+  opacity: 0.05;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Field Notes: authoritative card chrome — LAST WORD in cascade.
+   No left rules, no boxes, no indents: whitespace + top hairlines only.
+   ═══════════════════════════════════════════════════════════════════ */
+.post-card,
+.blog-card,
+.coding__card,
+.coding__item,
+.photography__card,
+.library__card,
+.library__item,
+.library__note-item,
+.about__card,
+.uses-card,
+.uses-item {
+  border: none !important;
+  border-top: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.post-card--featured {
+  border-top: none !important;
+  padding-inline: 0 !important;
+}
+
+.post-card:hover,
+.blog-card:hover,
+.coding__card:hover,
+.coding__item:hover,
+.library__card:hover,
+.library__item:hover,
+.about__card:hover,
+.uses-card:hover,
+.uses-item:hover {
+  border-color: transparent !important;
+  background: color-mix(in srgb, var(--accent-wash) 14%, transparent) !important;
+}
+
+.post-card--featured,
+.blog-card--featured {
+  padding-inline: 0 !important;
+  background: transparent !important;
+}

@@ -24,7 +24,7 @@ const e = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(
 
 /** Word-wrap a title into serif lines that fit maxW at `size`. */
 function wrapLines(title: string, size: number, maxW: number): string[] {
-  const charW = size * 0.52; // Fraunces 600 mixed-case average
+  const charW = size * 0.52; // conservative for Newsreader 400 (narrower than this average)
   const maxChars = Math.max(8, Math.floor(maxW / charW));
   const words = title.split(/\s+/);
   const lines: string[] = [];
@@ -67,14 +67,14 @@ function blogSvg(title: string, desc: string, date: string, readTime: string, sl
   <!-- moss spine -->
   <rect x="0" y="0" width="6" height="630" fill="${MOSS_DEEP}"/>
   <!-- masthead -->
-  <text x="64" y="86" font-family="Fraunces" font-size="30" font-weight="600" fill="${INK}">Ritik Patni</text>
+  <text x="64" y="86" font-family="Newsreader" font-size="30" font-weight="400" fill="${INK}">Ritik Patni</text>
   <text x="1136" y="84" font-family="Plex Mono" font-size="19" font-weight="500" fill="${MUTED}" text-anchor="end" letter-spacing="3">${e(/^\d{4}-w\d+$/.test(slug) ? `READING · W${slug.split("-w")[1]?.toUpperCase() ?? ""}` : "NOTES")}</text>
   <line x1="64" y1="112" x2="1136" y2="112" stroke="${INK}" stroke-width="1.5" opacity="0.75"/>
   <!-- headline -->
   ${lines
     .map(
       (l, i) =>
-        `<text x="64" y="${linesTop + i * lineHeight}" font-family="Fraunces" font-size="${size}" font-weight="600" fill="${INK}" letter-spacing="-1.5">${e(l)}</text>`,
+        `<text x="64" y="${linesTop + i * lineHeight}" font-family="Newsreader" font-size="${size}" font-weight="400" fill="${INK}" letter-spacing="-1.5">${e(l)}</text>`,
     )
     .join("\n  ")}
   <!-- moss tick -->
@@ -100,7 +100,7 @@ export async function GET({ props }: { props: { post: any } }) {
 
   const png = new Resvg(blogSvg(post.data.title, post.data.description || "", date, `${min} min`, slug), {
     fitTo: { mode: "width", value: 1200 },
-    font: { loadSystemFonts: false, fontFiles: FONT_FILES, defaultFontFamily: "Fraunces" },
+    font: { loadSystemFonts: false, fontFiles: FONT_FILES, defaultFontFamily: "Newsreader" },
   }).render().asPng();
 
   return new Response(new Uint8Array(png), { headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=31536000, immutable" } });

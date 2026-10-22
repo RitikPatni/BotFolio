@@ -19,5 +19,5 @@ If the above excerpt was not clear then it works in following conditions
 - When it's the top level page on browser meaning it is a **new tab** or a link was opened in a new tab.
 
 ---
-**Learned on** : [08-Jul-2021](🧔%20Private/Planners/Day%20Planners/08-Jul-2021.md)
+**Learned on** : 08-Jul-2021
 **Source** : [w3 Org#script-closable](https://www.w3.org/TR/html51/browsers.html#script-closable)

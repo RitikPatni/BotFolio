@@ -22,11 +22,12 @@
   }
 }
 
-/* Prose content — 960px wide */
+/* Prose content: starts on the shared content edge (no inline padding of its
+   own — the main container's gutter is the only inset). */
 .slug-prose {
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 2rem 2rem 6rem;
+  padding: 2rem 0 6rem;
 
   /* Typography defaults */
   font-size: 1.1rem;
@@ -39,7 +40,6 @@
 
   /* Headings within prose */
   h2 {
-    font-size: 1.75rem;
     font-weight: 400;
     letter-spacing: -0.01em;
     margin-top: 3rem;
@@ -147,6 +147,15 @@
     border-collapse: collapse;
     margin: 2rem 0;
     font-size: 0.95rem;
+
+    /* Markdown tables can't be wrapped in a scroller, so on narrow screens the
+       table becomes its own one: wide tables scroll inside the column instead
+       of pushing the page wider than the viewport. */
+    @media (max-width: 48rem) {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+    }
   }
 
   th, td {

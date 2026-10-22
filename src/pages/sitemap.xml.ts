@@ -9,17 +9,19 @@ function toUrl(base: string, path: string) {
 export async function GET(context: APIContext) {
   const site = (context.site ?? new URL("https://ritikpatni.me")).origin;
 
+  /* Canonical form is slashless (matches <link rel="canonical"> and every
+     internal link); build.format "file" serves these without a redirect. */
   const staticPaths = [
     "/",
-    "/coding/",
-    "/about/",
-    "/blog/",
-    "/newsletter/",
-    "/uses/",
-    "/library/",
-    "/resources/",
-    "/photography/",
-    "/contact/",
+    "/coding",
+    "/about",
+    "/blog",
+    "/newsletter",
+    "/uses",
+    "/library",
+    "/resources",
+    "/photography",
+    /* /contact is a noindex redirect stub to /about#connect — not listed. */
   ];
 
   const blog = await getCollection("blog", ({ data }) => !data.draft);
@@ -38,11 +40,11 @@ export async function GET(context: APIContext) {
   );
 
   const dynamicPaths = [
-    ...blog.map((item) => `/blog/${slugOf(item)}/`),
-    ...newsletter.map((item) => `/newsletter/${slugOf(item)}/`),
-    ...books.map((item) => `/library/books/${slugOf(item)}/`),
-    ...highlights.map((item) => `/library/highlights/${slugOf(item)}/`),
-    ...resources.map((item) => `/resources/${slugOf(item)}/`),
+    ...blog.map((item) => `/blog/${slugOf(item)}`),
+    ...newsletter.map((item) => `/newsletter/${slugOf(item)}`),
+    ...books.map((item) => `/library/books/${slugOf(item)}`),
+    ...highlights.map((item) => `/library/highlights/${slugOf(item)}`),
+    ...resources.map((item) => `/resources/${slugOf(item)}`),
   ];
 
   const urls = [...staticPaths, ...dynamicPaths];

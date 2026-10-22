@@ -34,4 +34,4 @@ module.exports = humanSnip;
 ---
 ## Additional Metadata
 
-Suggested by:: [@Ximena](🧔%20Private/Uncategorized%20Notes/@Ximena.md)
+Suggested by:: @Ximena

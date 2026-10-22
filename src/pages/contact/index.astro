@@ -1,5 +1,8 @@
 ---
-// Contact merged into About. Permanent redirect.
+// Contact merged into About: this is a redirect stub, not a page. It is kept
+// out of the sitemap and marked noindex; the canonical points at the target.
 ---
-<meta http-equiv="refresh" content="0;url=/about/#connect" />
-<script is:inline>window.location.replace("/about/#connect");</script>
+<meta name="robots" content="noindex, follow" />
+<link rel="canonical" href={new URL("/about", Astro.site).toString()} />
+<meta http-equiv="refresh" content="0;url=/about#connect" />
+<script is:inline>window.location.replace("/about#connect");</script>

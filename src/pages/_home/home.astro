@@ -4,9 +4,12 @@ import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { photographyGalleryData } from "../../data/photography";
-import { photographyCategories } from "../../data/photography/manifest";
+import type { PhotoMetadata } from "../../data/photography";
 import { slugOf } from "../../utils/slug";
 import "./_home.scss";
+
+const STRIP_FRAMES = 8;
+const STRIP_H = { desktop: 208, mobile: 176 }; // px; mirrors --strip-h in _home.scss
 
 const galleryAssetModules = import.meta.glob(
   "../../assets/photography/**/*.{avif,gif,jpeg,jpg,png,webp}",
@@ -20,27 +23,45 @@ const galleryAssets = new Map(
   ]),
 );
 
-const heroBleedAsset = galleryAssets.get(
-  "wildlife/sunset-silhouette-storks.jpg",
-);
+/* Build-time archive counts: each is the number of entries the linked page
+   lists, so the hero can never disagree with the page it opens. */
+const notes = [
+  ...(await getCollection("blog", ({ data }) => !data.draft)),
+  ...(await getCollection("newsletter", ({ data }) => !data.draft)),
+];
+const books = await getCollection("books", ({ data }) => !data.draft);
+const frameCount = photographyGalleryData.length;
 
-const featuredShots = photographyGalleryData
-  .map((img) => {
-    const assetModule = galleryAssets.get(`${img.category}/${img.filename}`);
-    if (!(assetModule && img.alt)) return null;
+/* One exposure line from the frame's own EXIF; fields that are missing are
+   left out, and a frame without EXIF gets no exposure line at all. */
+const exposureOf = (meta?: PhotoMetadata) =>
+  [meta?.aperture, meta?.shutterSpeed, meta?.iso != null ? `ISO ${meta.iso}` : undefined]
+    .filter(Boolean)
+    .join(" · ");
+
+/* Contact strip: the STRIP_FRAMES most recent frames by frame date; frames
+   sharing a date keep their gallery manifest order. */
+const stripFrames = photographyGalleryData
+  .map((frame, order) => ({ frame, order }))
+  .sort(
+    (a, b) =>
+      dateTimestamp(b.frame.date) - dateTimestamp(a.frame.date) || a.order - b.order,
+  )
+  .slice(0, STRIP_FRAMES)
+  .map(({ frame }) => {
+    const asset = galleryAssets.get(`${frame.category}/${frame.filename}`);
+    if (!asset) {
+      throw new Error(`Missing photography asset: ${frame.category}/${frame.filename}`);
+    }
+    const ratio = asset.width / asset.height;
     return {
-      title: img.title,
-      category: img.category,
-      asset: assetModule,
-      alt: img.alt,
+      title: frame.title,
+      alt: frame.alt,
+      asset,
+      exposure: exposureOf(frame.metadata),
+      sizes: `(max-width: 48rem) ${Math.ceil(ratio * STRIP_H.mobile)}px, ${Math.ceil(ratio * STRIP_H.desktop)}px`,
     };
-  })
-  .filter((shot): shot is NonNullable<typeof shot> => shot !== null)
-  .slice(0, 5);
-
-const panoAsset = galleryAssets.get("wildlife/flamingo-flock-panorama.jpg");
-const categoryLabel = (id: string) =>
-  photographyCategories.find((c) => c.id === id)?.label ?? id;
+  });
 
 const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
@@ -55,61 +76,55 @@ const posts = (await getCollection("blog"))
 ---
 
 <BaseLayout
-  title="Ritik Patni — Frontend developer &amp; wildlife/macro photographer"
+  title="Ritik Patni — Frontend developer & wildlife/macro photographer"
   description="I build thoughtful web experiences and document nature up close."
   path="/"
 >
-  <section class="hero" data-hero="hzn" style={'--hz: 83.5dvh; --pos: 50% 100%'}>
-    {heroBleedAsset && (
-    <figure class="hero-bleed" aria-hidden="true">
-      <AstroImage
-        src={heroBleedAsset}
-        alt="Two storks silhouetted in golden dusk light over still water"
-        widths={[960, 1600, 2400]}
-        sizes="100vw"
-        loading="eager"
-        class="hero-bleed-img"
-      />
-    </figure>
-    )}
-    <div class="hz-rule" aria-hidden="true"><span class="hz-right">field notes</span><span class="hz-below">dusk</span></div>
-    <div class="hzn-panel">
-      <h1 class="hero-name hzn-name">Ritik <span class="fw-5">Patni</span></h1>
-      <p class="hero-tagline hzn-tagline">I build thoughtful product surfaces — and document nature up close, one frame at a time.</p>
-      <a class="hero-cta hzn-cta-inline" href="/blog">Read the notes →</a>
+  <section class="index-hero" aria-labelledby="index-statement">
+    <div class="index-hero__head">
+      <h1 class="index-hero__statement" id="index-statement">
+        <span class="index-hero__name">Ritik Patni</span> builds thoughtful product surfaces —{" "}
+        <span class="index-hero__field">and documents nature up close, one frame at a time.</span>
+      </h1>
     </div>
+
+    <nav class="index-hero__ledger" aria-label="Archive">
+      <a href="/blog">Notes <span class="index-hero__count" data-count="notes">{notes.length} posts</span></a>
+      <a href="/photography">Gallery <span class="index-hero__count" data-count="frames">{frameCount} frames</span></a>
+      <a href="/library">Library <span class="index-hero__count" data-count="books">{books.length} books</span></a>
+      <a href="/about">About <span class="index-hero__count" aria-hidden="true">→</span></a>
+    </nav>
+
+    <section class="index-strip" aria-labelledby="index-strip-title">
+      <p class="index-strip__label" id="index-strip-title">Contact sheet · recent frames</p>
+      <ul class="index-strip__row">
+        {
+          stripFrames.map((frame) => (
+            <li class="index-strip__frame">
+              <a href="/photography">
+                <AstroImage
+                  src={frame.asset}
+                  alt={frame.alt}
+                  widths={[240, 360, 480, 720]}
+                  sizes={frame.sizes}
+                  loading="lazy"
+                  class="index-strip__img"
+                />
+                <span class="index-strip__cap">
+                  <b>{frame.title}</b>
+                  {frame.exposure && <span class="index-strip__exif">{frame.exposure}</span>}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="index-strip__more" href="/photography">Open the gallery →</a>
+    </section>
   </section>
 
-  <!-- Recent frames -->
-  <section class="posts field-home">
-    <p class="section-kicker">Photography</p>
-    <h2 class="section-title">Recent frames</h2>
-    <div class="field-home__grid">
-      {
-        featuredShots.map((shot) => (
-          <a class="field-home__shot" href="/photography" aria-label={`${shot.title} — open gallery`}>
-            <AstroImage
-              src={shot.asset}
-              alt={shot.alt}
-              widths={[320, 640]}
-              sizes="(max-width: 48rem) 45vw, 220px"
-              loading="lazy"
-              class="field-home__shot-img"
-            />
-            <span class="field-home__shot-title">{shot.title}</span>
-            <span class="field-home__shot-cat">{categoryLabel(shot.category)}</span>
-          </a>
-        ))
-      }
-    </div>
-    <p class="mt-2">
-      <a class="view-all" href="/photography">Open the gallery →</a>
-    </p>
-  </section>
-
-  <!-- Journal -->
   <section class="posts">
-    <p class="section-kicker">Journal</p>
+    <p class="section-kicker">Notes</p>
     <h2 class="section-title">Latest posts</h2>
     {
       posts.length === 0 ? (
@@ -127,7 +142,7 @@ const posts = (await getCollection("blog"))
       )
     }
     <p class="mt-2">
-      <a class="view-all" href="/blog">View all posts →</a>
+      <a class="view-all" href="/blog">All notes →</a>
     </p>
   </section>
 </BaseLayout>

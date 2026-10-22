@@ -10,7 +10,7 @@ category: "newsletter"
 ---
 Hello everyone,
 
-Happy 2022 to everyone who has made this so far. Hopefully, you'll be doing great and are committed to your new year resolutions so far. I, am also trying to do something similar and also adding my [New Year resolutions](https://ritikpatni.me/ritik/My+Year+In+Review#Personal) for accountability reasons. So with all this, happy new year again and here we go….
+Happy 2022 to everyone who has made this so far. Hopefully, you'll be doing great and are committed to your new year resolutions so far. I, am also trying to do something similar and also adding my New Year resolutions for accountability reasons. So with all this, happy new year again and here we go….
 
 ## 📚 To Read
 

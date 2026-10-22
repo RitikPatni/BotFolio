@@ -8,14 +8,14 @@ export async function GET(context: APIContext) {
     title: entry.data.title,
     description: entry.data.description,
     pubDate: entry.data.date,
-    link: `/blog/${slugOf(entry)}/`
+    link: `/blog/${slugOf(entry)}`
   }));
 
   const newsletterEntries = (await getCollection('newsletter', ({ data }) => !data.draft)).map((entry) => ({
     title: `[Newsletter] ${entry.data.title}`,
     description: entry.data.description,
     pubDate: entry.data.date,
-    link: `/newsletter/${slugOf(entry)}/`
+    link: `/newsletter/${slugOf(entry)}`
   }));
 
   const items = [...blogEntries, ...newsletterEntries].sort(
@@ -27,6 +27,8 @@ export async function GET(context: APIContext) {
     description: 'Blog posts and newsletter updates from Ritik Patni.',
     site: context.site ?? 'https://ritikpatni.me',
     items,
-    stylesheet: false
+    stylesheet: false,
+    // Item links match the slashless canonical URLs.
+    trailingSlash: false
   });
 }

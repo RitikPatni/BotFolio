@@ -20,9 +20,11 @@ const { Content } = await render(post);
 const reading = readingTimeMinutes(post.body ?? "");
 // OG cache-bust: the PNG endpoint URL changes whenever title/description/date change,
 // so platform embed caches (Discord, Twitter) refetch instead of serving a stale card.
+// OG_TEMPLATE changes when the card design itself changes (e.g. its typeface).
+const OG_TEMPLATE = "newsreader-1";
 const ogVersion = crypto
   .createHash("sha256")
-  .update(`${post.data.title}|${post.data.description}|${post.data.date}`)
+  .update(`${OG_TEMPLATE}|${post.data.title}|${post.data.description}|${post.data.date}`)
   .digest("hex")
   .slice(0, 8);
 const ogImage = `/og/blog/${slugOf(post)}.png?v=${ogVersion}`;
@@ -32,7 +34,7 @@ import "./_slug.scss";
 ---
 
 <BaseLayout
-  title={`${post.data.title} — Writing`}
+  title={`${post.data.title} — Notes`}
   description={post.data.description}
   path={`/blog/${slugOf(post)}`}
   image={ogImage}

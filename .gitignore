@@ -12,3 +12,7 @@ public/standard-site/
 
 # Screenshot artifacts from visual testing / preview tools
 .shots/
+
+# local evidence artifacts
+/design/
+/.p1-evidence/

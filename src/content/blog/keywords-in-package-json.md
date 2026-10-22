@@ -13,4 +13,4 @@ Here's the definition from
 > Put keywords in it. It's an array of strings. This helps people discover your package as it's listed in `npm search`.
 
 ---
-**Learned on** : [[🧔 Private/Planners/Day Planners/04-Jul-2021]]
+**Learned on** : 04-Jul-2021
