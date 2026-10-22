@@ -43,25 +43,30 @@ const { galleryLightboxItemsJson } = Astro.props;
       />
     </div>
 
-    <button
-      class="photography__lightbox-nav photography__lightbox-nav--prev"
-      type="button"
-      data-gallery-prev
-      aria-label="Previous image"
-    >
-      <UiIcon name="chevron-left" class="photography__nav-icon" />
-    </button>
-    <button
-      class="photography__lightbox-nav photography__lightbox-nav--next"
-      type="button"
-      data-gallery-next
-      aria-label="Next image"
-    >
-      <UiIcon name="chevron-right" class="photography__nav-icon" />
-    </button>
-
     <div class="photography__lightbox-topbar">
-      <p class="photography__lightbox-counter" data-gallery-counter></p>
+      <!-- Pager: prev / next flank the counter. On fine pointers the buttons
+           break out into full-height edge zones; on touch they stay here, in
+           the chrome, so screen-reader users (whose swipes the reader takes
+           over) can still move between frames. -->
+      <div class="photography__lightbox-pager">
+        <button
+          class="photography__lightbox-nav photography__lightbox-nav--prev"
+          type="button"
+          data-gallery-prev
+          aria-label="Previous frame"
+        >
+          <UiIcon name="chevron-left" class="photography__nav-icon" />
+        </button>
+        <p class="photography__lightbox-counter" data-gallery-counter></p>
+        <button
+          class="photography__lightbox-nav photography__lightbox-nav--next"
+          type="button"
+          data-gallery-next
+          aria-label="Next frame"
+        >
+          <UiIcon name="chevron-right" class="photography__nav-icon" />
+        </button>
+      </div>
       <div class="photography__lightbox-actions">
         <button
           class="photography__lightbox-action"

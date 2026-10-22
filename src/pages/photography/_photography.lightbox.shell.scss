@@ -143,58 +143,122 @@
   }
 }
 
-/* Prev / next: tall edge click-zones with a quiet chevron that brightens on
-   hover. Pointer-only — touch devices swipe instead. */
+/* Prev / next live in the pager, flanking the counter. */
+.photography__lightbox-pager {
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-round);
+}
+
 .photography__lightbox-nav {
-  position: absolute;
-  inset-block: var(--lb-top) var(--lb-bottom);
-  z-index: 20;
-  inline-size: var(--lb-zone);
   display: grid;
   place-items: center;
   padding: 0;
   border: none;
+  border-radius: var(--radius-round);
   background: transparent;
   color: var(--lb-cream);
   cursor: pointer;
-  opacity: 0.55;
-  transition: opacity 200ms ease;
-
-  &--prev {
-    inset-inline-start: 0;
-  }
-
-  &--next {
-    inset-inline-end: 0;
-  }
-
-  .photography__nav-icon {
-    inline-size: 1.75rem;
-    block-size: 1.75rem;
-    padding: 0.6rem;
-    box-sizing: content-box;
-    border-radius: var(--radius-round);
-    background: var(--lb-tag);
-  }
-
-  &:hover,
-  &:focus-visible {
-    opacity: 1;
-  }
 
   &:disabled {
     display: none;
   }
+}
 
-  @media (hover: none), (pointer: coarse) {
-    display: none;
+/* Fine pointers: the buttons break out of the pager into tall edge
+   click-zones with a quiet chevron that brightens on hover. Fixed, so they
+   size against the viewer rather than the top bar. The top bar drops its
+   stacking context here so the zones keep their place beneath the metadata
+   panel; the counter and actions carry the bar's layer themselves. */
+@media (hover: hover) and (pointer: fine) {
+  .photography__lightbox-topbar {
+    z-index: auto;
+  }
+
+  .photography__lightbox-counter,
+  .photography__lightbox-actions {
+    position: relative;
+    z-index: 30;
+  }
+
+  .photography__lightbox-nav {
+    position: fixed;
+    inset-block: var(--lb-top) var(--lb-bottom);
+    z-index: 20;
+    inline-size: var(--lb-zone);
+    border-radius: 0;
+    opacity: 0.55;
+    transition: opacity 200ms ease;
+
+    &--prev {
+      inset-inline-start: 0;
+    }
+
+    &--next {
+      inset-inline-end: 0;
+    }
+
+    .photography__nav-icon {
+      inline-size: 1.75rem;
+      block-size: 1.75rem;
+      padding: 0.6rem;
+      box-sizing: content-box;
+      border-radius: var(--radius-round);
+      background: var(--lb-tag);
+    }
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+    }
+  }
+
+  /* Keep the photo clear of the edge zones. */
+  .photography__lightbox-image {
+    max-inline-size: min(92vw, calc(100vw - 2 * var(--lb-zone)));
   }
 }
 
-/* Keep the photo clear of the edge zones where they exist. */
-@media (hover: hover) and (pointer: fine) {
-  .photography__lightbox-image {
-    max-inline-size: min(92vw, calc(100vw - 2 * var(--lb-zone)));
+/* Touch: one joined chip in the top bar — ‹ 3 / 39 › — clear of the photo.
+   Swipe stays the fast path; these are the path screen readers can use. */
+@media (hover: none), (pointer: coarse) {
+  .photography__lightbox-pager {
+    background: var(--lb-tag);
+    transition: background-color 240ms ease;
+  }
+
+  .photography__lightbox-counter {
+    padding-inline: 0.25rem;
+    background: transparent;
+    transition: background-color 240ms ease;
+  }
+
+  .photography__lightbox-nav {
+    inline-size: var(--lb-target);
+    block-size: var(--lb-target);
+
+    .photography__nav-icon {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+    }
+
+    &:active {
+      background: rgb(29 27 22 / 0.95);
+    }
+  }
+
+  /* Chrome hidden: the arrows fade and the counter becomes its own chip,
+     widened into the arrows' space without moving its text. */
+  .photography__lightbox-shell[data-ui-visible="false"] {
+    .photography__lightbox-pager {
+      background: transparent;
+    }
+
+    .photography__lightbox-counter {
+      margin-inline: -0.45rem;
+      padding-inline: 0.7rem;
+      background: var(--lb-tag);
+    }
   }
 }
 

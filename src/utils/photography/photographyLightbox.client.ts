@@ -297,6 +297,21 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   previousButton.addEventListener("click", () => move(-1), { signal });
   nextButton.addEventListener("click", () => move(1), { signal });
 
+  /* Hidden chrome is faded, not removed, so keyboard and screen-reader users
+     can still reach it; bring it back as soon as focus lands on a control. */
+  lightboxShell.addEventListener(
+    "focusin",
+    (event) => {
+      if (
+        lightboxShell.dataset.uiVisible === "false" &&
+        event.target instanceof HTMLButtonElement
+      ) {
+        setChromeVisibility(true);
+      }
+    },
+    { signal },
+  );
+
   /* ─── Touch: swipe to navigate, with the photo following the finger ── */
 
   let touchStartX = 0;
