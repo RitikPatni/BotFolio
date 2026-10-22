@@ -11,7 +11,6 @@ interface Props {
   path?: string;
   image?: string;
   ogType?: string;
-  theme?: "light" | "dark";
   /** Error pages: robots noindex and no canonical. */
   noindex?: boolean;
 }
@@ -23,8 +22,6 @@ const {
   image = "/og/default.png",
   ogType = "website",
   noindex = false,
-  /* Field Notes: photography gallery keeps a dark viewing frame */
-  theme = path.startsWith("/photography") ? ("dark" as const) : ("light" as const),
 } = Astro.props;
 
 const socials = SITE_CONFIG.socials;
@@ -40,7 +37,7 @@ const imageUrl = new URL(image, Astro.site).toString();
 <!doctype html>
 <html
   lang="en"
-  data-theme={theme}
+  data-theme="light"
   transition:name="page-root"
   transition:animate="none"
 >
@@ -51,19 +48,31 @@ const imageUrl = new URL(image, Astro.site).toString();
       (() => {
         const THEME_STORAGE_KEY = "rp-theme";
 
-        const applySavedTheme = () => {
+        /* Theme is visitor-owned, never page-owned: stored choice → system
+           preference → light. The server renders "light" only as the no-JS
+           fallback; this runs before first paint and again on every
+           ClientRouter swap so the incoming page's attribute never wins. */
+        const resolveTheme = () => {
           try {
             const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
 
             if (savedTheme === "light" || savedTheme === "dark") {
-              document.documentElement.setAttribute("data-theme", savedTheme);
+              return savedTheme;
             }
           } catch {
-            // Ignore storage access errors; layout falls back to default theme.
+            // Ignore storage access errors; fall through to the system theme.
+          }
+
+          try {
+            return window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+          } catch {
+            return "light";
           }
         };
 
-        applySavedTheme();
+        document.documentElement.setAttribute("data-theme", resolveTheme());
 
         if (!window.__rpGalleryFeedbackBound) {
           document.addEventListener(
@@ -116,7 +125,18 @@ const imageUrl = new URL(image, Astro.site).toString();
         }
 
         if (!window.__rpThemeSwapHookBound) {
-          document.addEventListener("astro:after-swap", applySavedTheme);
+          /* Stamp the incoming document before it is swapped in (no frame of
+             the server default), then re-assert after the root attributes
+             have been copied across. */
+          document.addEventListener("astro:before-swap", (event) => {
+            event.newDocument.documentElement.setAttribute(
+              "data-theme",
+              resolveTheme(),
+            );
+          });
+          document.addEventListener("astro:after-swap", () => {
+            document.documentElement.setAttribute("data-theme", resolveTheme());
+          });
           window.__rpThemeSwapHookBound = true;
         }
       })();

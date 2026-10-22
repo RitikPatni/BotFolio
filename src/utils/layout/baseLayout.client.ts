@@ -32,12 +32,42 @@ const flipTheme = (theme: "light" | "dark") => {
   );
 };
 
-const applyStoredTheme = () => {
-  const saved = readStoredTheme();
+const systemThemeQuery = (): MediaQueryList | null =>
+  typeof window.matchMedia === "function"
+    ? window.matchMedia("(prefers-color-scheme: dark)")
+    : null;
 
-  if (saved) {
-    applyTheme(saved);
+/* Resolution order (mirrors the pre-paint script in BaseLayout.astro):
+   stored choice → system preference → light. */
+const resolveTheme = (): "light" | "dark" =>
+  readStoredTheme() ?? (systemThemeQuery()?.matches ? "dark" : "light");
+
+const applyResolvedTheme = () => {
+  applyTheme(resolveTheme());
+};
+
+/* Until the visitor makes an explicit choice, follow live OS changes; once a
+   choice is stored it always wins and system changes are ignored. */
+let systemThemeBound = false;
+const bindSystemTheme = () => {
+  const query = systemThemeQuery();
+
+  if (systemThemeBound || !query) {
+    return;
   }
+
+  systemThemeBound = true;
+  query.addEventListener("change", (event) => {
+    if (readStoredTheme()) {
+      return;
+    }
+
+    flipTheme(event.matches ? "dark" : "light");
+    const toggleButton = document.getElementById("themeToggle");
+    if (toggleButton instanceof HTMLButtonElement) {
+      syncThemeToggle(toggleButton);
+    }
+  });
 };
 
 const syncThemeToggle = (toggleButton: HTMLButtonElement) => {
@@ -164,7 +194,8 @@ export function initBaseLayoutClient(options: BaseLayoutInitOptions = {}) {
     return;
   }
 
-  applyStoredTheme();
+  applyResolvedTheme();
+  bindSystemTheme();
   bindThemeToggle();
   bindNavOverflow();
   bindHeaderHeight();
