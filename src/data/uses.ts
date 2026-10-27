@@ -43,7 +43,7 @@ const HARDWARE: UsesSection = {
         { text: "Tofu65 keyboard" },
         { text: 'Stack Overflow "The Key" keyboard' },
         { text: "Maja keyboard" },
-        { text: "Logitech MX Master 3 (white)" },
+        { text: "Logitech MX Master 3S (white)" },
       ],
     },
   ],
