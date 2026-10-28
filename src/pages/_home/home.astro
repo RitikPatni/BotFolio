@@ -39,13 +39,16 @@ const exposureOf = (meta?: PhotoMetadata) =>
     .filter(Boolean)
     .join(" · ");
 
-/* Contact strip: the STRIP_FRAMES most recent frames by frame date; frames
-   sharing a date keep their gallery manifest order. */
+/* Contact strip: the STRIP_FRAMES strongest frames — editorial rating first
+   (blind-audit medians), most recent within a rating tier. A "recent only"
+   strip would surface the newest cull regardless of strength. */
 const stripFrames = photographyGalleryData
   .map((frame, order) => ({ frame, order }))
   .sort(
     (a, b) =>
-      dateTimestamp(b.frame.date) - dateTimestamp(a.frame.date) || a.order - b.order,
+      (b.frame.rating ?? 0) - (a.frame.rating ?? 0) ||
+      dateTimestamp(b.frame.date) - dateTimestamp(a.frame.date) ||
+      a.order - b.order,
   )
   .slice(0, STRIP_FRAMES)
   .map(({ frame }) => {
@@ -96,7 +99,7 @@ const posts = (await getCollection("blog"))
     </nav>
 
     <section class="index-strip" aria-labelledby="index-strip-title">
-      <p class="index-strip__label" id="index-strip-title">Contact sheet · recent frames</p>
+      <p class="index-strip__label" id="index-strip-title">Contact sheet · top frames</p>
       <ul class="index-strip__row">
         {
           stripFrames.map((frame) => (
