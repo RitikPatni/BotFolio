@@ -19,7 +19,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/1000s",
       "iso": 125
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "starling-flight-material.jpg",
@@ -42,7 +43,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 800
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "kingfisher-golden-perch.jpg",
@@ -65,7 +67,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 2000
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "kingfisher-takeoff.jpg",
@@ -88,7 +91,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 1600
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "egret-yellow-eye.jpg",
@@ -111,6 +115,7 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 320
-    }
+    },
+    "rating": 3
   }
 ]
