@@ -56,7 +56,8 @@
       "behavior",
       "wildlife",
       "small-bird",
-      "prinia"
+      "indian-silverbill",
+      "silverbill"
     ],
     "alt": "A small bird carrying an oversized long twig in its beak while perched on a wire, nest-building behavior",
     "date": "2025-10-01",
@@ -167,16 +168,17 @@
   },
   {
     "filename": "wagtail-thorny-perch.jpg",
-    "title": "Wagtail on Thorns",
+    "title": "Plain Prinia on Thorns",
     "category": "birds",
     "tags": [
-      "wagtail",
+      "plain-prinia",
+      "prinia",
       "thorny-branch",
       "spiderweb",
       "perch",
       "warm-light"
     ],
-    "alt": "A small wagtail perched on a thorny branch with delicate spiderwebs visible, bathed in warm natural light",
+    "alt": "A plain prinia with a long graduated tail perched on a thorny branch with delicate spiderwebs, bathed in warm natural light",
     "date": "2025-12-07",
     "metadata": {
       "camera": "ILCE-6700",
