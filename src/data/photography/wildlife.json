@@ -341,5 +341,165 @@
     ],
     "alt": "A long-legged stilt wading through shimmering golden water at sunrise, one leg raised mid-step, silhouetted against warm orange light",
     "date": "2026-05-25"
+  },
+  {
+    "filename": "dhole-grass-stare.jpg",
+    "title": "Grassland Stare",
+    "category": "wildlife",
+    "tags": [
+      "dhole",
+      "portrait",
+      "grass",
+      "overcast",
+      "alert",
+      "eye-contact"
+    ],
+    "alt": "A dhole sitting low in lush green grass, ears erect, staring directly into the camera with soft diffused light",
+    "date": "2026-10-03",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/800s",
+      "iso": 1250
+    }
+  },
+  {
+    "filename": "dhole-alert-sit.jpg",
+    "title": "Alert Sit",
+    "category": "wildlife",
+    "tags": [
+      "dhole",
+      "portrait",
+      "grass",
+      "overcast",
+      "alert"
+    ],
+    "alt": "An alert dhole sitting in deep green grass, muzzle dark with a pale chin, gazing fixedly at the camera under shadowless overcast light",
+    "date": "2026-10-03",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/800s",
+      "iso": 1250
+    }
+  },
+  {
+    "filename": "dhole-yawn-apex.jpg",
+    "title": "Yawn Apex",
+    "category": "wildlife",
+    "tags": [
+      "dhole",
+      "yawn",
+      "portrait",
+      "behaviour",
+      "canine",
+      "close-up"
+    ],
+    "alt": "A dhole mid-yawn facing the camera, jaw wide open showing its canines, shot tight against a soft morning background",
+    "date": "2026-10-03",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "448mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/800s",
+      "iso": 2000
+    }
+  },
+  {
+    "filename": "leopard-warm-stride.jpg",
+    "title": "Warm Stride",
+    "category": "wildlife",
+    "tags": [
+      "leopard",
+      "walking",
+      "portrait",
+      "golden-hour",
+      "dappled",
+      "forest"
+    ],
+    "alt": "A leopard walking through the grass mid-stride, gaze forward, lit by warm golden side-light filtered through dappled forest canopy",
+    "date": "2026-10-03",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/800s",
+      "iso": 640
+    }
+  },
+  {
+    "filename": "leopard-scent-check.jpg",
+    "title": "Scent Check",
+    "category": "wildlife",
+    "tags": [
+      "leopard",
+      "walking",
+      "sniffing",
+      "behaviour",
+      "dappled",
+      "forest"
+    ],
+    "alt": "A leopard dropping its nose to sniff a leaf on the forest floor, dappled light catching its body mid-stride",
+    "date": "2026-10-03",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/800s",
+      "iso": 1600
+    }
+  },
+  {
+    "filename": "leopard-on-the-trail.jpg",
+    "title": "On the Trail",
+    "category": "wildlife",
+    "tags": [
+      "leopard",
+      "scent-tracking",
+      "golden",
+      "portrait",
+      "walking",
+      "forest"
+    ],
+    "alt": "A leopard scent-tracking with head lowered along the trunk line, warm golden light on its face and shoulder",
+    "date": "2026-10-03",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/800s",
+      "iso": 1250
+    }
+  },
+  {
+    "filename": "leopard-trail-in-mono.jpg",
+    "title": "Trail in Mono",
+    "category": "wildlife",
+    "tags": [
+      "leopard",
+      "black-and-white",
+      "scent-tracking",
+      "portrait",
+      "walking",
+      "forest"
+    ],
+    "alt": "A black-and-white study of the scent-tracking leopard, head lowered near the trunk line with grain carried high",
+    "date": "2026-10-03",
+    "metadata": {
+      "camera": "ILCE-6700",
+      "lens": "FE 200-600mm F5.6-6.3 G OSS",
+      "focalLength": "600mm",
+      "aperture": "f/6.3",
+      "shutterSpeed": "1/800s",
+      "iso": 1250
+    }
   }
 ]
