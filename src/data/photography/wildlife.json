@@ -21,7 +21,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/1000s",
       "iso": 640
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "stork-flight-with-prey.jpg",
@@ -44,7 +45,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 640
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "tigress-with-cubs.jpg",
@@ -68,7 +70,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/640s",
       "iso": 1000
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "red-headed-vulture-wings.jpg",
@@ -91,7 +94,8 @@
       "aperture": "f/8",
       "shutterSpeed": "1/4000s",
       "iso": 1250
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "vultures-feeding.jpg",
@@ -114,7 +118,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/1000s",
       "iso": 1250
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "tiger-cub-closeup.jpg",
@@ -137,7 +142,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/160s",
       "iso": 12800
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "tiger-portrait.jpg",
@@ -160,7 +166,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/800s",
       "iso": 1600
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "shorebirds-flight-reflection.jpg",
@@ -184,7 +191,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 320
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "cranes-wetland.jpg",
@@ -208,7 +216,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 2500
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "golden-stilt-silhouette.jpg",
@@ -224,7 +233,8 @@
       "sunrise"
     ],
     "alt": "A long-legged stilt wading through shimmering golden water at sunrise, one leg raised mid-step, silhouetted against warm orange light",
-    "date": "2026-05-25"
+    "date": "2026-05-25",
+    "rating": 4
   },
   {
     "filename": "dhole-yawn-apex.jpg",
@@ -247,7 +257,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/800s",
       "iso": 2000
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "leopard-warm-stride.jpg",
@@ -270,7 +281,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/800s",
       "iso": 640
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "leopard-on-the-trail.jpg",
@@ -293,6 +305,7 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/800s",
       "iso": 1250
-    }
+    },
+    "rating": 4
   }
 ]

@@ -19,7 +19,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 250
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "cattle-egret-breeding.jpg",
@@ -42,7 +43,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/1000s",
       "iso": 250
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "nest-building-twigs.jpg",
@@ -65,7 +67,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 400
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "common-kingfisher-perch.jpg",
@@ -88,7 +91,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 1000
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "bulbul-backlit-perch.jpg",
@@ -111,7 +115,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/320s",
       "iso": 800
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "sunrise-silhouette-perch.jpg",
@@ -134,7 +139,8 @@
       "aperture": "f/8",
       "shutterSpeed": "1/2500s",
       "iso": 800
-    }
+    },
+    "rating": 4
   },
   {
     "filename": "dove-fanned-tail.jpg",
@@ -156,7 +162,8 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/1000s",
       "iso": 400
-    }
+    },
+    "rating": 3
   },
   {
     "filename": "wagtail-thorny-perch.jpg",
@@ -178,6 +185,7 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/125s",
       "iso": 200
-    }
+    },
+    "rating": 3
   }
 ]
