@@ -63,6 +63,9 @@ const stripFrames = photographyGalleryData
       asset,
       exposure: exposureOf(frame.metadata),
       sizes: `(max-width: 48rem) ${Math.ceil(ratio * STRIP_H.mobile)}px, ${Math.ceil(ratio * STRIP_H.desktop)}px`,
+      /* Deep link: same id the gallery's lightbox reads from the URL hash
+         (/photography#<slug>), so the exact clicked frame opens. */
+      href: `/photography#${frame.filename.replace(/\.[^.]+$/, "")}`,
     };
   });
 
@@ -104,7 +107,7 @@ const posts = (await getCollection("blog"))
         {
           stripFrames.map((frame) => (
             <li class="index-strip__frame">
-              <a href="/photography">
+              <a href={frame.href}>
                 <AstroImage
                   src={frame.asset}
                   alt={frame.alt}
