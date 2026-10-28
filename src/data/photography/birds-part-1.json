@@ -22,51 +22,6 @@
     }
   },
   {
-    "filename": "pied-kingfisher-perch.jpg",
-    "title": "Pied Kingfisher on Thorny Perch",
-    "category": "birds",
-    "tags": [
-      "pied-kingfisher",
-      "kingfisher",
-      "wildlife",
-      "thorn",
-      "perch",
-      "spiderweb"
-    ],
-    "alt": "A pied kingfisher perched on a thorny bare branch against a soft muted background of water and foliage",
-    "date": "2026-02-21",
-    "metadata": {
-      "camera": "ILCE-6700",
-      "lens": "FE 200-600mm F5.6-6.3 G OSS",
-      "focalLength": "600mm",
-      "aperture": "f/6.3",
-      "shutterSpeed": "1/1000s",
-      "iso": 125
-    }
-  },
-  {
-    "filename": "bulbul-golden-light.jpg",
-    "title": "Bulbul in Golden Light",
-    "category": "birds",
-    "tags": [
-      "bulbul",
-      "golden-light",
-      "wildlife",
-      "backlit",
-      "bokeh"
-    ],
-    "alt": "A bulbul perched on a leafy branch bathed in warm golden rim light against a dark bokeh background",
-    "date": "2025-01-04",
-    "metadata": {
-      "camera": "ILCE-6700",
-      "lens": "FE 200-600mm F5.6-6.3 G OSS",
-      "focalLength": "600mm",
-      "aperture": "f/7.1",
-      "shutterSpeed": "1/100s",
-      "iso": 200
-    }
-  },
-  {
     "filename": "cattle-egret-breeding.jpg",
     "title": "Cattle Egret in Breeding Plumage",
     "category": "birds",
@@ -133,28 +88,6 @@
       "aperture": "f/6.3",
       "shutterSpeed": "1/2500s",
       "iso": 1000
-    }
-  },
-  {
-    "filename": "raptor-antenna-perch.jpg",
-    "title": "Raptor on Watch",
-    "category": "birds",
-    "tags": [
-      "raptor",
-      "hawk",
-      "amber-eyes",
-      "perch",
-      "bird-of-prey"
-    ],
-    "alt": "A small raptor with amber eyes and yellow legs perched on a metal antenna against a blurred green background",
-    "date": "2025-06-18",
-    "metadata": {
-      "camera": "ILCE-6700",
-      "lens": "FE 200-600mm F5.6-6.3 G OSS",
-      "focalLength": "600mm",
-      "aperture": "f/6.3",
-      "shutterSpeed": "1/2000s",
-      "iso": 3200
     }
   },
   {
