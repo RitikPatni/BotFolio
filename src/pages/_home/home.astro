@@ -47,7 +47,8 @@ const stripFrames = photographyGalleryData
   .sort(
     (a, b) =>
       (b.frame.rating ?? 0) - (a.frame.rating ?? 0) ||
-      dateTimestamp(b.frame.date) - dateTimestamp(a.frame.date) ||
+      (b.frame.date ? dateTimestamp(b.frame.date) : 0) -
+        (a.frame.date ? dateTimestamp(a.frame.date) : 0) ||
       a.order - b.order,
   )
   .slice(0, STRIP_FRAMES)
