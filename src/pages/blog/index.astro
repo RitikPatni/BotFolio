@@ -69,6 +69,7 @@ import "./_blog.scss";
       </a>
     ))}
   </div>
+  <p class="visually-hidden" role="status" aria-live="polite" data-blog-filter-status></p>
 
   <!-- Blog list -->
   <section class="blog-posts">
@@ -98,9 +99,21 @@ import "./_blog.scss";
   (() => {
     const filters = [...document.querySelectorAll("[data-blog-filter]")];
     const cards = [...document.querySelectorAll("[data-blog-card-category]")];
+    const status = document.querySelector("[data-blog-filter-status]");
     if (!filters.length || !cards.length) return;
 
-    const applyFilter = (category, updateUrl) => {
+    /* ClientRouter re-runs this inline script on every visit: drop the
+       previous visit's window listener, and this one when the page leaves. */
+    window.__rpBlogFilterAbort?.abort();
+    const lifecycle = new AbortController();
+    window.__rpBlogFilterAbort = lifecycle;
+    document.addEventListener("astro:before-swap", () => lifecycle.abort(), {
+      once: true,
+      signal: lifecycle.signal,
+    });
+
+    /* announce: only for a visitor's own filter change, not the initial render. */
+    const applyFilter = (category, updateUrl, announce = updateUrl) => {
       const validCategory = ["all", "blog", "newsletter"].includes(category)
         ? category
         : "all";
@@ -124,6 +137,11 @@ import "./_blog.scss";
         else filter.removeAttribute("aria-current");
       });
 
+      if (announce && status) {
+        const count = visibleCards.length;
+        status.textContent = `${count} ${count === 1 ? "post" : "posts"}`;
+      }
+
       if (updateUrl) {
         const url = new URL(window.location.href);
         if (validCategory === "all") url.searchParams.delete("category");
@@ -138,9 +156,13 @@ import "./_blog.scss";
         applyFilter(filter.dataset.blogFilter || "all", true);
       });
     });
-    window.addEventListener("popstate", () => {
-      applyFilter(new URL(window.location.href).searchParams.get("category") || "all", false);
-    });
+    window.addEventListener(
+      "popstate",
+      () => {
+        applyFilter(new URL(window.location.href).searchParams.get("category") || "all", false, true);
+      },
+      { signal: lifecycle.signal },
+    );
     applyFilter(new URL(window.location.href).searchParams.get("category") || "all", false);
   })();
 </script>
