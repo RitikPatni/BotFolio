@@ -21,6 +21,11 @@ li {
   box-sizing: border-box;
 }
 
+html {
+  /* A weight or style that isn't loaded should fail visibly, not be faked. */
+  font-synthesis: none;
+}
+
 html,
 body {
   margin: 0;
@@ -60,21 +65,26 @@ a {
   font-family: var(--font-mono);
 }
 
-:where(h1, h2, h3, h4, h5, h6, p, li, dd, dt, a, figcaption, span) {
+/* Long URLs and tokens live in running text: let them break anywhere so they
+   can't widen a grid track. Headings only break a word that can't fit. */
+:where(p, li, dd, dt, a, figcaption, span) {
   overflow-wrap: anywhere;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  overflow-wrap: break-word;
 }
 
 :where(img, picture, svg, video, canvas, iframe) {
   max-inline-size: 100%;
 }
 
-/* Reserve space for remote/content images to avoid layout shift (CLS) */
+/* Markdown images keep their own proportions: a forced ratio + cover cropped
+   tall diagrams and screenshots. Astro emits width/height for them, which is
+   what reserves the space; the background only shows while they load. */
 .prose img,
-[class*="content"] img,
 .slug__content img {
   height: auto;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
   background: var(--bg-soft);
 }
 

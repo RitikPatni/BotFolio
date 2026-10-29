@@ -32,8 +32,8 @@ const HARDWARE: UsesSection = {
       badge: "Computers",
       title: "MacBooks",
       items: [
-        { label: "Personal", text: "MacBook Pro (2021) — M1 Pro, 32 GB" },
-        { label: "Office", text: "MacBook Pro (2025) — M4 Pro, 24 GB" },
+        { label: "Personal", text: "MacBook Pro (2021), M1 Pro, 32 GB" },
+        { label: "Office", text: "MacBook Pro (2025), M4 Pro, 24 GB" },
       ],
     },
     {

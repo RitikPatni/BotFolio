@@ -70,7 +70,7 @@ export async function GET(context: APIContext) {
     )
     .join("\n---\n\n");
 
-  const header = `# Ritik Patni — Full Content
+  const header = `# Ritik Patni · Full Content
 
 This file contains the full text of all published notes, blog posts, newsletters, book entries, and highlights from ritikpatni.me. For a curated overview, see /llms.txt.
 
