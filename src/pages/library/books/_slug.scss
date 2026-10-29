@@ -24,7 +24,9 @@
   border: 1px solid var(--line);
   box-shadow: 0.8rem 0.8rem 0 color-mix(in srgb, var(--accent-start) 24%, transparent);
   display: block;
-  object-fit: cover;
+  /* Covers aren't all 2:3: show the whole cover inside the reserved box
+     rather than cropping its edges (titles and author names sit there). */
+  object-fit: contain;
   width: 100%;
 }
 
@@ -56,6 +58,12 @@
   color: var(--text-muted);
   max-width: 640px;
   margin: 0;
+}
+
+/* Most imported books have no usable description; without the lead, the
+   title's margin alone spaces the list. */
+.slug__title + .slug__book-meta {
+  margin-block-start: 0;
 }
 
 /* Book metadata list */

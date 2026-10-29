@@ -6,6 +6,7 @@ import {
   extractCoverImage,
   findBookHighlights,
   getHighlightMeta,
+  normalizeBookDescription,
 } from "../../../utils/library";
 import { slugOf } from "../../../utils/slug";
 
@@ -23,6 +24,18 @@ const highlights = (await getCollection("highlights"))
   .filter(({ data }) => !data.draft);
 const bookHighlights = findBookHighlights(item.data.title, highlights);
 const coverImage = extractCoverImage(item.body ?? "");
+/* Imported descriptions are mostly Obsidian tags ("Genre:: #genre/fiction");
+   the raw field stays as-is because the library index classifies by it. */
+const description = normalizeBookDescription(item.data.description);
+const metaDescription =
+  description ||
+  `${item.data.title}${item.data.author ? ` by ${item.data.author}` : ""}, from Ritik Patni's reading log.`;
+/* Frontmatter values are lowercase ("english", "non fiction"); match the
+   library filter labels ("English", "Non-fiction"). */
+const toLabel = (value: string) => {
+  const hyphenated = value.trim().replace(/^non /i, "non-");
+  return hyphenated.charAt(0).toUpperCase() + hyphenated.slice(1);
+};
 const hasAdditionalContent = Boolean(
   (item.body ?? "").replace(/!\[[^\]]*\]\([^)]+\)/g, "").trim(),
 );
@@ -31,7 +44,7 @@ import "./_slug.scss";
 
 <BaseLayout
   title={`${item.data.title} · Library`}
-  description={item.data.description}
+  description={metaDescription}
   path="/library"
 >
   <div class="slug">
@@ -55,7 +68,7 @@ import "./_slug.scss";
         <div class="slug__book-details">
           <p class="slug__meta page-hero__meta">{formatDisplayDate(item.data.date)}</p>
           <h1 class="slug__title page-hero__title">{item.data.title}</h1>
-          <p class="slug__lead page-hero__lead">{item.data.description}</p>
+          {description && <p class="slug__lead page-hero__lead">{description}</p>}
           <ul class="slug__book-meta" aria-label="Book metadata">
             {
               item.data.author ? (
@@ -67,14 +80,14 @@ import "./_slug.scss";
             {
               item.data.language ? (
                 <li>
-                  <strong>Language:</strong> {item.data.language}
+                  <strong>Language:</strong> {toLabel(item.data.language)}
                 </li>
               ) : null
             }
             {
               item.data.genres?.length ? (
                 <li>
-                  <strong>Genres:</strong> {item.data.genres.join(", ")}
+                  <strong>Genres:</strong> {item.data.genres.map(toLabel).join(", ")}
                 </li>
               ) : null
             }
