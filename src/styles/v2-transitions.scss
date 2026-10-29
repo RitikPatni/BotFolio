@@ -11,10 +11,8 @@
   --dur-slow: 360ms;
 }
 
-/* ── Page transitions (Astro ClientRouter, main = "page-content") ──
-   Cross-fade + slight vertical lift so navigation feels smooth, not a hard cut. */
-/* Field Notes: page-switch motion removed entirely — hard cut, no fade/lift.
-   (vt-fade keyframes + ::view-transition-* animations deleted; jank > charm.) */
+/* Page switches are a hard cut: no view-transition fade and no entrance
+   animation on <main>. Navigation is the most frequent action on the site. */
 
 /* ── General interaction motion ──
    Buttons, links, cards, images ease on state changes. */
@@ -31,7 +29,6 @@ a,
 input,
 select,
 textarea,
-.photo-strip img,
 .library__book-cover,
 .base-layout__theme-toggle {
   transition: background-color var(--dur-base) var(--ease-soft),
@@ -42,35 +39,9 @@ textarea,
     box-shadow var(--dur-base) var(--ease-soft);
 }
 
-/* Nav: underline animated on page change */
-.nav-link::after {
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: transform var(--dur-base) var(--ease-out);
-}
-
-.nav-link.active::after {
-  transform: scaleX(1);
-}
-
-/* Image hover micro-scale */
-.photo-strip img:hover {
-  transform: scale(1.02);
-}
-
 /* Theme toggle press feedback */
 .base-layout__theme-toggle:active {
-  transform: scale(0.92);
-}
-
-/* Entrance: gentle fade-up of the main content on first paint + after swaps */
-@keyframes content-rise {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.base-layout__main {
-  animation: content-rise var(--dur-slow) var(--ease-out) both;
+  transform: scale(0.97);
 }
 
 /* Reduced motion: disable all transition/animation */

@@ -19,7 +19,7 @@ const entries = (await getCollection("newsletter"))
 import "./_newsletter.scss";
 ---
 
-<BaseLayout title="Newsletter Archive — Ritik Patni" path="/newsletter">
+<BaseLayout title="Newsletter Archive · Ritik Patni" path="/newsletter">
   <div class="newsletter">
     <section class="newsletter__hero page-hero page-hero--standard">
       <div class="page-hero__inner">
@@ -55,17 +55,17 @@ import "./_newsletter.scss";
     <section class="newsletter__subscribe">
       <h2 class="newsletter__subscribe-title">Subscribe</h2>
       <p class="newsletter__subscribe-lead">
-        Two independent ways to follow new writing — pick either, they don't
+        Two independent ways to follow new writing. Pick either; they don't
         depend on each other.
       </p>
       <ul class="newsletter__subscribe-list">
         <li>
-          <strong>RSS</strong> — for any feed reader. The full archive is
+          <strong>RSS</strong> for any feed reader. The full archive is
           available as a standard RSS feed:
           <a href="/rss.xml">ritikpatni.me/rss.xml</a>.
         </li>
         <li>
-          <strong>AT Protocol (Standard.site)</strong> — for AT-native clients.
+          <strong>AT Protocol (Standard.site)</strong> for AT-native clients.
           Every post is published as a <code>site.standard.document</code> record
           to the channel below; an AT Proto reader can subscribe directly and
           receive new posts without polling this site.

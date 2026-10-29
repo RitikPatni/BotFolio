@@ -12,7 +12,7 @@
 
   &__lead { max-width: 500px; }
 
-  &__section-title { font-size: 1.5rem; font-weight: 300; letter-spacing: -0.01em; margin: 0 0 1.5rem; }
+  &__section-title { font-size: 1.5rem; font-weight: 400; letter-spacing: -0.01em; margin: 0 0 1.5rem; }
 
   &__grid {
     display: grid; gap: 1.5rem;
@@ -70,7 +70,7 @@
     &--spaced { margin-block-end: 0.5rem; }
   }
 
-  &__description { margin: 0; font-weight: 300; color: var(--text-muted); }
+  &__description { margin: 0; font-weight: 400; color: var(--text-muted); }
 
   &__subscribe {
     margin-top: 2.5rem;
@@ -79,8 +79,8 @@
     padding: 1.5rem;
     background: color-mix(in srgb, var(--bg) 96%, transparent);
 
-    &-title { font-weight: 300; letter-spacing: -0.01em; margin: 0 0 0.5rem; }
-    &-lead  { margin: 0 0 1rem; color: var(--text-muted); font-weight: 300; }
+    &-title { font-weight: 400; letter-spacing: -0.01em; margin: 0 0 0.5rem; }
+    &-lead  { margin: 0 0 1rem; color: var(--text-muted); font-weight: 400; }
     &-list  { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.9rem; }
     &-aturi {
       display: inline-block; margin-top: 0.35rem;

@@ -8,5 +8,5 @@ export const ABOUT_BIO: string[] = [
 ];
 
 export const ABOUT_HERO = {
-  lead: "I'm Ritik Patni — a front-end developer with a strong focus on design, accessibility, performance, and reliable user experience.",
+  lead: "I'm Ritik Patni, a front-end developer with a strong focus on design, accessibility, performance, and reliable user experience.",
 };

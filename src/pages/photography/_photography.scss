@@ -165,7 +165,7 @@
     position: fixed;
     inset-inline-start: 50%;
     inset-block-start: 50%;
-    z-index: 90;
+    z-index: var(--z-overlay);
     max-inline-size: min(32rem, calc(100vw - 2rem));
     margin: 0;
     padding: 0.65rem 0.9rem;
@@ -205,14 +205,21 @@
       /* Exception: negative token offset for tooltip entrance animation. */
       transform: translate(-50%, calc(var(--size-1) * -1));
       transition:
-        opacity 140ms ease,
-        transform 140ms ease;
+        opacity var(--dur-fast) var(--ease-out),
+        transform var(--dur-fast) var(--ease-out);
     }
 
-    &:hover::after,
+    /* Touch has no hover: a tapped button would keep its tooltip up. */
     &:focus-visible::after {
       opacity: 1;
       transform: translate(-50%, 0);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover::after {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
     }
   }
 }

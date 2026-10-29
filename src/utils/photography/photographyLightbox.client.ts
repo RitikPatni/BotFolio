@@ -64,15 +64,20 @@ export function initPhotographyLightbox(): (() => void) | undefined {
     imageElement,
   } = elements;
   const statusElement = root.querySelector<HTMLElement>("[data-gallery-status]");
+  const openStatusElement = root.querySelector<HTMLElement>(
+    "[data-gallery-open-status]",
+  );
   const lifecycle = new AbortController();
   const { signal } = lifecycle;
 
   const clearGalleryLoading = (trigger: HTMLElement | null) => {
     trigger?.removeAttribute("aria-busy");
     dialog.removeAttribute("aria-busy");
-    if (statusElement) {
-      statusElement.hidden = true;
-      statusElement.textContent = "";
+    for (const status of [statusElement, openStatusElement]) {
+      if (status) {
+        status.hidden = true;
+        status.textContent = "";
+      }
     }
   };
 
@@ -186,7 +191,6 @@ export function initPhotographyLightbox(): (() => void) | undefined {
 
   const updateFullscreenButton = () => {
     const isFullscreen = isFullscreenActive();
-    fullscreenToggle.setAttribute("aria-pressed", String(isFullscreen));
     const label = isFullscreen ? "Exit full screen" : "Full screen";
     fullscreenToggle.setAttribute("aria-label", label);
     fullscreenToggle.dataset.tooltip = label;
@@ -466,7 +470,15 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   window.addEventListener(
     "keydown",
     (event) => {
-      if (!dialog.open || event.defaultPrevented) {
+      /* Modified keys belong to the browser (Cmd/Ctrl+F is find, not full
+         screen; Alt+Arrow is history). */
+      if (
+        !dialog.open ||
+        event.defaultPrevented ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.altKey
+      ) {
         return;
       }
 

@@ -13,8 +13,16 @@ const readStoredTheme = (): "light" | "dark" | null => {
   }
 };
 
+/* Mirrors the theme-color metas in BaseLayout.astro. Those key off the OS
+   scheme, so a stored choice that differs from it would tint the browser bar
+   the wrong polarity; point both at the theme actually applied. */
+const THEME_COLORS = { light: "#eeefed", dark: "#141516" } as const;
+
 const applyTheme = (theme: "light" | "dark") => {
   document.documentElement.setAttribute("data-theme", theme);
+  document
+    .querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')
+    .forEach((meta) => meta.setAttribute("content", THEME_COLORS[theme]));
 };
 
 /* Atomic flip: every transition is suspended (BaseLayout.scss
@@ -72,13 +80,6 @@ const bindSystemTheme = () => {
 
 const syncThemeToggle = (toggleButton: HTMLButtonElement) => {
   const isLight = document.documentElement.getAttribute("data-theme") === "light";
-  const icon = toggleButton.querySelector<HTMLElement>(
-    ".base-layout__theme-icon",
-  );
-
-  if (icon) {
-    icon.textContent = isLight ? "☾" : "☼";
-  }
 
   toggleButton.setAttribute(
     "aria-label",
@@ -88,7 +89,6 @@ const syncThemeToggle = (toggleButton: HTMLButtonElement) => {
     "title",
     isLight ? "Switch to dark theme" : "Switch to light theme",
   );
-  toggleButton.setAttribute("aria-pressed", String(isLight));
 };
 
 const bindThemeToggle = () => {
