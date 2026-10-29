@@ -151,7 +151,6 @@
     letter-spacing: 0.02em;
     text-transform: none;
     color: var(--text-muted);
-    font-variant-numeric: tabular-nums;
   }
 
   &__caption-title {
@@ -163,8 +162,11 @@
     color: var(--text);
   }
 
+  /* Tabular figures only here: on the Schibsted title they widen the colon
+     ("Hawk-Eagle : Over the Shoulder"). */
   &__caption-exif {
     display: block;
+    font-variant-numeric: tabular-nums;
   }
 
   &__inline-icon,

@@ -133,6 +133,28 @@ const imageUrl = new URL(image, Astro.site).toString();
           window.__rpGalleryFeedbackBound = true;
         }
 
+        if (!window.__rpBrokenImageBound) {
+          /* Imported notes embed third-party images (tweet avatars and media)
+             that have since been deleted: hide a content image that fails to
+             load instead of showing a broken-image icon. Image errors don't
+             bubble, hence capture. Inline style, because content rules set
+             img { display: block } and would beat the hidden attribute. */
+          document.addEventListener(
+            "error",
+            (event) => {
+              const img = event.target;
+              if (
+                img instanceof HTMLImageElement &&
+                img.closest(".slug__content, .slug-prose, .prose")
+              ) {
+                img.style.display = "none";
+              }
+            },
+            true,
+          );
+          window.__rpBrokenImageBound = true;
+        }
+
         if (!window.__rpThemeSwapHookBound) {
           /* Stamp the incoming document before it is swapped in (no frame of
              the server default), then re-assert after the root attributes

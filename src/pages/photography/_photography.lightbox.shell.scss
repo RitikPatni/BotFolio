@@ -303,8 +303,24 @@
   }
 }
 
+/* Same wrap rule as components/ExposureLine.astro: lines break between
+   parts, and the separator in front of a part that starts a line is clipped. */
 .photography__lightbox-caption-line {
   display: block;
+  overflow: hidden;
+}
+
+.photography__lightbox-caption-parts {
+  display: flex;
+  flex-wrap: wrap;
+  margin-inline-start: -1.25em;
+}
+
+.photography__lightbox-caption-part::before {
+  content: "·" / "";
+  display: inline-block;
+  inline-size: 1.25em;
+  text-align: center;
 }
 
 /* Chrome toggle (tap the photo): controls and caption fade; the counter

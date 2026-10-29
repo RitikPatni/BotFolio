@@ -1,10 +1,18 @@
 import { defineConfig } from 'astro/config';
 import nightOwl from '@shikijs/themes/night-owl';
 
-// Night Owl's comment grey (#637777) is 3.87:1 on its #011627 background.
-// Same hue, lifted just past WCAG AA (4.61:1).
+// Night Owl token colours that fall below WCAG AA (4.5:1) on its #011627
+// background, each lifted just past it with the same hue.
+const AA_TOKEN_COLORS = {
+  '#637777': '#6d8484', // comments: 3.87 -> 4.61
+  '#5f7e97': '#64849e', // punctuation: 4.29 -> 4.66
+  '#7e57c2': '#906fcb', // 3.52 -> 4.65
+};
 const codeTheme = JSON.parse(
-  JSON.stringify(nightOwl).replaceAll('#637777', '#6d8484'),
+  Object.entries(AA_TOKEN_COLORS).reduce(
+    (json, [from, to]) => json.replaceAll(new RegExp(from, 'gi'), to),
+    JSON.stringify(nightOwl),
+  ),
 );
 
 export default defineConfig({

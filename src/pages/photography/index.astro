@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import ExposureLine from "../../components/ExposureLine.astro";
 import { Image, getImage } from "astro:assets";
 import PhotographyLightbox from "./_PhotographyLightbox.astro";
 import "./_photography.scss";
@@ -248,7 +249,7 @@ const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
                       <figcaption class="photography__caption">
                         <span class="photography__caption-title">{image.title}</span>
                         {image.exposure && (
-                          <span class="photography__caption-exif">{image.exposure}</span>
+                          <ExposureLine class="photography__caption-exif" value={image.exposure} />
                         )}
                       </figcaption>
                     </figure>

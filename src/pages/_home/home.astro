@@ -1,6 +1,7 @@
 ---
 import { Image as AstroImage } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import ExposureLine from "../../components/ExposureLine.astro";
 import { getCollection } from "astro:content";
 import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { photographyGalleryData } from "../../data/photography";
@@ -119,7 +120,7 @@ const posts = (await getCollection("blog"))
                 />
                 <span class="index-strip__cap">
                   <b>{frame.title}</b>
-                  {frame.exposure && <span class="index-strip__exif">{frame.exposure}</span>}
+                  {frame.exposure && <ExposureLine class="index-strip__exif" value={frame.exposure} />}
                 </span>
               </a>
             </li>

@@ -104,21 +104,32 @@ export function createLightboxRenderer({
      Only the frame's own fields — anything missing is left out, never filled. */
   const renderCaption = (image: GalleryDialogImage) => {
     const lines = [
-      image.exposure,
+      image.exposure ? image.exposure.split(" · ") : [],
       [
         image.date ? formatGalleryDate(image.date) : undefined,
         image.metadata.camera,
         image.metadata.lens,
-      ]
-        .filter(Boolean)
-        .join(" · "),
-    ].filter(Boolean);
+      ].filter((part): part is string => Boolean(part)),
+    ].filter((parts) => parts.length > 0);
 
+    /* A word joiner after each hyphen keeps "F5.6-6.3" and "200-600mm" whole
+       (U+2011 would be cleaner but Plex Mono has no glyph for it); a long
+       part can still wrap at its spaces. */
     captionMetaElement.replaceChildren(
-      ...lines.map((text) => {
+      ...lines.map((parts) => {
         const line = document.createElement("span");
         line.className = "photography__lightbox-caption-line";
-        line.textContent = text;
+        const list = document.createElement("span");
+        list.className = "photography__lightbox-caption-parts";
+        list.append(
+          ...parts.map((text) => {
+            const part = document.createElement("span");
+            part.className = "photography__lightbox-caption-part";
+            part.textContent = text.replaceAll("-", "-\u2060");
+            return part;
+          }),
+        );
+        line.append(list);
         return line;
       }),
     );
