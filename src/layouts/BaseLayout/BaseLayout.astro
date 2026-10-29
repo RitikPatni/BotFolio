@@ -4,6 +4,7 @@ import "./BaseLayout.scss";
 import { SITE_CONFIG, NAV_LINKS } from "../../config/site";
 import { ClientRouter } from "astro:transitions";
 import SocialIcon from "../../components/SocialIcon.astro";
+import UiIcon from "../../components/UiIcon.astro";
 
 interface Props {
   title: string;
@@ -84,7 +85,7 @@ const imageUrl = new URL(image, Astro.site).toString();
                   ? target.closest("[data-gallery-trigger]")
                   : null;
               const root = trigger?.closest("[data-gallery-root]");
-              const status = root?.querySelector("[data-gallery-status]");
+              const status = root?.querySelector("[data-gallery-open-status]");
 
               if (
                 !(trigger instanceof HTMLElement) ||
@@ -145,7 +146,7 @@ const imageUrl = new URL(image, Astro.site).toString();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
     />
     <link
       rel="icon"
@@ -241,10 +242,10 @@ const imageUrl = new URL(image, Astro.site).toString();
             type="button"
             id="themeToggle"
             aria-label="Toggle light and dark theme"
-            aria-pressed="false"
             title="Toggle theme"
           >
-            <span class="base-layout__theme-icon" aria-hidden="true">☼</span>
+            <UiIcon name="moon" class="base-layout__theme-icon base-layout__theme-icon--moon" />
+            <UiIcon name="sun" class="base-layout__theme-icon base-layout__theme-icon--sun" />
           </button>
         </div>
       </header>

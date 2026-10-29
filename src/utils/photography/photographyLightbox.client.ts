@@ -64,15 +64,20 @@ export function initPhotographyLightbox(): (() => void) | undefined {
     imageElement,
   } = elements;
   const statusElement = root.querySelector<HTMLElement>("[data-gallery-status]");
+  const openStatusElement = root.querySelector<HTMLElement>(
+    "[data-gallery-open-status]",
+  );
   const lifecycle = new AbortController();
   const { signal } = lifecycle;
 
   const clearGalleryLoading = (trigger: HTMLElement | null) => {
     trigger?.removeAttribute("aria-busy");
     dialog.removeAttribute("aria-busy");
-    if (statusElement) {
-      statusElement.hidden = true;
-      statusElement.textContent = "";
+    for (const status of [statusElement, openStatusElement]) {
+      if (status) {
+        status.hidden = true;
+        status.textContent = "";
+      }
     }
   };
 

@@ -7,6 +7,8 @@ import ChevronRightIcon from "./icons/ChevronRightIcon.astro";
 import ImageIcon from "./icons/ImageIcon.astro";
 import CalendarIcon from "./icons/CalendarIcon.astro";
 import StackIcon from "./icons/StackIcon.astro";
+import SunIcon from "./icons/SunIcon.astro";
+import MoonIcon from "./icons/MoonIcon.astro";
 
 interface Props {
   name:
@@ -17,7 +19,9 @@ interface Props {
     | "chevron-right"
     | "image"
     | "calendar"
-    | "stack";
+    | "stack"
+    | "sun"
+    | "moon";
   class?: string;
 }
 
@@ -32,6 +36,8 @@ const ICON_COMPONENTS = {
   image: ImageIcon,
   calendar: CalendarIcon,
   stack: StackIcon,
+  sun: SunIcon,
+  moon: MoonIcon,
 };
 
 const isKnownIcon = (value: string): value is keyof typeof ICON_COMPONENTS =>

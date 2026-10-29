@@ -38,6 +38,12 @@
      gutter and nothing inside them adds its own inline padding. */
   --gutter: clamp(1rem, 3vw, 2rem);
 
+  /* Page-level stacking. Components stack locally with small values (cards
+     1 and 2); the lightbox is a modal <dialog> in the top layer, so its internal
+     z-indexes never compete with these. */
+  --z-sticky: 50;
+  --z-overlay: 90;
+
   /* Type ramp (font-size only). Display = the home statement; H1 = page
      titles; H2 = the single section-heading size, used by every h2. */
   --fs-display: clamp(2.3rem, 5.4vw, 4.9rem);

@@ -162,7 +162,7 @@ const totalImages = typedGallery.length;
 const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
 ---
 
-<BaseLayout title="Gallery — Ritik Patni" path="/photography">
+<BaseLayout title="Gallery · Ritik Patni" path="/photography">
   <div class="photography" data-gallery-root>
     <section class="photography__hero page-hero page-hero--standard">
       <div class="page-hero__inner">
@@ -261,6 +261,15 @@ const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
       )
     }
 
+    {/* Pre-open feedback lives outside the dialog: a closed <dialog> is not
+        rendered, so a status inside it is neither seen nor announced. */}
+    <p
+      class="photography__gallery-status"
+      data-gallery-open-status
+      role="status"
+      aria-live="polite"
+      hidden
+    ></p>
     <PhotographyLightbox galleryLightboxItemsJson={galleryLightboxItemsJson} />
   </div>
 </BaseLayout>
