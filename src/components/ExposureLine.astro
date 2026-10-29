@@ -1,0 +1,45 @@
+---
+/* An exposure line ("f/6.3 · 1/1000s · ISO 2000") that wraps between
+   settings, never inside one, and never leaves a "·" dangling at a line
+   edge. Every part carries its separator in a 1.25em slot to its left; the
+   list is pulled left by that slot and clipped, so the separator in front of
+   whichever part starts a line falls outside the clip. */
+interface Props {
+  value: string;
+  class?: string;
+}
+
+const { value, class: className } = Astro.props;
+const parts = value.split(" · ");
+---
+
+<span class:list={["exposure-line", className]}>
+  <span class="exposure-line__parts">
+    {parts.map((part) => <span class="exposure-line__part">{part}</span>)}
+  </span>
+</span>
+
+<style>
+  .exposure-line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .exposure-line__parts {
+    display: flex;
+    flex-wrap: wrap;
+    margin-inline-start: -1.25em;
+  }
+
+  .exposure-line__part {
+    white-space: nowrap;
+
+    &::before {
+      /* Decorative: the empty alt keeps screen readers from saying "dot". */
+      content: "·" / "";
+      display: inline-block;
+      inline-size: 1.25em;
+      text-align: center;
+    }
+  }
+</style>
