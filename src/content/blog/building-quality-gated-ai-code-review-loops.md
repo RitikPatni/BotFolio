@@ -105,12 +105,12 @@ The handoff is the most important artifact in the system. The planner creates it
 GOAL: Add a dark-mode toggle to settings
 
 FILE PATHS (already found):
-  src/components/ThemeToggle.astro — new component
-  src/layouts/BaseLayout.astro — add toggle to header
-  src/styles/theme.scss — add dark-mode variables
+  src/components/ThemeToggle.astro: new component
+  src/layouts/BaseLayout.astro: add toggle to header
+  src/styles/theme.scss: add dark-mode variables
 
 CONSTRAINTS:
-- Do not modify src/styles/reset.scss — it is canonical.
+- Do not modify src/styles/reset.scss: it is canonical.
 - Keep light mode as the default; avoid a flash on load.
 - Match existing component patterns.
 

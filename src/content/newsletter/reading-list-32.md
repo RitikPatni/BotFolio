@@ -34,7 +34,7 @@ Familiar patterns, it seems, are useful for memory recall other cognitive tasks.
 
 [The old internet](https://rebeccatoh.co/the-old-internet/)
 
-The old internet — the internet we first fell in love with — was a weird and wild and unregulated country. It was experimental, free for all, exhilarating, creative.
+The old internet, the internet we first fell in love with, was a weird and wild and unregulated country. It was experimental, free for all, exhilarating, creative.
 
 The new internet is filled with tracking scripts, cookie popups and what not. Can we not go back to the old times? 🤔
 
