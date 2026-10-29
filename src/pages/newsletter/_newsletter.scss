@@ -85,12 +85,16 @@
     /* The global reset strips link styling; restore it here, matching the
        post pages, or these read as plain text. */
     &-list a {
+      position: relative;
       color: var(--text);
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-color: var(--text-dim);
 
       &:hover { text-decoration-color: var(--accent-start); }
+
+      /* Tap box extends to 44px tall; the list gap keeps boxes apart. */
+      &::after { content: ""; position: absolute; inset: -0.75rem 0; }
     }
     &-aturi {
       display: inline-block; margin-top: 0.35rem;

@@ -100,4 +100,27 @@
   &__description {
     margin: 0;
   }
+
+  /* Matches the home page's "All notes →"; the global reset otherwise
+     leaves this link looking like plain text. */
+  &__more {
+    position: relative;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-soft);
+
+    /* Tap box extends to 44px tall; the text stays as set. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -0.8125rem 0;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: var(--text);
+      }
+    }
+  }
 }

@@ -310,11 +310,19 @@
 }
 
 .view-all {
+  position: relative;
   font-size: 0.9rem;
   font-weight: 400;
   color: var(--text-muted);
   text-decoration: none;
-  transition: color 200ms;
+  transition: color var(--dur-fast) var(--ease-soft);
+
+  /* Tap box extends to 44px tall; the text stays as set. */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -0.8125rem 0;
+  }
 
   &:hover {
     color: var(--text);

@@ -21,7 +21,7 @@
 
 .slug__related-linkline {
   color: var(--text-muted);
-  margin: 1.25rem auto 0;
+  margin: 1.25rem 0 0;
   max-width: 640px;
 
   span {
@@ -29,10 +29,18 @@
   }
 
   a {
+    position: relative;
     color: var(--text);
     text-decoration: underline;
     text-decoration-color: var(--text-dim);
     text-underline-offset: 3px;
+
+    /* Tap box extends to 44px tall; the text stays as set. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -0.75rem -0.25rem;
+    }
 
     &:hover {
       text-decoration-color: var(--accent-start);
