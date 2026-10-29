@@ -82,6 +82,16 @@
     &-title { font-weight: 400; letter-spacing: -0.01em; margin: 0 0 0.5rem; }
     &-lead  { margin: 0 0 1rem; color: var(--text-muted); font-weight: 400; }
     &-list  { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.9rem; }
+    /* The global reset strips link styling; restore it here, matching the
+       post pages, or these read as plain text. */
+    &-list a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--text-dim);
+
+      &:hover { text-decoration-color: var(--accent-start); }
+    }
     &-aturi {
       display: inline-block; margin-top: 0.35rem;
       font-size: 0.85rem; color: var(--text-dim);

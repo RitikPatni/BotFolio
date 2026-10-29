@@ -133,9 +133,11 @@
     background-color 200ms ease,
     border-color 200ms ease;
 
-  &:hover {
-    border-color: var(--lb-line);
-    background: rgb(29 27 22 / 0.95);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      border-color: var(--lb-line);
+      background: rgb(29 27 22 / 0.95);
+    }
   }
 
   &[hidden] {

@@ -1,4 +1,12 @@
 ---
+/* Fonts are self-hosted (Fontsource): no third-party stylesheet blocking first
+   paint, and the main face is preloaded below. */
+import "@fontsource-variable/schibsted-grotesk/wght.css";
+import "@fontsource-variable/schibsted-grotesk/wght-italic.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource/ibm-plex-mono/600.css";
+import schibstedLatinUrl from "@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2?url";
 import "../../styles/global.scss";
 import "./BaseLayout.scss";
 import { SITE_CONFIG, NAV_LINKS } from "../../config/site";
@@ -142,11 +150,12 @@ const imageUrl = new URL(image, Astro.site).toString();
         }
       })();
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="preload"
+      href={schibstedLatinUrl}
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     <link
       rel="icon"
@@ -281,6 +290,7 @@ const imageUrl = new URL(image, Astro.site).toString();
                     class="base-layout__social-icon"
                   />
                   {social.label}
+                  <span class="visually-hidden"> (opens in new tab)</span>
                 </a>
               ))
             }

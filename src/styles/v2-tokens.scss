@@ -73,8 +73,8 @@
   --accent: var(--accent-start);
   /* Schibsted Grotesk = headings + body (newsprint grotesque), IBM Plex Mono =
      UI accents (h3/h4, ledger index) + dates/labels. Mono-forward ledger. */
-  --font-body: "Schibsted Grotesk", "Helvetica Neue", system-ui, sans-serif;
-  --font-display: "Schibsted Grotesk", "Helvetica Neue", system-ui, sans-serif;
+  --font-body: "Schibsted Grotesk Variable", "Schibsted Grotesk", "Helvetica Neue", system-ui, sans-serif;
+  --font-display: "Schibsted Grotesk Variable", "Schibsted Grotesk", "Helvetica Neue", system-ui, sans-serif;
   --font-sans: var(--font-body);
   --font-ui: var(--font-mono);
   --font-mono: "IBM Plex Mono", monospace;

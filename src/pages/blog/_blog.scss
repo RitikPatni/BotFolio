@@ -94,6 +94,7 @@
 }
 
 .blog-filter-pill {
+  position: relative;
   padding: 0.35rem 0.85rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-round);
@@ -101,12 +102,23 @@
   font-weight: 400;
   color: var(--text-muted);
   text-decoration: none;
-  transition: background-color 200ms ease, border-color 200ms ease,
-    color 200ms ease;
+  transition:
+    background-color var(--dur-fast) var(--ease-soft),
+    border-color var(--dur-fast) var(--ease-soft),
+    color var(--dur-fast) var(--ease-soft);
 
-  &:hover {
-    color: var(--text);
-    border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
+  /* The pill stays compact; the tap box extends to 44px tall. */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -0.3125rem 0;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: var(--text);
+      border-color: color-mix(in srgb, var(--accent-start) 30%, var(--line));
+    }
   }
 
   &.is-active {
