@@ -88,6 +88,18 @@
   }
 }
 
+/* The OpenLibrary link is the only link in the list; its tap box extends to
+   44px tall without changing the line rhythm. */
+.slug__book-meta a {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -0.75rem -0.25rem;
+  }
+}
+
 /* Related reading notes */
 .slug__related {
   border: 1px solid var(--line);

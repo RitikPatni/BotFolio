@@ -22,7 +22,8 @@
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.5rem 1.75rem;
+    /* Row gap clears the links' extended hit areas when they wrap. */
+    gap: 1.25rem 1.75rem;
     padding: 0.75rem 0;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
@@ -36,13 +37,23 @@
   }
 
   &__index-link {
+    position: relative;
     color: var(--accent-text);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     transition: border-color var(--dur-base) var(--ease-soft);
 
-    &:hover {
-      border-bottom-color: var(--accent-start);
+    /* The ruled index stays tight; the tap box extends to 44px tall. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -0.6875rem -0.25rem;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        border-bottom-color: var(--accent-start);
+      }
     }
   }
 
@@ -115,8 +126,10 @@
     outline-offset: 3px;
     transition: outline-color var(--dur-base) var(--ease-soft);
 
-    &:hover {
-      outline-color: var(--accent-start);
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        outline-color: var(--accent-start);
+      }
     }
   }
 

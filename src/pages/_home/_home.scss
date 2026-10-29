@@ -55,7 +55,7 @@
     display: inline-flex;
     align-items: baseline;
     gap: 0.6rem;
-    padding-block: 0.35rem;
+    padding-block: 0.5rem; /* 44px tap height with the 1px rule */
     border-bottom: 1px solid var(--line);
     font-family: var(--font-ui);
     font-size: 1rem;
@@ -181,12 +181,20 @@
 }
 
 .index-strip__more {
+  position: relative;
   display: block;
   inline-size: fit-content;
   margin: 0.5rem 0 0 auto;
   padding-block: 0.25rem;
   color: var(--text);
   text-decoration: none;
+
+  /* Small mono label; the tap box extends to 44px tall. */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -0.5rem 0;
+  }
 
   &:hover {
     color: var(--accent-text);
