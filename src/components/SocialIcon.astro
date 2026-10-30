@@ -5,6 +5,7 @@ interface Props {
 }
 
 import FallbackCodeIcon from "./icons/social/FallbackCodeIcon.astro";
+import EmailIcon from "./icons/social/EmailIcon.astro";
 import GithubIcon from "./icons/social/GithubIcon.astro";
 import GoodreadsIcon from "./icons/social/GoodreadsIcon.astro";
 import InstagramIcon from "./icons/social/InstagramIcon.astro";
@@ -13,6 +14,7 @@ import LinkedinIcon from "./icons/social/LinkedinIcon.astro";
 const { name, class: className } = Astro.props;
 
 const ICON_COMPONENTS = {
+  email: EmailIcon,
   github: GithubIcon,
   linkedin: LinkedinIcon,
   instagram: InstagramIcon,

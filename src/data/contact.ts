@@ -37,6 +37,11 @@ export const CONTACT_INTENTS: ContactIntent[] = [
 
 export const CONTACT_CHANNELS: ContactChannel[] = [
   {
+    icon: "email",
+    helper: "Direct email for projects, roles, and collaborations.",
+    intents: ["frontend", "photography", "css", "general"],
+  },
+  {
     icon: "github",
     helper: "Frontend engineering notes, code, and experiments.",
     intents: ["frontend", "general"],

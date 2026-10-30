@@ -28,6 +28,12 @@ export const SITE_CONFIG = {
   rssTitle: "Ritik Patni RSS Feed",
   socials: [
     {
+      label: "hi@ritikpatni.me",
+      href: "mailto:hi@ritikpatni.me",
+      icon: "email",
+      iconSource: "iconsvg.xyz",
+    },
+    {
       label: "GitHub",
       href: "https://github.com/RitikPatni",
       icon: "github",
