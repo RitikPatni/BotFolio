@@ -47,20 +47,25 @@ import "./_about.scss";
 
       <div class="about__socials" aria-label="Social links">
         {
-          SITE_CONFIG.socials.map((social) => (
-            <a
-              class="about__social-link"
-              href={social.href}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <span class="about__social-row">
-                <SocialIcon name={social.icon} class="about__social-icon" />
-                <span class="about__social-label">{social.label}</span>
-              </span>
-              <span class="visually-hidden"> (opens in new tab)</span>
-            </a>
-          ))
+          SITE_CONFIG.socials.map((social) => {
+            const isMailto = social.href.startsWith("mailto:");
+            return (
+              <a
+                class="about__social-link"
+                href={social.href}
+                target={isMailto ? undefined : "_blank"}
+                rel={isMailto ? undefined : "noreferrer noopener"}
+              >
+                <span class="about__social-row">
+                  <SocialIcon name={social.icon} class="about__social-icon" />
+                  <span class="about__social-label">{social.label}</span>
+                </span>
+                {!isMailto && (
+                  <span class="visually-hidden"> (opens in new tab)</span>
+                )}
+              </a>
+            );
+          })
         }
       </div>
     </section>

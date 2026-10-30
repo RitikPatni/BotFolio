@@ -300,21 +300,26 @@ const imageUrl = new URL(image, Astro.site).toString();
           </p>
           <nav class="base-layout__socials" aria-label="Social links">
             {
-              socials.map((social) => (
-                <a
-                  href={social.href}
-                  class="base-layout__social-link"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <SocialIcon
-                    name={social.icon}
-                    class="base-layout__social-icon"
-                  />
-                  {social.label}
-                  <span class="visually-hidden"> (opens in new tab)</span>
-                </a>
-              ))
+              socials.map((social) => {
+                const isMailto = social.href.startsWith("mailto:");
+                return (
+                  <a
+                    href={social.href}
+                    class="base-layout__social-link"
+                    target={isMailto ? undefined : "_blank"}
+                    rel={isMailto ? undefined : "noreferrer noopener"}
+                  >
+                    <SocialIcon
+                      name={social.icon}
+                      class="base-layout__social-icon"
+                    />
+                    {social.label}
+                    {!isMailto && (
+                      <span class="visually-hidden"> (opens in new tab)</span>
+                    )}
+                  </a>
+                );
+              })
             }
           </nav>
         </div>
