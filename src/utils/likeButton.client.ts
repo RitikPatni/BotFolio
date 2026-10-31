@@ -5,13 +5,18 @@
  */
 
 const MAX_MINE = 10;
+const ACTION_RETENTION_MS = 30 * 24 * 60 * 60_000;
+const MAX_TIMER_DELAY_MS = 2_147_000_000;
 const HOLD_START_DELAY_MS = 400; // hold this long before repeats begin
 const HOLD_REPEAT_MS = 300;      // cadence between repeated likes
 const storageKey = (slug: string) => `botfolio:likes:${slug}`;
 const VISITOR_STORAGE_KEY = "botfolio:like-visitor";
 const VISITOR_TOKEN_PATTERN = /^[0-9a-f]{64}$/;
 let fallbackVisitorToken: string | null = null;
-const fallbackMine = new Map<string, number>();
+type PersonalState = { count: number; lastAcceptedAt: number };
+const EMPTY_PERSONAL_STATE: PersonalState = { count: 0, lastAcceptedAt: 0 };
+const fallbackMine = new Map<string, PersonalState>();
+const resetTimers = new WeakMap<HTMLButtonElement, number>();
 
 function createVisitorToken(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(32));
@@ -32,7 +37,7 @@ function visitorToken(): string {
   }
 }
 
-type LikesResponse = { slug?: string; count?: number; error?: string };
+type LikesResponse = { slug?: string; count?: number; error?: string; resetAt?: number };
 
 function formatCount(value: number): string {
   return new Intl.NumberFormat("en-US").format(value);
@@ -79,25 +84,65 @@ function completeHeart(button: HTMLButtonElement): void {
   window.setTimeout(() => heart.classList.remove("floating-like__heart--complete"), 320);
 }
 
-function mineFromStorage(slug: string): number {
+export function personalStateFromStorage(raw: string | null, now = Date.now()): PersonalState {
+  if (raw === null) return { ...EMPTY_PERSONAL_STATE };
+
   try {
-    const raw = localStorage.getItem(storageKey(slug));
-    if (raw !== null) {
-      const mine = Number.parseInt(raw, 10);
-      return Number.isFinite(mine) ? Math.min(Math.max(mine, 0), MAX_MINE) : 0;
+    const value: unknown = JSON.parse(raw);
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+      // Legacy count-only values have no trustworthy age. Let the server decide
+      // whether the token is still capped; it supplies resetAt on rejection.
+      return { ...EMPTY_PERSONAL_STATE };
     }
+    const record = value as { count?: unknown; lastAcceptedAt?: unknown };
+    if (typeof record.count !== "number" || typeof record.lastAcceptedAt !== "number") {
+      return { ...EMPTY_PERSONAL_STATE };
+    }
+    const count = Math.min(Math.max(Math.floor(record.count), 0), MAX_MINE);
+    if (count === 0) return { ...EMPTY_PERSONAL_STATE };
+    const lastAcceptedAt = Number.isFinite(record.lastAcceptedAt)
+      ? Math.min(record.lastAcceptedAt, now)
+      : 0;
+    if (lastAcceptedAt <= now - ACTION_RETENTION_MS) return { ...EMPTY_PERSONAL_STATE };
+    return { count, lastAcceptedAt };
   } catch {
-    // Use the page-session mirror when browser storage is unavailable.
+    return { ...EMPTY_PERSONAL_STATE };
   }
-  return fallbackMine.get(slug) ?? 0;
 }
 
-function storeMine(slug: string, mine: number): void {
+function personalStateFromStorageKey(slug: string): PersonalState {
   try {
-    localStorage.setItem(storageKey(slug), String(mine));
+    const raw = localStorage.getItem(storageKey(slug));
+    if (raw === null) {
+      const fallback = fallbackMine.get(slug);
+      return fallback ? personalStateFromStorage(JSON.stringify(fallback)) : { ...EMPTY_PERSONAL_STATE };
+    }
+    const state = personalStateFromStorage(raw);
+    if (raw !== JSON.stringify(state)) localStorage.setItem(storageKey(slug), JSON.stringify(state));
+    fallbackMine.delete(slug);
+    return state;
+  } catch {
+    const fallback = fallbackMine.get(slug);
+    if (!fallback) return { ...EMPTY_PERSONAL_STATE };
+    const state = personalStateFromStorage(JSON.stringify(fallback));
+    fallbackMine.set(slug, state);
+    return state;
+  }
+}
+
+function mineFromStorage(slug: string): number {
+  return personalStateFromStorageKey(slug).count;
+}
+
+function storeMine(slug: string, mine: number, lastAcceptedAt = Date.now()): void {
+  const state = mine > 0
+    ? { count: Math.min(mine, MAX_MINE), lastAcceptedAt }
+    : { ...EMPTY_PERSONAL_STATE };
+  try {
+    localStorage.setItem(storageKey(slug), JSON.stringify(state));
     fallbackMine.delete(slug);
   } catch {
-    fallbackMine.set(slug, mine);
+    fallbackMine.set(slug, state);
   }
 }
 
@@ -105,8 +150,25 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => window.setTimeout(resolve, ms));
 }
 
-function renderPersonalState(button: HTMLButtonElement, slug: string, animateProgress = false): void {
-  const mine = mineFromStorage(slug);
+function scheduleCapReset(button: HTMLButtonElement, slug: string, state: PersonalState): void {
+  const existing = resetTimers.get(button);
+  if (existing !== undefined) window.clearTimeout(existing);
+  resetTimers.delete(button);
+
+  if (state.count < MAX_MINE || state.lastAcceptedAt <= 0) return;
+  const remaining = state.lastAcceptedAt + ACTION_RETENTION_MS - Date.now();
+  if (remaining <= 0) return;
+  const timer = window.setTimeout(() => {
+    resetTimers.delete(button);
+    if (button.isConnected) renderPersonalState(button, slug);
+  }, Math.min(remaining, MAX_TIMER_DELAY_MS));
+  resetTimers.set(button, timer);
+}
+
+export function renderPersonalState(button: HTMLButtonElement, slug: string, animateProgress = false): void {
+  const state = personalStateFromStorageKey(slug);
+  const mine = state.count;
+  scheduleCapReset(button, slug, state);
   button.dataset.likeMine = String(mine);
   if (animateProgress) button.dataset.likeProgressAnimate = "true";
   const progress = mine / MAX_MINE;
@@ -123,7 +185,7 @@ function renderPersonalState(button: HTMLButtonElement, slug: string, animatePro
   if (hint) hint.textContent = maxed ? "You’ve reached your 10-like limit for this post." : "";
 }
 
-async function loadCount(button: HTMLButtonElement, slug: string): Promise<void> {
+export async function loadCount(button: HTMLButtonElement, slug: string): Promise<void> {
   try {
     const response = await fetch(`/api/likes?slug=${encodeURIComponent(slug)}`, {
       headers: { accept: "application/json" },
@@ -173,7 +235,10 @@ async function like(button: HTMLButtonElement, slug: string): Promise<void> {
   delete button.dataset.likePending;
   if (data?.error === "limit-reached") {
     if (typeof data.count === "number") setCount(button, data.count);
-    storeMine(slug, MAX_MINE);
+    const lastAcceptedAt = typeof data.resetAt === "number" && Number.isSafeInteger(data.resetAt)
+      ? data.resetAt - ACTION_RETENTION_MS
+      : Date.now();
+    storeMine(slug, MAX_MINE, lastAcceptedAt);
     renderPersonalState(button, slug);
     return;
   }
@@ -192,7 +257,24 @@ async function like(button: HTMLButtonElement, slug: string): Promise<void> {
   renderPersonalState(button, slug);
 }
 
+function refreshPersonalStates(): void {
+  document.querySelectorAll<HTMLButtonElement>("[data-like-button]").forEach((button) => {
+    const slug = button.dataset.likeSlug;
+    if (slug) renderPersonalState(button, slug);
+  });
+}
+
+let capResetListenersInstalled = false;
+
 export async function initLikeButtons(): Promise<void> {
+  if (!capResetListenersInstalled) {
+    window.addEventListener("focus", refreshPersonalStates);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) refreshPersonalStates();
+    });
+    capResetListenersInstalled = true;
+  }
+
   document.querySelectorAll<HTMLButtonElement>("[data-like-button]").forEach((button) => {
     if (button.dataset.likeReady === "true") return;
     button.dataset.likeReady = "true";

@@ -16,6 +16,7 @@ public/standard-site/
 # Local Wrangler state and config
 .wrangler/
 wrangler.local.toml
+wrangler.toml
 
 # local evidence artifacts
 /design/

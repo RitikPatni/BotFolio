@@ -1,0 +1,15 @@
+# Copy to the ignored root wrangler.toml for local Pages+D1 development only.
+# Pages requires its config at the project root; this template itself is not auto-loaded.
+# Never run a deployment with the generated local config.
+name = "botfolio-likes-local"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-10-30"
+
+[vars]
+LIKES_SALT = "local-only-test-salt-not-for-production-0000000000000000"
+
+[[d1_databases]]
+binding = "LIKES_DB"
+database_name = "botfolio-likes"
+database_id = "00000000-0000-0000-0000-000000000001"
+migrations_dir = "migrations"
