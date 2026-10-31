@@ -6,7 +6,8 @@
  * purpose — one would take over the project's existing dashboard bindings):
  *   • UMAMI_API_BASE      e.g. https://analytics.ritikpatni.me/api
  *   • UMAMI_WEBSITE_ID    website id in the self-hosted instance
- *   • UMAMI_API_TOKEN     API key (x-umami-api-key) or JWT — server-side only
+ *   • UMAMI_API_KEY       API key (x-umami-api-key) — server-side only
+ *                        (UMAMI_API_TOKEN also accepted as an alias)
  *
  * Any failure returns 5xx JSON; the footer renders nothing on failure —
  * no placeholder, no zero, no stale number.
@@ -24,7 +25,7 @@ function pageviewsEnv(env) {
   return {
     base: (env.UMAMI_API_BASE ?? "").replace(/\/+$/, ""),
     websiteId: env.UMAMI_WEBSITE_ID ?? "",
-    token: env.UMAMI_API_TOKEN ?? "",
+    token: env.UMAMI_API_KEY ?? env.UMAMI_API_TOKEN ?? "",
   };
 }
 
