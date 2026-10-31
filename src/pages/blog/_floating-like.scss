@@ -112,6 +112,19 @@
   42% { transform: scale(1.32); }
 }
 
+.floating-like__total-group {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.floating-like__total {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
 .floating-like__count {
   min-inline-size: 2ch;
   font-family: var(--font-mono);

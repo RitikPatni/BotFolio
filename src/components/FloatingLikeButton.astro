@@ -19,7 +19,7 @@ const { slug, title } = Astro.props;
         data-like-mine={0}
         type="button"
         aria-label={`Like “${title}”`}
-        aria-describedby={`like-status-${slug}`}
+        aria-describedby={`like-explainer-${slug} like-status-${slug}`}
       >
         <span class="floating-like__heart" data-like-heart aria-hidden="true">
           <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
@@ -43,8 +43,12 @@ const { slug, title } = Astro.props;
             />
           </svg>
         </span>
-        <span class="floating-like__count" data-like-count-value aria-live="polite" aria-atomic="true">0</span>
+        <span class="floating-like__total-group">
+          <span class="floating-like__count" data-like-count-value aria-live="polite" aria-atomic="true">0</span>
+          <span class="floating-like__total" data-like-total-label aria-hidden="true">total</span>
+        </span>
       </button>
+      <span class="visually-hidden" id={`like-explainer-${slug}`}>The number is the public total for this post. The heart fill shows your likes from this browser, up to 10.</span>
       <span class="floating-like__status visually-hidden" id={`like-status-${slug}`} data-like-hint aria-live="polite" />
     </aside>
   )

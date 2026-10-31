@@ -8,6 +8,7 @@ const tokenA = randomBytes(32).toString("hex");
 const tokenB = randomBytes(32).toString("hex");
 const tokenC = randomBytes(32).toString("hex");
 const tokenD = randomBytes(32).toString("hex");
+const tokenE = randomBytes(32).toString("hex");
 const checks = [];
 
 async function check(name, action) {
@@ -41,12 +42,18 @@ await check("rendered control carries slug on the initialized button", () => {
   assert.match(articleHtml, /<button[^>]*data-like-button[^>]*data-like-slug="building-quality-gated-ai-code-review-loops"/);
   assert.match(articleHtml, /class="floating-like"[^>]*hidden/);
 });
+await check("rendered page labels the public total separately from personal progress", () => {
+  assert.ok(articleHtml.includes('data-like-total-label aria-hidden="true">total</span>'));
+  assert.ok(articleHtml.includes("The number is the public total for this post. The heart fill shows your likes from this browser, up to 10."));
+});
+
 await check("rendered page includes progressive fill and completion animation hooks", () => {
   assert.ok(articleHtml.includes("data-like-fill-window"));
   assert.ok(articleHtml.includes("floating-like__heart--pop"));
   assert.ok(articleHtml.includes("floating-like__count--roll"));
   assert.ok(articleHtml.includes("floating-like__heart--complete"));
-  assert.ok(articleHtml.includes("floating-like-complete-halo"));
+  assert.ok(!articleHtml.includes("floating-like__halo"));
+  assert.ok(articleHtml.includes('class="floating-like__status visually-hidden"'));
   assert.ok(articleHtml.includes("floating-like__button--error"));
 });
 
@@ -80,6 +87,27 @@ response = await post(slug, tokenB);
 await check("second browser token can like the same post", async () => {
   assert.equal(response.status, 200);
   assert.equal((await response.json()).count, 11);
+});
+
+// Three likes from another browser make the public aggregate start at 3; one
+// fresh token then makes exactly 13 sequential requests for this same post.
+const reportedSlug = `${slug}-same-token-13`;
+for (let index = 0; index < 3; index += 1) {
+  response = await post(reportedSlug, tokenB);
+  assert.equal(response.status, 200);
+}
+const sameTokenAttempts = [];
+for (let index = 0; index < 13; index += 1) {
+  response = await post(reportedSlug, tokenE);
+  sameTokenAttempts.push({ status: response.status, body: await response.json() });
+}
+await check("D1: 10 accepted, requests 11–13 rejected for one token; total remains 13", async () => {
+  assert.deepEqual(sameTokenAttempts.slice(0, 10).map(({ status }) => status), Array(10).fill(200));
+  assert.deepEqual(sameTokenAttempts.slice(10).map(({ status }) => status), Array(3).fill(429));
+  assert.equal(sameTokenAttempts[9].body.count, 13);
+  assert.ok(sameTokenAttempts.slice(10).every(({ body }) => body.error === "limit-reached" && body.count === 13));
+  const result = await get(reportedSlug);
+  assert.equal((await result.json()).count, 13);
 });
 
 const secondSlug = `${slug}-other`;

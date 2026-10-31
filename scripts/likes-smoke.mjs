@@ -12,6 +12,7 @@
  */
 import { DatabaseSync } from "node:sqlite";
 import assert from "node:assert/strict";
+import { randomBytes } from "node:crypto";
 import { onRequestGet, onRequestPost } from "../functions/api/likes.js";
 
 const SCHEMA = `
@@ -235,6 +236,25 @@ await check("no raw browser token in responses or D1", () => {
 e = env();
 res = await post(e, "no-ip-needed", TOKEN_A, null);
 await check("valid browser token works without cf-connecting-ip", () => assert.equal(res.status, 200));
+
+// 11. Thirteen requests from one opaque token: 10 personal actions accepted;
+// a seeded public aggregate from other visitors may still show 13.
+e = env();
+const reportedSlug = "building-quality-gated-ai-code-review-loops";
+const sameVisitorToken = randomBytes(32).toString("hex");
+e.LIKES_DB.db.prepare("INSERT INTO like_counts (slug, count) VALUES (?, ?)").run(reportedSlug, 3);
+const attempts = [];
+for (let index = 0; index < 13; index += 1) {
+  const response = await post(e, reportedSlug, sameVisitorToken, null);
+  attempts.push({ status: response.status, body: await response.json() });
+}
+await check("same token: 10 accepted, requests 11–13 rejected; public aggregate stays 13", async () => {
+  assert.deepEqual(attempts.slice(0, 10).map(({ status }) => status), Array(10).fill(200));
+  assert.deepEqual(attempts.slice(10).map(({ status }) => status), Array(3).fill(429));
+  assert.equal(attempts[9].body.count, 13);
+  assert.ok(attempts.slice(10).every(({ body }) => body.error === "limit-reached" && body.count === 13));
+  assert.equal((await (await get(e, reportedSlug)).json()).count, 13);
+});
 
 console.log(checks.join("\n"));
 console.log(process.exitCode ? "SMOKE TEST FAILED" : "SMOKE TEST PASSED");
