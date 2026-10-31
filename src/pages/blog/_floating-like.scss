@@ -36,6 +36,9 @@
   font: inherit;
   cursor: pointer;
   touch-action: manipulation;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
   transition:
     border-color var(--dur-fast) var(--ease-soft),

@@ -5,6 +5,8 @@
  */
 
 const MAX_MINE = 10;
+const HOLD_START_DELAY_MS = 400; // hold this long before repeats begin
+const HOLD_REPEAT_MS = 300;      // cadence between repeated likes
 const storageKey = (slug: string) => `botfolio:likes:${slug}`;
 const VISITOR_STORAGE_KEY = "botfolio:like-visitor";
 const VISITOR_TOKEN_PATTERN = /^[0-9a-f]{64}$/;
@@ -97,6 +99,10 @@ function storeMine(slug: string, mine: number): void {
   } catch {
     fallbackMine.set(slug, mine);
   }
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
 }
 
 function renderPersonalState(button: HTMLButtonElement, slug: string, animateProgress = false): void {
@@ -208,9 +214,61 @@ export async function initLikeButtons(): Promise<void> {
       dock.hidden = false;
     }
 
+    // Hold-to-repeat: keep firing likes while the button stays pressed.
+    // Requests are serialized (the loop awaits each like), so the count
+    // never desyncs from server responses.
+    let holding = false;
+    let holdDelivered = 0;
+    const stopHold = () => {
+      holding = false;
+    };
+    const runHold = async (): Promise<void> => {
+      await sleep(HOLD_START_DELAY_MS);
+      while (holding && button.isConnected && !button.disabled && mineFromStorage(slug) < MAX_MINE) {
+        await like(button, slug);
+        holdDelivered += 1;
+        if (!holding || mineFromStorage(slug) >= MAX_MINE) break;
+        await sleep(HOLD_REPEAT_MS);
+      }
+    };
+    const startHold = () => {
+      holding = true;
+      holdDelivered = 0;
+      void runHold();
+    };
+
     button.addEventListener("click", () => {
       if (button.disabled) return;
+      // A completed hold already delivered its likes; the trailing click
+      // (pointer or keyboard) must not add one more.
+      if (holdDelivered > 0) {
+        holdDelivered = 0;
+        return;
+      }
       void like(button, slug);
+    });
+
+    button.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0) return;
+      startHold();
+    });
+    window.addEventListener("pointerup", stopHold);
+    window.addEventListener("pointercancel", stopHold);
+    window.addEventListener("blur", stopHold);
+    // Touch long-press must not open the browser context menu here.
+    button.addEventListener("contextmenu", (event) => event.preventDefault());
+
+    button.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      // Our timer drives the repeat cadence; suppress OS key auto-repeat.
+      if (event.repeat) {
+        event.preventDefault();
+        return;
+      }
+      startHold();
+    });
+    button.addEventListener("keyup", (event) => {
+      if (event.key === "Enter" || event.key === " ") stopHold();
     });
   });
 }
