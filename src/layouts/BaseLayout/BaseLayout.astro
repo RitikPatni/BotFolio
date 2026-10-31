@@ -247,8 +247,8 @@ const imageUrl = new URL(image, Astro.site).toString();
     />
     <script
       defer
-      src="https://cloud.umami.is/script.js"
-      data-website-id="1954c052-315e-42e7-bf31-c803cf2cd164"
+      src={import.meta.env.PUBLIC_UMAMI_SRC ?? "https://cloud.umami.is/script.js"}
+      data-website-id={import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ?? "1954c052-315e-42e7-bf31-c803cf2cd164"}
     ></script>
     <slot name="head" />
   </head>
@@ -298,6 +298,9 @@ const imageUrl = new URL(image, Astro.site).toString();
             {" "}
             {SITE_CONFIG.personName} · Built with Astro.
           </p>
+          <p class="base-layout__footer-views" data-site-pageviews hidden>
+            Page views · <span data-site-pageviews-count></span>
+          </p>
           <nav class="base-layout__socials" aria-label="Social links">
             {
               socials.map((social) => {
@@ -328,6 +331,7 @@ const imageUrl = new URL(image, Astro.site).toString();
 
     <script>
       import { initBaseLayoutClient } from "../../utils/layout/baseLayout.client";
+      import { loadPageviews } from "../../utils/layout/pageviews.client";
 
       initBaseLayoutClient({ animateReveals: true });
       document.addEventListener("DOMContentLoaded", () => {
@@ -335,6 +339,8 @@ const imageUrl = new URL(image, Astro.site).toString();
       });
       document.addEventListener("astro:page-load", () => {
         initBaseLayoutClient({ animateReveals: false });
+        // Fires on the initial load and every client-side navigation.
+        void loadPageviews();
       });
     </script>
   </body>
