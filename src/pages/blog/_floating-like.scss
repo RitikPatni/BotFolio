@@ -112,6 +112,9 @@
 }
 
 .floating-like__status {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-end: calc(100% + 0.45rem);
   max-inline-size: 15rem;
   padding-inline: 0.25rem;
   color: var(--text-dim);
