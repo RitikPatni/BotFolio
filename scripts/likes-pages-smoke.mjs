@@ -1,9 +1,13 @@
 import assert from "node:assert/strict";
+import { randomBytes } from "node:crypto";
 
 const base = (process.argv[2] ?? "http://127.0.0.1:8788").replace(/\/$/, "");
 const run = Math.random().toString(36).slice(2, 10);
 const slug = `smoke-${run}`;
-const ip = "203.0.113.41";
+const tokenA = randomBytes(32).toString("hex");
+const tokenB = randomBytes(32).toString("hex");
+const tokenC = randomBytes(32).toString("hex");
+const tokenD = randomBytes(32).toString("hex");
 const checks = [];
 
 async function check(name, action) {
@@ -19,10 +23,13 @@ async function check(name, action) {
 async function get(target) {
   return fetch(`${base}/api/likes?slug=${encodeURIComponent(target)}`);
 }
-async function post(target, sourceIp = ip) {
+async function post(target, visitorToken = tokenA) {
   return fetch(`${base}/api/likes`, {
     method: "POST",
-    headers: { "content-type": "application/json", "cf-connecting-ip": sourceIp },
+    headers: {
+      "content-type": "application/json",
+      "x-like-visitor-token": visitorToken,
+    },
     body: JSON.stringify({ slug: target }),
   });
 }
@@ -69,23 +76,56 @@ await check("local D1 rejects the 11th like without increment", async () => {
   assert.equal((await result.json()).count, 10);
 });
 
+response = await post(slug, tokenB);
+await check("second browser token can like the same post", async () => {
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).count, 11);
+});
+
 const secondSlug = `${slug}-other`;
-response = await post(secondSlug);
-await check("same visitor can like another post", async () => {
+response = await post(secondSlug, tokenA);
+await check("same browser token can like another post", async () => {
   assert.equal(response.status, 200);
   assert.equal((await response.json()).count, 1);
 });
 
-const rateIp = "198.51.100.24";
+const concurrentSlug = `${slug}-concurrent`;
+const concurrent = await Promise.all(Array.from({ length: 20 }, () => post(concurrentSlug, tokenD)));
+const concurrentBodies = await Promise.all(concurrent.map((result) => result.json()));
+await check("concurrent D1 requests accept exactly ten for one token", async () => {
+  assert.equal(concurrent.filter((result) => result.status === 200).length, 10);
+  assert.equal(concurrent.filter((result) => result.status === 429).length, 10);
+  assert.equal(concurrentBodies.filter((item) => item.error === "limit-reached").length, 10);
+  const result = await get(concurrentSlug);
+  assert.equal((await result.json()).count, 10);
+});
+
 for (let index = 0; index < 20; index += 1) {
-  response = await post(`${slug}-rate-${index}`, rateIp);
+  response = await post(`${slug}-rate-${index}`, tokenC);
   assert.equal(response.status, 200, `rate request ${index + 1}: ${await response.text()}`);
 }
-response = await post(`${slug}-rate-over`, rateIp);
+response = await post(`${slug}-rate-over`, tokenC);
 body = await response.json();
+const rateLimitResponseBody = JSON.stringify(body);
 await check("local D1 rate-limits request 21", () => {
   assert.equal(response.status, 429);
   assert.equal(body.error, "rate-limited");
+});
+
+response = await fetch(`${base}/api/likes`, {
+  method: "POST",
+  headers: { "content-type": "application/json" },
+  body: JSON.stringify({ slug: `${slug}-missing-token` }),
+});
+await check("POST without browser token rejected", async () => {
+  assert.equal(response.status, 400);
+  assert.equal((await response.json()).error, "visitor-token-required");
+});
+
+response = await post(`${slug}-bad-token`, "invalid");
+await check("malformed browser token rejected", async () => {
+  assert.equal(response.status, 400);
+  assert.equal((await response.json()).error, "invalid visitor token");
 });
 
 response = await get("not-valid"); // valid route slug shape, zero state
@@ -93,10 +133,12 @@ await check("valid slug accepted", () => assert.equal(response.status, 200));
 response = await get("bad.slug");
 await check("invalid slug rejected", () => assert.equal(response.status, 400));
 
-const captured = JSON.stringify(body);
-await check("rate-limit response contains no raw IP", () => {
-  assert.ok(!captured.includes(rateIp));
-  assert.ok(!/[0-9a-f]{64}/.test(captured));
+const captured = `${rateLimitResponseBody} ${JSON.stringify(body)}`;
+await check("error responses contain no browser token", () => {
+  assert.ok(!captured.includes(tokenC));
+  assert.ok(!captured.includes(tokenA));
+  assert.ok(!captured.includes(tokenB));
+  assert.ok(!captured.includes(tokenD));
 });
 
 console.log(checks.join("\n"));

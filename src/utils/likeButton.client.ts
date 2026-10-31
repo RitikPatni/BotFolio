@@ -6,6 +6,29 @@
 
 const MAX_MINE = 10;
 const storageKey = (slug: string) => `botfolio:likes:${slug}`;
+const VISITOR_STORAGE_KEY = "botfolio:like-visitor";
+const VISITOR_TOKEN_PATTERN = /^[0-9a-f]{64}$/;
+let fallbackVisitorToken: string | null = null;
+const fallbackMine = new Map<string, number>();
+
+function createVisitorToken(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function visitorToken(): string {
+  try {
+    const stored = localStorage.getItem(VISITOR_STORAGE_KEY);
+    if (stored && VISITOR_TOKEN_PATTERN.test(stored)) return stored;
+    const token = createVisitorToken();
+    localStorage.setItem(VISITOR_STORAGE_KEY, token);
+    return token;
+  } catch {
+    // Keep the control usable if storage is blocked; this fallback lasts until reload.
+    fallbackVisitorToken ??= createVisitorToken();
+    return fallbackVisitorToken;
+  }
+}
 
 type LikesResponse = { slug?: string; count?: number; error?: string };
 
@@ -57,10 +80,22 @@ function completeHeart(button: HTMLButtonElement): void {
 function mineFromStorage(slug: string): number {
   try {
     const raw = localStorage.getItem(storageKey(slug));
-    const mine = raw === null ? 0 : Number.parseInt(raw, 10);
-    return Number.isFinite(mine) ? Math.min(Math.max(mine, 0), MAX_MINE) : 0;
+    if (raw !== null) {
+      const mine = Number.parseInt(raw, 10);
+      return Number.isFinite(mine) ? Math.min(Math.max(mine, 0), MAX_MINE) : 0;
+    }
   } catch {
-    return 0;
+    // Use the page-session mirror when browser storage is unavailable.
+  }
+  return fallbackMine.get(slug) ?? 0;
+}
+
+function storeMine(slug: string, mine: number): void {
+  try {
+    localStorage.setItem(storageKey(slug), String(mine));
+    fallbackMine.delete(slug);
+  } catch {
+    fallbackMine.set(slug, mine);
   }
 }
 
@@ -96,7 +131,10 @@ async function sendLike(slug: string): Promise<LikesResponse | null> {
   try {
     const response = await fetch("/api/likes", {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json",
+        "x-like-visitor-token": visitorToken(),
+      },
       body: JSON.stringify({ slug }),
     });
     return (await response.json()) as LikesResponse;
@@ -106,6 +144,7 @@ async function sendLike(slug: string): Promise<LikesResponse | null> {
 }
 
 async function like(button: HTMLButtonElement, slug: string): Promise<void> {
+  if (button.dataset.likePending === "true") return;
   const mine = mineFromStorage(slug);
   if (mine >= MAX_MINE) {
     renderPersonalState(button, slug);
@@ -114,29 +153,23 @@ async function like(button: HTMLButtonElement, slug: string): Promise<void> {
 
   const before = Number.parseInt(button.dataset.likeCount ?? "0", 10) || 0;
   const completesPersonalProgress = mine === MAX_MINE - 1;
+  button.dataset.likePending = "true";
   setCount(button, before + 1);
   if (!completesPersonalProgress) popHeart(button);
   rollCount(button);
 
   const data = await sendLike(slug);
+  delete button.dataset.likePending;
   if (data?.error === "limit-reached") {
     if (typeof data.count === "number") setCount(button, data.count);
-    try {
-      localStorage.setItem(storageKey(slug), String(MAX_MINE));
-    } catch {
-      /* server still enforces the cap */
-    }
+    storeMine(slug, MAX_MINE);
     renderPersonalState(button, slug);
     return;
   }
 
   if (data && typeof data.count === "number") {
     setCount(button, data.count);
-    try {
-      localStorage.setItem(storageKey(slug), String(mine + 1));
-    } catch {
-      /* private mode: server still enforces the cap */
-    }
+    storeMine(slug, mine + 1);
     renderPersonalState(button, slug, true);
     if (completesPersonalProgress) completeHeart(button);
     return;

@@ -8,8 +8,8 @@
  *
  * D1 binding (dashboard-configured — see docs/like-counter.md):
  *   • LIKES_DB    — the D1 database
- *   • LIKES_SALT  — random secret used to HMAC the visitor IP; the raw IP is
- *                   never stored, logged, or returned.
+ *   • LIKES_SALT  — random secret used to HMAC the browser's random token;
+ *                   the raw token is never stored, logged, or returned.
  *
  * Schema (created via the wrangler commands in docs/like-counter.md):
  *   CREATE TABLE like_counts  (slug TEXT PRIMARY KEY, count INTEGER NOT NULL);
@@ -18,17 +18,19 @@
  *     PRIMARY KEY (visitor_hash, slug));
  *
  * GET  /api/likes?slug=<slug>           → 200 {slug, count}
- * POST /api/likes  body {slug}           → 200 {slug, count}  (count after +1)
+ * POST /api/likes (x-like-visitor-token) body {slug}
+ *                                       → 200 {slug, count}  (count after +1)
  *                                         429 {error:"limit-reached"}
  * Anything wrong returns 4xx/5xx JSON with a sanitized message — never the
- * visitor hash, the IP, or D1 error text.
+ * browser token, visitor hash, IP, or D1 error text.
  */
 
 const MAX_LIKES_PER_VISITOR = 10;
 const RATE_LIMIT_MAX = 20;        // requests per visitor per minute (all /api/likes calls)
 const RATE_LIMIT_WINDOW_MS = 60_000;
-const ACTION_RETENTION_MS = 30 * 24 * 60 * 60_000; // per-visitor caps reset after 30d
+const ACTION_RETENTION_MS = 30 * 24 * 60 * 60_000; // per-browser caps reset after 30d
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const VISITOR_TOKEN_PATTERN = /^[0-9a-f]{64}$/;
 
 const json = (data, status) =>
   new Response(JSON.stringify(data), {
@@ -54,10 +56,8 @@ async function readSlugFromPost(request) {
   return slug;
 }
 
-/** HMAC the visitor IP with the configured salt — irreversible per-visitor key. */
-async function visitorHash(request, salt) {
-  const ip =
-    request.headers.get("cf-connecting-ip") ?? "unknown";
+/** HMAC the random first-party browser token; never use a network identifier. */
+async function visitorHash(token, salt) {
   const key = await crypto.subtle.importKey(
     "raw",
     new TextEncoder().encode(salt),
@@ -68,7 +68,7 @@ async function visitorHash(request, salt) {
   const signature = await crypto.subtle.sign(
     "HMAC",
     key,
-    new TextEncoder().encode(ip)
+    new TextEncoder().encode(token)
   );
   return Array.from(new Uint8Array(signature))
     .map((byte) => byte.toString(16).padStart(2, "0"))
@@ -175,10 +175,14 @@ export async function onRequestPost({ request, env, waitUntil }) {
   const slug = await readSlugFromPost(request);
   if (!slug) return json({ error: "invalid slug" }, 400);
 
+  const token = request.headers.get("x-like-visitor-token");
+  if (!token) return json({ error: "visitor-token-required" }, 400);
+  if (!VISITOR_TOKEN_PATTERN.test(token)) return json({ error: "invalid visitor token" }, 400);
+
   const now = Date.now();
   let hash;
   try {
-    hash = await visitorHash(request, env.LIKES_SALT);
+    hash = await visitorHash(token, env.LIKES_SALT);
   } catch {
     return json({ error: "likes write failed" }, 500);
   }
