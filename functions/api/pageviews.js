@@ -40,7 +40,22 @@ async function fetchLifetimePageviews({ base, websiteId, token }) {
     },
   });
   if (!response.ok) {
-    throw new Error(`umami stats ${response.status}`);
+    // Return only the upstream status and a strictly allowlisted error code.
+    // Never forward upstream bodies: they may contain implementation details.
+    let code = "";
+    try {
+      const body = await response.json();
+      const candidate = body?.error?.code ?? body?.code;
+      if (typeof candidate === "string" && /^[a-z0-9_-]{1,48}$/i.test(candidate)) {
+        code = candidate;
+      }
+    } catch {
+      // An empty code is enough to distinguish status-level failures.
+    }
+    const error = new Error("Umami request failed");
+    error.upstreamStatus = response.status;
+    error.upstreamCode = code;
+    throw error;
   }
   const data = await response.json();
   const value = data?.pageviews?.value;
@@ -73,6 +88,17 @@ export async function onRequestGet({ env, waitUntil }) {
     waitUntil(cache.put(cacheKey, response.clone()));
     return response;
   } catch (error) {
-    return json({ error: "pageviews read failed" }, 500);
+    if (Number.isInteger(error?.upstreamStatus)) {
+      return json(
+        {
+          error: "pageviews upstream failed",
+          upstream_status: error.upstreamStatus,
+          ...(error.upstreamCode ? { upstream_code: error.upstreamCode } : {}),
+        },
+        502,
+        { "cache-control": "no-store" }
+      );
+    }
+    return json({ error: "pageviews read failed" }, 500, { "cache-control": "no-store" });
   }
 }

@@ -59,9 +59,14 @@ check("cached response reused", fetchRan, false);
 
 // 4. Umami error → 5xx.
 cacheStore.clear();
-globalThis.fetch = stubFetch(403, { error: "unauthorized" });
+globalThis.fetch = stubFetch(403, { error: { code: "unauthorized", message: "private upstream detail" } });
 res = await onRequestGet({ env, waitUntil, caches });
-check("umami auth failure → 500", res.status, 500);
+check("Umami auth failure → 502", res.status, 502);
+const diagnostic = await res.json();
+check("upstream status exposed", diagnostic.upstream_status, 403);
+check("allowlisted upstream code exposed", diagnostic.upstream_code, "unauthorized");
+check("secret excluded from diagnostic", JSON.stringify(diagnostic).includes("secret-token"), false);
+check("upstream message excluded from diagnostic", JSON.stringify(diagnostic).includes("private upstream detail"), false);
 
 // 5. Malformed payload → 5xx.
 cacheStore.clear();
