@@ -34,9 +34,12 @@ await check("rendered control carries slug on the initialized button", () => {
   assert.match(articleHtml, /<button[^>]*data-like-button[^>]*data-like-slug="building-quality-gated-ai-code-review-loops"/);
   assert.match(articleHtml, /class="floating-like"[^>]*hidden/);
 });
-await check("rendered page includes matching pop, roll, and failure animation hooks", () => {
+await check("rendered page includes progressive fill and completion animation hooks", () => {
+  assert.ok(articleHtml.includes("data-like-fill-window"));
   assert.ok(articleHtml.includes("floating-like__heart--pop"));
   assert.ok(articleHtml.includes("floating-like__count--roll"));
+  assert.ok(articleHtml.includes("floating-like__heart--complete"));
+  assert.ok(articleHtml.includes("floating-like-complete-halo"));
   assert.ok(articleHtml.includes("floating-like__button--error"));
 });
 

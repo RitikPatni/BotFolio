@@ -45,6 +45,15 @@ function shake(button: HTMLElement): void {
   button.classList.add("floating-like__button--error");
 }
 
+function completeHeart(button: HTMLButtonElement): void {
+  const heart = button.querySelector<HTMLElement>("[data-like-heart]");
+  if (!heart) return;
+  heart.classList.remove("floating-like__heart--pop", "floating-like__heart--complete");
+  void heart.offsetWidth;
+  heart.classList.add("floating-like__heart--complete");
+  window.setTimeout(() => heart.classList.remove("floating-like__heart--complete"), 320);
+}
+
 function mineFromStorage(slug: string): number {
   try {
     const raw = localStorage.getItem(storageKey(slug));
@@ -55,9 +64,11 @@ function mineFromStorage(slug: string): number {
   }
 }
 
-function renderPersonalState(button: HTMLButtonElement, slug: string): void {
+function renderPersonalState(button: HTMLButtonElement, slug: string, animateProgress = false): void {
   const mine = mineFromStorage(slug);
   button.dataset.likeMine = String(mine);
+  if (animateProgress) button.dataset.likeProgressAnimate = "true";
+  button.style.setProperty("--like-progress", String(mine / MAX_MINE));
   const maxed = mine >= MAX_MINE;
   button.classList.toggle("floating-like__button--maxed", maxed);
   button.classList.toggle("floating-like__button--liked", mine > 0);
@@ -102,8 +113,9 @@ async function like(button: HTMLButtonElement, slug: string): Promise<void> {
   }
 
   const before = Number.parseInt(button.dataset.likeCount ?? "0", 10) || 0;
+  const completesPersonalProgress = mine === MAX_MINE - 1;
   setCount(button, before + 1);
-  popHeart(button);
+  if (!completesPersonalProgress) popHeart(button);
   rollCount(button);
 
   const data = await sendLike(slug);
@@ -125,7 +137,8 @@ async function like(button: HTMLButtonElement, slug: string): Promise<void> {
     } catch {
       /* private mode: server still enforces the cap */
     }
-    renderPersonalState(button, slug);
+    renderPersonalState(button, slug, true);
+    if (completesPersonalProgress) completeHeart(button);
     return;
   }
 

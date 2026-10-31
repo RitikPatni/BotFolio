@@ -56,21 +56,72 @@
 }
 
 .floating-like__heart {
+  position: relative;
   display: inline-flex;
   color: var(--text-muted);
 
   svg {
+    position: relative;
+    z-index: 1;
     display: block;
   }
+}
+
+.floating-like__fill {
+  fill: currentColor;
 }
 
 .floating-like__button--liked .floating-like__heart,
 .floating-like__button--maxed .floating-like__heart {
   color: var(--accent-text);
+}
 
-  svg path {
-    fill: currentColor;
-  }
+.floating-like__fill-window {
+  transform: scaleY(var(--like-progress, 0));
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+
+.floating-like__button[data-like-progress-animate="true"] .floating-like__fill-window {
+  transition: transform 180ms var(--ease-out);
+}
+
+.floating-like__halo {
+  position: absolute;
+  z-index: 0;
+  inset: -0.3rem;
+  border: 1px solid var(--accent-text);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+}
+
+.floating-like__heart--pop {
+  animation: floating-like-pop 240ms var(--ease-out);
+}
+
+.floating-like__heart--complete {
+  animation: floating-like-complete-pop 280ms var(--ease-out);
+}
+
+.floating-like__heart--complete .floating-like__halo {
+  animation: floating-like-complete-halo 280ms var(--ease-out);
+}
+
+@keyframes floating-like-pop {
+  40% { transform: scale(1.2); }
+  72% { transform: scale(0.96); }
+}
+
+@keyframes floating-like-complete-pop {
+  38% { transform: scale(1.34); }
+  68% { transform: scale(0.96); }
+}
+
+@keyframes floating-like-complete-halo {
+  35% { opacity: 0.55; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.65); }
 }
 
 .floating-like__count {
@@ -85,15 +136,6 @@
 .floating-like__count--roll {
   display: inline-block;
   animation: floating-like-roll 180ms var(--ease-out);
-}
-
-.floating-like__heart--pop {
-  animation: floating-like-pop 240ms var(--ease-out);
-}
-
-@keyframes floating-like-pop {
-  40% { transform: scale(1.2); }
-  72% { transform: scale(0.96); }
 }
 
 @keyframes floating-like-roll {
@@ -126,6 +168,9 @@
 @media (prefers-reduced-motion: reduce) {
   .floating-like__button,
   .floating-like__heart--pop,
+  .floating-like__heart--complete,
+  .floating-like__heart--complete .floating-like__halo,
+  .floating-like__fill-window,
   .floating-like__count--roll,
   .floating-like__button--error {
     animation: none !important;

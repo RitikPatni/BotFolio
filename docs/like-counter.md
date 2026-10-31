@@ -5,6 +5,7 @@ A floating, like-only control on published blog posts. It counts with D1; it doe
 ## Behavior and privacy
 
 - One browser visitor may add at most 10 likes per post. The server enforces this; clearing local storage does not bypass the limit. There is no unlike.
+- The heart fill shows that visitor's own 0–10 progress; the adjacent number remains the public aggregate. Only the accepted 10th like plays the completion pop and single halo pulse. Loading an already-maxed state does not replay it.
 - Counts are public. Visitor identity is an HMAC-SHA-256 of Cloudflare's `cf-connecting-ip`, using `LIKES_SALT`; only that digest is stored. The raw IP is neither stored nor logged nor returned. If Cloudflare omits the header, requests share an `unknown` bucket.
 - POSTs are limited to 20 requests per visitor hash per minute. Old per-visitor action rows are opportunistically removed after 30 days; totals remain.
 - The floating control is visible while the article is in view, and hides outside the article. It has a 44px minimum target, keyboard focus, a labeled button, light/dark tokens, and reduced-motion handling.
@@ -37,7 +38,7 @@ npx --yes --package=node@22 node scripts/likes-smoke.mjs
 npx --yes --package=node@22 node scripts/likes-pages-smoke.mjs http://127.0.0.1:8788
 ```
 
-It checks zero-count GET, increments, ten-like cap and rejected 11th like, rate limit, independent posts/visitors, invalid slugs, missing bindings, and IP/hash non-disclosure. To test the UI, open any published post in the local Pages preview, verify the dock appears only while reading, tab to it and activate with Enter/Space, inspect a 390px viewport, toggle dark mode, and emulate `prefers-reduced-motion: reduce`.
+It checks zero-count GET, increments, ten-like cap and rejected 11th like, rate limit, independent posts/visitors, invalid slugs, missing bindings, and IP/hash non-disclosure. To review the UI, open a published post in the local Pages preview, verify the heart at 0/1/5/9/10 personal likes (separate from the public count), confirm only a successful 10th like gets the completion pulse, then test rejected 11th, 390px layout, keyboard activation, and reduced motion.
 
 ## Production activation — human gate, not run by this prototype
 
