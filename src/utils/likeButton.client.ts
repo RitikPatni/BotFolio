@@ -14,9 +14,22 @@ const VISITOR_STORAGE_KEY = "botfolio:like-visitor";
 const VISITOR_TOKEN_PATTERN = /^[0-9a-f]{64}$/;
 let fallbackVisitorToken: string | null = null;
 type PersonalState = { count: number; lastAcceptedAt: number };
+type QueuedAction = { completesPersonalProgress: boolean };
+type LikeQueue = {
+  slug: string;
+  button: HTMLButtonElement;
+  actions: QueuedAction[];
+  pending: number;
+  inFlight: boolean;
+  confirmedMine: number;
+  lastAcceptedAt: number;
+  confirmedCount: number;
+  countVersion: number;
+};
 const EMPTY_PERSONAL_STATE: PersonalState = { count: 0, lastAcceptedAt: 0 };
 const fallbackMine = new Map<string, PersonalState>();
 const resetTimers = new WeakMap<HTMLButtonElement, number>();
+const likeQueues = new WeakMap<HTMLButtonElement, LikeQueue>();
 
 function createVisitorToken(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(32));
@@ -134,6 +147,26 @@ function mineFromStorage(slug: string): number {
   return personalStateFromStorageKey(slug).count;
 }
 
+function queueFor(button: HTMLButtonElement, slug: string): LikeQueue {
+  let queue = likeQueues.get(button);
+  if (!queue) {
+    const personal = personalStateFromStorageKey(slug);
+    queue = {
+      slug,
+      button,
+      actions: [],
+      pending: 0,
+      inFlight: false,
+      confirmedMine: personal.count,
+      lastAcceptedAt: personal.lastAcceptedAt,
+      confirmedCount: Number.parseInt(button.dataset.likeCount ?? "0", 10) || 0,
+      countVersion: 0,
+    };
+    likeQueues.set(button, queue);
+  }
+  return queue;
+}
+
 function storeMine(slug: string, mine: number, lastAcceptedAt = Date.now()): void {
   const state = mine > 0
     ? { count: Math.min(mine, MAX_MINE), lastAcceptedAt }
@@ -166,7 +199,10 @@ function scheduleCapReset(button: HTMLButtonElement, slug: string, state: Person
 }
 
 export function renderPersonalState(button: HTMLButtonElement, slug: string, animateProgress = false): void {
-  const state = personalStateFromStorageKey(slug);
+  const queue = likeQueues.get(button);
+  const state = queue && queue.pending > 0
+    ? { count: queue.confirmedMine + queue.pending, lastAcceptedAt: Date.now() }
+    : personalStateFromStorageKey(slug);
   const mine = state.count;
   scheduleCapReset(button, slug, state);
   button.dataset.likeMine = String(mine);
@@ -186,21 +222,24 @@ export function renderPersonalState(button: HTMLButtonElement, slug: string, ani
 }
 
 export async function loadCount(button: HTMLButtonElement, slug: string): Promise<void> {
+  const queue = queueFor(button, slug);
+  const version = queue.countVersion;
   try {
     const response = await fetch(`/api/likes?slug=${encodeURIComponent(slug)}`, {
       headers: { accept: "application/json" },
     });
     if (!response.ok) return;
     const data = (await response.json()) as LikesResponse;
-    if (typeof data.count === "number" && data.count >= 0) {
-      setCount(button, data.count);
+    if (typeof data.count === "number" && data.count >= 0 && queue.countVersion === version && queue.pending === 0) {
+      queue.confirmedCount = data.count;
+      setCount(button, queue.confirmedCount + queue.pending);
     }
   } catch {
     // No count yet — keep the initial state; the button still works.
   }
 }
 
-async function sendLike(slug: string): Promise<LikesResponse | null> {
+async function sendLike(slug: string): Promise<{ ok: boolean; status: number; data: LikesResponse } | null> {
   try {
     const response = await fetch("/api/likes", {
       method: "POST",
@@ -210,51 +249,121 @@ async function sendLike(slug: string): Promise<LikesResponse | null> {
       },
       body: JSON.stringify({ slug }),
     });
-    return (await response.json()) as LikesResponse;
+    let data: LikesResponse = {};
+    try {
+      const parsed: unknown = await response.json();
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) data = parsed as LikesResponse;
+    } catch {
+      // Preserve the HTTP status even when an edge-generated body is not JSON.
+    }
+    return { ok: response.ok, status: response.status, data };
   } catch {
     return null;
   }
 }
 
-async function like(button: HTMLButtonElement, slug: string): Promise<void> {
-  if (button.dataset.likePending === "true") return;
-  const mine = mineFromStorage(slug);
+function updateQueueCount(queue: LikeQueue): void {
+  setCount(queue.button, queue.confirmedCount + queue.pending);
+}
+
+function showLikeFailure(queue: LikeQueue, message: string): void {
+  queue.button.dataset.likeQueueFailed = "true";
+  const hint = queue.button.parentElement?.querySelector<HTMLElement>("[data-like-hint]");
+  if (hint) hint.textContent = message;
+  shake(queue.button);
+}
+
+function clearPendingLikes(queue: LikeQueue, mine: number, lastAcceptedAt: number): void {
+  queue.actions.length = 0;
+  queue.pending = 0;
+  queue.confirmedMine = mine;
+  queue.lastAcceptedAt = lastAcceptedAt;
+  storeMine(queue.slug, mine, lastAcceptedAt);
+  updateQueueCount(queue);
+  renderPersonalState(queue.button, queue.slug);
+}
+
+async function drainLikeQueue(queue: LikeQueue): Promise<void> {
+  if (queue.inFlight) return;
+  queue.inFlight = true;
+  try {
+    while (queue.actions.length > 0) {
+      const action = queue.actions.shift()!;
+      const result = await sendLike(queue.slug);
+      if (result?.data.error === "limit-reached") {
+        queue.confirmedCount = typeof result.data.count === "number" ? result.data.count : queue.confirmedCount;
+        queue.countVersion += 1;
+        const lastAcceptedAt = typeof result.data.resetAt === "number" && Number.isSafeInteger(result.data.resetAt)
+          ? result.data.resetAt - ACTION_RETENTION_MS
+          : Date.now();
+        clearPendingLikes(queue, MAX_MINE, lastAcceptedAt);
+        break;
+      }
+
+      if (result?.ok && typeof result.data.count === "number") {
+        queue.pending -= 1;
+        queue.confirmedMine = Math.min(queue.confirmedMine + 1, MAX_MINE);
+        queue.lastAcceptedAt = Date.now();
+        queue.confirmedCount = result.data.count;
+        queue.countVersion += 1;
+        storeMine(queue.slug, queue.confirmedMine, queue.lastAcceptedAt);
+        updateQueueCount(queue);
+        renderPersonalState(queue.button, queue.slug, true);
+        if (action.completesPersonalProgress) completeHeart(queue.button);
+        continue;
+      }
+
+      if (result && result.status >= 400 && result.status < 500) {
+        clearPendingLikes(queue, queue.confirmedMine, queue.lastAcceptedAt);
+        queue.countVersion += 1;
+        showLikeFailure(
+          queue,
+          result.status === 429 || result.data.error === "rate-limited"
+            ? "The likes service is busy. Unsent likes were removed; try again shortly."
+            : "This like was rejected. Your unconfirmed likes were removed. Please try again."
+        );
+        void loadCount(queue.button, queue.slug);
+        break;
+      }
+
+      // A network/5xx failure may have committed, but the server remains the
+      // cap authority. Drop all optimistic state, never retry automatically,
+      // and let a later successful response or limit-reached response reconcile.
+      clearPendingLikes(queue, queue.confirmedMine, queue.lastAcceptedAt);
+      queue.countVersion += 1;
+      showLikeFailure(
+        queue,
+        "The server could not confirm this like. Queued likes were stopped; try again when the connection is stable."
+      );
+      void loadCount(queue.button, queue.slug);
+      break;
+    }
+  } finally {
+    queue.inFlight = false;
+  }
+}
+
+function like(button: HTMLButtonElement, slug: string): void {
+  const queue = queueFor(button, slug);
+  if (queue.pending === 0 && !queue.inFlight) {
+    const personal = personalStateFromStorageKey(slug);
+    queue.confirmedMine = personal.count;
+    queue.lastAcceptedAt = personal.lastAcceptedAt;
+  }
+  const mine = queue.confirmedMine + queue.pending;
   if (mine >= MAX_MINE) {
     renderPersonalState(button, slug);
     return;
   }
 
-  const before = Number.parseInt(button.dataset.likeCount ?? "0", 10) || 0;
   const completesPersonalProgress = mine === MAX_MINE - 1;
-  button.dataset.likePending = "true";
-  setCount(button, before + 1);
+  queue.actions.push({ completesPersonalProgress });
+  queue.pending += 1;
+  updateQueueCount(queue);
   if (!completesPersonalProgress) popHeart(button);
   rollCount(button);
-
-  const data = await sendLike(slug);
-  delete button.dataset.likePending;
-  if (data?.error === "limit-reached") {
-    if (typeof data.count === "number") setCount(button, data.count);
-    const lastAcceptedAt = typeof data.resetAt === "number" && Number.isSafeInteger(data.resetAt)
-      ? data.resetAt - ACTION_RETENTION_MS
-      : Date.now();
-    storeMine(slug, MAX_MINE, lastAcceptedAt);
-    renderPersonalState(button, slug);
-    return;
-  }
-
-  if (data && typeof data.count === "number") {
-    setCount(button, data.count);
-    storeMine(slug, mine + 1);
-    renderPersonalState(button, slug, true);
-    if (completesPersonalProgress) completeHeart(button);
-    return;
-  }
-
-  // Failure (network, rate limit, server cap already hit): revert + shake.
-  setCount(button, before);
-  shake(button);
-  renderPersonalState(button, slug);
+  renderPersonalState(button, slug, true);
+  if (!queue.inFlight) void drainLikeQueue(queue);
 }
 
 function refreshPersonalStates(): void {
@@ -296,27 +405,30 @@ export async function initLikeButtons(): Promise<void> {
       dock.hidden = false;
     }
 
-    // Hold-to-repeat: keep firing likes while the button stays pressed.
-    // Requests are serialized (the loop awaits each like), so the count
-    // never desyncs from server responses.
+    // Hold-to-repeat queues each action at the configured cadence. A separate
+    // per-button worker serializes POSTs without blocking the interaction.
     let holding = false;
     let holdDelivered = 0;
+    let holdGeneration = 0;
     const stopHold = () => {
       holding = false;
+      holdGeneration += 1;
     };
-    const runHold = async (): Promise<void> => {
+    const runHold = async (generation: number): Promise<void> => {
       await sleep(HOLD_START_DELAY_MS);
-      while (holding && button.isConnected && !button.disabled && mineFromStorage(slug) < MAX_MINE) {
-        await like(button, slug);
+      while (generation === holdGeneration && holding && button.isConnected && !button.disabled && button.dataset.likeQueueFailed !== "true" && mineFromStorage(slug) < MAX_MINE) {
+        like(button, slug);
         holdDelivered += 1;
-        if (!holding || mineFromStorage(slug) >= MAX_MINE) break;
+        if (generation !== holdGeneration || !holding || button.disabled || button.dataset.likeQueueFailed === "true" || mineFromStorage(slug) >= MAX_MINE) break;
         await sleep(HOLD_REPEAT_MS);
       }
     };
     const startHold = () => {
       holding = true;
       holdDelivered = 0;
-      void runHold();
+      delete button.dataset.likeQueueFailed;
+      holdGeneration += 1;
+      void runHold(holdGeneration);
     };
 
     button.addEventListener("click", () => {
@@ -327,7 +439,7 @@ export async function initLikeButtons(): Promise<void> {
         holdDelivered = 0;
         return;
       }
-      void like(button, slug);
+      like(button, slug);
     });
 
     button.addEventListener("pointerdown", (event) => {
