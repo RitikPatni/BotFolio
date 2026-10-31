@@ -1,7 +1,7 @@
 /**
- * Like button client behaviour: load the real count, optimistic +1 with a
- * heart pop and count roll, revert + shake on failure, hard stop at 10
- * personal likes (server-enforced; localStorage mirrors it).
+ * Like button client behaviour: per-browser progress only (no public
+ * aggregate), heart fill toward the 10-like personal cap (server-enforced;
+ * localStorage mirrors confirmed likes only).
  */
 
 const MAX_MINE = 10;
@@ -14,9 +14,20 @@ const VISITOR_STORAGE_KEY = "botfolio:like-visitor";
 const VISITOR_TOKEN_PATTERN = /^[0-9a-f]{64}$/;
 let fallbackVisitorToken: string | null = null;
 type PersonalState = { count: number; lastAcceptedAt: number };
+type QueuedAction = { completesPersonalProgress: boolean };
+type LikeQueue = {
+  slug: string;
+  button: HTMLButtonElement;
+  actions: QueuedAction[];
+  pending: number;
+  inFlight: boolean;
+  confirmedMine: number;
+  lastAcceptedAt: number;
+};
 const EMPTY_PERSONAL_STATE: PersonalState = { count: 0, lastAcceptedAt: 0 };
 const fallbackMine = new Map<string, PersonalState>();
 const resetTimers = new WeakMap<HTMLButtonElement, number>();
+const likeQueues = new WeakMap<HTMLButtonElement, LikeQueue>();
 
 function createVisitorToken(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(32));
@@ -37,29 +48,7 @@ function visitorToken(): string {
   }
 }
 
-type LikesResponse = { slug?: string; count?: number; error?: string; resetAt?: number };
-
-function formatCount(value: number): string {
-  return new Intl.NumberFormat("en-US").format(value);
-}
-
-function setCount(button: HTMLElement, value: number): void {
-  const label = button.querySelector<HTMLElement>("[data-like-count-value]");
-  if (!label) return;
-  label.textContent = formatCount(value);
-  button.dataset.likeCount = String(value);
-}
-
-function rollCount(button: HTMLElement): void {
-  const label = button.querySelector<HTMLElement>("[data-like-count-value]");
-  if (!label) return;
-  // Re-trigger the one-shot roll animation (cloning resets it cleanly).
-  // The animation class is only ever present on post-click renders — the
-  // initial page-load count must not animate.
-  const clone = label.cloneNode(true) as HTMLElement;
-  clone.classList.add("floating-like__count--roll");
-  label.replaceWith(clone);
-}
+type LikesResponse = { error?: string; resetAt?: number };
 
 function popHeart(button: HTMLElement): void {
   const heart = button.querySelector<HTMLElement>("[data-like-heart]");
@@ -134,6 +123,24 @@ function mineFromStorage(slug: string): number {
   return personalStateFromStorageKey(slug).count;
 }
 
+function queueFor(button: HTMLButtonElement, slug: string): LikeQueue {
+  let queue = likeQueues.get(button);
+  if (!queue) {
+    const personal = personalStateFromStorageKey(slug);
+    queue = {
+      slug,
+      button,
+      actions: [],
+      pending: 0,
+      inFlight: false,
+      confirmedMine: personal.count,
+      lastAcceptedAt: personal.lastAcceptedAt,
+    };
+    likeQueues.set(button, queue);
+  }
+  return queue;
+}
+
 function storeMine(slug: string, mine: number, lastAcceptedAt = Date.now()): void {
   const state = mine > 0
     ? { count: Math.min(mine, MAX_MINE), lastAcceptedAt }
@@ -166,7 +173,10 @@ function scheduleCapReset(button: HTMLButtonElement, slug: string, state: Person
 }
 
 export function renderPersonalState(button: HTMLButtonElement, slug: string, animateProgress = false): void {
-  const state = personalStateFromStorageKey(slug);
+  const queue = likeQueues.get(button);
+  const state = queue && queue.pending > 0
+    ? { count: queue.confirmedMine + queue.pending, lastAcceptedAt: Date.now() }
+    : personalStateFromStorageKey(slug);
   const mine = state.count;
   scheduleCapReset(button, slug, state);
   button.dataset.likeMine = String(mine);
@@ -185,22 +195,7 @@ export function renderPersonalState(button: HTMLButtonElement, slug: string, ani
   if (hint) hint.textContent = maxed ? "You’ve reached your 10-like limit for this post." : "";
 }
 
-export async function loadCount(button: HTMLButtonElement, slug: string): Promise<void> {
-  try {
-    const response = await fetch(`/api/likes?slug=${encodeURIComponent(slug)}`, {
-      headers: { accept: "application/json" },
-    });
-    if (!response.ok) return;
-    const data = (await response.json()) as LikesResponse;
-    if (typeof data.count === "number" && data.count >= 0) {
-      setCount(button, data.count);
-    }
-  } catch {
-    // No count yet — keep the initial state; the button still works.
-  }
-}
-
-async function sendLike(slug: string): Promise<LikesResponse | null> {
+async function sendLike(slug: string): Promise<{ ok: boolean; status: number; data: LikesResponse } | null> {
   try {
     const response = await fetch("/api/likes", {
       method: "POST",
@@ -210,51 +205,105 @@ async function sendLike(slug: string): Promise<LikesResponse | null> {
       },
       body: JSON.stringify({ slug }),
     });
-    return (await response.json()) as LikesResponse;
+    let data: LikesResponse = {};
+    try {
+      const parsed: unknown = await response.json();
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) data = parsed as LikesResponse;
+    } catch {
+      // Preserve the HTTP status even when an edge-generated body is not JSON.
+    }
+    return { ok: response.ok, status: response.status, data };
   } catch {
     return null;
   }
 }
 
-async function like(button: HTMLButtonElement, slug: string): Promise<void> {
-  if (button.dataset.likePending === "true") return;
-  const mine = mineFromStorage(slug);
+function showLikeFailure(queue: LikeQueue, message: string): void {
+  queue.button.dataset.likeQueueFailed = "true";
+  const hint = queue.button.parentElement?.querySelector<HTMLElement>("[data-like-hint]");
+  if (hint) hint.textContent = message;
+  shake(queue.button);
+}
+
+function clearPendingLikes(queue: LikeQueue, mine: number, lastAcceptedAt: number): void {
+  queue.actions.length = 0;
+  queue.pending = 0;
+  queue.confirmedMine = mine;
+  queue.lastAcceptedAt = lastAcceptedAt;
+  storeMine(queue.slug, mine, lastAcceptedAt);
+  renderPersonalState(queue.button, queue.slug);
+}
+
+async function drainLikeQueue(queue: LikeQueue): Promise<void> {
+  if (queue.inFlight) return;
+  queue.inFlight = true;
+  try {
+    while (queue.actions.length > 0) {
+      const action = queue.actions.shift()!;
+      const result = await sendLike(queue.slug);
+      if (result?.data.error === "limit-reached") {
+        const lastAcceptedAt = typeof result.data.resetAt === "number" && Number.isSafeInteger(result.data.resetAt)
+          ? result.data.resetAt - ACTION_RETENTION_MS
+          : Date.now();
+        clearPendingLikes(queue, MAX_MINE, lastAcceptedAt);
+        break;
+      }
+
+      if (result?.ok) {
+        queue.pending -= 1;
+        queue.confirmedMine = Math.min(queue.confirmedMine + 1, MAX_MINE);
+        queue.lastAcceptedAt = Date.now();
+        storeMine(queue.slug, queue.confirmedMine, queue.lastAcceptedAt);
+        renderPersonalState(queue.button, queue.slug, true);
+        if (action.completesPersonalProgress) completeHeart(queue.button);
+        continue;
+      }
+
+      if (result && result.status >= 400 && result.status < 500) {
+        clearPendingLikes(queue, queue.confirmedMine, queue.lastAcceptedAt);
+        showLikeFailure(
+          queue,
+          result.status === 429 || result.data.error === "rate-limited"
+            ? "The likes service is busy. Unsent likes were removed; try again shortly."
+            : "This like was rejected. Your unconfirmed likes were removed. Please try again."
+        );
+        break;
+      }
+
+      // A network/5xx failure may have committed, but the server remains the
+      // cap authority. Drop all optimistic state, never retry automatically,
+      // and let a later successful response or limit-reached response reconcile.
+      clearPendingLikes(queue, queue.confirmedMine, queue.lastAcceptedAt);
+      showLikeFailure(
+        queue,
+        "The server could not confirm this like. Queued likes were stopped; try again when the connection is stable."
+      );
+      break;
+    }
+  } finally {
+    queue.inFlight = false;
+  }
+}
+
+function like(button: HTMLButtonElement, slug: string): void {
+  const queue = queueFor(button, slug);
+  if (queue.pending === 0 && !queue.inFlight) {
+    const personal = personalStateFromStorageKey(slug);
+    queue.confirmedMine = personal.count;
+    queue.lastAcceptedAt = personal.lastAcceptedAt;
+  }
+  const mine = queue.confirmedMine + queue.pending;
   if (mine >= MAX_MINE) {
     renderPersonalState(button, slug);
     return;
   }
 
-  const before = Number.parseInt(button.dataset.likeCount ?? "0", 10) || 0;
   const completesPersonalProgress = mine === MAX_MINE - 1;
-  button.dataset.likePending = "true";
-  setCount(button, before + 1);
+  queue.actions.push({ completesPersonalProgress });
+  queue.pending += 1;
   if (!completesPersonalProgress) popHeart(button);
-  rollCount(button);
-
-  const data = await sendLike(slug);
-  delete button.dataset.likePending;
-  if (data?.error === "limit-reached") {
-    if (typeof data.count === "number") setCount(button, data.count);
-    const lastAcceptedAt = typeof data.resetAt === "number" && Number.isSafeInteger(data.resetAt)
-      ? data.resetAt - ACTION_RETENTION_MS
-      : Date.now();
-    storeMine(slug, MAX_MINE, lastAcceptedAt);
-    renderPersonalState(button, slug);
-    return;
-  }
-
-  if (data && typeof data.count === "number") {
-    setCount(button, data.count);
-    storeMine(slug, mine + 1);
-    renderPersonalState(button, slug, true);
-    if (completesPersonalProgress) completeHeart(button);
-    return;
-  }
-
-  // Failure (network, rate limit, server cap already hit): revert + shake.
-  setCount(button, before);
-  shake(button);
-  renderPersonalState(button, slug);
+  renderPersonalState(button, slug, true);
+  if (!queue.inFlight) void drainLikeQueue(queue);
 }
 
 function refreshPersonalStates(): void {
@@ -283,7 +332,6 @@ export async function initLikeButtons(): Promise<void> {
     if (!slug) return;
 
     renderPersonalState(button, slug);
-    void loadCount(button, slug);
 
     const dock = button.closest<HTMLElement>("[data-floating-like]");
     const article = document.querySelector(".slug-prose");
@@ -296,27 +344,30 @@ export async function initLikeButtons(): Promise<void> {
       dock.hidden = false;
     }
 
-    // Hold-to-repeat: keep firing likes while the button stays pressed.
-    // Requests are serialized (the loop awaits each like), so the count
-    // never desyncs from server responses.
+    // Hold-to-repeat queues each action at the configured cadence. A separate
+    // per-button worker serializes POSTs without blocking the interaction.
     let holding = false;
     let holdDelivered = 0;
+    let holdGeneration = 0;
     const stopHold = () => {
       holding = false;
+      holdGeneration += 1;
     };
-    const runHold = async (): Promise<void> => {
+    const runHold = async (generation: number): Promise<void> => {
       await sleep(HOLD_START_DELAY_MS);
-      while (holding && button.isConnected && !button.disabled && mineFromStorage(slug) < MAX_MINE) {
-        await like(button, slug);
+      while (generation === holdGeneration && holding && button.isConnected && !button.disabled && button.dataset.likeQueueFailed !== "true" && mineFromStorage(slug) < MAX_MINE) {
+        like(button, slug);
         holdDelivered += 1;
-        if (!holding || mineFromStorage(slug) >= MAX_MINE) break;
+        if (generation !== holdGeneration || !holding || button.disabled || button.dataset.likeQueueFailed === "true" || mineFromStorage(slug) >= MAX_MINE) break;
         await sleep(HOLD_REPEAT_MS);
       }
     };
     const startHold = () => {
       holding = true;
       holdDelivered = 0;
-      void runHold();
+      delete button.dataset.likeQueueFailed;
+      holdGeneration += 1;
+      void runHold(holdGeneration);
     };
 
     button.addEventListener("click", () => {
@@ -327,7 +378,7 @@ export async function initLikeButtons(): Promise<void> {
         holdDelivered = 0;
         return;
       }
-      void like(button, slug);
+      like(button, slug);
     });
 
     button.addEventListener("pointerdown", (event) => {

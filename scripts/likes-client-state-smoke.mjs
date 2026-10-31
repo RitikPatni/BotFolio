@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { loadCount, personalStateFromStorage, renderPersonalState } from "../src/utils/likeButton.client.ts";
+import { initLikeButtons, personalStateFromStorage, renderPersonalState } from "../src/utils/likeButton.client.ts";
 
 const now = 1_800_000_000_000;
 const retention = 30 * 24 * 60 * 60_000;
@@ -85,24 +85,212 @@ try {
 }
 
 const previousFetch = Object.getOwnPropertyDescriptor(globalThis, "fetch");
-let publicCountLabel = "0";
+const previousDocument = Object.getOwnPropertyDescriptor(globalThis, "document");
+currentTime = now;
+Date.now = () => currentTime;
+const postRequests = [];
+let failNextPost = false;
+let failedPostAttempts = 0;
+const eventListeners = new Map();
+const windowListeners = new Map();
+const windowTimers = new Map();
+let fakeTimerId = 0;
+storage.set("botfolio:likes:cap-post", JSON.stringify({ count: 9, lastAcceptedAt: now }));
+const hint = { textContent: "" };
+const makeButton = (slug) => ({
+  dataset: { likeSlug: slug },
+  style: { setProperty() {} },
+  classList: { toggle() {}, remove() {}, add() {} },
+  disabled: false,
+  isConnected: true,
+  parentElement: { querySelector: () => hint },
+  querySelector: () => null,
+  closest: () => null,
+  addEventListener(name, callback) { eventListeners.set(`${slug}:${name}`, callback); },
+});
+const queuedButton = makeButton("queued-post");
+const capButton = makeButton("cap-post");
+const holdButton = makeButton("hold-post");
 Object.defineProperty(globalThis, "fetch", {
   configurable: true,
-  value: async (url, options) => {
-    assert.equal(url, "/api/likes?slug=open-post");
-    assert.deepEqual(options.headers, { accept: "application/json" });
-    return { ok: true, json: async () => ({ count: 42 }) };
+  value: async (url, options = {}) => {
+    if (options.method !== "POST") {
+      throw new Error(`aggregate count fetch must not happen: ${url}`);
+    }
+    if (failNextPost) {
+      failNextPost = false;
+      failedPostAttempts += 1;
+      throw new Error("network unreachable");
+    }
+    let resolve;
+    const response = new Promise((finish) => { resolve = finish; });
+    postRequests.push({ url, options, resolve });
+    return response;
   },
 });
+Object.defineProperty(globalThis, "localStorage", {
+  configurable: true,
+  value: {
+    getItem: (key) => storage.get(key) ?? null,
+    setItem: (key, value) => storage.set(key, value),
+  },
+});
+Object.defineProperty(globalThis, "window", {
+  configurable: true,
+  value: {
+    addEventListener: (name, callback) => windowListeners.set(name, callback),
+    setTimeout: (callback, delay) => {
+      const id = ++fakeTimerId;
+      windowTimers.set(id, { callback, delay });
+      return id;
+    },
+    clearTimeout: (id) => windowTimers.delete(id),
+  },
+});
+Object.defineProperty(globalThis, "document", {
+  configurable: true,
+  value: {
+    hidden: false,
+    addEventListener() {},
+    querySelector: () => null,
+    querySelectorAll: () => [queuedButton, capButton, holdButton],
+  },
+});
+const flush = async () => new Promise((resolve) => setTimeout(resolve, 0));
+const waitFor = async (predicate) => {
+  for (let attempt = 0; attempt < 20 && !predicate(); attempt += 1) await flush();
+  assert.ok(predicate(), "expected queued request did not start");
+};
+const reply = (request, status, data) => request.resolve({ ok: status >= 200 && status < 300, status, json: async () => data });
+const replyWithoutJson = (request, status) => request.resolve({ ok: false, status, json: async () => { throw new Error("non-JSON edge response"); } });
+const fireTimer = async (id) => {
+  const timer = windowTimers.get(id);
+  assert.ok(timer, `timer ${id} should be pending`);
+  windowTimers.delete(id);
+  timer.callback();
+  await flush();
+};
+const timerIdForDelay = (delay, occurrence = 0) => [...windowTimers]
+  .filter(([, timer]) => timer.delay === delay)[occurrence]?.[0];
 try {
-  await loadCount({
-    dataset: {},
-    querySelector: () => ({ set textContent(value) { publicCountLabel = value; } }),
-  }, "open-post");
-  assert.equal(publicCountLabel, "42");
+  await initLikeButtons();
+  await flush();
+  assert.equal(postRequests.length, 0, "initializing the control must not fetch a public aggregate");
+  const click = (button) => eventListeners.get(`${button.dataset.likeSlug}:click`)();
+
+  click(capButton);
+  click(capButton);
+  assert.equal(capButton.dataset.likeMine, "10", "the final available personal slot is reserved immediately");
+  assert.equal(capButton.disabled, true, "queued likes cannot exceed the local 10-like cap");
+  assert.equal(JSON.parse(storage.get("botfolio:likes:cap-post")).count, 9, "pending actions are not persisted as accepted across reloads");
+  assert.equal(postRequests.length, 1, "a rapid second click after the cap does not enqueue another POST");
+  reply(postRequests[0], 200, { slug: "cap-post", count: 101 });
+  await flush();
+  assert.equal(capButton.dataset.likeMine, "10");
+  assert.equal(capButton.disabled, true);
+  assert.equal(JSON.parse(storage.get("botfolio:likes:cap-post")).count, 10);
+
+  click(queuedButton);
+  click(queuedButton);
+  click(queuedButton);
+  assert.equal(queuedButton.dataset.likeMine, "3", "three rapid taps reserve three personal slots immediately");
+  assert.equal(storage.has("botfolio:likes:queued-post"), false, "unconfirmed taps are not persisted as accepted progress");
+  assert.equal(postRequests.length, 2, "only one POST is in flight while the rest queue");
+
+  reply(postRequests[1], 200, { slug: "queued-post", count: 101 });
+  await waitFor(() => postRequests.length === 3);
+  assert.equal(JSON.parse(storage.get("botfolio:likes:queued-post")).count, 1, "only the confirmed like is persisted while others remain queued");
+  reply(postRequests[2], 200, { slug: "queued-post", count: 102 });
+  await waitFor(() => postRequests.length === 4);
+  reply(postRequests[3], 200, { slug: "queued-post", count: 103 });
+  await flush();
+  assert.equal(queuedButton.dataset.likeMine, "3");
+  assert.equal(JSON.parse(storage.get("botfolio:likes:queued-post")).count, 3);
+
+  click(queuedButton);
+  click(queuedButton);
+  await waitFor(() => postRequests.length === 5);
+  replyWithoutJson(postRequests[4], 429);
+  await flush();
+  assert.equal(postRequests.length, 5, "a 429 stops queued requests instead of retrying them");
+  assert.equal(queuedButton.dataset.likeMine, "3", "rejected and unsent taps roll back to confirmed personal progress");
+  assert.match(hint.textContent, /service is busy/, "non-JSON edge 429s still show rate-limit feedback");
+
+  click(queuedButton);
+  click(queuedButton);
+  await waitFor(() => postRequests.length === 6);
+  reply(postRequests[5], 503, { error: "likes service unavailable" });
+  await flush();
+  assert.equal(postRequests.length, 6, "an ambiguous server error stops rather than replaying queued actions");
+  assert.equal(queuedButton.dataset.likeMine, "3", "an ambiguous error never persists unconfirmed progress toward the cap");
+  assert.equal(JSON.parse(storage.get("botfolio:likes:queued-post")).count, 3, "ambiguous failures cannot build toward a 30-day lockout");
+  assert.match(hint.textContent, /could not confirm/);
+
+  failNextPost = true;
+  click(queuedButton);
+  await flush();
+  assert.equal(failedPostAttempts, 1, "a network-level failure reaches the ambiguous path");
+  assert.equal(queuedButton.dataset.likeMine, "3", "a network failure must not persist unconfirmed progress");
+  assert.equal(JSON.parse(storage.get("botfolio:likes:queued-post")).count, 3);
+  assert.match(hint.textContent, /could not confirm/);
+  click(queuedButton);
+  await waitFor(() => postRequests.length === 7);
+  reply(postRequests[6], 200, { slug: "queued-post", count: 105 });
+  await flush();
+  assert.equal(queuedButton.dataset.likeMine, "4", "the next successful like after a network failure is still accepted");
+  assert.equal(JSON.parse(storage.get("botfolio:likes:queued-post")).count, 4);
+
+  click(queuedButton);
+  click(queuedButton);
+  await waitFor(() => postRequests.length === 8);
+  reply(postRequests[7], 429, { error: "limit-reached", slug: "queued-post", count: 105, resetAt: now + retention });
+  await flush();
+  assert.equal(postRequests.length, 8, "a limit-reached response stops the queued burst");
+  assert.equal(queuedButton.dataset.likeMine, "10", "the server cap is applied immediately");
+  assert.equal(queuedButton.disabled, true);
+  assert.deepEqual(JSON.parse(storage.get("botfolio:likes:queued-post")), { count: 10, lastAcceptedAt: now }, "resetAt is converted to the accepted-at timestamp");
+
+  eventListeners.get("hold-post:pointerdown")({ button: 0 });
+  const firstHoldStart = timerIdForDelay(400);
+  assert.ok(firstHoldStart);
+  windowListeners.get("pointerup")(); // release before the 400ms hold threshold
+  click(holdButton); // normal tap
+  await waitFor(() => postRequests.length === 9);
+  eventListeners.get("hold-post:pointerdown")({ button: 0 }); // press again before the old timer fires
+  const secondHoldStart = timerIdForDelay(400, 1);
+  assert.ok(secondHoldStart);
+
+  await fireTimer(firstHoldStart);
+  assert.equal(holdButton.dataset.likeMine, "1", "a cancelled pre-threshold hold cannot wake inside the next hold");
+  await fireTimer(secondHoldStart);
+  assert.equal(holdButton.dataset.likeMine, "2");
+  const repeatTimer = timerIdForDelay(300);
+  assert.ok(repeatTimer);
+  await fireTimer(repeatTimer);
+  assert.equal(holdButton.dataset.likeMine, "3", "hold repeat queues at 300ms cadence while the first response is delayed");
+  windowListeners.get("pointerup")();
+  click(holdButton); // the trailing click must not enqueue beyond the held actions
+  assert.equal(holdButton.dataset.likeMine, "3");
+  assert.equal(postRequests.length, 9, "only the first held request is in flight");
+
+  reply(postRequests[8], 200, { slug: "hold-post", count: 105 });
+  await waitFor(() => postRequests.length === 10);
+  reply(postRequests[9], 200, { slug: "hold-post", count: 106 });
+  await waitFor(() => postRequests.length === 11);
+  reply(postRequests[10], 200, { slug: "hold-post", count: 107 });
+  await flush();
+  assert.equal(holdButton.dataset.likeMine, "3");
+  assert.equal(postRequests.every(({ options }) => options.method === "POST"), true, "no aggregate count GET was ever issued");
 } finally {
+  Date.now = originalDateNow;
   if (previousFetch) Object.defineProperty(globalThis, "fetch", previousFetch);
   else delete globalThis.fetch;
+  if (previousDocument) Object.defineProperty(globalThis, "document", previousDocument);
+  else delete globalThis.document;
+  if (previousWindow) Object.defineProperty(globalThis, "window", previousWindow);
+  else delete globalThis.window;
+  if (previousLocalStorage) Object.defineProperty(globalThis, "localStorage", previousLocalStorage);
+  else delete globalThis.localStorage;
 }
 
 console.log("CLIENT STATE SMOKE PASSED");

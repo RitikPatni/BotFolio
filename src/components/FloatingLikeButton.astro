@@ -15,7 +15,6 @@ const { slug, title } = Astro.props;
         class="floating-like__button"
         data-like-button
         data-like-slug={slug}
-        data-like-count={0}
         data-like-mine={0}
         type="button"
         aria-label={`Like “${title}”`}
@@ -43,12 +42,8 @@ const { slug, title } = Astro.props;
             />
           </svg>
         </span>
-        <span class="floating-like__total-group">
-          <span class="floating-like__count" data-like-count-value aria-live="polite" aria-atomic="true">0</span>
-          <span class="floating-like__total" data-like-total-label aria-hidden="true">total</span>
-        </span>
       </button>
-      <span class="visually-hidden" id={`like-explainer-${slug}`}>The number is the public total for this post. The heart fill shows your likes from this browser, up to 10.</span>
+      <span class="visually-hidden" id={`like-explainer-${slug}`}>The heart fill shows your personal progress toward 10 likes on this post.</span>
       <span class="floating-like__status visually-hidden" id={`like-status-${slug}`} data-like-hint aria-live="polite" />
     </aside>
   )
