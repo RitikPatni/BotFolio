@@ -169,6 +169,17 @@
     color: var(--text-dim);
   }
 
+  /* Lifetime pageviews line: hidden until the API returns a real total. */
+  &__footer-views {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+  }
+
   &__socials {
     display: flex;
     flex-wrap: wrap;
