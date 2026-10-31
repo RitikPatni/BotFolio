@@ -28,7 +28,7 @@ const MAX_LIKES_PER_VISITOR = 10;
 const RATE_LIMIT_MAX = 20;        // requests per visitor per minute (all /api/likes calls)
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const ACTION_RETENTION_MS = 30 * 24 * 60 * 60_000; // per-visitor caps reset after 30d
-const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/i;
+const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const json = (data, status) =>
   new Response(JSON.stringify(data), {
@@ -81,22 +81,16 @@ async function visitorHash(request, salt) {
  */
 async function allowRate(db, hash, now) {
   const windowStart = Math.floor(now / RATE_LIMIT_WINDOW_MS) * RATE_LIMIT_WINDOW_MS;
-  const row = await db
+  const result = await db
     .prepare(
-      "SELECT hits FROM like_rate WHERE visitor_hash = ? AND window_start = ?"
+      `INSERT INTO like_rate (visitor_hash, window_start, hits) VALUES (?, ?, 1)
+       ON CONFLICT(visitor_hash, window_start) DO UPDATE SET hits = hits + 1
+       WHERE hits < ${RATE_LIMIT_MAX}
+       RETURNING hits`
     )
     .bind(hash, windowStart)
     .first();
-  const hits = row?.hits ?? 0;
-  if (hits >= RATE_LIMIT_MAX) return false;
-  await db
-    .prepare(
-      `INSERT INTO like_rate (visitor_hash, window_start, hits) VALUES (?, ?, 1)
-       ON CONFLICT(visitor_hash, window_start) DO UPDATE SET hits = hits + 1`
-    )
-    .bind(hash, windowStart)
-    .run();
-  return true;
+  return result !== null;
 }
 
 async function getCount(db, slug) {
@@ -108,34 +102,35 @@ async function getCount(db, slug) {
 }
 
 async function addLike(db, hash, slug, now) {
-  // Atomic cap: the upsert's WHERE clause refuses the 11th like, so two
-  // racing requests can never push one visitor past the limit. Only when the
-  // actions row was written does the count row increment — both in one batch
-  // (D1 batches are sequential + atomic).
-  const actions = await db
-    .prepare(
-      `INSERT INTO like_actions (visitor_hash, slug, likes_given, last_ts)
-       VALUES (?, ?, 1, ?)
-       ON CONFLICT(visitor_hash, slug) DO UPDATE
-         SET likes_given = likes_given + 1, last_ts = ?
-         WHERE likes_given < ${MAX_LIKES_PER_VISITOR}
-       RETURNING likes_given`
-    )
-    .bind(hash, slug, now, now)
-    .first();
+  // D1 batches run sequentially and atomically. The second statement reads
+  // SQLite's changes() from the conditional action upsert, so a rejected cap
+  // cannot increment the aggregate, even when requests race.
+  const results = await db.batch([
+    db
+      .prepare(
+        `INSERT INTO like_actions (visitor_hash, slug, likes_given, last_ts)
+         VALUES (?, ?, 1, ?)
+         ON CONFLICT(visitor_hash, slug) DO UPDATE
+           SET likes_given = likes_given + 1, last_ts = ?
+           WHERE likes_given < ${MAX_LIKES_PER_VISITOR}
+         RETURNING likes_given`
+      )
+      .bind(hash, slug, now, now),
+    db
+      .prepare(
+        `INSERT INTO like_counts (slug, count)
+         SELECT ?, 1 WHERE changes() = 1
+         ON CONFLICT(slug) DO UPDATE SET count = count + 1
+         RETURNING count`
+      )
+      .bind(slug),
+  ]);
 
-  if (!actions) return { limitReached: true };
+  const action = results[0]?.results?.[0];
+  if (!action) return { limitReached: true };
 
-  const counts = await db
-    .prepare(
-      `INSERT INTO like_counts (slug, count) VALUES (?, 1)
-       ON CONFLICT(slug) DO UPDATE SET count = count + 1
-       RETURNING count`
-    )
-    .bind(slug)
-    .first();
-
-  return { limitReached: false, count: counts?.count ?? null };
+  const count = results[1]?.results?.[0]?.count;
+  return { limitReached: false, count: typeof count === "number" ? count : null };
 }
 
 /** Opportunistic cleanup: expired visitor caps + stale rate rows. */

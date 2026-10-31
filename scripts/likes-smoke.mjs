@@ -44,16 +44,18 @@ class FakeD1 {
   prepare(sql) {
     const statement = this.db.prepare(sql);
     return {
-      bind: (...params) => {
-        const bound = { params };
-        return {
-          first: async () => statement.get(...params) ?? null,
-          run: async () => statement.run(...params),
-        };
-      },
+      bind: (...params) => ({
+        first: async () => statement.get(...params) ?? null,
+        run: async () => statement.run(...params),
+        all: async () => ({ results: statement.all(...params) }),
+      }),
       first: async () => statement.get() ?? null,
       run: async () => statement.run(),
     };
+  }
+
+  async batch(statements) {
+    return Promise.all(statements.map((statement) => statement.all()));
   }
 }
 
@@ -80,7 +82,7 @@ const post = (e, slug, ip = "203.0.113.7") =>
 const checks = [];
 const check = async (name, fn) => {
   try {
-    fn();
+    await fn();
     checks.push(`PASS  ${name}`);
   } catch (error) {
     checks.push(`FAIL  ${name}  (${error.message})`);
@@ -127,23 +129,26 @@ await check("second visitor adds 10 more → count 20", async () =>
 
 // 5. Per-post caps are independent.
 res = await post(e, "other-post");
-await check("capped visitor can like a different post", () => {
+await check("capped visitor can like a different post", async () => {
   assert.equal(res.status, 200);
-  assert.equal(res.json().count, 1);
+  assert.equal((await res.json()).count, 1);
 });
 
 // 6. Rate limit: fresh visitor, hammer past 20 requests in the window.
 for (let i = 0; i < 20; i++) {
-  res = await post(e, "rate-post", "192.0.2.50");
+  res = await post(e, `rate-post-${i}`, "192.0.2.50");
+  assert.equal(res.status, 200, `request ${i + 1} should be allowed`);
 }
-res = await post(e, "rate-post", "192.0.2.50");
+res = await post(e, "rate-post-20", "192.0.2.50");
+body = await res.json();
 await check("21st request in window → 429 rate-limited", () => {
   assert.equal(res.status, 429);
-  assert.equal((res.json()).error, "rate-limited");
+  assert.equal(body.error, "rate-limited");
 });
-res = await get(e, "rate-post");
-await check("rate-limited writes were capped at 20", async () =>
-  assert.equal((await res.json()).count, 20));
+await check("rate limit counter stops at 20", () => {
+  const row = e.LIKES_DB.db.prepare("SELECT MAX(hits) AS hits FROM like_rate").get();
+  assert.equal(row.hits, 20);
+});
 
 // 7. Slug validation.
 for (const bad of ["", "UPPER", "has space", "a".repeat(161), "dot.slug", "semi;colon"]) {

@@ -27,22 +27,22 @@ function rollCount(button: HTMLElement): void {
   // The animation class is only ever present on post-click renders — the
   // initial page-load count must not animate.
   const clone = label.cloneNode(true) as HTMLElement;
-  clone.classList.add("like-button__count--roll");
+  clone.classList.add("floating-like__count--roll");
   label.replaceWith(clone);
 }
 
 function popHeart(button: HTMLElement): void {
   const heart = button.querySelector<HTMLElement>("[data-like-heart]");
   if (!heart) return;
-  heart.classList.remove("like-button__heart--pop");
+  heart.classList.remove("floating-like__heart--pop");
   void heart.offsetWidth; // restart the keyframe
-  heart.classList.add("like-button__heart--pop");
+  heart.classList.add("floating-like__heart--pop");
 }
 
 function shake(button: HTMLElement): void {
-  button.classList.remove("like-button--error");
+  button.classList.remove("floating-like__button--error");
   void button.offsetWidth;
-  button.classList.add("like-button--error");
+  button.classList.add("floating-like__button--error");
 }
 
 function mineFromStorage(slug: string): number {
@@ -59,7 +59,8 @@ function renderPersonalState(button: HTMLButtonElement, slug: string): void {
   const mine = mineFromStorage(slug);
   button.dataset.likeMine = String(mine);
   const maxed = mine >= MAX_MINE;
-  button.classList.toggle("like-button--maxed", maxed);
+  button.classList.toggle("floating-like__button--maxed", maxed);
+  button.classList.toggle("floating-like__button--liked", mine > 0);
   button.disabled = maxed;
   const hint = button.parentElement?.querySelector<HTMLElement>("[data-like-hint]");
   if (hint) hint.textContent = maxed ? "That's all 10 of your likes" : "";
@@ -106,6 +107,17 @@ async function like(button: HTMLButtonElement, slug: string): Promise<void> {
   rollCount(button);
 
   const data = await sendLike(slug);
+  if (data?.error === "limit-reached") {
+    if (typeof data.count === "number") setCount(button, data.count);
+    try {
+      localStorage.setItem(storageKey(slug), String(MAX_MINE));
+    } catch {
+      /* server still enforces the cap */
+    }
+    renderPersonalState(button, slug);
+    return;
+  }
+
   if (data && typeof data.count === "number") {
     setCount(button, data.count);
     try {
@@ -133,6 +145,17 @@ export async function initLikeButtons(): Promise<void> {
 
     renderPersonalState(button, slug);
     void loadCount(button, slug);
+
+    const dock = button.closest<HTMLElement>("[data-floating-like]");
+    const article = document.querySelector(".slug-prose");
+    if (dock && article && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        dock.hidden = !entry.isIntersecting;
+      }, { threshold: 0.01 });
+      observer.observe(article);
+    } else if (dock) {
+      dock.hidden = false;
+    }
 
     button.addEventListener("click", () => {
       if (button.disabled) return;

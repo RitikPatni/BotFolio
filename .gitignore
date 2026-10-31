@@ -13,6 +13,10 @@ public/standard-site/
 # Screenshot artifacts from visual testing / preview tools
 .shots/
 
+# Local Wrangler state and config
+.wrangler/
+wrangler.local.toml
+
 # local evidence artifacts
 /design/
 /.p1-evidence/

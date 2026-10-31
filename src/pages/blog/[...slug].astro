@@ -1,7 +1,7 @@
 ---
 import crypto from "node:crypto";
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
-import LikeButton from "../../components/LikeButton.astro";
+import FloatingLikeButton from "../../components/FloatingLikeButton.astro";
 import { getCollection, render } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
 import { formatDisplayDate } from "../../utils/date";
@@ -32,6 +32,7 @@ const ogImage = `/og/blog/${slugOf(post)}.png?v=${ogVersion}`;
 const STANDARD_SITE_DID = "did:plc:53jkze3ofomdesnodoz5i34y";
 const standardSiteDocUri = `at://${STANDARD_SITE_DID}/site.standard.document/${slugOf(post)}`;
 import "./_slug.scss";
+import "./_floating-like.scss";
 ---
 
 <BaseLayout
@@ -62,5 +63,5 @@ import "./_slug.scss";
     <Content />
   </article>
 
-  <LikeButton slug={slugOf(post)} />
+  <FloatingLikeButton slug={slugOf(post)} title={post.data.title} />
 </BaseLayout>
