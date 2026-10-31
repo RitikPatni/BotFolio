@@ -51,7 +51,14 @@ check("startAt=0 for lifetime", lastFetch.url.includes("startAt=0"), true);
 check("api key header sent", lastFetch.init.headers["x-umami-api-key"], "secret-token");
 check("bearer header sent", lastFetch.init.headers.authorization, "Bearer secret-token");
 
-// 3. Second call served from cache (fetch must not run again).
+// 3. Current Umami API v3 shape uses a numeric pageviews field.
+cacheStore.clear();
+globalThis.fetch = stubFetch(200, { pageviews: 1120, visitors: 288, visits: 303 });
+res = await onRequestGet({ env, waitUntil, caches });
+check("numeric pageviews shape status", res.status, 200);
+check("numeric pageviews total", (await res.json()).pageviews, 1120);
+
+// 4. Second call served from cache (fetch must not run again).
 let fetchRan = false;
 globalThis.fetch = () => { fetchRan = true; return Promise.resolve(new Response("{}", { status: 200 })); };
 res = await onRequestGet({ env, waitUntil, caches });

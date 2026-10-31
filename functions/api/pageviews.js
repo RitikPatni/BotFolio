@@ -58,9 +58,11 @@ async function fetchLifetimePageviews({ base, websiteId, token }) {
     throw error;
   }
   const data = await response.json();
-  const value = data?.pageviews?.value;
+  const value = typeof data?.pageviews === "number"
+    ? data.pageviews
+    : data?.pageviews?.value;
   if (typeof value !== "number" || value < 0) {
-    throw new Error("umami stats: missing pageviews.value");
+    throw new Error("umami stats: missing pageviews value");
   }
   return value;
 }
