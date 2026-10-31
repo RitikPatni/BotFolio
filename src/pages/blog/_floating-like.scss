@@ -115,38 +115,6 @@
   42% { transform: scale(1.32); }
 }
 
-.floating-like__total-group {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.25rem;
-}
-
-.floating-like__total {
-  color: var(--text-dim);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  line-height: 1;
-}
-
-.floating-like__count {
-  min-inline-size: 2ch;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  text-align: center;
-}
-
-.floating-like__count--roll {
-  display: inline-block;
-  animation: floating-like-roll 180ms var(--ease-out);
-}
-
-@keyframes floating-like-roll {
-  from { transform: translateY(0.4em); opacity: 0.3; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
 @keyframes floating-like-shake {
   25% { transform: translateX(-3px); }
   75% { transform: translateX(3px); }
@@ -162,7 +130,6 @@
   .floating-like__heart--pop,
   .floating-like__heart--complete,
   .floating-like__fill-window,
-  .floating-like__count--roll,
   .floating-like__button--error {
     animation: none !important;
     transition: none !important;

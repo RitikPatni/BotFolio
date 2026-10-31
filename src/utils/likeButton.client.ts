@@ -1,7 +1,7 @@
 /**
- * Like button client behaviour: load the real count, optimistic +1 with a
- * heart pop and count roll, revert + shake on failure, hard stop at 10
- * personal likes (server-enforced; localStorage mirrors it).
+ * Like button client behaviour: per-browser progress only (no public
+ * aggregate), heart fill toward the 10-like personal cap (server-enforced;
+ * localStorage mirrors confirmed likes only).
  */
 
 const MAX_MINE = 10;
@@ -23,8 +23,6 @@ type LikeQueue = {
   inFlight: boolean;
   confirmedMine: number;
   lastAcceptedAt: number;
-  confirmedCount: number;
-  countVersion: number;
 };
 const EMPTY_PERSONAL_STATE: PersonalState = { count: 0, lastAcceptedAt: 0 };
 const fallbackMine = new Map<string, PersonalState>();
@@ -50,29 +48,7 @@ function visitorToken(): string {
   }
 }
 
-type LikesResponse = { slug?: string; count?: number; error?: string; resetAt?: number };
-
-function formatCount(value: number): string {
-  return new Intl.NumberFormat("en-US").format(value);
-}
-
-function setCount(button: HTMLElement, value: number): void {
-  const label = button.querySelector<HTMLElement>("[data-like-count-value]");
-  if (!label) return;
-  label.textContent = formatCount(value);
-  button.dataset.likeCount = String(value);
-}
-
-function rollCount(button: HTMLElement): void {
-  const label = button.querySelector<HTMLElement>("[data-like-count-value]");
-  if (!label) return;
-  // Re-trigger the one-shot roll animation (cloning resets it cleanly).
-  // The animation class is only ever present on post-click renders — the
-  // initial page-load count must not animate.
-  const clone = label.cloneNode(true) as HTMLElement;
-  clone.classList.add("floating-like__count--roll");
-  label.replaceWith(clone);
-}
+type LikesResponse = { error?: string; resetAt?: number };
 
 function popHeart(button: HTMLElement): void {
   const heart = button.querySelector<HTMLElement>("[data-like-heart]");
@@ -159,8 +135,6 @@ function queueFor(button: HTMLButtonElement, slug: string): LikeQueue {
       inFlight: false,
       confirmedMine: personal.count,
       lastAcceptedAt: personal.lastAcceptedAt,
-      confirmedCount: Number.parseInt(button.dataset.likeCount ?? "0", 10) || 0,
-      countVersion: 0,
     };
     likeQueues.set(button, queue);
   }
@@ -221,24 +195,6 @@ export function renderPersonalState(button: HTMLButtonElement, slug: string, ani
   if (hint) hint.textContent = maxed ? "You’ve reached your 10-like limit for this post." : "";
 }
 
-export async function loadCount(button: HTMLButtonElement, slug: string): Promise<void> {
-  const queue = queueFor(button, slug);
-  const version = queue.countVersion;
-  try {
-    const response = await fetch(`/api/likes?slug=${encodeURIComponent(slug)}`, {
-      headers: { accept: "application/json" },
-    });
-    if (!response.ok) return;
-    const data = (await response.json()) as LikesResponse;
-    if (typeof data.count === "number" && data.count >= 0 && queue.countVersion === version && queue.pending === 0) {
-      queue.confirmedCount = data.count;
-      setCount(button, queue.confirmedCount + queue.pending);
-    }
-  } catch {
-    // No count yet — keep the initial state; the button still works.
-  }
-}
-
 async function sendLike(slug: string): Promise<{ ok: boolean; status: number; data: LikesResponse } | null> {
   try {
     const response = await fetch("/api/likes", {
@@ -262,10 +218,6 @@ async function sendLike(slug: string): Promise<{ ok: boolean; status: number; da
   }
 }
 
-function updateQueueCount(queue: LikeQueue): void {
-  setCount(queue.button, queue.confirmedCount + queue.pending);
-}
-
 function showLikeFailure(queue: LikeQueue, message: string): void {
   queue.button.dataset.likeQueueFailed = "true";
   const hint = queue.button.parentElement?.querySelector<HTMLElement>("[data-like-hint]");
@@ -279,7 +231,6 @@ function clearPendingLikes(queue: LikeQueue, mine: number, lastAcceptedAt: numbe
   queue.confirmedMine = mine;
   queue.lastAcceptedAt = lastAcceptedAt;
   storeMine(queue.slug, mine, lastAcceptedAt);
-  updateQueueCount(queue);
   renderPersonalState(queue.button, queue.slug);
 }
 
@@ -291,8 +242,6 @@ async function drainLikeQueue(queue: LikeQueue): Promise<void> {
       const action = queue.actions.shift()!;
       const result = await sendLike(queue.slug);
       if (result?.data.error === "limit-reached") {
-        queue.confirmedCount = typeof result.data.count === "number" ? result.data.count : queue.confirmedCount;
-        queue.countVersion += 1;
         const lastAcceptedAt = typeof result.data.resetAt === "number" && Number.isSafeInteger(result.data.resetAt)
           ? result.data.resetAt - ACTION_RETENTION_MS
           : Date.now();
@@ -300,14 +249,11 @@ async function drainLikeQueue(queue: LikeQueue): Promise<void> {
         break;
       }
 
-      if (result?.ok && typeof result.data.count === "number") {
+      if (result?.ok) {
         queue.pending -= 1;
         queue.confirmedMine = Math.min(queue.confirmedMine + 1, MAX_MINE);
         queue.lastAcceptedAt = Date.now();
-        queue.confirmedCount = result.data.count;
-        queue.countVersion += 1;
         storeMine(queue.slug, queue.confirmedMine, queue.lastAcceptedAt);
-        updateQueueCount(queue);
         renderPersonalState(queue.button, queue.slug, true);
         if (action.completesPersonalProgress) completeHeart(queue.button);
         continue;
@@ -315,14 +261,12 @@ async function drainLikeQueue(queue: LikeQueue): Promise<void> {
 
       if (result && result.status >= 400 && result.status < 500) {
         clearPendingLikes(queue, queue.confirmedMine, queue.lastAcceptedAt);
-        queue.countVersion += 1;
         showLikeFailure(
           queue,
           result.status === 429 || result.data.error === "rate-limited"
             ? "The likes service is busy. Unsent likes were removed; try again shortly."
             : "This like was rejected. Your unconfirmed likes were removed. Please try again."
         );
-        void loadCount(queue.button, queue.slug);
         break;
       }
 
@@ -330,12 +274,10 @@ async function drainLikeQueue(queue: LikeQueue): Promise<void> {
       // cap authority. Drop all optimistic state, never retry automatically,
       // and let a later successful response or limit-reached response reconcile.
       clearPendingLikes(queue, queue.confirmedMine, queue.lastAcceptedAt);
-      queue.countVersion += 1;
       showLikeFailure(
         queue,
         "The server could not confirm this like. Queued likes were stopped; try again when the connection is stable."
       );
-      void loadCount(queue.button, queue.slug);
       break;
     }
   } finally {
@@ -359,9 +301,7 @@ function like(button: HTMLButtonElement, slug: string): void {
   const completesPersonalProgress = mine === MAX_MINE - 1;
   queue.actions.push({ completesPersonalProgress });
   queue.pending += 1;
-  updateQueueCount(queue);
   if (!completesPersonalProgress) popHeart(button);
-  rollCount(button);
   renderPersonalState(button, slug, true);
   if (!queue.inFlight) void drainLikeQueue(queue);
 }
@@ -392,7 +332,6 @@ export async function initLikeButtons(): Promise<void> {
     if (!slug) return;
 
     renderPersonalState(button, slug);
-    void loadCount(button, slug);
 
     const dock = button.closest<HTMLElement>("[data-floating-like]");
     const article = document.querySelector(".slug-prose");

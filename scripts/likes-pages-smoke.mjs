@@ -68,15 +68,17 @@ await check("rendered control carries slug on the initialized button", () => {
   assert.match(articleHtml, /<button[^>]*data-like-button[^>]*data-like-slug="building-quality-gated-ai-code-review-loops"/);
   assert.match(articleHtml, /class="floating-like"[^>]*hidden/);
 });
-await check("rendered page labels the public total separately from personal progress", () => {
-  assert.ok(articleHtml.includes('data-like-total-label aria-hidden="true">total</span>'));
-  assert.ok(articleHtml.includes("The number is the public total for this post. The heart fill shows your likes from this browser, up to 10."));
+await check("rendered like control exposes personal progress without a public aggregate", () => {
+  assert.ok(articleHtml.includes("data-like-hint"));
+  assert.ok(articleHtml.includes("The heart fill shows your personal progress toward 10 likes on this post."));
+  assert.ok(!articleHtml.includes("data-like-count-value"));
+  assert.ok(!articleHtml.includes("data-like-total-label"));
+  assert.ok(!articleHtml.includes(">total<"));
 });
 
 await check("rendered page includes progressive fill and completion animation hooks", () => {
   assert.ok(articleHtml.includes("data-like-fill-window"));
   assert.ok(articleHtml.includes("floating-like__heart--pop"));
-  assert.ok(articleHtml.includes("floating-like__count--roll"));
   assert.ok(articleHtml.includes("floating-like__heart--complete"));
   assert.ok(!articleHtml.includes("floating-like__halo"));
   assert.ok(articleHtml.includes('class="floating-like__status visually-hidden"'));
