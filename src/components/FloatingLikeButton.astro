@@ -1,0 +1,63 @@
+---
+/** Floating like control for blog posts. No control is rendered without a slug. */
+interface Props {
+  slug: string;
+  title: string;
+}
+
+const { slug, title } = Astro.props;
+---
+
+{
+  slug && (
+  <aside class="floating-like" data-floating-like data-like-slug={slug} hidden>
+      <button
+        class="floating-like__button"
+        data-like-button
+        data-like-slug={slug}
+        data-like-count={0}
+        data-like-mine={0}
+        type="button"
+        aria-label={`Like “${title}”`}
+        aria-describedby={`like-explainer-${slug} like-status-${slug}`}
+      >
+        <span class="floating-like__heart" data-like-heart aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <clipPath id={`like-fill-${slug}`} clipPathUnits="userSpaceOnUse">
+                <rect class="floating-like__fill-window" data-like-fill-window x="0" y="0" width="24" height="24" />
+              </clipPath>
+            </defs>
+            <path
+              class="floating-like__fill"
+              d="M12 20.5c-.2 0-.4-.05-.55-.16C6.4 16.6 3 13.4 3 9.7 3 6.9 5.1 5 7.5 5c1.7 0 3.3.9 4.5 2.6C13.2 5.9 14.8 5 16.5 5 18.9 5 21 6.9 21 9.7c0 3.7-3.4 6.9-8.45 10.64-.15.11-.35.16-.55.16Z"
+              clip-path={`url(#like-fill-${slug})`}
+            />
+            <path
+              class="floating-like__outline"
+              d="M12 20.5c-.2 0-.4-.05-.55-.16C6.4 16.6 3 13.4 3 9.7 3 6.9 5.1 5 7.5 5c1.7 0 3.3.9 4.5 2.6C13.2 5.9 14.8 5 16.5 5 18.9 5 21 6.9 21 9.7c0 3.7-3.4 6.9-8.45 10.64-.15.11-.35.16-.55.16Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <span class="floating-like__total-group">
+          <span class="floating-like__count" data-like-count-value aria-live="polite" aria-atomic="true">0</span>
+          <span class="floating-like__total" data-like-total-label aria-hidden="true">total</span>
+        </span>
+      </button>
+      <span class="visually-hidden" id={`like-explainer-${slug}`}>The number is the public total for this post. The heart fill shows your likes from this browser, up to 10.</span>
+      <span class="floating-like__status visually-hidden" id={`like-status-${slug}`} data-like-hint aria-live="polite" />
+    </aside>
+  )
+}
+
+<script>
+  import { initLikeButtons } from "../utils/likeButton.client";
+
+  document.addEventListener("astro:page-load", () => {
+    void initLikeButtons();
+  });
+</script>
