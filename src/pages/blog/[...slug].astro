@@ -1,6 +1,7 @@
 ---
 import crypto from "node:crypto";
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import LikeButton from "../../components/LikeButton.astro";
 import { getCollection, render } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
 import { formatDisplayDate } from "../../utils/date";
@@ -60,4 +61,6 @@ import "./_slug.scss";
   <article class="slug-prose">
     <Content />
   </article>
+
+  <LikeButton slug={slugOf(post)} />
 </BaseLayout>
