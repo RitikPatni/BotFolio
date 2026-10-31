@@ -22,7 +22,6 @@ const { slug, title } = Astro.props;
         aria-describedby={`like-status-${slug}`}
       >
         <span class="floating-like__heart" data-like-heart aria-hidden="true">
-          <span class="floating-like__halo" data-like-halo />
           <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <clipPath id={`like-fill-${slug}`} clipPathUnits="userSpaceOnUse">
@@ -46,7 +45,7 @@ const { slug, title } = Astro.props;
         </span>
         <span class="floating-like__count" data-like-count-value aria-live="polite" aria-atomic="true">0</span>
       </button>
-      <span class="floating-like__status" id={`like-status-${slug}`} data-like-hint aria-live="polite" />
+      <span class="floating-like__status visually-hidden" id={`like-status-${slug}`} data-like-hint aria-live="polite" />
     </aside>
   )
 }

@@ -103,13 +103,18 @@ function renderPersonalState(button: HTMLButtonElement, slug: string, animatePro
   const mine = mineFromStorage(slug);
   button.dataset.likeMine = String(mine);
   if (animateProgress) button.dataset.likeProgressAnimate = "true";
-  button.style.setProperty("--like-progress", String(mine / MAX_MINE));
+  const progress = mine / MAX_MINE;
+  button.style.setProperty("--like-progress", String(progress));
+  button.style.setProperty(
+    "--like-heart-color",
+    `color-mix(in srgb, var(--like-heart-from) ${(1 - progress) * 100}%, var(--like-heart-to) ${progress * 100}%)`,
+  );
   const maxed = mine >= MAX_MINE;
   button.classList.toggle("floating-like__button--maxed", maxed);
   button.classList.toggle("floating-like__button--liked", mine > 0);
   button.disabled = maxed;
   const hint = button.parentElement?.querySelector<HTMLElement>("[data-like-hint]");
-  if (hint) hint.textContent = maxed ? "That's all 10 of your likes" : "";
+  if (hint) hint.textContent = maxed ? "You’ve reached your 10-like limit for this post." : "";
 }
 
 async function loadCount(button: HTMLButtonElement, slug: string): Promise<void> {
