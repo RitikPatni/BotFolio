@@ -1,0 +1,230 @@
+.work {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0;
+
+  &__hero {
+    /* Shared geometry comes from .page-hero--standard. */
+  }
+
+  &__lead {
+    max-width: 500px;
+  }
+
+  /* Flat ruled cards: top hairline, inset content, no box or shadow. */
+  &__card {
+    border: none;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    padding: 1.5rem 0;
+
+    &-title {
+      margin-top: 0;
+      margin-block-end: 1rem;
+      font-family: var(--font-display);
+    }
+
+    &--offset {
+      margin-block-start: var(--size-4);
+    }
+  }
+
+  &__prose {
+    margin: 0 0 1rem;
+    color: var(--text);
+    max-width: 60ch;
+
+    &:last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  &__shapes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__shape {
+    border-top: 1px solid var(--line);
+    padding: 1rem 0;
+
+    &-title {
+      margin: 0 0 0.25rem;
+      font-family: var(--font-display);
+    }
+
+    &-description {
+      margin: 0;
+      color: var(--text-muted);
+      max-width: 60ch;
+    }
+  }
+
+  &__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: none;
+  }
+
+  &__step {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: var(--size-3);
+    border-top: 1px solid var(--line);
+    padding: 1.25rem 0;
+
+    &-index {
+      /* Mono records: the step number is data, not display type. */
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--accent-text);
+      font-variant-numeric: tabular-nums;
+      padding-block-start: 0.35rem;
+    }
+
+    &-title {
+      margin: 0 0 0.25rem;
+      font-family: var(--font-display);
+    }
+
+    &-description {
+      margin: 0;
+      color: var(--text-muted);
+      max-width: 60ch;
+    }
+  }
+
+  &__proof {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__proof-item {
+    border-top: 1px solid var(--line);
+    padding: 1rem 0;
+  }
+
+  &__proof-link {
+    /* Ledger link: quiet underline that turns rust on hover. */
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 0.2em;
+    transition: color var(--dur-fast) var(--ease-soft),
+      text-decoration-color var(--dur-fast) var(--ease-soft);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--accent-text);
+      text-decoration-color: var(--accent-start);
+    }
+  }
+
+  &__proof-description {
+    margin: 0.25rem 0 0;
+    color: var(--text-muted);
+    max-width: 60ch;
+  }
+
+  &__availability {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--size-3);
+
+    &-label {
+      /* Mono label layer: the one place uppercase is allowed. */
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    &-text {
+      margin: 0;
+      color: var(--text);
+    }
+  }
+
+  /* Contact channels reuse the About page's contact-sheet pattern. */
+  &__socials {
+    display: grid;
+    gap: var(--size-3);
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, var(--size-12)), 1fr)
+    );
+    margin-block-start: var(--size-4);
+
+    @media (max-width: 48rem) {
+      & {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  &__social-link {
+    display: grid;
+    align-items: center;
+    min-block-size: 100%;
+    padding: var(--size-3);
+    border: var(--surface-border) solid
+      color-mix(in srgb, var(--line) 74%, transparent);
+    border-radius: var(--radius-3);
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    color: var(--text);
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-soft),
+      background-color var(--dur-fast) var(--ease-soft);
+
+    &:hover,
+    &:focus-visible {
+      border-color: color-mix(in srgb, var(--text) 28%, var(--line));
+      background: color-mix(in srgb, var(--bg-soft) 84%, var(--bg));
+    }
+
+    /* Lift only for a real pointer: on touch, :hover sticks after the tap. */
+    @media (prefers-reduced-motion: no-preference) {
+      &:focus-visible {
+        /* Exception: negative token nudge for hover elevation. */
+        transform: translateY(calc(var(--size-1) * -0.5));
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          transform: translateY(calc(var(--size-1) * -0.5));
+        }
+      }
+    }
+  }
+
+  &__social-row {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-2);
+  }
+
+  &__social-label {
+    font-family: var(--font-display);
+    font-size: var(--font-size-3);
+  }
+
+  &__social-icon {
+    inline-size: var(--size-5);
+    block-size: var(--size-5);
+  }
+}
+
+@media (max-width: 48rem) {
+  .work__step {
+    grid-template-columns: 2.75rem 1fr;
+    gap: var(--size-2);
+  }
+}

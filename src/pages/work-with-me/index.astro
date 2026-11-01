@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { SITE_CONFIG } from "../../config/site";
+import SocialIcon from "../../components/SocialIcon.astro";
+import {
+  WORK_HERO,
+  WORK_OFFER,
+  WORK_PROCESS,
+  WORK_PROOF,
+  WORK_AVAILABILITY,
+  WORK_CONTACT,
+} from "../../data/work";
+import "./_work-with-me.scss";
+---
+
+<BaseLayout
+  title="Work with me · Ritik Patni"
+  description="Product engineering and AI automation — one fixed-scope engagement at a time. Audit, build, handover."
+  path="/work-with-me"
+>
+  <div class="work">
+    <section class="work__hero page-hero page-hero--standard">
+      <div class="page-hero__inner">
+        <h1 class="work__title page-hero__title">Work with me</h1>
+        <p class="work__lead page-hero__lead">{WORK_HERO.lead}</p>
+      </div>
+    </section>
+
+    <section class="work__card">
+      <h2 class="work__card-title">What I do</h2>
+      {WORK_OFFER.intro.map((paragraph) => <p class="work__prose">{paragraph}</p>)}
+      <ul class="work__shapes">
+        {
+          WORK_OFFER.shapes.map((shape) => (
+            <li class="work__shape">
+              <h3 class="work__shape-title">{shape.title}</h3>
+              <p class="work__shape-description">{shape.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="work__card work__card--offset">
+      <h2 class="work__card-title">How it works</h2>
+      <p class="work__prose">{WORK_PROCESS.intro}</p>
+      <ol class="work__steps">
+        {
+          WORK_PROCESS.steps.map((step) => (
+            <li class="work__step">
+              <span class="work__step-index">{step.index}</span>
+              <div class="work__step-body">
+                <h3 class="work__step-title">{step.title}</h3>
+                <p class="work__step-description">{step.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="work__card work__card--offset">
+      <h2 class="work__card-title">Proof of work</h2>
+      <p class="work__prose">{WORK_PROOF.intro}</p>
+      <ul class="work__proof">
+        {
+          WORK_PROOF.items.map((item) => (
+            <li class="work__proof-item">
+              <a class="work__proof-link" href={item.href}>
+                {item.title}
+              </a>
+              <p class="work__proof-description">{item.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="work__card work__card--offset work__availability">
+      <p class="work__availability-label">{WORK_AVAILABILITY.label}</p>
+      <p class="work__availability-text">{WORK_AVAILABILITY.text}</p>
+    </section>
+
+    <section class="work__card work__card--offset" id="connect">
+      <h2 class="work__card-title">{WORK_CONTACT.title}</h2>
+      <p class="work__prose">{WORK_CONTACT.description}</p>
+
+      <div class="work__socials" aria-label="Contact channels">
+        {
+          SITE_CONFIG.socials
+            .filter((social) => WORK_CONTACT.socials.includes(social.icon))
+            .map((social) => {
+              const isMailto = social.href.startsWith("mailto:");
+              return (
+                <a
+                  class="work__social-link"
+                  href={social.href}
+                  target={isMailto ? undefined : "_blank"}
+                  rel={isMailto ? undefined : "noreferrer noopener"}
+                >
+                  <span class="work__social-row">
+                    <SocialIcon name={social.icon} class="work__social-icon" />
+                    <span class="work__social-label">{social.label}</span>
+                  </span>
+                  {!isMailto && (
+                    <span class="visually-hidden"> (opens in new tab)</span>
+                  )}
+                </a>
+              );
+            })
+        }
+      </div>
+    </section>
+  </div>
+</BaseLayout>
