@@ -18,6 +18,7 @@ export const NAV_LINKS: NavLink[] = [
   { href: "/photography", label: "Gallery" },
   { href: "/library", label: "Library" },
   { href: "/uses", label: "Uses" },
+  { href: "/work-with-me", label: "Consulting" },
   { href: "/about", label: "About" },
 ];
 

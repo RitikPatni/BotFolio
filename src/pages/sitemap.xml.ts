@@ -21,6 +21,7 @@ export async function GET(context: APIContext) {
     "/library",
     "/resources",
     "/photography",
+    "/work-with-me",
     /* /contact is a noindex redirect stub to /about#connect — not listed. */
   ];
 

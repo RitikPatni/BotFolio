@@ -332,7 +332,7 @@ The built site breaks the rules above in these places. Each one is a bug to fix 
 - **There is one solid row: brand · nav · theme toggle** (`BaseLayout.astro:206-230`, `BaseLayout.scss:46-64`).
 - It is sticky at `top: 0` with a `--bg` ground and a 1px `--line` bottom hairline. There is no transparency, no backdrop blur, no overlay mode and no scroll-aware state.
 - It is 61px tall on every route, theme and width (`C25`). `--header-h` (fallback 61px, measured by ResizeObserver) feeds `scroll-padding-block-start` so anchor jumps clear the bar, and it feeds the home hero height (`BaseLayout.scss:1-10`).
-- Nav labels are Home, Journal, Notes, Gallery, Library, Uses, About, from one `NAV_LINKS` list (`src/config/site.ts:14-22`; `C27`). The active link gets `aria-current="page"`, `--text`, a 6% ink wash and a 2px `--accent-start` underline (`BaseLayout.scss:255-269`).
+- Nav labels are Home, Journal, Notes, Gallery, Library, Uses, Consulting, About, from one `NAV_LINKS` list (`src/config/site.ts:14-22`; `C27`). The active link gets `aria-current="page"`, `--text`, a 6% ink wash and a 2px `--accent-start` underline (`BaseLayout.scss:255-269`).
 - When the links outgrow the bar (below about 700px), they scroll sideways inside the nav slot with edge masks. A mono "More →" hint shows while links remain hidden and disappears at the end. The page itself never widens.
 - The theme toggle is a 2.25rem round button inside the bar (`BaseLayout.scss:91-109`). There is no floating toggle.
 - Theme flips are atomic: `html[data-theme-switching]` suspends all transitions for two frames (`BaseLayout.scss:198-205`), so text never shows on the wrong-polarity surface mid-flip.
