@@ -1,0 +1,139 @@
+---
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { Image } from "astro:assets";
+import { birdSpecies, formatYears, STICKER_CREDIT, type BirdSpecies } from "../../data/birds";
+import "./_birds.scss";
+
+export function getStaticPaths() {
+  return birdSpecies.map((species, i) => ({
+    params: { slug: species.slug },
+    props: {
+      species,
+      prev: birdSpecies[i - 1],
+      next: birdSpecies[i + 1],
+    },
+  }));
+}
+
+interface Props {
+  species: BirdSpecies;
+  prev?: BirdSpecies;
+  next?: BirdSpecies;
+}
+
+const { species, prev, next } = Astro.props;
+const { featured, records, sticker } = species;
+const photographed = Boolean(featured);
+---
+<BaseLayout
+  title={`${species.commonName} · Birds · Ritik Patni`}
+  description={`${species.commonName} (${species.scientificName}) on Ritik Patni's bird life list, seen ${formatYears(species.years)}.`}
+  path={`/birds/${species.slug}`}
+>
+  <article class="birds birds--detail">
+    <nav class="birds__back" aria-label="Breadcrumb">
+      <a href="/birds">← All birds</a>
+    </nav>
+
+    <header class="birds__detail-hero">
+      <h1 class="page-hero__title">{species.commonName}</h1>
+      <p class="birds__sci birds__sci--lg" lang="la">{species.scientificName}</p>
+    </header>
+
+    <div class="birds__detail-grid">
+      <div class="birds__detail-main">
+        {
+          featured ? (
+            <figure class="birds__figure">
+              <div class="birds__figure-well">
+                <Image
+                  src={featured.asset}
+                  alt={featured.alt}
+                  widths={[640, 960, 1440, 1920]}
+                  sizes="(max-width: 48rem) 92vw, 46rem"
+                  loading="eager"
+                />
+              </div>
+              <figcaption>Photograph · Ritik Patni · {featured.year}</figcaption>
+            </figure>
+          ) : sticker ? (
+            <figure class="birds__figure birds__figure--illustration">
+              <div class="birds__figure-well">
+                <Image
+                  src={sticker.asset}
+                  alt={`Illustration of ${species.commonName}`}
+                  width={320}
+                  densities={[1, 2]}
+                  format="webp"
+                />
+              </div>
+              <figcaption>
+                Illustration, not a photograph ·{" "}
+                <a href={STICKER_CREDIT.url}>{STICKER_CREDIT.project}</a>,{" "}
+                <a href={STICKER_CREDIT.licenseUrl}>{STICKER_CREDIT.license}</a>
+              </figcaption>
+            </figure>
+          ) : (
+            <p class="birds__nophoto">No photo has been linked to this species yet. No illustration is available.</p>
+          )
+        }
+
+        {
+          records.length > 0 && (
+            <section class="birds__records" aria-labelledby="records-title">
+              <h2 id="records-title">Record shots</h2>
+              <ul class="birds__grid" role="list">
+                {records.map((r) => (
+                  <li class="birds__tile">
+                    <figure>
+                      <div class="birds__well">
+                        <Image src={r.asset} alt={r.alt} widths={[360, 720]} sizes="(max-width: 48rem) 46vw, 23rem" />
+                      </div>
+                      <figcaption class="birds__years">Record shot · {r.year}</figcaption>
+                    </figure>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </div>
+
+      <aside class="birds__aside" aria-label="Species notes">
+        <dl class="birds__facts">
+          <div>
+            <dt>Sighting years</dt>
+            <dd>{formatYears(species.years)}</dd>
+          </div>
+          <div>
+            <dt>Photos linked</dt>
+            <dd>{photographed ? `${1 + records.length}` : "None linked"}</dd>
+          </div>
+        </dl>
+        {
+          featured && sticker && (
+            <figure class="birds__aside-sticker">
+              <Image
+                src={sticker.asset}
+                alt={`Illustration of ${species.commonName}`}
+                width={128}
+                densities={[1, 2]}
+                format="webp"
+              />
+              <figcaption>
+                Illustration ·{" "}
+                <a href={STICKER_CREDIT.url}>{STICKER_CREDIT.project}</a>,{" "}
+                <a href={STICKER_CREDIT.licenseUrl}>{STICKER_CREDIT.license}</a>
+              </figcaption>
+            </figure>
+          )
+        }
+      </aside>
+    </div>
+
+    <nav class="birds__pager" aria-label="More species">
+      {prev ? <a href={`/birds/${prev.slug}`} rel="prev">← {prev.commonName}</a> : <span />}
+      {next && <a href={`/birds/${next.slug}`} rel="next">{next.commonName} →</a>}
+    </nav>
+  </article>
+</BaseLayout>

@@ -1,0 +1,346 @@
+[
+  {
+    "slug": "ashy-prinia",
+    "commonName": "Ashy Prinia",
+    "scientificName": "Prinia socialis",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "asian-green-bee-eater",
+    "commonName": "Asian Green Bee-eater",
+    "scientificName": "Merops orientalis",
+    "years": [
+      2024
+    ]
+  },
+  {
+    "slug": "asian-koel",
+    "commonName": "Asian Koel",
+    "scientificName": "Eudynamys scolopaceus",
+    "years": [
+      2024
+    ]
+  },
+  {
+    "slug": "black-drongo",
+    "commonName": "Black Drongo",
+    "scientificName": "Dicrurus macrocercus",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "black-winged-stilt",
+    "commonName": "Black-winged Stilt",
+    "scientificName": "Himantopus himantopus",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "common-babbler",
+    "commonName": "Common Babbler",
+    "scientificName": "Argya caudata",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "common-kingfisher",
+    "commonName": "Common Kingfisher",
+    "scientificName": "Alcedo atthis",
+    "years": [
+      2026
+    ]
+  },
+  {
+    "slug": "common-myna",
+    "commonName": "Common Myna",
+    "scientificName": "Acridotheres tristis",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "common-tailorbird",
+    "commonName": "Common Tailorbird",
+    "scientificName": "Orthotomus sutorius",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "eurasian-collared-dove",
+    "commonName": "Eurasian Collared-Dove",
+    "scientificName": "Streptopelia decaocto",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "gray-bushchat",
+    "commonName": "Gray Bushchat",
+    "scientificName": "Saxicola ferreus",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "gray-francolin",
+    "commonName": "Gray Francolin",
+    "scientificName": "Ortygornis pondicerianus",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "greater-coucal",
+    "commonName": "Greater Coucal",
+    "scientificName": "Centropus sinensis",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "greater-flamingo",
+    "commonName": "Greater Flamingo",
+    "scientificName": "Phoenicopterus roseus",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "green-backed-tit",
+    "commonName": "Green-backed Tit",
+    "scientificName": "Parus monticolus",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "house-sparrow",
+    "commonName": "House Sparrow",
+    "scientificName": "Passer domesticus",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "indian-gray-hornbill",
+    "commonName": "Indian Gray Hornbill",
+    "scientificName": "Ocyceros birostris",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "indian-peafowl",
+    "commonName": "Indian Peafowl",
+    "scientificName": "Pavo cristatus",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "indian-pied-starling",
+    "commonName": "Indian Pied Starling",
+    "scientificName": "Gracupica contra",
+    "years": [
+      2024
+    ]
+  },
+  {
+    "slug": "indian-pond-heron",
+    "commonName": "Indian Pond-Heron",
+    "scientificName": "Ardeola grayii",
+    "years": [
+      2024
+    ]
+  },
+  {
+    "slug": "indian-robin",
+    "commonName": "Indian Robin",
+    "scientificName": "Copsychus fulicatus",
+    "years": [
+      2024
+    ]
+  },
+  {
+    "slug": "indian-roller",
+    "commonName": "Indian Roller",
+    "scientificName": "Coracias benghalensis",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "indian-white-eye",
+    "commonName": "Indian White-eye",
+    "scientificName": "Zosterops palpebrosus",
+    "years": [
+      2026
+    ]
+  },
+  {
+    "slug": "jungle-babbler",
+    "commonName": "Jungle Babbler",
+    "scientificName": "Argya striata",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "large-billed-crow",
+    "commonName": "Large-billed Crow",
+    "scientificName": "Corvus macrorhynchos",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "laughing-dove",
+    "commonName": "Laughing Dove",
+    "scientificName": "Spilopelia senegalensis",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "little-swift",
+    "commonName": "Little Swift",
+    "scientificName": "Apus affinis",
+    "years": [
+      2026
+    ]
+  },
+  {
+    "slug": "long-tailed-shrike",
+    "commonName": "Long-tailed Shrike",
+    "scientificName": "Lanius schach",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "oriental-magpie-robin",
+    "commonName": "Oriental Magpie-Robin",
+    "scientificName": "Copsychus saularis",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "oriental-turtle-dove",
+    "commonName": "Oriental Turtle-Dove",
+    "scientificName": "Streptopelia orientalis",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "pied-kingfisher",
+    "commonName": "Pied Kingfisher",
+    "scientificName": "Ceryle rudis",
+    "years": [
+      2026
+    ]
+  },
+  {
+    "slug": "purple-sunbird",
+    "commonName": "Purple Sunbird",
+    "scientificName": "Cinnyris asiaticus",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "red-vented-bulbul",
+    "commonName": "Red-vented Bulbul",
+    "scientificName": "Pycnonotus cafer",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "red-wattled-lapwing",
+    "commonName": "Red-wattled Lapwing",
+    "scientificName": "Vanellus indicus",
+    "years": [
+      2023
+    ]
+  },
+  {
+    "slug": "rock-pigeon",
+    "commonName": "Rock Pigeon",
+    "scientificName": "Columba livia",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "rose-ringed-parakeet",
+    "commonName": "Rose-ringed Parakeet",
+    "scientificName": "Psittacula krameri",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "rufous-treepie",
+    "commonName": "Rufous Treepie",
+    "scientificName": "Dendrocitta vagabunda",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "scaly-breasted-munia",
+    "commonName": "Scaly-breasted Munia",
+    "scientificName": "Lonchura punctulata",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "shikra",
+    "commonName": "Shikra",
+    "scientificName": "Tachyspiza badia",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "white-wagtail",
+    "commonName": "White Wagtail",
+    "scientificName": "Motacilla alba",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "white-breasted-waterhen",
+    "commonName": "White-breasted Waterhen",
+    "scientificName": "Amaurornis phoenicurus",
+    "years": [
+      2025
+    ]
+  },
+  {
+    "slug": "white-browed-wagtail",
+    "commonName": "White-browed Wagtail",
+    "scientificName": "Motacilla maderaspatensis",
+    "years": [
+      2026
+    ]
+  },
+  {
+    "slug": "white-throated-kingfisher",
+    "commonName": "White-throated Kingfisher",
+    "scientificName": "Halcyon smyrnensis",
+    "years": [
+      2023
+    ]
+  }
+]

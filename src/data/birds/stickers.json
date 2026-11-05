@@ -1,0 +1,330 @@
+[
+  {
+    "slug": "asian-green-bee-eater",
+    "scientificName": "Merops orientalis",
+    "file": "Merops_orientalis.webp",
+    "upstreamPath": "stickers/Coraciiformes/Meropidae/Merops_orientalis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "asian-koel",
+    "scientificName": "Eudynamys scolopaceus",
+    "file": "Eudynamys_scolopaceus.webp",
+    "upstreamPath": "stickers/Cuculiformes/Cuculidae/Eudynamys_scolopaceus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "black-drongo",
+    "scientificName": "Dicrurus macrocercus",
+    "file": "Dicrurus_macrocercus.webp",
+    "upstreamPath": "stickers/Passeriformes/Dicruridae/Dicrurus_macrocercus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "black-winged-stilt",
+    "scientificName": "Himantopus himantopus",
+    "file": "Himantopus_himantopus.webp",
+    "upstreamPath": "stickers/Charadriiformes/Recurvirostridae/Himantopus_himantopus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "common-kingfisher",
+    "scientificName": "Alcedo atthis",
+    "file": "Alcedo_atthis.webp",
+    "upstreamPath": "stickers/Coraciiformes/Alcedinidae/Alcedo_atthis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "common-myna",
+    "scientificName": "Acridotheres tristis",
+    "file": "Acridotheres_tristis.webp",
+    "upstreamPath": "stickers/Passeriformes/Sturnidae/Acridotheres_tristis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "common-tailorbird",
+    "scientificName": "Orthotomus sutorius",
+    "file": "Orthotomus_sutorius.webp",
+    "upstreamPath": "stickers/Passeriformes/Cisticolidae/Orthotomus_sutorius.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "eurasian-collared-dove",
+    "scientificName": "Streptopelia decaocto",
+    "file": "Streptopelia_decaocto.webp",
+    "upstreamPath": "stickers/Columbiformes/Columbidae/Streptopelia_decaocto.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "gray-bushchat",
+    "scientificName": "Saxicola ferreus",
+    "file": "Saxicola_ferreus.webp",
+    "upstreamPath": "stickers/Passeriformes/Muscicapidae/Saxicola_ferreus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "gray-francolin",
+    "scientificName": "Ortygornis pondicerianus",
+    "file": "Ortygornis_pondicerianus.webp",
+    "upstreamPath": "stickers/Galliformes/Phasianidae/Ortygornis_pondicerianus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "greater-coucal",
+    "scientificName": "Centropus sinensis",
+    "file": "Centropus_sinensis.webp",
+    "upstreamPath": "stickers/Cuculiformes/Cuculidae/Centropus_sinensis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "greater-flamingo",
+    "scientificName": "Phoenicopterus roseus",
+    "file": "Phoenicopterus_roseus.webp",
+    "upstreamPath": "stickers/Phoenicopteriformes/Phoenicopteridae/Phoenicopterus_roseus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "green-backed-tit",
+    "scientificName": "Parus monticolus",
+    "file": "Parus_monticolus.webp",
+    "upstreamPath": "stickers/Passeriformes/Paridae/Parus_monticolus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "house-sparrow",
+    "scientificName": "Passer domesticus",
+    "file": "Passer_domesticus.webp",
+    "upstreamPath": "stickers/Passeriformes/Passeridae/Passer_domesticus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "indian-gray-hornbill",
+    "scientificName": "Ocyceros birostris",
+    "file": "Ocyceros_birostris.webp",
+    "upstreamPath": "stickers/Bucerotiformes/Bucerotidae/Ocyceros_birostris.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "indian-peafowl",
+    "scientificName": "Pavo cristatus",
+    "file": "Pavo_cristatus.webp",
+    "upstreamPath": "stickers/Galliformes/Phasianidae/Pavo_cristatus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "indian-pied-starling",
+    "scientificName": "Gracupica contra",
+    "file": "Gracupica_contra.webp",
+    "upstreamPath": "stickers/Passeriformes/Sturnidae/Gracupica_contra.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "indian-pond-heron",
+    "scientificName": "Ardeola grayii",
+    "file": "Ardeola_grayii.webp",
+    "upstreamPath": "stickers/Pelecaniformes/Ardeidae/Ardeola_grayii.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "indian-robin",
+    "scientificName": "Copsychus fulicatus",
+    "file": "Copsychus_fulicatus.webp",
+    "upstreamPath": "stickers/Passeriformes/Muscicapidae/Copsychus_fulicatus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "indian-roller",
+    "scientificName": "Coracias benghalensis",
+    "file": "Coracias_benghalensis.webp",
+    "upstreamPath": "stickers/Coraciiformes/Coraciidae/Coracias_benghalensis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "indian-white-eye",
+    "scientificName": "Zosterops palpebrosus",
+    "file": "Zosterops_palpebrosus.webp",
+    "upstreamPath": "stickers/Passeriformes/Zosteropidae/Zosterops_palpebrosus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "jungle-babbler",
+    "scientificName": "Argya striata",
+    "file": "Argya_striata.webp",
+    "upstreamPath": "stickers/Passeriformes/Leiothrichidae/Argya_striata.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "large-billed-crow",
+    "scientificName": "Corvus macrorhynchos",
+    "file": "Corvus_macrorhynchos.webp",
+    "upstreamPath": "stickers/Passeriformes/Corvidae/Corvus_macrorhynchos.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "laughing-dove",
+    "scientificName": "Spilopelia senegalensis",
+    "file": "Spilopelia_senegalensis.webp",
+    "upstreamPath": "stickers/Columbiformes/Columbidae/Spilopelia_senegalensis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "little-swift",
+    "scientificName": "Apus affinis",
+    "file": "Apus_affinis.webp",
+    "upstreamPath": "stickers/Apodiformes/Apodidae/Apus_affinis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "long-tailed-shrike",
+    "scientificName": "Lanius schach",
+    "file": "Lanius_schach.webp",
+    "upstreamPath": "stickers/Passeriformes/Laniidae/Lanius_schach.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "oriental-magpie-robin",
+    "scientificName": "Copsychus saularis",
+    "file": "Copsychus_saularis.webp",
+    "upstreamPath": "stickers/Passeriformes/Muscicapidae/Copsychus_saularis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "oriental-turtle-dove",
+    "scientificName": "Streptopelia orientalis",
+    "file": "Streptopelia_orientalis.webp",
+    "upstreamPath": "stickers/Columbiformes/Columbidae/Streptopelia_orientalis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "pied-kingfisher",
+    "scientificName": "Ceryle rudis",
+    "file": "Ceryle_rudis.webp",
+    "upstreamPath": "stickers/Coraciiformes/Alcedinidae/Ceryle_rudis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "purple-sunbird",
+    "scientificName": "Cinnyris asiaticus",
+    "file": "Cinnyris_asiaticus.webp",
+    "upstreamPath": "stickers/Passeriformes/Nectariniidae/Cinnyris_asiaticus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "red-vented-bulbul",
+    "scientificName": "Pycnonotus cafer",
+    "file": "Pycnonotus_cafer.webp",
+    "upstreamPath": "stickers/Passeriformes/Pycnonotidae/Pycnonotus_cafer.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "red-wattled-lapwing",
+    "scientificName": "Vanellus indicus",
+    "file": "Vanellus_indicus.webp",
+    "upstreamPath": "stickers/Charadriiformes/Charadriidae/Vanellus_indicus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "rock-pigeon",
+    "scientificName": "Columba livia",
+    "file": "Columba_livia.webp",
+    "upstreamPath": "stickers/Columbiformes/Columbidae/Columba_livia.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "rose-ringed-parakeet",
+    "scientificName": "Psittacula krameri",
+    "file": "Psittacula_krameri.webp",
+    "upstreamPath": "stickers/Psittaciformes/Psittaculidae/Psittacula_krameri.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "rufous-treepie",
+    "scientificName": "Dendrocitta vagabunda",
+    "file": "Dendrocitta_vagabunda.webp",
+    "upstreamPath": "stickers/Passeriformes/Corvidae/Dendrocitta_vagabunda.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "scaly-breasted-munia",
+    "scientificName": "Lonchura punctulata",
+    "file": "Lonchura_punctulata.webp",
+    "upstreamPath": "stickers/Passeriformes/Estrildidae/Lonchura_punctulata.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "shikra",
+    "scientificName": "Tachyspiza badia",
+    "file": "Tachyspiza_badia.webp",
+    "upstreamPath": "stickers/Accipitriformes/Accipitridae/Tachyspiza_badia.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "white-breasted-waterhen",
+    "scientificName": "Amaurornis phoenicurus",
+    "file": "Amaurornis_phoenicurus.webp",
+    "upstreamPath": "stickers/Gruiformes/Rallidae/Amaurornis_phoenicurus.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "white-browed-wagtail",
+    "scientificName": "Motacilla maderaspatensis",
+    "file": "Motacilla_maderaspatensis.webp",
+    "upstreamPath": "stickers/Passeriformes/Motacillidae/Motacilla_maderaspatensis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "white-throated-kingfisher",
+    "scientificName": "Halcyon smyrnensis",
+    "file": "Halcyon_smyrnensis.webp",
+    "upstreamPath": "stickers/Coraciiformes/Alcedinidae/Halcyon_smyrnensis.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  },
+  {
+    "slug": "white-wagtail",
+    "scientificName": "Motacilla alba",
+    "file": "Motacilla_alba.webp",
+    "upstreamPath": "stickers/Passeriformes/Motacillidae/Motacilla_alba.webp",
+    "license": "CC-BY-4.0",
+    "meetsQualityBar": true
+  }
+]

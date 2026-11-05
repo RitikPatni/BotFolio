@@ -32,7 +32,11 @@
     "gallery:validate:ci": "node scripts/validate-gallery.mjs --ci",
     "gallery:hook:install": "node scripts/install-gallery-hook.mjs",
     "standard-site:generate": "node scripts/standard-site-publish.mjs",
-    "prepare": "node scripts/install-gallery-hook.mjs"
+    "prepare": "node scripts/install-gallery-hook.mjs",
+    "birds:import": "node scripts/birds/import-ebird.mjs",
+    "birds:stickers": "node scripts/birds/select-stickers.mjs",
+    "birds:validate": "node scripts/birds/validate-birds.mjs",
+    "birds:test": "node --test scripts/birds/"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
