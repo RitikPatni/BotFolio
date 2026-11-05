@@ -1,0 +1,463 @@
+/* Bird journal — photo-led life list on Ledger paper. Photos sit in
+   --bg-deep wells at their natural shape; stickers are small, labelled
+   illustrations and never stand in for a photograph. */
+.birds {
+  --birds-well-h: clamp(10rem, 18vw, 14rem);
+  padding-block-end: clamp(4rem, 8vw, 6rem);
+
+  &__kicker,
+  &__count,
+  &__years,
+  &__label,
+  &__status,
+  &__index,
+  &__facts dt {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__kicker {
+    margin: 0 0 1rem;
+    color: var(--accent-text);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &__lead {
+    max-width: 52ch;
+  }
+
+  &__count,
+  &__years {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+
+  &__sci {
+    margin: 0.15rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  &__sci--lg {
+    font-size: 1.05rem;
+  }
+
+  /* Sentence-case nav row with build-time counts, like the gallery index. */
+  &__index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
+    margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+    padding: 0.75rem 0;
+    border-block: 1px solid var(--line);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+
+    a {
+      color: var(--accent-text);
+      text-decoration: none;
+      &:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+    }
+  }
+
+  &__highlight {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: center;
+    margin-block-end: clamp(3rem, 6vw, 4.5rem);
+    padding-block-start: 1.5rem;
+    border-top: 1px solid var(--line);
+
+    h2 a { color: inherit; text-decoration: none; }
+    h2 a:hover { text-decoration: underline; text-decoration-color: var(--accent-start); text-underline-offset: 0.2em; }
+  }
+
+  &__highlight-frame {
+    display: flex;
+    justify-content: center;
+    background: var(--bg-deep);
+    border-radius: var(--radius-sm);
+
+    img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 30rem;
+      border-radius: var(--radius-sm);
+    }
+  }
+
+  &__alt {
+    margin: 1rem 0 0;
+    color: var(--text-muted);
+    max-width: 44ch;
+  }
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 1rem 1.5rem;
+    margin-block-end: 2.5rem;
+
+    &[hidden] { display: none; }
+  }
+
+  &__search {
+    flex: 1 1 18rem;
+    min-width: 0;
+  }
+
+  &__label {
+    display: block;
+    margin-block-end: 0.4rem;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  &__input {
+    display: block;
+    inline-size: 100%;
+    block-size: 2.75rem;
+    padding-inline: 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg-soft);
+    color: var(--text);
+    font-size: 1rem; /* 16px: no iOS zoom */
+
+    &::placeholder { color: var(--text-dim); }
+  }
+
+  &__filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    button {
+      min-block-size: 2.75rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-round);
+      background: transparent;
+      color: var(--text);
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+
+    button[aria-pressed="true"] {
+      border-color: var(--text);
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      button:hover { border-color: var(--accent-start); }
+    }
+  }
+
+  &__status {
+    flex-basis: 100%;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+  }
+
+  &__section {
+    margin-block-end: clamp(3rem, 6vw, 4.5rem);
+
+    &[hidden] { display: none; }
+  }
+
+  &__section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin-block-end: 1.25rem;
+    padding-block-start: 1.5rem;
+    border-top: 1px solid var(--line);
+
+    h2 { margin: 0; }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: 2.25rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__tile {
+    position: relative;
+    min-width: 0;
+
+    &[hidden] { display: none; }
+    figure { margin: 0; }
+  }
+
+  &__well {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: var(--birds-well-h);
+    margin-block-end: 0.85rem;
+    background: var(--bg-deep);
+    border-radius: var(--radius-sm);
+
+    img {
+      display: block;
+      max-inline-size: 100%;
+      max-block-size: 100%;
+      inline-size: auto;
+      block-size: auto;
+      border-radius: var(--radius-sm);
+    }
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.3;
+
+    a { color: var(--text); text-decoration: none; }
+  }
+
+  &__tile:hover &__name a,
+  &__row:hover &__name a {
+    text-decoration: underline;
+    text-decoration-color: var(--accent-start);
+    text-underline-offset: 0.2em;
+  }
+
+  /* Unphotographed species: a ruled list, sticker as a small identifier. */
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    column-gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--line);
+
+    &[hidden] { display: none; }
+  }
+
+  &__row-text { min-width: 0; }
+
+  &__sticker {
+    display: block;
+    inline-size: 3.5rem;
+    block-size: 3.5rem;
+    object-fit: contain;
+  }
+
+  &__sticker--none {
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-sm);
+  }
+
+  &__empty {
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--line);
+    color: var(--text-muted);
+
+    &[hidden] { display: none; }
+  }
+
+  &__reset {
+    min-block-size: 2.75rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    cursor: pointer;
+  }
+
+  &__credits {
+    padding-block-start: 1.25rem;
+    border-top: 1px solid var(--line);
+    color: var(--text-dim);
+    font-size: 0.875rem;
+    max-width: 70ch;
+
+    a { color: var(--text-muted); }
+  }
+
+  /* ---- Species page ---- */
+  &__back {
+    padding-block-start: clamp(1.5rem, 3vw, 2.5rem);
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-block-size: 2.75rem;
+      color: var(--accent-text);
+      text-decoration: none;
+      &:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+    }
+  }
+
+  &__detail-hero {
+    padding-block: clamp(1.5rem, 4vw, 3rem) clamp(2rem, 4vw, 3rem);
+
+    .page-hero__title { margin: 0; max-width: 18ch; }
+  }
+
+  &__detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(14rem, 0.6fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    padding-block-start: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  &__figure {
+    margin: 0;
+
+    figcaption {
+      padding-block-start: 0.75rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+      a { color: var(--text-muted); }
+    }
+  }
+
+  &__figure-well {
+    display: flex;
+    justify-content: center;
+    padding: clamp(0.75rem, 2vw, 1.5rem);
+    background: var(--bg-deep);
+    border-radius: var(--radius-sm);
+
+    img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 42rem;
+      border-radius: var(--radius-sm);
+    }
+  }
+
+  &__figure--illustration &__figure-well img {
+    max-height: 20rem;
+    object-fit: contain;
+  }
+
+  &__nophoto {
+    margin: 0;
+    padding: 2rem 0;
+    color: var(--text-muted);
+  }
+
+  &__records {
+    margin-block-start: clamp(2.5rem, 5vw, 3.5rem);
+    padding-block-start: 1.5rem;
+    border-top: 1px solid var(--line);
+
+    h2 { margin: 0 0 1.25rem; }
+  }
+
+  &__facts {
+    margin: 0;
+
+    div {
+      padding: 1rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    dt {
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    dd {
+      margin: 0.35rem 0 0;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  &__aside-sticker {
+    margin: 0;
+    padding-block-start: 1rem;
+    border-top: 1px solid var(--line);
+
+    img {
+      display: block;
+      inline-size: 6rem;
+      block-size: 6rem;
+      object-fit: contain;
+    }
+
+    figcaption {
+      margin-block-start: 0.5rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      a { color: var(--text-muted); }
+    }
+  }
+
+  &__pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block-start: clamp(3rem, 6vw, 4.5rem);
+    padding-block-start: 1rem;
+    border-top: 1px solid var(--line);
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-block-size: 2.75rem;
+      color: var(--text);
+      text-decoration: none;
+      &:hover { color: var(--accent-text); }
+    }
+  }
+
+  @media (max-width: 48rem) {
+    --birds-well-h: 9rem;
+
+    &__highlight,
+    &__detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__highlight-frame img { max-height: 20rem; }
+
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem 0.75rem;
+    }
+
+    &__filter { inline-size: 100%; }
+  }
+}
