@@ -40,7 +40,7 @@ const searchText = (s: (typeof birdSpecies)[number]) =>
           <a class="birds__highlight-frame" href={`/birds/${highlight.slug}`} tabindex="-1" aria-hidden="true">
             <Image
               src={highlight.featured.asset}
-              alt=""
+              alt={`Photograph of ${highlight.commonName} by Ritik Patni`}
               widths={[640, 960, 1280]}
               sizes="(max-width: 48rem) 92vw, 44rem"
               loading="eager"
@@ -118,7 +118,7 @@ const searchText = (s: (typeof birdSpecies)[number]) =>
                 <Image
                   class="birds__sticker"
                   src={s.sticker.asset}
-                  alt=""
+                  alt={`Illustration of ${s.commonName}`}
                   width={128}
                   densities={[1, 2]}
                   format="webp"

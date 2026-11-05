@@ -2,6 +2,8 @@
 // Only names, a stable slug and sighting years leave the eBird export.
 
 export const LIFE_LIST_KEYS = ["slug", "commonName", "scientificName", "years"];
+const PHOTO_KEYS = ["slug", "file", "role", "alt", "year", "evidence"];
+const STICKER_KEYS = ["slug", "scientificName", "file", "upstreamPath", "license", "meetsQualityBar"];
 const PHOTO_ROLES = new Set(["featured", "record"]);
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -113,6 +115,8 @@ export function validateJournal({ lifeList, photos, stickers, photoExists, stick
   const files = new Set();
   for (const p of photos) {
     const label = `photo ${p.file}`;
+    const extra = Object.keys(p).filter((k) => !PHOTO_KEYS.includes(k));
+    if (extra.length) errors.push(`${label}: unexpected field(s) ${extra.join(", ")}`);
     if (!slugs.has(p.slug)) errors.push(`${label}: unknown species slug ${p.slug}`);
     if (!PHOTO_ROLES.has(p.role)) errors.push(`${label}: role must be featured or record`);
     if (!p.alt?.trim()) errors.push(`${label}: alt text required`);
@@ -129,6 +133,8 @@ export function validateJournal({ lifeList, photos, stickers, photoExists, stick
 
   const stickered = new Set();
   for (const st of stickers) {
+    const extra = Object.keys(st).filter((k) => !STICKER_KEYS.includes(k));
+    if (extra.length) errors.push(`sticker ${st.file}: unexpected field(s) ${extra.join(", ")}`);
     const species = slugs.get(st.slug);
     if (!species) errors.push(`sticker ${st.file}: unknown species slug ${st.slug}`);
     else if (species.scientificName !== st.scientificName) errors.push(`sticker ${st.file}: scientific name does not match ${st.slug}`);

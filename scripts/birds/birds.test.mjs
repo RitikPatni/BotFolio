@@ -109,6 +109,8 @@ test("validateJournal rejects bad references and leaks", () => {
     [(j) => (j.stickerExists = () => false), /missing sticker/],
     [(j) => j.lifeList.push({ ...j.lifeList[0] }), /duplicate/],
     [(j) => (j.lifeList[1].location = "Home"), /field/],
+    [(j) => (j.photos[0].location = "Home"), /field/],
+    [(j) => (j.stickers[0].location = "Home"), /field/],
     [(j) => (j.lifeList[1].years = ["2024-01-03"]), /year/],
     [(j) => (j.expectedCount = 43), /43/],
   ];
