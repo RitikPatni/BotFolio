@@ -36,7 +36,6 @@ const photographed = Boolean(featured);
     </nav>
 
     <header class="birds__detail-hero">
-      <p class="birds__kicker">Seen {formatYears(species.years)}</p>
       <h1 class="page-hero__title">{species.commonName}</h1>
       <p class="birds__sci birds__sci--lg" lang="la">{species.scientificName}</p>
     </header>
@@ -75,7 +74,7 @@ const photographed = Boolean(featured);
               </figcaption>
             </figure>
           ) : (
-            <p class="birds__nophoto">Not photographed yet. No illustration is used for this species.</p>
+            <p class="birds__nophoto">No photo has been linked to this species yet. No illustration is available.</p>
           )
         }
 
@@ -107,8 +106,8 @@ const photographed = Boolean(featured);
             <dd>{formatYears(species.years)}</dd>
           </div>
           <div>
-            <dt>My photos</dt>
-            <dd>{photographed ? `${1 + records.length}` : "None yet"}</dd>
+            <dt>Photos linked</dt>
+            <dd>{photographed ? `${1 + records.length}` : "None linked"}</dd>
           </div>
         </dl>
         {

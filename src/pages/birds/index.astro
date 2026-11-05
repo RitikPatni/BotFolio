@@ -1,13 +1,12 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { Image } from "astro:assets";
-import { birdSpecies, yearRange, STICKER_CREDIT } from "../../data/birds";
+import { birdSpecies, STICKER_CREDIT } from "../../data/birds";
 import "./_birds.scss";
 
 const photographed = birdSpecies.filter((s) => s.featured);
 const unphotographed = birdSpecies.filter((s) => !s.featured);
 const highlight = photographed[0];
-const allYears = [...new Set(birdSpecies.flatMap((s) => s.years))].sort((a, b) => a - b);
 const searchText = (s: (typeof birdSpecies)[number]) =>
   `${s.commonName} ${s.scientificName}`.toLowerCase();
 ---
@@ -19,35 +18,36 @@ const searchText = (s: (typeof birdSpecies)[number]) =>
   <div class="birds" data-birds-root>
     <section class="page-hero page-hero--standard">
       <div class="page-hero__inner">
-        <p class="birds__kicker">Life list · {yearRange(allYears)}</p>
         <h1 class="page-hero__title">Birds</h1>
         <p class="page-hero__lead birds__lead">
-          Every species on my eBird life list, with my own photographs where I
-          have one. Sighting years only, no places.
+          Birds on my eBird life list, alongside photographs matched to their
+          species. The photo archive is still being reviewed.
         </p>
       </div>
     </section>
 
     <p class="birds__index">
       <span>{birdSpecies.length} species</span>
-      <a href="#photographed">Photographed <span class="birds__count">{photographed.length}</span></a>
-      <a href="#unphotographed">Not yet photographed <span class="birds__count">{unphotographed.length}</span></a>
+      <a href="#photographed">Photos linked</a>
+      <a href="#unphotographed">No photo linked yet</a>
     </p>
 
     {
       highlight?.featured && (
         <section class="birds__highlight" aria-labelledby="highlight-title">
-          <a class="birds__highlight-frame" href={`/birds/${highlight.slug}`} tabindex="-1" aria-hidden="true">
-            <Image
-              src={highlight.featured.asset}
-              alt={`Photograph of ${highlight.commonName} by Ritik Patni`}
-              widths={[640, 960, 1280]}
-              sizes="(max-width: 48rem) 92vw, 44rem"
-              loading="eager"
-            />
-          </a>
+          <figure class="birds__highlight-figure">
+            <a class="birds__highlight-frame" href={`/birds/${highlight.slug}`} tabindex="-1" aria-hidden="true">
+              <Image
+                src={highlight.featured.asset}
+                alt={`Photograph of ${highlight.commonName} by Ritik Patni`}
+                widths={[640, 960, 1280]}
+                sizes="(max-width: 48rem) 92vw, 44rem"
+                loading="eager"
+              />
+            </a>
+            <figcaption>Photographed in {highlight.featured.year}</figcaption>
+          </figure>
           <div class="birds__highlight-text">
-            <p class="birds__kicker">From the camera · {highlight.featured.year}</p>
             <h2 id="highlight-title">
               <a href={`/birds/${highlight.slug}`}>{highlight.commonName}</a>
             </h2>
@@ -73,16 +73,15 @@ const searchText = (s: (typeof birdSpecies)[number]) =>
       </div>
       <div class="birds__filter" role="group" aria-label="Filter species">
         <button type="button" aria-pressed="true" data-birds-filter="all">All</button>
-        <button type="button" aria-pressed="false" data-birds-filter="photo">Photographed</button>
-        <button type="button" aria-pressed="false" data-birds-filter="none">Not yet photographed</button>
+        <button type="button" aria-pressed="false" data-birds-filter="photo">Photos linked</button>
+        <button type="button" aria-pressed="false" data-birds-filter="none">No photo linked</button>
       </div>
       <p class="birds__status" role="status" aria-live="polite" data-birds-status></p>
     </div>
 
     <section class="birds__section" id="photographed" aria-labelledby="photographed-title" data-birds-section>
       <header class="birds__section-head">
-        <h2 id="photographed-title">Photographed</h2>
-        <p class="birds__count">{photographed.length} species</p>
+        <h2 id="photographed-title">Photos linked</h2>
       </header>
       <ul class="birds__grid" role="list">
         {
@@ -107,8 +106,7 @@ const searchText = (s: (typeof birdSpecies)[number]) =>
 
     <section class="birds__section" id="unphotographed" aria-labelledby="unphotographed-title" data-birds-section>
       <header class="birds__section-head">
-        <h2 id="unphotographed-title">Not yet photographed</h2>
-        <p class="birds__count">{unphotographed.length} species · illustrations, not photographs</p>
+        <h2 id="unphotographed-title">No photo linked yet</h2>
       </header>
       <ul class="birds__list" role="list">
         {
