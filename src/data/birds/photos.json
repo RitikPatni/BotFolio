@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "common-kingfisher",
+    "file": "birds/common-kingfisher-perch.jpg",
+    "role": "featured",
+    "alt": "A vibrant common kingfisher with turquoise and orange plumage perched on a thorny branch against a soft earthy background",
+    "year": 2025,
+    "evidence": "Published gallery title and alt name the species: \"Common Kingfisher\" (src/data/photography/birds-part-2.json). Not visually re-confirmed for the journal."
+  },
+  {
+    "slug": "black-drongo",
+    "file": "birds/starling-flight-material.jpg",
+    "role": "featured",
+    "alt": "A black drongo with deeply forked tail in mid-flight carrying nesting material in its beak against a soft blurred green and golden background",
+    "year": 2025,
+    "evidence": "Published gallery title and alt name the species: \"Black Drongo in Flight\" (src/data/photography/birds-part-1.json). The filename says starling; the title wins. Not visually re-confirmed for the journal."
+  }
+]
