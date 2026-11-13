@@ -5,7 +5,13 @@ import ExposureLine from "../../components/ExposureLine.astro";
 import { getCollection } from "astro:content";
 import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { photographyGalleryData } from "../../data/photography";
-import type { PhotoMetadata } from "../../data/photography";
+import { photographyCategories } from "../../data/photography/manifest";
+import PhotographyLightbox from "../photography/_PhotographyLightbox.astro";
+import {
+  exposureOf,
+  frameSlug,
+  toLightboxItem,
+} from "../../utils/photography/photographyLightbox.items";
 import { slugOf } from "../../utils/slug";
 import "./_home.scss";
 
@@ -33,13 +39,6 @@ const notes = [
 const books = await getCollection("books", ({ data }) => !data.draft);
 const frameCount = photographyGalleryData.length;
 
-/* One exposure line from the frame's own EXIF; fields that are missing are
-   left out, and a frame without EXIF gets no exposure line at all. */
-const exposureOf = (meta?: PhotoMetadata) =>
-  [meta?.aperture, meta?.shutterSpeed, meta?.iso != null ? `ISO ${meta.iso}` : undefined]
-    .filter(Boolean)
-    .join(" · ");
-
 /* Contact strip: the STRIP_FRAMES strongest frames — editorial rating first
    (blind-audit medians), most recent within a rating tier. A "recent only"
    strip would surface the newest cull regardless of strength. */
@@ -53,23 +52,37 @@ const stripFrames = photographyGalleryData
       a.order - b.order,
   )
   .slice(0, STRIP_FRAMES)
-  .map(({ frame }) => {
+  .map(({ frame }, index) => {
     const asset = galleryAssets.get(`${frame.category}/${frame.filename}`);
     if (!asset) {
       throw new Error(`Missing photography asset: ${frame.category}/${frame.filename}`);
     }
     const ratio = asset.width / asset.height;
     return {
+      frame,
+      asset,
+      index,
       title: frame.title,
       alt: frame.alt,
-      asset,
       exposure: exposureOf(frame.metadata),
       sizes: `(max-width: 48rem) ${Math.ceil(ratio * STRIP_H.mobile)}px, ${Math.ceil(ratio * STRIP_H.desktop)}px`,
-      /* Deep link: same id the gallery's lightbox reads from the URL hash
-         (/photography#<slug>), so the exact clicked frame opens. */
-      href: `/photography#${frame.filename.replace(/\.[^.]+$/, "")}`,
+      /* A plain click opens the viewer here on home (see the lightbox below);
+         the href is the fallback for new tabs and no-JS, and lands on the same
+         frame in the gallery. */
+      href: `/photography#${frameSlug(frame)}`,
     };
   });
+
+/* The home viewer pages through the strip's own frames, in strip order, so a
+   click on a frame never takes the visitor to /photography. */
+const categoryLabels = new Map(photographyCategories.map((c) => [c.id, c.label]));
+const stripLightboxItemsJson = JSON.stringify(
+  await Promise.all(
+    stripFrames.map(({ frame, asset, index }) =>
+      toLightboxItem(frame, categoryLabels.get(frame.category) ?? frame.category, asset, index),
+    ),
+  ),
+);
 
 const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
@@ -103,13 +116,18 @@ const posts = (await getCollection("blog"))
       <a href="/about">About <span class="index-hero__count" aria-hidden="true">→</span></a>
     </nav>
 
-    <section class="index-strip" aria-labelledby="index-strip-title">
+    <section class="index-strip" aria-labelledby="index-strip-title" data-gallery-root>
       <p class="index-strip__label" id="index-strip-title">Contact sheet · top frames</p>
       <ul class="index-strip__row">
         {
           stripFrames.map((frame) => (
             <li class="index-strip__frame">
-              <a href={frame.href}>
+              <a
+                href={frame.href}
+                data-gallery-trigger
+                data-gallery-index={String(frame.index)}
+                aria-haspopup="dialog"
+              >
                 <AstroImage
                   src={frame.asset}
                   alt={frame.alt}
@@ -128,6 +146,7 @@ const posts = (await getCollection("blog"))
         }
       </ul>
       <a class="index-strip__more" href="/photography">Open the gallery →</a>
+      <PhotographyLightbox galleryLightboxItemsJson={stripLightboxItemsJson} />
     </section>
   </section>
 

@@ -28,8 +28,8 @@ export function bindPhotographyLightbox() {
 
 /* The router numbers the history entries it creates (history.state.index,
    0 for the first page of the visit). Above 0, the entry before this one is
-   another page on the site, e.g. the home strip that linked here. Read at
-   init, since this module only loads once /photography is reached. */
+   another page on the site, e.g. a post that linked to a frame. Read at
+   init, before the viewer pushes any entries of its own. */
 const cameFromSitePage = () => {
   const index = (window.history.state as { index?: unknown } | null)?.index;
   return typeof index === "number" && index > 0;
@@ -126,7 +126,7 @@ export function initPhotographyLightbox(): (() => void) | undefined {
      steps back over it instead of leaving a dead #slug entry behind. */
   let ownsHistoryEntry = false;
   /* True while the viewer was opened by a link from another page on the site
-     (e.g. a home-strip frame). The visitor came for one photo, not the whole
+     (e.g. a frame linked from a post). The visitor came for one photo, not the whole
      gallery, so closing steps back to where they came from. */
   let returnToReferrer = false;
 
@@ -138,7 +138,7 @@ export function initPhotographyLightbox(): (() => void) | undefined {
     onNavigate: (index) => goTo(index),
   });
 
-  /* ─── Deep links: /photography#<slug> ─────────────────────────── */
+  /* ─── Deep links: #<slug> on whichever page hosts the viewer ──── */
 
   const slugIndex = new Map(images.map((image) => [image.slug, image.index]));
 
@@ -296,11 +296,27 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   triggers.forEach((trigger) => {
     trigger.addEventListener(
       "click",
-      () => {
+      (event) => {
         const index = Number(trigger.getAttribute("data-gallery-index"));
 
         if (Number.isNaN(index)) {
           return;
+        }
+
+        /* Link triggers (the home strip) keep their href as the no-JS and
+           new-tab fallback; a plain click opens the viewer right here. */
+        if (trigger instanceof HTMLAnchorElement) {
+          if (
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey
+          ) {
+            return;
+          }
+          /* Also stops the ClientRouter, which skips prevented clicks. */
+          event.preventDefault();
         }
 
         openDialog(index, trigger);

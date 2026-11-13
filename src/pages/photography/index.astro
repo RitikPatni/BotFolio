@@ -1,20 +1,14 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import ExposureLine from "../../components/ExposureLine.astro";
-import { Image, getImage } from "astro:assets";
+import { Image } from "astro:assets";
 import PhotographyLightbox from "./_PhotographyLightbox.astro";
 import "./_photography.scss";
 
-import {
-  photographyGalleryData,
-  type GalleryImage,
-  type PhotoMetadata,
-} from "../../data/photography";
+import { photographyGalleryData, type GalleryImage } from "../../data/photography";
 import { photographyCategories } from "../../data/photography/manifest";
-import type {
-  GalleryDialogImage,
-  GalleryLightboxMetadata,
-} from "../../utils/photography/photographyLightbox.types";
+import type { GalleryDialogImage } from "../../utils/photography/photographyLightbox.types";
+import { toLightboxItem } from "../../utils/photography/photographyLightbox.items";
 
 type GalleryAssetModule = {
   default: ImageMetadata;
@@ -51,33 +45,6 @@ const galleryAssets = new Map(
   ]),
 );
 
-/* Contact-sheet caption: one exposure line from the frame's own EXIF (same
-   rule as the home strip); missing fields are omitted, never filled in. */
-const exposureOf = (meta?: PhotoMetadata) =>
-  [meta?.aperture, meta?.shutterSpeed, meta?.iso != null ? `ISO ${meta.iso}` : undefined]
-    .filter(Boolean)
-    .join(" · ");
-
-const createLightboxMetadata = (
-  image: GalleryImage,
-  categoryLabel: string,
-  asset: ImageMetadata,
-) => {
-  return {
-    date: image.date || undefined,
-    camera: image.metadata?.camera,
-    lens: image.metadata?.lens,
-    focalLength: image.metadata?.focalLength,
-    aperture: image.metadata?.aperture,
-    shutterSpeed: image.metadata?.shutterSpeed,
-    iso: image.metadata?.iso ? String(image.metadata.iso) : undefined,
-    category: categoryLabel,
-    /* images:optimize records the camera resolution before shrinking an
-       original; fall back to the file's own size. */
-    resolution: image.metadata?.resolution ?? `${asset.width} × ${asset.height}`,
-  } satisfies GalleryLightboxMetadata;
-};
-
 let lightboxIndex = 0;
 const imagesByCategory: CategoryGallerySection[] = [];
 const galleryLightboxItems: GalleryDialogImage[] = [];
@@ -97,49 +64,12 @@ for (const category of photographyCategories) {
       throw new Error(`Missing photography asset: ${assetPath}`);
     }
 
-    const lightboxImage = await getImage({
-      src: asset,
-      widths: [960, 1440, 1920],
-      sizes: "92vw",
-      quality: "high",
-    });
+    const galleryItem = await toLightboxItem(image, category.label, asset, lightboxIndex);
 
-    const relatedThumb = await getImage({
-      src: asset,
-      width: 240,
-      quality: "high",
-    });
-
-    /* Deep-link id (/photography#<slug>): the asset filename sans extension. */
-    const slug = image.filename.replace(/\.[^.]+$/, "");
-
-    if (frameSlugs.has(slug)) {
-      throw new Error(`Duplicate photography frame slug: ${slug}`);
+    if (frameSlugs.has(galleryItem.slug)) {
+      throw new Error(`Duplicate photography frame slug: ${galleryItem.slug}`);
     }
-    frameSlugs.add(slug);
-
-    const exposure = exposureOf(image.metadata);
-    const metadataEntries = createLightboxMetadata(
-      image,
-      category.label,
-      asset,
-    );
-    const galleryItem = {
-      index: lightboxIndex,
-      slug,
-      title: image.title,
-      alt: image.alt,
-      category: category.label,
-      date: image.date,
-      src: lightboxImage.src,
-      srcSet: lightboxImage.srcSet.attribute,
-      thumbSrc: relatedThumb.src,
-      width: Number(lightboxImage.attributes.width),
-      height: Number(lightboxImage.attributes.height),
-      exposure,
-      metadata: metadataEntries,
-      tags: image.tags,
-    } satisfies GalleryDialogImage;
+    frameSlugs.add(galleryItem.slug);
 
     galleryLightboxItems.push(galleryItem);
     images.push({
@@ -149,7 +79,7 @@ for (const category of photographyCategories) {
       tags: image.tags,
       lightboxIndex,
       ratio: asset.width / asset.height,
-      exposure,
+      exposure: galleryItem.exposure,
     });
 
     lightboxIndex += 1;
