@@ -32,11 +32,10 @@
 
 .slug__cover-caption {
   color: var(--text-dim);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.9rem;
   margin-top: 0.75rem;
-  text-transform: uppercase;
 }
 
 .slug__book-details {
@@ -130,8 +129,6 @@
   margin: 0 0 0.35rem;
   color: var(--text-dim);
   font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .slug__related-title {
@@ -142,10 +139,9 @@
 .slug__related-count {
   color: var(--text-dim);
   flex: 0 0 auto;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.86rem;
 }
 
 .slug__related-list {

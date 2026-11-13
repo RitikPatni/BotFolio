@@ -45,9 +45,9 @@
   }
 
   &__link-meta {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
+    font-family: var(--font-meta);
+    font-style: italic;
+    font-size: 0.96rem;
     color: var(--text-dim);
   }
 }

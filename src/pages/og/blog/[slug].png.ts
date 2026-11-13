@@ -68,7 +68,7 @@ function blogSvg(title: string, desc: string, date: string, readTime: string, sl
   <rect x="0" y="0" width="6" height="630" fill="${MOSS_DEEP}"/>
   <!-- masthead -->
   <text x="64" y="86" font-family="Newsreader" font-size="30" font-weight="400" fill="${INK}">Ritik Patni</text>
-  <text x="1136" y="84" font-family="Plex Mono" font-size="19" font-weight="500" fill="${MUTED}" text-anchor="end" letter-spacing="3">${e(/^\d{4}-w\d+$/.test(slug) ? `READING · W${slug.split("-w")[1]?.toUpperCase() ?? ""}` : "NOTES")}</text>
+  <text x="1136" y="84" font-family="Newsreader" font-style="italic" font-size="24" fill="${MUTED}" text-anchor="end">${e(/^\d{4}-w\d+$/.test(slug) ? `Reading · Week ${slug.split("-w")[1] ?? ""}` : "Notes")}</text>
   <line x1="64" y1="112" x2="1136" y2="112" stroke="${INK}" stroke-width="1.5" opacity="0.75"/>
   <!-- headline -->
   ${lines
@@ -82,8 +82,8 @@ function blogSvg(title: string, desc: string, date: string, readTime: string, sl
   <!-- description -->
   <text x="64" y="560" font-family="Newsreader" font-size="25" fill="${MUTED}">${e(descClean)}</text>
   <!-- footer meta -->
-  <text x="1136" y="560" font-family="Plex Mono" font-size="20" font-weight="500" fill="${MOSS_DEEP}" text-anchor="end">${meta}</text>
-  <text x="64" y="606" font-family="Plex Mono" font-size="18" fill="${MUTED}" letter-spacing="2">RITIKPATNI.ME/BLOG/${e(slugDisplay.toUpperCase())}</text>
+  <text x="1136" y="560" font-family="Newsreader" font-style="italic" font-size="25" fill="${MOSS_DEEP}" text-anchor="end">${meta}</text>
+  <text x="64" y="606" font-family="Newsreader" font-style="italic" font-size="23" fill="${MUTED}">ritikpatni.me/blog/${e(slugDisplay)}</text>
 </svg>`;
 }
 

@@ -1,6 +1,6 @@
 ---
 name: BotFolio — Ritik Patni
-description: Personal archive of a frontend engineer and wildlife/macro photographer, set in one Ledger identity (stone greys, one rust accent, Schibsted Grotesk + IBM Plex Mono)
+description: Personal archive of a frontend engineer and wildlife/macro photographer, set in one Ledger identity (stone greys, one rust accent, Schibsted Grotesk + Newsreader italic)
 colors:
   # Light theme (the default) — src/styles/v2-tokens.scss:8-21
   stone: "#eeefed"
@@ -106,28 +106,33 @@ typography:
     fontSize: "0.95rem"
     fontWeight: 500
   meta:
-    fontFamily: "IBM Plex Mono, monospace"
-    fontSize: "0.82rem"
-    letterSpacing: "0.08em"
+    fontFamily: "Newsreader, Georgia, serif"
+    fontStyle: italic
+    fontSize: "0.98rem"
+    letterSpacing: "0"
   count:
-    fontFamily: "IBM Plex Mono, monospace"
-    fontSize: "0.78rem"
-    letterSpacing: "0.06em"
+    fontFamily: "Newsreader, Georgia, serif"
+    fontStyle: italic
+    fontSize: "0.94rem"
+    letterSpacing: "0"
   label:
-    fontFamily: "IBM Plex Mono, monospace"
-    fontSize: "0.75rem"
-    letterSpacing: "0.1em"
+    fontFamily: "Newsreader, Georgia, serif"
+    fontStyle: italic
+    fontSize: "0.9rem"
+    letterSpacing: "0"
   index:
-    fontFamily: "IBM Plex Mono, monospace"
-    fontSize: "0.8rem"
+    fontFamily: "Newsreader, Georgia, serif"
+    fontStyle: italic
+    fontSize: "0.96rem"
     letterSpacing: "0"
   caption:
-    fontFamily: "IBM Plex Mono, monospace"
-    fontSize: "0.75rem"
+    fontFamily: "Newsreader, Georgia, serif"
+    fontStyle: italic
+    fontSize: "0.9rem"
     lineHeight: 1.45
-    letterSpacing: "0.02em"
+    letterSpacing: "0"
   code:
-    fontFamily: "IBM Plex Mono, monospace"
+    fontFamily: "ui-monospace, SF Mono, Menlo, Consolas, monospace"
     fontSize: "0.875rem"
 rounded:
   sm: "4px"
@@ -170,14 +175,14 @@ Claim IDs `C01`–`C36`, gap-pass IDs `G01`–`G26` and true-up IDs `T01`–`T11
 
 **Creative North Star: "Ledger": an engineer's working ledger that also keeps the photographs.**
 
-There is one identity: stone-grey paper, graphite ink, and one rust accent. A newsprint grotesque (Schibsted Grotesk) carries headings, reading and UI, and a mono hand (IBM Plex Mono) carries dates, counts, labels and exposure data. Hierarchy comes from size and the grotesque/mono split, not from a second display face. Engineering and photography share the same surfaces, type and accent.
+There is one identity: stone-grey paper, graphite ink, and one rust accent. A newsprint grotesque (Schibsted Grotesk) carries headings, reading and UI, and an italic serif (Newsreader) carries dates, counts, labels and exposure data, like notes in a field journal. Hierarchy comes from size and the grotesque/italic split, not from a second display face. Engineering and photography share the same surfaces, type and accent.
 
 Ledger replaced the Field Notes identity (cream, moss, Newsreader + Geist) in #92. It changed tokens and fonts only: layout, card chrome, motion and the theme system are unchanged. The earlier dual-persona system stays dissolved. No route renders a persona attribute and the header has no persona switch (`C01`, `C02`).
 
 **Key characteristics**
 - Paper first. Light is the designed-first theme and the no-JS fallback. Dark is a neutral slate theme. The theme belongs to the visitor, not the page: a stored toggle choice wins, otherwise the system `prefers-color-scheme` decides, and no route forces a theme (`BaseLayout.astro`; `T08`).
 - One accent, rust, in both themes and at both ends of every gradient token.
-- Hierarchy comes from the grotesque/mono split and from size, not from colour or weight theatrics.
+- Hierarchy comes from the grotesque/italic split and from size, not from colour or weight theatrics.
 - Flat: whitespace and top hairlines structure the page. Cards have no boxes, no left rules and no shadows.
 - Truth in the details: counts are computed at build time, captions come from real EXIF, and contrast floors are measured.
 
@@ -188,7 +193,7 @@ Styles load in exactly this order (`src/styles/global.scss:1-7`, imported by `sr
 1. `open-props/style`: stock scales (`--size-*`, `--font-size-*`, `--border-size-*`). These are utility only, and nothing visual is decided here.
 2. `primitives.scss`: surface/stack primitives that read the tokens.
 3. **`v2-tokens.scss`: the single token authority.** Every colour, radius, layout measure, type-ramp size and font stack is defined here (`:root` light at `:8-77`, dark override at `:81-94`).
-4. `v2-typography.scss`: base element sizes (`h2` takes `--fs-h2`, `h3` takes `--fs-h3`) and the mono metadata layer.
+4. `v2-typography.scss`: base element sizes (`h2` takes `--fs-h2`, `h3` takes `--fs-h3`) and the italic metadata layer.
 5. `page-hero.scss`: the shared page hero (`.page-hero__title` takes `--fs-h1`).
 6. `v2-transitions.scss`: motion tokens (`--ease-out`, `--ease-soft`, `--dur-fast/base/slow`) and the reduced-motion collapse.
 7. **`field-notes.scss`: the rules layer, and the last word in the cascade.** The filename predates Ledger. It sets heading family, weight and tracking, body leading, hero glow, the standard page-hero padding ramp, the authoritative card chrome and the clickable-card stretch, focus ring and hover.
@@ -227,7 +232,7 @@ There are three text tiers plus accent text. Each has a measured floor in both t
 |---|---|---|---|
 | `--text` | 15.26 / 16.57 / 13.66 | 15.31 / 14.17 / 16.18 | headings, body, prose, caption titles |
 | `--text-muted` | 8.13 / 8.83 / 7.28 | 8.57 / 7.94 / 9.06 | ledger counts, strip and gallery captions, nav links at rest, page-hero lead |
-| `--text-dim` | 5.59 / 6.07 / 5.00 | 5.97 / 5.53 / 6.31 | the mono metadata layer (dates, hero meta, figcaptions), footer copy and social links |
+| `--text-dim` | 5.59 / 6.07 / 5.00 | 5.97 / 5.53 / 6.31 | the italic metadata layer (dates, hero meta, figcaptions), footer copy and social links |
 | `--accent-text` | 7.14 / 7.75 / 6.40 | 9.41 / 8.70 / 9.94 | section kickers, gallery index links, accent clauses |
 
 Rules:
@@ -245,7 +250,7 @@ Rust is the only accent hue. Every accent token in both themes sits in one rust 
 
 ### Code blocks (Night Owl)
 
-Markdown code renders through Shiki's Night Owl theme on ground `{colors.night-owl-bg}` (#011627), set in IBM Plex Mono. Night Owl is content styling, like a photograph on the wall. It appears only inside `<pre>`/`<code>` and is exempt from the one-accent rule, but not from the contrast floor. `astro.config.mjs` loads the theme through a `SYNTAX_RETUNE` map that swaps Night Owl's comment grey `#637777` (3.87:1) for the Ledger dark `--text-dim` stone `#919493` (5.99:1) (`L02`). To fix any other token that lands under 4.5:1, add it to that map with a Ledger stone or a same-hue lift. Don't fork the theme.
+Markdown code renders through Shiki's Night Owl theme on ground `{colors.night-owl-bg}` (#011627), set in the system monospace stack. Night Owl is content styling, like a photograph on the wall. It appears only inside `<pre>`/`<code>` and is exempt from the one-accent rule, but not from the contrast floor. `astro.config.mjs` loads the theme through a `SYNTAX_RETUNE` map that swaps Night Owl's comment grey `#637777` (3.87:1) for the Ledger dark `--text-dim` stone `#919493` (5.99:1) (`L02`). To fix any other token that lands under 4.5:1, add it to that map with a Ledger stone or a same-hue lift. Don't fork the theme.
 
 ### Utility
 
@@ -261,14 +266,16 @@ Markdown code renders through Shiki's Night Owl theme on ground `{colors.night-o
 
 ## Typography
 
-**Fonts loaded:** exactly two families, from one Google Fonts request (`BaseLayout.astro:148`), with matching `@fontsource` packages in `package.json`:
+**Fonts loaded:** exactly two families, self-hosted through `@fontsource-variable` packages imported in `BaseLayout.astro`:
 
 | Family | Faces requested | Token | Role |
 |---|---|---|---|
 | **Schibsted Grotesk** | variable 400–700, italic 400 | `--font-body` = `--font-display` = `--font-sans` (`v2-tokens.scss:70-72`) | headings, the home statement, body, prose, nav, ledger, caption titles |
-| **IBM Plex Mono** | 400, 500, 600 | `--font-mono` = `--font-ui` (`v2-tokens.scss:73-74`) | dates, counts, labels, captions, the gallery index, code |
+| **Newsreader** | variable italic (wght + opsz) | `--font-meta`, always with `font-style: italic` (`v2-tokens.scss`) | dates, counts, labels, captions, the gallery index |
 
-Measured: every heading, body, prose, nav and caption-title role computes `"Schibsted Grotesk", "Helvetica Neue", system-ui, sans-serif`. Every meta, label, caption, index and code role computes `"IBM Plex Mono", monospace`, at 1440 and 390 (`L03`, `measure-type.json`). No other family appears in any computed stack. Newsreader, Geist, Fraunces, Fira Code, Archivo, JetBrains Mono, Geist Mono and Switzer are retired and must not return. The families named inside the CSS code sample of the "different language fonts" TIL post (Myriad Pro, Mangal) are article text, not site type.
+Code (`code`, `kbd`, `samp`, `pre`) uses `--font-mono`, the system monospace stack (`ui-monospace`, SF Mono, Menlo, Consolas). Nothing is downloaded for it. `--font-ui` is the body family.
+
+Measured: every heading, body, prose, nav and caption-title role computes `"Schibsted Grotesk", "Helvetica Neue", system-ui, sans-serif`. Every meta, label, caption and index role computes `"Newsreader Variable"` in italic. Mono reads as a stock pattern, so IBM Plex Mono was retired in favour of the italic serif; it, Geist, Fraunces, Fira Code, Archivo, JetBrains Mono, Geist Mono and Switzer must not return. The families named inside the CSS code sample of the "different language fonts" TIL post (Myriad Pro, Mangal) are article text, not site type.
 
 Rules:
 - Use only the requested faces. Schibsted is variable 400–700, so a `font-weight: 300` clamps to 400. Declaring it is a bug: write 400.
@@ -291,22 +298,22 @@ Shared type sizes come from this ramp. The ramp tokens live in `v2-tokens.scss:4
 | Ledger | 1rem | 16px | Schibsted 400 | home ledger links |
 | Caption title | 0.95rem | 15.2px | Schibsted 500 | strip and gallery captions |
 | Nav | 0.875rem (0.8125rem at ≤48rem) | 14 / 13px | Schibsted 400 | header links |
-| Meta | 0.82rem base, +0.08em, uppercase, `--text-dim` | 12.8–13.6px | IBM Plex Mono | metadata layer (`v2-typography.scss`) |
-| Count | 0.78rem, +0.06em | 12.48px | IBM Plex Mono, tabular | ledger counts, section kickers |
-| Index | 0.8rem, no tracking, sentence case | 12.8px | IBM Plex Mono | the gallery section index (`_photography.scss`) |
-| Label / caption | **0.75rem** (the floor) | 12px | IBM Plex Mono | strip label, "Open the gallery →", exposure captions, nav "More →" hint |
+| Meta | 0.98rem base, no tracking, sentence case, `--text-dim` | 15.7px | Newsreader italic | metadata layer (`v2-typography.scss`) |
+| Count | 0.94rem, no tracking | 15px | Newsreader italic, tabular | ledger counts, section kickers |
+| Index | 0.96rem, no tracking, sentence case | 15.4px | Newsreader italic | the gallery section index (`_photography.scss`) |
+| Label / caption | **0.9rem** | 14.4px | Newsreader italic | strip label, "Open the gallery →", exposure captions, nav "More →" hint |
 
 ### Tracking
 
-Tracking is a property of the mono caps layer only. There are four documented values, all in the typography frontmatter: `meta` +0.08em, `count` +0.06em, `label` +0.1em and `caption` +0.02em. Headings track negative (−0.01 to −0.022em).
+The site has no all-caps text and no positive tracking: italic serif labels set solid. Headings track negative (−0.01 to −0.022em).
 - **Running text and nav rows get 0.** Body, prose, lede, ledger links and the gallery index never get positive tracking. In particular, they never get 0.05em or more (`L04`).
-- Positive tracking ≥ 0.05em is allowed only with `text-transform: uppercase` on a short mono label (meta, count, label, card badge).
+- Metadata labels (meta, count, label, card badge, kicker) get no tracking either.
 
 Rules:
 - **The One H2 Rule.** `h2` has a single size, `--fs-h2`. Route styles must not set an h2 font-size, line-height or weight.
-- **The Floor Rule.** Functional text is at least 0.75rem (12px). 0.75rem is a floor, not a default, and is reserved for mono labels and captions.
-- **The Voice Split.** Schibsted speaks and reads (titles, the statement, prose, nav, links). Plex Mono records (dates, counts, EXIF, labels). Don't set a date in Schibsted or a heading in mono.
-- **Case.** Headings, ledger, captions and the gallery index use sentence case. Only the mono label layer uppercases: the strip label, "Open the gallery →" and the metadata layer. EXIF lines are never uppercased, so "f/6.3" stays lowercase (`_photography.scss`, and the lightbox caption in `_photography.lightbox.shell.scss`; `T06`).
+- **The Floor Rule.** Functional text is at least 0.75rem (12px). 0.75rem is a floor, not a default. The italic metadata sits about 20% larger than the old mono (0.86–0.98rem), because the serif's small x-height reads smaller at the same size.
+- **The Voice Split.** Schibsted speaks and reads (titles, the statement, prose, nav, links). Newsreader italic records (dates, counts, EXIF, labels). Don't set a date in Schibsted or a heading in the italic serif. Never set Newsreader upright.
+- **Case.** Everything is sentence case, as written in the markup. No rule sets `text-transform: uppercase`: not kickers, labels, dates, badges, tags, the footer or the OG cards. All-caps eyebrows read as a stock website pattern, and the site doesn't use them. EXIF keeps its own case, so "f/6.3" stays lowercase (`T06`).
 - **Figures.** Ledger turns site-wide tabular figures off, because Schibsted's `tnum` widens punctuation (`field-notes.scss:33-35`). Counts, dates and captions set `font-variant-numeric: tabular-nums` explicitly.
 - **Italic** is the second voice. Use it only for the accent clause of the home statement, and never as decoration elsewhere.
 
@@ -333,7 +340,7 @@ The built site breaks the rules above in these places. Each one is a bug to fix 
 - It is sticky at `top: 0` with a `--bg` ground and a 1px `--line` bottom hairline. There is no transparency, no backdrop blur, no overlay mode and no scroll-aware state.
 - It is 61px tall on every route, theme and width (`C25`). `--header-h` (fallback 61px, measured by ResizeObserver) feeds `scroll-padding-block-start` so anchor jumps clear the bar, and it feeds the home hero height (`BaseLayout.scss:1-10`).
 - Nav labels are Home, Journal, Notes, Gallery, Library, Uses, About, from one `NAV_LINKS` list (`src/config/site.ts:14-22`; `C27`). The active link gets `aria-current="page"`, `--text`, a 6% ink wash and a 2px `--accent-start` underline (`BaseLayout.scss:255-269`).
-- When the links outgrow the bar (below about 700px), they scroll sideways inside the nav slot with edge masks. A mono "More →" hint shows while links remain hidden and disappears at the end. The page itself never widens.
+- When the links outgrow the bar (below about 700px), they scroll sideways inside the nav slot with edge masks. An italic "More →" hint shows while links remain hidden and disappears at the end. The page itself never widens.
 - The theme toggle is a 2.25rem round button inside the bar (`BaseLayout.scss:91-109`). There is no floating toggle.
 - Theme flips are atomic: `html[data-theme-switching]` suspends all transitions for two frames (`BaseLayout.scss:198-205`), so text never shows on the wrong-polarity surface mid-flip.
 
@@ -344,11 +351,12 @@ Sources: `src/pages/_home/home.astro:26-124` and `src/pages/_home/_home.scss:1-1
 1. **The sentence is the hero.** An `h1`: "**Ritik Patni** builds thoughtful product surfaces — *and documents nature up close, one frame at a time.*" (`C28`). It is set at `--fs-display` with max 22ch. The name is weight 500 and the second clause is italic in `--accent-text` (`C21`, `C11`).
 2. **The ledger is the doors.** A ruled row of links: Notes · *n* posts, Gallery · *n* frames, Library · *n* books, About →. **Every count is computed at build time** from the same data the destination page lists: non-draft blog plus newsletter entries, the gallery manifest length, and non-draft books (`home.astro:26-33`). It currently renders 66 / 39 / 86 (`C29`). Never type a count in by hand.
 3. **The contact sheet closes the hero.** A `--bg-deep` band with a top hairline paints edge to edge via `border-image` outset, which adds no page scroll (`_home.scss:84-87`). Inside it:
-   - a mono label, "Contact sheet · recent frames";
+   - an italic label, "Contact sheet · top frames";
    - a row of the **8 most recent frames by date** (ties keep manifest order; `home.astro:42-50`), at one shared height and natural aspect ratios, 4px radius, all `loading="lazy"`. The height is `clamp(8.5rem, 22svh, 13rem)` (208px cap) on desktop and 11rem (176px) at ≤48rem (`C30`). The row scrolls and scroll-snaps inside the content column and fades at its right edge;
-   - **Journal-style captions** under each frame: the frame title in Schibsted Grotesk 0.95rem/500, then one mono exposure line, `aperture · shutter · ISO`, taken from the frame's own EXIF. Missing fields are dropped, and a frame with no EXIF shows only its title (`home.astro:35-40`);
-   - **"Open the gallery →"**, the closing link under the row on the right, in the mono label style (uppercase via CSS; `_home.scss:171-182`).
-4. The hero's **minimum** height is `100svh − --header-h` (`_home.scss:11`). It grows with its content: at 1440×900 it measures 922px against an 839px minimum, and at 390×844 it measures 841px against 783px. On both, the bottom of the strip (about 60–80px) falls below the fold (`G15`). Below the hero, "Latest posts" uses the shared section header: a mono rust kicker plus an h2 on the ramp.
+   - **Journal-style captions** under each frame: the frame title in Schibsted Grotesk 0.95rem/500, then one italic exposure line, `aperture · shutter · ISO`, taken from the frame's own EXIF. Missing fields are dropped, and a frame with no EXIF shows only its title (`home.astro:35-40`);
+   - **Clicking a frame opens the gallery viewer right on home**, paging through the strip's 8 frames (`#<slug>` in the URL; Close or Back leaves the visitor on home). The visitor only goes to `/photography` by choosing to: the nav, the ledger, or "Open the gallery →". Each frame's href, `/photography#<slug>`, is the fallback for new tabs and no-JS;
+   - **"Open the gallery →"**, the closing link under the row on the right, in the italic label style, sentence case.
+4. The hero's **minimum** height is `100svh − --header-h` (`_home.scss:11`). It grows with its content: at 1440×900 it measures 922px against an 839px minimum, and at 390×844 it measures 841px against 783px. On both, the bottom of the strip (about 60–80px) falls below the fold (`G15`). Below the hero, "Latest posts" uses the shared section header: an italic rust kicker plus an h2 on the ramp.
 
 ### Gallery: the contact sheet
 
@@ -356,15 +364,15 @@ Sources: `src/pages/photography/index.astro`, `_photography.scss:1-223` and the 
 
 - **Justified rows.** Each frame is `flex: <aspect> 1 calc(<aspect> × --sheet-row-h)`, so every frame in a row shares one height at its natural shape. An `::after` filler stops the last row from stretching (`_photography.scss:80-99`). The row-height basis is `clamp(10rem, 17vw, 15rem)`, or 9rem at ≤48rem.
 - Frames are 4px radius on a `--bg-deep` well. Hover shows a 1px `--accent-start` outline at 3px offset (`_photography.scss:105-120`). The frame itself is the lightbox trigger, and there is no separate icon button (`C31`). Each `figure` is a `.card-link`, so keyboard focus draws the 2px `--accent` ring around the whole frame and its caption, not around the button (`field-notes.scss:107-115`; `T09`).
-- Captions use the same language as the home strip: a Schibsted title, then a mono exposure line, never uppercased.
-- A **ruled mono index** sits at the top: a sentence-case 0.8rem row of rust jump links with build-time counts ("39 frames · Birds 21 · …"). It has no tracking, because it is a nav row, not a label (`L04`). Each category section has a sentence-case h2 on the ramp and a mono meta line.
+- Captions use the same language as the home strip: a Schibsted title, then an italic exposure line, never uppercased.
+- A **ruled italic index** sits at the top: a sentence-case 0.8rem row of rust jump links with build-time counts ("39 frames · Birds 21 · …"). It has no tracking, because it is a nav row, not a label (`L04`). Each category section has a sentence-case h2 on the ramp and an italic meta line.
 - `/photography` has no theme of its own. It resolves like every route: stored choice, then system preference, then light (`BaseLayout.astro:51-75`; `T08`, which supersedes `C32`).
-- **The lightbox is an ink room** in both themes: a `::backdrop` of rgb(12 12 10 / 0.92) with an 8px blur (`_photography.lightbox.shell.scss:37-42`). A top bar on the right holds the counter chip and 44px round actions on the ink tag. Prev/next become tall edge click-zones on fine pointers (`:173-220`) and join the counter as one ‹ n / 39 › chip in the top bar on touch (`:222-263`). A bottom-left caption tag repeats the contact-sheet language (a Schibsted 1.05rem title over the mono exposure line, never uppercased; `:265-296`). The title is declared 500 but renders 400, because it is an `h2` and `:root h2` in `field-notes.scss` wins. Tapping the photo fades the actions, arrows and caption, but the counter stays (`:308-322`). "Show metadata" slides in a sheet: a 340px `--bg-soft` panel on the right on desktop, and a bottom sheet with 20px top corners at ≤48rem (`_photography.lightbox.metadata.scss:5-33`, `:51-74`; `T04`–`T06`).
+- **The lightbox is an ink room** in both themes: a `::backdrop` of rgb(12 12 10 / 0.92) with an 8px blur (`_photography.lightbox.shell.scss:37-42`). A top bar on the right holds the counter chip and 44px round actions on the ink tag. Prev/next become tall edge click-zones on fine pointers (`:173-220`) and join the counter as one ‹ n / 39 › chip in the top bar on touch (`:222-263`). A bottom-left caption tag repeats the contact-sheet language (a Schibsted 1.05rem title over the italic exposure line, never uppercased; `:265-296`). The title is declared 500 but renders 400, because it is an `h2` and `:root h2` in `field-notes.scss` wins. Tapping the photo fades the actions, arrows and caption, but the counter stays (`:308-322`). "Show metadata" slides in a sheet: a 340px `--bg-soft` panel on the right on desktop, and a bottom sheet with 20px top corners at ≤48rem (`_photography.lightbox.metadata.scss:5-33`, `:51-74`; `T04`–`T06`).
 - Never crop a frame to fit a grid, and never set text on a frame.
 
 ### Other pages
 
-- **Page heroes** share one block: mono meta, an H1 at `--fs-h1`, and a lede in `--text-muted` (`page-hero.scss`). They also share one block rhythm. Landing and listing pages (`/blog`, `/coding`, `/library`, `/newsletter`, `/photography`, `/about`, 404) all use `page-hero--standard`, whose padding ramp is `clamp(3rem, 7vw, 6rem)` top and `clamp(3.5rem, 8vw, 7rem)` bottom, or 96 / 112px at 1440 (`field-notes.scss:43-45`; `T10`). There is no compact listing variant: a listing page gets the same hero rhythm as its siblings. Detail pages (post, book, highlight, issue) use their own `--detail`, `--media` and `--compact` heroes. Two known outliers remain. `/resources` still carries the older `page-hero--listing` (44 / 28px), and `/uses` uses `page-hero--intro` (24 / 48px). Neither is a pattern to copy.
+- **Page heroes** share one block: italic meta, an H1 at `--fs-h1`, and a lede in `--text-muted` (`page-hero.scss`). They also share one block rhythm. Landing and listing pages (`/blog`, `/coding`, `/library`, `/newsletter`, `/photography`, `/about`, 404) all use `page-hero--standard`, whose padding ramp is `clamp(3rem, 7vw, 6rem)` top and `clamp(3.5rem, 8vw, 7rem)` bottom, or 96 / 112px at 1440 (`field-notes.scss:43-45`; `T10`). There is no compact listing variant: a listing page gets the same hero rhythm as its siblings. Detail pages (post, book, highlight, issue) use their own `--detail`, `--media` and `--compact` heroes. Two known outliers remain. `/resources` still carries the older `page-hero--listing` (44 / 28px), and `/uses` uses `page-hero--intro` (24 / 48px). Neither is a pattern to copy.
 - **Cards and lists** are flat. There is no box, no left rule, no radius and no shadow, only a top hairline and whitespace (`field-notes.scss:56-77`; `C33`). A ruled row always insets its content from its hairline: `border-top: 1px solid var(--line)` with a `padding: <top> 0` shorthand. The inset is 1rem for list rows (`.newsletter__item`, `.coding__item`), 1.5rem for cards and sections, and 0.75rem for `/uses` inventory rows. Text never sits flush against a hairline (`L06`).
 - **Clickable cards.** Six card families carry `.card-link`: `.post-card` (home), `.blog-card`, `.coding__item`, `.library__item`, `.library__note-item` and `.newsletter__item`. Their one title link stretches over the whole card with an inset-0 `::after`, so the whole card is the hit area, while other links inside it stay clickable on top (`field-notes.scss:79-105`). Hover is colour only. The top hairline turns `--accent-start` mixed 55% into `--line`, and a 14% `--accent-wash` tint fills the card. Nothing moves: the card box shifts 0px in both themes (`:117-135`; `T01`). The featured post has no hairline, so it shows only the wash. Uses and About cards are not links and have no hover state.
 - **Book covers** on the library shelf keep a 1px `--line` border at 4px radius. On card hover the border turns `--accent-start` mixed 45% into `--line`. There is no lift, scale or shadow, and the cover moves 0px (`library/_library.scss:146-159`; `T03`).
@@ -407,13 +415,13 @@ A round 2.25rem button in the header bar with a `--bg-soft` ground and a 45% `--
 Schibsted Grotesk 0.875rem in `--text-muted`, 6px radius, and a 4% `--text` wash on hover. The active link gets `--text`, a 6% wash and a 2px rust underline.
 
 ### Ledger link
-Schibsted Grotesk 1rem in `--text` with a 1px `--line` underline that turns `--accent-start` on hover, while the label turns `--accent-text`. The count is mono 0.78rem in `--text-muted`.
+Schibsted Grotesk 1rem in `--text` with a 1px `--line` underline that turns `--accent-start` on hover, while the label turns `--accent-text`. The count is Newsreader italic 0.94rem in `--text-muted`.
 
 ### Contact-sheet frame (home strip and gallery)
-A natural-ratio image at 4px radius, with a transparent 1px outline at 3px offset that turns rust on hover. Keyboard focus shows the standard 2px ring. On the home strip it wraps the link, and in the gallery it wraps the whole figure, frame and caption together, through `.card-link` (`T09`). The caption is a Schibsted title plus a mono exposure line in `--text-muted`.
+A natural-ratio image at 4px radius, with a transparent 1px outline at 3px offset that turns rust on hover. Keyboard focus shows the standard 2px ring. On the home strip it wraps the link, and in the gallery it wraps the whole figure, frame and caption together, through `.card-link` (`T09`). The caption is a Schibsted title plus an italic exposure line in `--text-muted`.
 
 ### Section header
-A mono uppercase kicker in `--accent-text` (0.78rem, +0.14em), then an h2 on the ramp, on the shared left edge.
+A sentence-case Newsreader italic kicker in `--accent-text` (0.94rem, no tracking), then an h2 on the ramp, on the shared left edge.
 
 Kickers belong to sections below the hero only, such as home "Latest posts". **Page heroes have no eyebrow.** A hero is the H1 and its lede, plus `page-hero__meta` on detail pages. The impeccable fix round removed two hero eyebrow chips: the `/uses` "WORKBENCH / FIELD KIT" chip, which also carried a 2px left rule (the side-tab finding), and the 404 "404 · page not found" chip, which repeated the H1. Removal won over restyling because no other listing hero (`/blog`, `/coding`, `/photography`, `/library`) has one. Every listing hero now opens the same way (`L05`).
 
@@ -442,11 +450,13 @@ Every link and button shows a 2px `--accent` outline with a `--size-1` offset on
 ### Don't
 - **Don't** reintroduce personas, a persona switch, or a second accent hue.
 - **Don't** set an h2 size in a route stylesheet, or a font size off the ramp.
-- **Don't** load or reference a family other than Schibsted Grotesk and IBM Plex Mono, or a weight outside the requested faces.
+- **Don't** load or reference a family other than Schibsted Grotesk and Newsreader (italic only), or a weight outside the requested faces.
 - **Don't** put text on a photograph, crop a frame to fit a grid, or bleed an image to the viewport edge.
 - **Don't** make the header transparent, blurred, two-row or scroll-aware.
 - **Don't** box, left-rule, round or shadow a card, and don't put a left rule on a label or eyebrow.
 - **Don't** put an eyebrow chip above a page-hero H1.
-- **Don't** track running text or nav rows. Positive tracking of 0.05em or more is for uppercase mono labels only.
+- **Don't** set text in all caps (`text-transform: uppercase` or typed caps) for labels, kickers, eyebrows, dates or tags.
+- **Don't** track running text, nav rows or labels.
+- **Don't** use a monospace face outside code.
 - **Don't** let a gradient exceed a whisper, and never use gradient text.
 - **Don't** fabricate content, counts, testimonials or EXIF. The archive is real or it doesn't ship.

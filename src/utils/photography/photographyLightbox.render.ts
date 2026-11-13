@@ -122,7 +122,7 @@ export function createLightboxRenderer({
     ].filter((parts) => parts.length > 0);
 
     /* A word joiner after each hyphen keeps "F5.6-6.3" and "200-600mm" whole
-       (U+2011 would be cleaner but Plex Mono has no glyph for it); a long
+       (U+2011 would be cleaner but Newsreader has no glyph for it); a long
        part can still wrap at its spaces. */
     captionMetaElement.replaceChildren(
       ...lines.map((parts) => {

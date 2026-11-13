@@ -132,9 +132,9 @@
   border-radius: var(--radius-round);
   background: var(--lb-tag);
   color: var(--lb-cream);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.9rem;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -318,11 +318,10 @@
 
 .photography__lightbox-caption-meta {
   margin: 0.2rem 0 0;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.9rem;
   line-height: 1.45;
-  letter-spacing: 0.02em;
-  text-transform: none;
   font-variant-numeric: tabular-nums;
   color: var(--lb-cream-muted);
 

@@ -1,5 +1,8 @@
 ---
 import UiIcon from "../../components/UiIcon.astro";
+/* The viewer brings its own styles, so any page that mounts it (the gallery,
+   the home strip) gets the same dialog without importing the gallery sheet. */
+import "./_photography.lightbox.scss";
 
 interface Props {
   galleryLightboxItemsJson: string;
