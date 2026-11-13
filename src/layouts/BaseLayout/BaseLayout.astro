@@ -307,22 +307,16 @@ const imageUrl = new URL(image, Astro.site).toString();
             <Fragment set:html="<!--email_off-->" />
             {
               socials.map((social) => {
-                const isMailto = social.href.startsWith("mailto:");
                 return (
                   <a
                     href={social.href}
                     class="base-layout__social-link"
-                    target={isMailto ? undefined : "_blank"}
-                    rel={isMailto ? undefined : "noreferrer noopener"}
                   >
                     <SocialIcon
                       name={social.icon}
                       class="base-layout__social-icon"
                     />
                     {social.label}
-                    {!isMailto && (
-                      <span class="visually-hidden"> (opens in new tab)</span>
-                    )}
                   </a>
                 );
               })
