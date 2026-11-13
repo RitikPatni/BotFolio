@@ -12,7 +12,7 @@ const baseSchema = z.object({
 });
 
 const highlightsSchema = baseSchema.extend({
-  source_url: z.union([z.string().url(), z.literal("")]).default(""),
+  source_url: z.union([z.url(), z.literal("")]).default(""),
 });
 
 const blog = defineCollection({
@@ -50,7 +50,7 @@ const books = defineCollection({
     isbn13: z.string().default(""),
     isbn10: z.string().default(""),
     publisher: z.string().default(""),
-    openlibrary_url: z.union([z.string().url(), z.literal("")]).default(""),
+    openlibrary_url: z.union([z.url(), z.literal("")]).default(""),
   }),
 });
 
@@ -62,7 +62,7 @@ const highlights = defineCollection({
 const resources = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/resources" }),
   schema: baseSchema.extend({
-    url: z.union([z.string().url(), z.literal("")]).default(""),
+    url: z.union([z.url(), z.literal("")]).default(""),
   }),
 });
 
