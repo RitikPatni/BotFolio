@@ -6,17 +6,32 @@ import { dateTimestamp, formatDayMonth, isoDate, toDate } from "../../utils/date
 import { excerpt } from "../../utils/excerpt";
 import { slugOf } from "../../utils/slug";
 
+const GENERIC_READING_DESCRIPTION = "What I'm reading this week.";
+
+/* The weekly digest's links, by title: "Taking Back CSS-Tricks, ...". Site
+   names after " – " or " | " are dropped; the author follows each link. */
+const readingListSummary = (body: string) =>
+  [...body.matchAll(/^- \[([^\]]+)\]\(/gm)]
+    .map(([, title]) => title.split(/ [–|] /)[0].trim())
+    .filter((title) => !/^share on /i.test(title))
+    .join(", ");
+
 const blogPosts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .map((post) => {
     const words = post.body ?? "";
+    const isReadingList = post.data.tags.includes("weekly");
+    const description =
+      isReadingList && post.data.description === GENERIC_READING_DESCRIPTION
+        ? readingListSummary(words) || post.data.description
+        : post.data.description;
     return {
       slug: `/blog/${slugOf(post)}`,
       title: post.data.title,
-      description: excerpt(post.data.description),
+      description: excerpt(description),
       date: post.data.date,
       readingTime: readingTimeMinutes(words),
-      category: post.data.category || "blog",
+      category: isReadingList ? "reading" : "blog",
     };
   });
 
@@ -37,7 +52,20 @@ const newsletterPosts = (await getCollection("newsletter"))
 const posts = [...blogPosts, ...newsletterPosts]
   .sort((a, b) => dateTimestamp(b.date) - dateTimestamp(a.date));
 
-const categories = ["all", "blog", "newsletter"];
+const categories = ["all", "blog", "reading", "newsletter"];
+const categoryLabel: Record<string, string> = {
+  all: "All",
+  blog: "Blog",
+  reading: "Reading lists",
+  newsletter: "Newsletter",
+};
+/* Singular, for the label on each row. */
+const rowLabel: Record<string, string> = {
+  blog: "Blog",
+  reading: "Reading list",
+  newsletter: "Newsletter",
+};
+const pageDescription = "Clean notes on frontend engineering, systems, and photography.";
 const requestedCategory = Astro.url.searchParams.get("category");
 const selectedCategory = categories.includes(requestedCategory ?? "")
   ? requestedCategory!
@@ -53,15 +81,19 @@ const postsByYear = years.map((year) => ({
   year,
   posts: visiblePosts.filter((post) => toDate(post.date).getUTCFullYear() === year),
 }));
-const categoryLabel = { blog: "Blog", newsletter: "Newsletter" } as Record<string, string>;
 import "./_blog.scss";
 ---
 
-<BaseLayout title="Notes · Ritik Patni" path="/blog">
+<BaseLayout
+  title="Notes · Ritik Patni"
+  description={pageDescription}
+  image="/og/notes.png"
+  path="/blog"
+>
   <section class="blog-hero page-hero page-hero--standard">
     <div class="blog-hero-content page-hero__inner">
       <h1 class="blog-hero-title page-hero__title">Notes</h1>
-      <p class="blog-hero-lead page-hero__lead">Clean notes on frontend engineering, systems, and photography.</p>
+      <p class="blog-hero-lead page-hero__lead">{pageDescription}</p>
     </div>
   </section>
 
@@ -74,7 +106,7 @@ import "./_blog.scss";
         class:list={["blog-filter-pill", { "is-active": selectedCategory === cat }]}
         aria-current={selectedCategory === cat ? "page" : undefined}
       >
-        {cat === "all" ? "All" : cat.charAt(0).toUpperCase() + cat.slice(1)}
+        {categoryLabel[cat]}
       </a>
     ))}
   </div>
@@ -97,7 +129,7 @@ import "./_blog.scss";
                     <h3 class="blog-card-title"><a class="card-link__target" href={post.slug}>{post.title}</a></h3>
                     {post.description && <p class="blog-card-desc">{post.description}</p>}
                     <p class="blog-card-meta">
-                      {categoryLabel[post.category] ?? "Blog"} · {post.readingTime} min read
+                      {rowLabel[post.category] ?? "Blog"} · {post.readingTime} min read
                     </p>
                   </div>
                 </article>
@@ -132,7 +164,7 @@ import "./_blog.scss";
 
     /* announce: only for a visitor's own filter change, not the initial render. */
     const applyFilter = (category, updateUrl, announce = updateUrl) => {
-      const validCategory = ["all", "blog", "newsletter"].includes(category)
+      const validCategory = ["all", "blog", "reading", "newsletter"].includes(category)
         ? category
         : "all";
       const visibleCards = cards.filter(
