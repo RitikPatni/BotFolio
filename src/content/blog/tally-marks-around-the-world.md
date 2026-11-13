@@ -1,6 +1,6 @@
 ---
 title: "Tally Marks Around the world"
-description: "- **Reddit Link**:: https://www.reddit.com/r/coolguides/comments/o46pw2/tally_marks_are_different_around_the_world/"
+description: "Tally marks are written differently in different parts of the world."
 date: "2021-06-21"
 draft: false
 tags:

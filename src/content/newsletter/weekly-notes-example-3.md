@@ -2,7 +2,7 @@
 title: "Weekly Notes Example #3"
 description: "Career Fulfillment Matrix, 2021 Roundup of Web Research, CSS Tricks, Show don’t Tell, Remembering You are not the user, Best practices can slow you down"
 date: "2022-01-03"
-draft: false
+draft: true
 tags:
   - "newsletter"
   - "buttondown"

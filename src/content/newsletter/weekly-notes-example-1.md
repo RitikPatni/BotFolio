@@ -2,7 +2,7 @@
 title: "Weekly Notes Example #1"
 description: "Introducing Block, Craft button, Open Props, Test Your Website on a Crappy Laptop, Web Tech is better Developer Norms are worse, How to Care Less About Work"
 date: "2022-01-03"
-draft: false
+draft: true
 tags:
   - "newsletter"
   - "buttondown"

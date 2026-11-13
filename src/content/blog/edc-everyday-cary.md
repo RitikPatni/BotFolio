@@ -1,6 +1,6 @@
 ---
 title: "EDC-Everyday Carry"
-description: "---"
+description: "Learned that EDC means everyday carry ex. Pens, Knives, Flashlights, etc."
 date: "2021-01-01"
 draft: false
 tags:
@@ -8,8 +8,4 @@ tags:
   - "til"
 category: "blog"
 ---
----
----
-
-
 Learned that EDC means everyday carry ex. Pens, Knives, Flashlights, etc.

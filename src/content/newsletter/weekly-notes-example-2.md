@@ -2,7 +2,7 @@
 title: "Weekly Notes Example #2"
 description: "Writing Non Advice, Embracing The Platform - Bramus, CSS Shadow Palette Generator, State of CSS 2021 Survey Results, How I (Re)Learnt to read, Maybe Nothing"
 date: "2022-01-03"
-draft: false
+draft: true
 tags:
   - "newsletter"
   - "buttondown"

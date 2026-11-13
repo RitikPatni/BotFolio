@@ -5,7 +5,7 @@ import FloatingLikeButton from "../../components/FloatingLikeButton.astro";
 import { getCollection, render } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
 import { formatDisplayDate } from "../../utils/date";
-import { excerpt } from "../../utils/excerpt";
+import { excerpt, stripMarkdown } from "../../utils/excerpt";
 import { slugOf } from "../../utils/slug";
 
 export async function getStaticPaths() {
@@ -19,6 +19,10 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const reading = readingTimeMinutes(post.body ?? "");
+/* Imported descriptions are often the post's opening sentence; showing it as
+   the lead too would print it twice. Keep it for the meta description only. */
+const leadKey = stripMarkdown(post.data.description).replace(/(\.\.\.|…)$/, "").trim();
+const showLead = Boolean(leadKey) && !stripMarkdown(post.body ?? "").startsWith(leadKey);
 // OG cache-bust: the PNG endpoint URL changes whenever title/description/date change,
 // so platform embed caches (Discord, Twitter) refetch instead of serving a stale card.
 // OG_TEMPLATE changes when the card design itself changes (e.g. its typeface).
@@ -54,7 +58,7 @@ import "./_floating-like.scss";
         {reading} min read
       </p>
       <h1 class="slug-hero-title page-hero__title">{post.data.title}</h1>
-      <p class="slug-hero-lead page-hero__lead">{excerpt(post.data.description)}</p>
+      {showLead && <p class="slug-hero-lead page-hero__lead">{excerpt(post.data.description)}</p>}
     </div>
   </section>
 

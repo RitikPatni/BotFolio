@@ -1,5 +1,5 @@
 ---
-title: "\\\\\\\\\\\\\\\"You are precisely as big as what you love and precisely as small as what you allow to annoy you.\\\\\\\\\\\\\\\" - Robert Anton Wilson"
+title: "“You are precisely as big as what you love and precisely as small as what you allow to annoy you.” - Robert Anton Wilson"
 description: "CSS :out-of-range, Measure What You Impact, Not What You Influence, Work ethics, Robin, Modern alternatives to BEM, Design the next iPhone"
 date: "2022-08-30"
 draft: false

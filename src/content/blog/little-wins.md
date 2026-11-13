@@ -1,6 +1,6 @@
 ---
 title: "Little Wins"
-description: "- Worked with Angular for the first time"
+description: "Joined Brainplay as a front-end developer: first time with Angular and React Native, some GraphQL, a carousel, and a reviews dashboard."
 date: "2021-06-12"
 draft: false
 tags:

@@ -26,12 +26,4 @@ module.exports = humanSnip;
 ```
 - **Step 2**: Put this file in some place of your vault except `.obsidian` folder as this folder is not accessible via templater plugin.
 - **Step 3**: Add the folder location in templater script locations
-	
-	(Local Obsidian asset omitted in web import.)(Where to set script in templater)
 - **Step 4**: Use the script as `tp.user.humanSnip(tp)` or whatever the name of your script was
-
-
----
-## Additional Metadata
-
-Suggested by:: @Ximena

@@ -1,6 +1,6 @@
 ---
 title: "Managing your CI pipeline with GitLab S3, Commitizen and Husky"
-description: "- Part 1: Husky"
+description: "Release management on the web with Husky, S3, Commitizen, and a CI provider of your choice."
 date: "2021-05-10"
 draft: false
 tags:
