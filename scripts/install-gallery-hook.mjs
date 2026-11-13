@@ -33,13 +33,20 @@ if echo "$STAGED" | grep -E '^(src/content/books/.*\\.md|scripts/goodreads-cover
 fi
 
 if echo "$STAGED" | grep -E '^(src/data/photography/|src/assets/photography/|scripts/validate-gallery\\.mjs|package\\.json|\\.github/workflows/gallery-qa\\.yml)' >/dev/null; then
-  echo "[gallery-hook] Detected gallery-related changes. Running strict validator..."
-  npm run -s gallery:validate:strict
+  echo "[gallery-hook] Detected gallery-related changes. Running strict validator on the staged files..."
+  # Validate exactly what is being committed: export the staged copies of the
+  # gallery data, assets and validator to a temp tree and run it there, so an
+  # unstaged fix (or an unstaged break) can't change the verdict.
+  GALLERY_TMP=$(mktemp -d)
+  trap 'rm -rf "$GALLERY_TMP"' EXIT
+  git ls-files -z -- src/data/photography src/assets/photography scripts/validate-gallery.mjs \\
+    | xargs -0 git checkout-index --prefix="$GALLERY_TMP/" --
+  node "$GALLERY_TMP/scripts/validate-gallery.mjs" --strict
 else
   echo "[gallery-hook] No gallery-related staged changes. Skipping gallery validator."
 fi
 
-if echo "$STAGED" | grep -E '^(src/content/blog/.*\.md|scripts/standard-site-publish\.mjs|package\.json|\.github/workflows/standard-site\.yml)' >/dev/null; then
+if echo "$STAGED" | grep -E '^(src/content/blog/.*\\.md|scripts/standard-site-publish\\.mjs|package\\.json|\\.github/workflows/standard-site\\.yml)' >/dev/null; then
   echo "[standard-site-hook] Detected blog/content changes. Regenerating Standard.site artifacts (dry run)..."
   npm run -s standard-site:generate
 fi

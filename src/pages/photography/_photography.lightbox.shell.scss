@@ -57,16 +57,22 @@
 .photography__lightbox-frame {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   padding-block: var(--lb-top) var(--lb-bottom);
   touch-action: pan-y pinch-zoom;
 }
 
-.photography__lightbox-image {
+.photography__lightbox-image,
+.photography__lightbox-placeholder {
+  grid-area: 1 / 1;
   display: block;
-  inline-size: auto;
+  inline-size: min(
+    var(--lb-image-width),
+    92vw,
+    calc((100dvh - var(--lb-top) - var(--lb-bottom)) * var(--lb-image-ratio))
+  );
+  aspect-ratio: var(--lb-image-ratio);
   block-size: auto;
   max-inline-size: 92vw;
   max-block-size: 100%;
@@ -74,13 +80,34 @@
   border-radius: 2px;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+.photography__lightbox-placeholder {
+  filter: blur(4px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &.is-visible {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+.photography__lightbox-image {
+  position: relative;
   transition:
-    opacity 150ms ease,
+    opacity 200ms ease-out,
     transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 
   &.is-swapping,
   &[data-image-state="error"] {
     opacity: 0;
+    transition: none;
   }
 
   &.is-dragging {
@@ -216,7 +243,8 @@
   }
 
   /* Keep the photo clear of the edge zones. */
-  .photography__lightbox-image {
+  .photography__lightbox-image,
+  .photography__lightbox-placeholder {
     max-inline-size: min(92vw, calc(100vw - 2 * var(--lb-zone)));
   }
 }
@@ -352,6 +380,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .photography__lightbox-placeholder,
   .photography__lightbox-image,
   .photography__lightbox-actions,
   .photography__lightbox-caption,

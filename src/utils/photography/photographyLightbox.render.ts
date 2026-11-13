@@ -27,6 +27,8 @@ export function createLightboxRenderer({
 }: RenderContext) {
   const {
     imageElement,
+    placeholderElement,
+    frameElement,
     counterElement,
     titleElement,
     captionMetaElement,
@@ -254,6 +256,10 @@ export function createLightboxRenderer({
     state.activeIndex = index;
     const requestToken = Symbol("gallery-image-request");
     currentRequest = requestToken;
+    placeholderElement.hidden = true;
+    placeholderElement.classList.remove("is-visible");
+    frameElement.style.setProperty("--lb-image-width", `${image.width}px`);
+    frameElement.style.setProperty("--lb-image-ratio", `${image.width / image.height}`);
 
     // Avoid the "last image lingers then refreshes" flash: fade the current
     // image out, then only swap metadata + reveal once the new source is ready.
@@ -286,9 +292,9 @@ export function createLightboxRenderer({
     imageElement.classList.add("is-swapping");
 
     // Point the element at the new source first.
-    imageElement.src = image.src;
-    imageElement.srcset = image.srcSet;
     imageElement.sizes = LIGHTBOX_SIZES;
+    imageElement.srcset = image.srcSet;
+    imageElement.src = image.src;
     imageElement.width = image.width;
     imageElement.height = image.height;
     imageElement.alt = image.alt;
@@ -299,6 +305,13 @@ export function createLightboxRenderer({
       swapIn();
       onImageState?.("loaded");
     } else {
+      /* The small frame holds the same box until the full source is ready. */
+      placeholderElement.width = image.width;
+      placeholderElement.height = image.height;
+      placeholderElement.src = image.thumbSrc;
+      placeholderElement.hidden = false;
+      placeholderElement.classList.add("is-visible");
+
       const onReady = (event: Event) => {
         imageElement.removeEventListener("load", onReady);
         imageElement.removeEventListener("error", onReady);
@@ -307,6 +320,10 @@ export function createLightboxRenderer({
           return;
         }
 
+        placeholderElement.classList.remove("is-visible");
+        if (event.type === "error") {
+          placeholderElement.hidden = true;
+        }
         swapIn();
         onImageState?.(event.type === "error" ? "error" : "loaded");
       };

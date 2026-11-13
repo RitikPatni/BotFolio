@@ -242,6 +242,7 @@ async function main() {
             "aperture",
             "shutterSpeed",
             "iso",
+            "resolution",
           ];
           for (const key of Object.keys(metadata)) {
             if (!knownMeta.includes(key)) {

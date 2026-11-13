@@ -34,6 +34,7 @@ export type GalleryElements = {
   lightboxShell: HTMLElement;
   triggers: HTMLElement[];
   imageElement: HTMLImageElement;
+  placeholderElement: HTMLImageElement;
   counterElement: HTMLElement;
   titleElement: HTMLElement;
   captionMetaElement: HTMLElement;
@@ -59,6 +60,7 @@ export function resolveElements(root: HTMLElement): GalleryElements | null {
   const lightboxShell = root.querySelector("[data-gallery-shell]");
   const triggers = Array.from(root.querySelectorAll<HTMLElement>("[data-gallery-trigger]"));
   const imageElement = root.querySelector("[data-gallery-image]");
+  const placeholderElement = root.querySelector("[data-gallery-placeholder]");
   const counterElement = root.querySelector("[data-gallery-counter]");
   const titleElement = root.querySelector("[data-gallery-title]");
   const captionMetaElement = root.querySelector("[data-gallery-caption-meta]");
@@ -82,6 +84,7 @@ export function resolveElements(root: HTMLElement): GalleryElements | null {
     !(dialog instanceof HTMLDialogElement) ||
     !(lightboxShell instanceof HTMLElement) ||
     !(imageElement instanceof HTMLImageElement) ||
+    !(placeholderElement instanceof HTMLImageElement) ||
     !(counterElement instanceof HTMLElement) ||
     !(titleElement instanceof HTMLElement) ||
     !(captionMetaElement instanceof HTMLElement) ||
@@ -109,6 +112,7 @@ export function resolveElements(root: HTMLElement): GalleryElements | null {
     lightboxShell,
     triggers,
     imageElement,
+    placeholderElement,
     counterElement,
     titleElement,
     captionMetaElement,

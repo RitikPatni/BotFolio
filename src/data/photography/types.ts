@@ -5,6 +5,9 @@ export type PhotoMetadata = {
   aperture?: string;
   shutterSpeed?: string;
   iso?: string | number;
+  /** Camera resolution ("6192 × 4128"), written by images:optimize before it
+   *  shrinks an original; the lightbox prefers it over the file's size. */
+  resolution?: string;
 };
 
 export type GalleryImage = {
