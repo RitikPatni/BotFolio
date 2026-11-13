@@ -1,8 +1,8 @@
 /* ==========================================================================
-   Field Notes design tokens — warm editorial, moss accent.
-   Light-first: cream paper surfaces are the DEFAULT. Dark retained as a
+   Ledger design tokens — stone greys, rust accent.
+   Light-first: stone paper surfaces are the DEFAULT. Dark retained as a
    scoped theme (photography gallery / explicit opt-in), not the site default.
-   Accent: single moss family — no gradients on paper surfaces.
+   Accent: single rust family — no gradients on paper surfaces.
    ========================================================================== */
 
 :root {
@@ -19,8 +19,8 @@
   --accent-wash: #efc9b8;
   --accent-text: #8a3216;
 
-  /* Gradient assets retained for compat; both ends are moss, so these read as
-     a flat moss rule on paper */
+  /* Gradient assets retained for compat; both ends are rust, so these read as
+     a flat rust rule on paper */
   --gradient-underline: linear-gradient(90deg, var(--accent-start), var(--accent-end));
   --gradient-hero: none;
   --gradient-border: linear-gradient(135deg, var(--accent-start), var(--accent-end));
