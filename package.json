@@ -44,12 +44,11 @@
     "@resvg/resvg-js": "^2.6.2",
     "@shikijs/themes": "^4.6.0",
     "astro": "^7.4.11",
-    "motion": "^12.43.0",
     "open-props": "^1.7.23",
     "sass": "^1.108.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   }
 }
