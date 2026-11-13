@@ -7,6 +7,7 @@ import { readingTimeMinutes } from "../../utils/readingTime";
 import { formatDisplayDate } from "../../utils/date";
 import { excerpt, stripMarkdown } from "../../utils/excerpt";
 import { slugOf } from "../../utils/slug";
+import { documentUri } from "../../utils/standardSite.mjs";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -33,8 +34,8 @@ const ogVersion = crypto
   .digest("hex")
   .slice(0, 8);
 const ogImage = `/og/blog/${slugOf(post)}.png?v=${ogVersion}`;
-const STANDARD_SITE_DID = "did:plc:53jkze3ofomdesnodoz5i34y";
-const standardSiteDocUri = `at://${STANDARD_SITE_DID}/site.standard.document/${slugOf(post)}`;
+// Same key the publish script writes, so the page names its real record.
+const standardSiteDocUri = documentUri(slugOf(post), post.data.date);
 import "./_slug.scss";
 import "./_floating-like.scss";
 ---

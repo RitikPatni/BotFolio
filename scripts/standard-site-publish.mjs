@@ -3,13 +3,17 @@
  * Standard.site (AT Protocol) publish helper for BotFolio.
  *
  * What it does (always, no secret needed):
- *  - Reads blog posts from src/content/blog/*.md (frontmatter + body).
+ *  - Reads blog posts from src/content/blog/*.md (frontmatter + body),
+ *    skipping drafts (`draft: true`): those never leave the repo.
  *  - Emits public/.well-known/site.standard.publication (the publication AT-URI).
  *  - Emits public/standard-site/records.json (publication + per-post document
  *    records) and public/standard-site/links.json (the <link> tags to inject).
  *
  * What it does ONLY with `BLUESKY_APP_PASSWORD` set + `--publish`:
- *  - Authenticates to the AT Proto PDS and creates/updates the records live.
+ *  - Authenticates to the AT Proto PDS and syncs the records live: upserts one
+ *    document per published post under a stable key, and deletes any document
+ *    record that no longer matches a published post (removed posts, drafts,
+ *    keys from older runs).
  *  This script NEVER fabricates credentials and NEVER publishes unless you pass
  *  --publish AND the env var is present.
  *
@@ -18,6 +22,12 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  STANDARD_SITE_DID,
+  PUBLICATION_RKEY,
+  PUBLICATION_URI,
+  documentRkey,
+} from "../src/utils/standardSite.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
@@ -47,33 +57,49 @@ function loadEnv() {
   return env;
 }
 
-// Parse a single Markdown file's frontmatter + raw body.
+// Parse a single Markdown file's frontmatter + raw body. Handles the shapes the
+// content uses: `key: value` scalars and `key:` followed by `  - item` lists.
 function parsePost(file) {
   const raw = readFileSync(file, "utf8");
-  const m = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!m) return null;
+  const unquote = (v) => v.trim().replace(/^["']|["']$/g, "").trim();
   const fm = {};
-  for (const line of m[1].split("\n")) {
+  let listKey = null;
+  for (const line of m[1].split(/\r?\n/)) {
+    const item = line.match(/^\s+-\s+(.*)$/);
+    if (item && listKey) {
+      fm[listKey].push(unquote(item[1]));
+      continue;
+    }
     const kv = line.match(/^([a-zA-Z0-9_-]+):\s*(.*)$/);
-    if (kv) fm[kv[1]] = kv[2].replace(/^["']|["']$/g, "").trim();
+    if (!kv) continue;
+    if (kv[2].trim() === "") {
+      listKey = kv[1];
+      fm[listKey] = [];
+    } else {
+      listKey = null;
+      fm[kv[1]] = unquote(kv[2]);
+    }
   }
   const slug = file.split("/").pop().replace(/\.md$/, "");
+  const tags = Array.isArray(fm.tags)
+    ? fm.tags
+    : String(fm.tags || "").replace(/^\[|\]$/g, "").split(",").map(unquote);
   return {
     slug,
+    draft: String(fm.draft).toLowerCase() === "true",
     title: fm.title || slug,
-    description: fm.description || "",
-    date: fm.date || new Date().toISOString().slice(0, 10),
-    tags: (fm.tags || "")
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean),
+    description: typeof fm.description === "string" ? fm.description : "",
+    date: fm.date,
+    tags: tags.filter(Boolean),
     body: m[2].trim(),
   };
 }
 
 async function main() {
   const env = loadEnv();
-  const DID = "did:plc:53jkze3ofomdesnodoz5i34y"; // ritikpatni.bsky.social
+  const DID = STANDARD_SITE_DID;
   const SITE_URL = env.SITE_URL || "https://ritikpatni.me";
 
   if (!existsSync(BLOG_DIR)) {
@@ -86,30 +112,46 @@ async function main() {
   for (const name of readdirSync(BLOG_DIR)) {
     if (!name.endsWith(".md")) continue;
     const post = parsePost(resolve(BLOG_DIR, name));
-    if (post) posts.push(post);
+    // Drafts never get a record: records.json is served publicly and the
+    // records themselves are public on the network.
+    if (post && !post.draft) posts.push(post);
   }
 
-  const publicationRKey = "3lwafzkjqm25s"; // stable rkey for the publication record
-  const publicationUri = `at://${DID}/site.standard.publication/${publicationRKey}`;
+  const publicationRKey = PUBLICATION_RKEY;
+  const publicationUri = PUBLICATION_URI;
 
   const publication = {
     $type: "site.standard.publication",
     url: SITE_URL,
-    name: "BotFolio",
+    name: "Ritik Patni",
     description: "Writing, notes, and a reading shelf from Ritik Patni.",
     preferences: { showInDiscover: true },
   };
 
-  const documents = posts.map((p) => ({
-    $type: "site.standard.document",
-    site: publicationUri,
-    title: p.title,
-    path: `/blog/${p.slug}`,
-    description: p.description,
-    publishedAt: new Date(p.date).toISOString(),
-    tags: p.tags,
-    textContent: p.body.slice(0, 20000),
-  }));
+  const documents = posts.map((p) => {
+    if (!p.date) {
+      throw new Error(`Post "${p.slug}" has no date, so it can't get a stable record key.`);
+    }
+    return {
+      rkey: documentRkey(p.slug, p.date),
+      $type: "site.standard.document",
+      site: publicationUri,
+      title: p.title,
+      path: `/blog/${p.slug}`,
+      description: p.description,
+      publishedAt: new Date(p.date).toISOString(),
+      tags: p.tags,
+      textContent: p.body.slice(0, 20000),
+    };
+  });
+
+  const seenKeys = new Map();
+  for (const doc of documents) {
+    if (seenKeys.has(doc.rkey)) {
+      throw new Error(`Record key collision: ${doc.path} and ${seenKeys.get(doc.rkey)} -> ${doc.rkey}`);
+    }
+    seenKeys.set(doc.rkey, doc.path);
+  }
 
   mkdirSync(OUT_DIR, { recursive: true });
   mkdirSync(WELL_KNOWN_DIR, { recursive: true });
@@ -119,13 +161,17 @@ async function main() {
 
   writeFileSync(
     resolve(OUT_DIR, "records.json"),
-    JSON.stringify({ publication, documents }, null, 2),
+    JSON.stringify(
+      { publication, documents: documents.map(({ rkey, ...record }) => record) },
+      null,
+      2,
+    ),
   );
 
   // <link> tags to inject into each post's <head>.
-  const links = posts.map((p) => ({
-    path: `/blog/${p.slug}`,
-    link: `<link rel="site.standard.document" href="at://${DID}/site.standard.document/${p.slug}" />`,
+  const links = documents.map((d) => ({
+    path: d.path,
+    link: `<link rel="site.standard.document" href="at://${DID}/site.standard.document/${d.rkey}" />`,
   }));
   writeFileSync(resolve(OUT_DIR, "links.json"), JSON.stringify(links, null, 2));
 
@@ -138,7 +184,9 @@ async function main() {
   const publish = process.argv.includes("--publish");
   if (publish && env.BLUESKY_APP_PASSWORD) {
     await publishRecords({
-      handle: "ritikpatni.bsky.social",
+      // The DID never changes; the handle has (ritikpatni.bsky.social ->
+      // ritikpatni.me), and a stale handle fails to sign in.
+      identifier: DID,
       appPassword: env.BLUESKY_APP_PASSWORD,
       pds: env.ATPROTO_PDS || "https://bsky.social",
       did: DID,
@@ -155,27 +203,10 @@ async function main() {
 }
 
 /* ── AT Proto publishing ────────────────────────────────────────────────
-   Real publish against a Bluesky/PDS XRPC endpoint. Uses putRecord with a
-   stable rkey per record so re-runs UPDATE rather than duplicate. */
-
-// Minimal valid TID (atproto base32, big-endian, <=64 bits) from a string seed.
-const TID_ALPHABET = "234567abcdefghijklmnopqrstuvwxyz";
-function tidFromSeed(str) {
-  let h = 0n;
-  for (let i = 0; i < str.length; i++) {
-    h = (h * 31n + BigInt(str.charCodeAt(i))) & 0xffffffffffffffffn;
-  }
-  // Mix in microseconds of now for sortability, keep within 64 bits.
-  const ts = BigInt(Date.now() % 1e15) & 0xffffffffffffffffn;
-  const value = ((ts << 24n) ^ (h << 8n) ^ (h & 0xffn)) & 0xffffffffffffffffn;
-  let v = value;
-  let out = "";
-  for (let i = 0; i < 13; i++) {
-    out = TID_ALPHABET[Number(v & 31n)] + out;
-    v >>= 5n;
-  }
-  return out;
-}
+   Real publish against a Bluesky/PDS XRPC endpoint. Every document has a
+   stable rkey (documentRkey), so putRecord updates on re-runs instead of
+   duplicating, and anything in the collection without a matching post is
+   deleted. */
 
 async function xrpc(pds, token, method, body, { retries = 3 } = {}) {
   let lastErr;
@@ -216,17 +247,42 @@ async function xrpc(pds, token, method, body, { retries = 3 } = {}) {
   throw lastErr;
 }
 
-async function publishRecords(opts) {
-  const { handle, appPassword, pds, did, publicationRKey, publication, documents } = opts;
+async function xrpcGet(pds, token, method, params) {
+  const res = await fetch(`${pds}/xrpc/${method}?${new URLSearchParams(params)}`, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`${method} failed (${res.status}): ${text.slice(0, 200)}`);
+  return JSON.parse(text);
+}
 
-  console.log(`Authenticating to ${pds} as ${handle}...`);
+async function listRkeys(pds, token, did, collection) {
+  const rkeys = [];
+  let cursor;
+  do {
+    const page = await xrpcGet(pds, token, "com.atproto.repo.listRecords", {
+      repo: did,
+      collection,
+      limit: "100",
+      ...(cursor ? { cursor } : {}),
+    });
+    for (const record of page.records ?? []) rkeys.push(record.uri.split("/").pop());
+    cursor = page.records?.length ? page.cursor : undefined;
+  } while (cursor);
+  return rkeys;
+}
+
+async function publishRecords(opts) {
+  const { identifier, appPassword, pds, did, publicationRKey, publication, documents } = opts;
+
+  console.log(`Authenticating to ${pds} as ${identifier}...`);
   const session = await xrpc(pds, null, "com.atproto.server.createSession", {
-    identifier: handle,
+    identifier,
     password: appPassword,
   });
   const token = session.accessJwt;
   if (session.did !== did) {
-    console.warn(`Warning: session DID ${session.did} != expected ${did}`);
+    throw new Error(`Session DID ${session.did} != expected ${did}; refusing to write to another repo.`);
   }
   console.log("Session OK.");
 
@@ -240,27 +296,52 @@ async function publishRecords(opts) {
 
   let ok = 0;
   const failed = [];
-  for (const doc of documents) {
-    const rkey = tidFromSeed(doc.path);
+  for (const { rkey, ...record } of documents) {
     try {
       await xrpc(pds, token, "com.atproto.repo.putRecord", {
         repo: did,
         collection: "site.standard.document",
         rkey,
-        record: doc,
+        record,
       });
       ok++;
     } catch (e) {
-      failed.push({ path: doc.path, error: e.message });
-      console.error(`FAILED ${doc.path}: ${e.message}`);
+      failed.push({ path: record.path, error: e.message });
+      console.error(`FAILED ${record.path}: ${e.message}`);
     }
   }
+
+  // Prune after upserting, and only when every upsert landed, so a partial run
+  // never leaves a live post without a record.
+  let pruned = 0;
+  if (failed.length === 0) {
+    const wanted = new Set(documents.map((d) => d.rkey));
+    const stale = (await listRkeys(pds, token, did, "site.standard.document")).filter(
+      (rkey) => !wanted.has(rkey),
+    );
+    for (const rkey of stale) {
+      try {
+        await xrpc(pds, token, "com.atproto.repo.deleteRecord", {
+          repo: did,
+          collection: "site.standard.document",
+          rkey,
+        });
+        pruned++;
+      } catch (e) {
+        failed.push({ path: `(stale ${rkey})`, error: e.message });
+        console.error(`FAILED to delete stale ${rkey}: ${e.message}`);
+      }
+    }
+  } else {
+    console.error("Skipping stale-record cleanup because some upserts failed.");
+  }
+
   if (failed.length > 0) {
-    console.error(`\n${failed.length}/${documents.length} documents FAILED:`);
+    console.error(`\n${failed.length} operation(s) FAILED:`);
     for (const f of failed) console.error(` - ${f.path}: ${f.error}`);
     process.exitCode = 3; // non-zero so the Action shows red, but partial progress is kept
   }
-  console.log(`Published ${ok}/${documents.length} document records. Done.`);
+  console.log(`Published ${ok}/${documents.length} document records, deleted ${pruned} stale. Done.`);
 }
 
 main().catch((e) => {

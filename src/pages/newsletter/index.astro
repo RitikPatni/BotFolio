@@ -5,6 +5,7 @@ import { readingTimeMinutes } from "../../utils/readingTime";
 import { dateTimestamp, formatDisplayDate } from "../../utils/date";
 import { excerpt } from "../../utils/excerpt";
 import { slugOf } from "../../utils/slug";
+import { PUBLICATION_URI, STANDARD_SITE_DID } from "../../utils/standardSite.mjs";
 
 const entries = (await getCollection("newsletter"))
   .filter((item) => !item.data.draft)
@@ -66,16 +67,16 @@ import "./_newsletter.scss";
         </li>
         <li>
           <strong>AT Protocol (Standard.site)</strong> for AT-native clients.
-          Every post is published as a <code>site.standard.document</code> record
+          Every post on <a href="/blog">Notes</a> is published as a <code>site.standard.document</code> record
           to the channel below; an AT Proto reader can subscribe directly and
           receive new posts without polling this site.
           <br />
           <span class="newsletter__subscribe-aturi">
-            Publication: <code>at://did:plc:53jkze3ofomdesnodoz5i34y/site.standard.publication</code>
+            Publication: <code>{PUBLICATION_URI}</code>
           </span>
           <br />
           <a
-            href="https://bsky.social/xrpc/com.atproto.repo.listRecords?repo=ritikpatni.bsky.social&collection=site.standard.document"
+            href={`https://bsky.social/xrpc/com.atproto.repo.listRecords?repo=${STANDARD_SITE_DID}&collection=site.standard.document`}
           >
             View published records
           </a>
