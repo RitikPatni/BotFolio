@@ -43,7 +43,7 @@ import "./_slug.scss";
 ---
 
 <BaseLayout
-  title={`${item.data.title}\u2003Library`}
+  title={item.data.author ? `${item.data.title} by ${item.data.author}` : item.data.title}
   description={metaDescription}
   path="/library"
 >

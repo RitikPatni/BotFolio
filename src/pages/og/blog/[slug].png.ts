@@ -68,7 +68,7 @@ function blogSvg(title: string, desc: string, date: string, readTime: string, sl
   <rect x="0" y="0" width="6" height="630" fill="${MOSS_DEEP}"/>
   <!-- masthead -->
   <text x="64" y="86" font-family="Newsreader" font-size="30" font-weight="400" fill="${INK}">Ritik Patni</text>
-  <text x="1136" y="84" font-family="Newsreader" font-style="italic" font-size="24" fill="${MUTED}" text-anchor="end">${e(/^\d{4}-w\d+$/.test(slug) ? `Reading\u2003Week ${slug.split("-w")[1] ?? ""}` : "Notes")}</text>
+  <text x="1136" y="84" font-family="Newsreader" font-style="italic" font-size="24" fill="${MUTED}" text-anchor="end">${e(/^\d{4}-w\d+$/.test(slug) ? `Reading list, week ${slug.split("-w")[1] ?? ""}` : "Notes")}</text>
   <line x1="64" y1="112" x2="1136" y2="112" stroke="${INK}" stroke-width="1.5" opacity="0.75"/>
   <!-- headline -->
   ${lines

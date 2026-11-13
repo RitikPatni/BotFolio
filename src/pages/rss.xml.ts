@@ -23,7 +23,7 @@ export async function GET(context: APIContext) {
   );
 
   return rss({
-    title: 'Ritik Patni\u2003Updates',
+    title: 'Ritik Patni',
     description: 'Blog posts and newsletter updates from Ritik Patni.',
     site: context.site ?? 'https://ritikpatni.me',
     items,
