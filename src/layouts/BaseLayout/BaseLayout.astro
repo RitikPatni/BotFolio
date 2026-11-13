@@ -295,10 +295,10 @@ const imageUrl = new URL(image, Astro.site).toString();
           <p class="base-layout__footer-copy">
             © {new Date().getFullYear()}
             {" "}
-            {SITE_CONFIG.personName} · Built with Astro.
+            {SITE_CONFIG.personName}. Built with Astro.
           </p>
           <p class="base-layout__footer-views" data-site-pageviews hidden>
-            Page views · <span data-site-pageviews-count></span>
+            <span data-site-pageviews-count></span> page views
           </p>
           <nav class="base-layout__socials" aria-label="Social links">
             {/* Cloudflare Email Obfuscation rewrites addresses to "[email protected]"

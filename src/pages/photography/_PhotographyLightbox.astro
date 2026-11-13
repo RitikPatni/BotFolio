@@ -36,23 +36,27 @@ const { galleryLightboxItemsJson } = Astro.props;
     ></div>
 
     <div class="photography__lightbox-frame" data-gallery-frame>
-      <img
-        class="photography__lightbox-placeholder"
-        data-gallery-placeholder
-        alt=""
-        aria-hidden="true"
-        decoding="async"
-        draggable="false"
-        hidden
-      />
-      <!-- impeccable-disable broken-image -- lightbox placeholder: src is set at runtime by the gallery script -->
-      <img
-        class="photography__lightbox-image"
-        data-gallery-image
-        alt=""
-        decoding="async"
-        draggable="false"
-      />
+      <!-- Stage: fills the frame and carries the zoom transform (Panzoom), so
+           the photo inside stays free for the swipe drag's own transform. -->
+      <div class="photography__lightbox-stage" data-gallery-stage>
+        <img
+          class="photography__lightbox-placeholder"
+          data-gallery-placeholder
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+          draggable="false"
+          hidden
+        />
+        <!-- impeccable-disable broken-image -- lightbox placeholder: src is set at runtime by the gallery script -->
+        <img
+          class="photography__lightbox-image"
+          data-gallery-image
+          alt=""
+          decoding="async"
+          draggable="false"
+        />
+      </div>
     </div>
 
     <div class="photography__lightbox-topbar">
@@ -80,6 +84,27 @@ const { galleryLightboxItemsJson } = Astro.props;
         </button>
       </div>
       <div class="photography__lightbox-actions">
+        <!-- Zoom: wheel, pinch and double-click/tap do the same; the buttons
+             are the discoverable path (and +, -, 0 on the keyboard). -->
+        <button
+          class="photography__lightbox-action photography__lightbox-zoom"
+          type="button"
+          data-gallery-zoom-out
+          aria-label="Zoom out"
+          data-tooltip="Zoom out"
+          aria-disabled="true"
+        >
+          <UiIcon name="zoom-out" class="photography__inline-icon" />
+        </button>
+        <button
+          class="photography__lightbox-action photography__lightbox-zoom"
+          type="button"
+          data-gallery-zoom-in
+          aria-label="Zoom in"
+          data-tooltip="Zoom in"
+        >
+          <UiIcon name="zoom-in" class="photography__inline-icon" />
+        </button>
         <button
           class="photography__lightbox-action"
           type="button"

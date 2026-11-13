@@ -14,7 +14,7 @@ import type {
 export const exposureOf = (meta?: PhotoMetadata) =>
   [meta?.aperture, meta?.shutterSpeed, meta?.iso != null ? `ISO ${meta.iso}` : undefined]
     .filter(Boolean)
-    .join(" · ");
+    .join("\u2003");
 
 /* Deep-link id (#<slug>): the asset filename without its extension. */
 export const frameSlug = (image: GalleryImage) => image.filename.replace(/\.[^.]+$/, "");
@@ -47,7 +47,7 @@ export async function toLightboxItem(
   index: number,
 ): Promise<GalleryDialogImage> {
   const [lightboxImage, relatedThumb] = await Promise.all([
-    getImage({ src: asset, widths: [960, 1440, 1920], sizes: "92vw", quality: "high" }),
+    getImage({ src: asset, widths: [960, 1440, 1920, 2560], sizes: "92vw", quality: "high" }),
     getImage({ src: asset, width: 240, quality: "high" }),
   ]);
 

@@ -85,7 +85,7 @@ import "./_blog.scss";
 ---
 
 <BaseLayout
-  title="Notes · Ritik Patni"
+  title="Notes"
   description={pageDescription}
   image="/og/notes.png?v=2"
   path="/blog"
@@ -129,7 +129,7 @@ import "./_blog.scss";
                     <h3 class="blog-card-title"><a class="card-link__target" href={post.slug}>{post.title}</a></h3>
                     {post.description && <p class="blog-card-desc">{post.description}</p>}
                     <p class="blog-card-meta">
-                      {rowLabel[post.category] ?? "Blog"} · {post.readingTime} min read
+                      {rowLabel[post.category] ?? "Blog"}&emsp;{post.readingTime} min read
                     </p>
                   </div>
                 </article>

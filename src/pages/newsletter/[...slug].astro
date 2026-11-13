@@ -20,7 +20,7 @@ import "./_slug.scss";
 ---
 
 <BaseLayout
-  title={`${item.data.title} · Newsletter`}
+  title={item.data.title}
   description={item.data.description}
   path="/newsletter"
 >
@@ -28,7 +28,7 @@ import "./_slug.scss";
     <article class="slug__hero page-hero page-hero--compact">
       <div class="page-hero__inner">
         <p class="slug__meta page-hero__meta">
-          {formatDisplayDate(item.data.date)} · {reading} min read
+          {formatDisplayDate(item.data.date)}&emsp;{reading} min read
         </p>
         <h1 class="slug__title page-hero__title">{item.data.title}</h1>
         <p class="slug__lead page-hero__lead">{excerpt(item.data.description)}</p>

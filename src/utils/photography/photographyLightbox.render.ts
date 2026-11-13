@@ -47,7 +47,7 @@ export function createLightboxRenderer({
 
     const megapixels = computeMegapixels(metadata.resolution);
     const resolutionValue = megapixels
-      ? `${metadata.resolution} · ${megapixels}`
+      ? `${metadata.resolution}\u2003${megapixels}`
       : metadata.resolution;
 
     const formattedDate = metadata.date
@@ -109,11 +109,11 @@ export function createLightboxRenderer({
     return `${((width * height) / 1_000_000).toFixed(1)} MP`;
   };
 
-  /* Journal caption under the title: exposure line, then date · camera · lens.
+  /* Journal caption under the title: exposure line, then date, camera, lens.
      Only the frame's own fields — anything missing is left out, never filled. */
   const renderCaption = (image: GalleryDialogImage) => {
     const lines = [
-      image.exposure ? image.exposure.split(" · ") : [],
+      image.exposure ? image.exposure.split("\u2003") : [],
       [
         image.date ? formatGalleryDate(image.date) : undefined,
         image.metadata.camera,

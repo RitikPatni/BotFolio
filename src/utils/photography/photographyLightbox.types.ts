@@ -23,7 +23,7 @@ export type GalleryDialogImage = {
   thumbSrc: string;
   width: number;
   height: number;
-  /* Contact-sheet exposure line (aperture · shutter · ISO); empty when no EXIF. */
+  /* Contact-sheet exposure line (aperture, shutter, ISO; em-space separated); empty when no EXIF. */
   exposure: string;
   metadata: GalleryLightboxMetadata;
   tags: string[];

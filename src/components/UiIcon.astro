@@ -9,6 +9,8 @@ import CalendarIcon from "./icons/CalendarIcon.astro";
 import StackIcon from "./icons/StackIcon.astro";
 import SunIcon from "./icons/SunIcon.astro";
 import MoonIcon from "./icons/MoonIcon.astro";
+import ZoomInIcon from "./icons/ZoomInIcon.astro";
+import ZoomOutIcon from "./icons/ZoomOutIcon.astro";
 
 interface Props {
   name:
@@ -21,7 +23,9 @@ interface Props {
     | "calendar"
     | "stack"
     | "sun"
-    | "moon";
+    | "moon"
+    | "zoom-in"
+    | "zoom-out";
   class?: string;
 }
 
@@ -38,6 +42,8 @@ const ICON_COMPONENTS = {
   stack: StackIcon,
   sun: SunIcon,
   moon: MoonIcon,
+  "zoom-in": ZoomInIcon,
+  "zoom-out": ZoomOutIcon,
 };
 
 const isKnownIcon = (value: string): value is keyof typeof ICON_COMPONENTS =>
