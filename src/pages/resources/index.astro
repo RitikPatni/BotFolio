@@ -18,7 +18,7 @@ const resources = (await getCollection("resources"))
 import "../blog/_blog.scss";
 ---
 
-<BaseLayout title="Resources · Ritik Patni" path="/resources">
+<BaseLayout title="Resources | Ritik Patni" path="/resources">
   <section class="blog-hero page-hero page-hero--listing">
     <div class="blog-hero-content page-hero__inner">
       <h1 class="blog-hero-title page-hero__title">Resources</h1>
@@ -43,8 +43,8 @@ import "../blog/_blog.scss";
               </h2>
               <p class="blog-card-desc">{item.description}</p>
               <p class="blog-card-meta">
-                {item.tags.join(" · ")}
-                {item.url ? ` · ${item.url}` : ""}
+                {item.tags.join(" | ")}
+                {item.url ? ` | ${item.url}` : ""}
               </p>
             </article>
           ))}

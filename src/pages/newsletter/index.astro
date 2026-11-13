@@ -20,7 +20,7 @@ const entries = (await getCollection("newsletter"))
 import "./_newsletter.scss";
 ---
 
-<BaseLayout title="Newsletter Archive · Ritik Patni" path="/newsletter">
+<BaseLayout title="Newsletter Archive | Ritik Patni" path="/newsletter">
   <div class="newsletter">
     <section class="newsletter__hero page-hero page-hero--standard">
       <div class="page-hero__inner">
@@ -44,7 +44,7 @@ import "./_newsletter.scss";
                 <a class="card-link__target" href={`/newsletter/${item.slug}`}>{item.title}</a>
               </h2>
               <p class="newsletter__meta newsletter__meta--spaced">
-                {formatDisplayDate(item.date)} · {item.readingTime} min read
+                {formatDisplayDate(item.date)} | {item.readingTime} min read
               </p>
               <p class="newsletter__description">{item.description}</p>
             </article>

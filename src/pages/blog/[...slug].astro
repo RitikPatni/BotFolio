@@ -41,7 +41,7 @@ import "./_floating-like.scss";
 ---
 
 <BaseLayout
-  title={`${post.data.title} · Notes`}
+  title={`${post.data.title} | Notes`}
   description={post.data.description}
   path={`/blog/${slugOf(post)}`}
   image={ogImage}
@@ -55,7 +55,7 @@ import "./_floating-like.scss";
   <section class="slug-hero page-hero page-hero--detail">
     <div class="slug-hero-content page-hero__inner">
       <p class="slug-hero-meta page-hero__meta">
-        {formatDisplayDate(post.data.date)} · {post.data.authors.join(" & ")} ·{" "}
+        {formatDisplayDate(post.data.date)} | {post.data.authors.join(" & ")} |{" "}
         {reading} min read
       </p>
       <h1 class="slug-hero-title page-hero__title">{post.data.title}</h1>

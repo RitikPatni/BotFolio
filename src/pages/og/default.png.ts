@@ -25,7 +25,7 @@ function svg(): string {
   <text x="60" y="330" font-family="Newsreader" font-size="120" font-weight="400" fill="${INK}" letter-spacing="-2">Ritik Patni</text>
   <text x="64" y="412" font-family="Newsreader" font-size="64" fill="${MOSS_DEEP}">frontend developer, field photographer.</text>
   <rect x="64" y="462" width="120" height="5" fill="${MOSS}"/>
-  <text x="64" y="540" font-family="Newsreader" font-size="27" fill="${MUTED}">Product surfaces and shipping notes · wildlife, birds, and macro studies</text>
+  <text x="64" y="540" font-family="Newsreader" font-size="27" fill="${MUTED}">Product surfaces and shipping notes | wildlife, birds, and macro studies</text>
   <text x="64" y="594" font-family="Newsreader" font-style="italic" font-size="23" fill="${MUTED}">ritikpatni.me</text>
 </svg>`;
 }

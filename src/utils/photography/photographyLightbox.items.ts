@@ -14,7 +14,7 @@ import type {
 export const exposureOf = (meta?: PhotoMetadata) =>
   [meta?.aperture, meta?.shutterSpeed, meta?.iso != null ? `ISO ${meta.iso}` : undefined]
     .filter(Boolean)
-    .join(" · ");
+    .join(" | ");
 
 /* Deep-link id (#<slug>): the asset filename without its extension. */
 export const frameSlug = (image: GalleryImage) => image.filename.replace(/\.[^.]+$/, "");
