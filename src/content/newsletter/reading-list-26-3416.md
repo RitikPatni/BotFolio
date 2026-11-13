@@ -1,5 +1,5 @@
 ---
-title: "Reading List #26"
+title: "Reading List #27"
 description: "SPAs: theory versus practice, In and Out of Style, Jeremy Keith, Analyzing pages in a particular state with Lighthouse, Ximena Vila Ferral: How to Protect Professional Boundaries"
 date: "2022-07-05"
 draft: false

@@ -65,7 +65,7 @@ const rowLabel: Record<string, string> = {
   reading: "Reading list",
   newsletter: "Newsletter",
 };
-const pageDescription = "Clean notes on frontend engineering, systems, and photography.";
+const pageDescription = "Notes on frontend engineering, plus weekly reading lists.";
 const requestedCategory = Astro.url.searchParams.get("category");
 const selectedCategory = categories.includes(requestedCategory ?? "")
   ? requestedCategory!

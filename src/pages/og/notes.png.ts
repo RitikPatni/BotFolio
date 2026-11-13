@@ -16,7 +16,7 @@ const MOSS_DEEP = "#46573a";
 const MUTED = "#8a8371";
 
 /* Keep in sync with the hero lead in src/pages/blog/index.astro. */
-const LEAD = "Clean notes on frontend engineering, systems, and photography.";
+const LEAD = "Notes on frontend engineering, plus weekly reading lists.";
 
 function svg(): string {
   return `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
