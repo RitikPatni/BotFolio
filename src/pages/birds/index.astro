@@ -1,0 +1,207 @@
+---
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
+import { Image } from "astro:assets";
+import { birdSpecies, STICKER_CREDIT } from "../../data/birds";
+import "./_birds.scss";
+
+const photographed = birdSpecies.filter((s) => s.featured);
+const unphotographed = birdSpecies.filter((s) => !s.featured);
+const highlight = photographed[0];
+const searchText = (s: (typeof birdSpecies)[number]) =>
+  `${s.commonName} ${s.scientificName}`.toLowerCase();
+---
+<BaseLayout
+  title="Birds · Ritik Patni"
+  description={`A life list of ${birdSpecies.length} bird species with Ritik Patni's photographs where he has them.`}
+  path="/birds"
+>
+  <div class="birds" data-birds-root>
+    <section class="page-hero page-hero--standard">
+      <div class="page-hero__inner">
+        <h1 class="page-hero__title">Birds</h1>
+        <p class="page-hero__lead birds__lead">
+          Birds on my eBird life list, alongside photographs matched to their
+          species. The photo archive is still being reviewed.
+        </p>
+      </div>
+    </section>
+
+    <p class="birds__index">
+      <span>{birdSpecies.length} species</span>
+      <a href="#photographed">Photos linked</a>
+      <a href="#unphotographed">No photo linked yet</a>
+    </p>
+
+    {
+      highlight?.featured && (
+        <section class="birds__highlight" aria-labelledby="highlight-title">
+          <figure class="birds__highlight-figure">
+            <a class="birds__highlight-frame" href={`/birds/${highlight.slug}`} tabindex="-1" aria-hidden="true">
+              <Image
+                src={highlight.featured.asset}
+                alt={`Photograph of ${highlight.commonName} by Ritik Patni`}
+                widths={[640, 960, 1280]}
+                sizes="(max-width: 48rem) 92vw, 44rem"
+                loading="eager"
+              />
+            </a>
+            <figcaption>Photographed in {highlight.featured.year}</figcaption>
+          </figure>
+          <div class="birds__highlight-text">
+            <h2 id="highlight-title">
+              <a href={`/birds/${highlight.slug}`}>{highlight.commonName}</a>
+            </h2>
+            <p class="birds__sci" lang="la">{highlight.scientificName}</p>
+            <p class="birds__alt">{highlight.featured.alt}.</p>
+          </div>
+        </section>
+      )
+    }
+
+    <div class="birds__controls" data-birds-controls hidden>
+      <div class="birds__search">
+        <label class="birds__label" for="birds-search">Search species</label>
+        <input
+          id="birds-search"
+          class="birds__input"
+          type="search"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Common or scientific name"
+          data-birds-search
+        />
+      </div>
+      <div class="birds__filter" role="group" aria-label="Filter species">
+        <button type="button" aria-pressed="true" data-birds-filter="all">All</button>
+        <button type="button" aria-pressed="false" data-birds-filter="photo">Photos linked</button>
+        <button type="button" aria-pressed="false" data-birds-filter="none">No photo linked</button>
+      </div>
+      <p class="birds__status" role="status" aria-live="polite" data-birds-status></p>
+    </div>
+
+    <section class="birds__section" id="photographed" aria-labelledby="photographed-title" data-birds-section>
+      <header class="birds__section-head">
+        <h2 id="photographed-title">Photos linked</h2>
+      </header>
+      <ul class="birds__grid" role="list">
+        {
+          photographed.map((s) => (
+            <li class="birds__tile card-link" data-birds-item data-search={searchText(s)} data-photo="true">
+              <div class="birds__well">
+                <Image
+                  src={s.featured!.asset}
+                  alt={s.featured!.alt}
+                  widths={[360, 540, 720]}
+                  sizes="(max-width: 48rem) 46vw, 23rem"
+                />
+              </div>
+              <h3 class="birds__name"><a class="card-link__target" href={`/birds/${s.slug}`}>{s.commonName}</a></h3>
+              <p class="birds__sci" lang="la">{s.scientificName}</p>
+              <p class="birds__years">Seen {s.years.join(", ")}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="birds__section" id="unphotographed" aria-labelledby="unphotographed-title" data-birds-section>
+      <header class="birds__section-head">
+        <h2 id="unphotographed-title">No photo linked yet</h2>
+      </header>
+      <ul class="birds__list" role="list">
+        {
+          unphotographed.map((s) => (
+            <li class="birds__row card-link" data-birds-item data-search={searchText(s)} data-photo="false">
+              {s.sticker ? (
+                <Image
+                  class="birds__sticker"
+                  src={s.sticker.asset}
+                  alt={`Illustration of ${s.commonName}`}
+                  width={128}
+                  densities={[1, 2]}
+                  format="webp"
+                />
+              ) : (
+                <span class="birds__sticker birds__sticker--none" aria-hidden="true" />
+              )}
+              <div class="birds__row-text">
+                <h3 class="birds__name"><a class="card-link__target" href={`/birds/${s.slug}`}>{s.commonName}</a></h3>
+                <p class="birds__sci" lang="la">{s.scientificName}</p>
+              </div>
+              <p class="birds__years">{s.years.join(", ")}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <p class="birds__empty" data-birds-empty hidden>
+      No species match. <button type="button" class="birds__reset" data-birds-reset>Clear search</button>
+    </p>
+
+    <footer class="birds__credits">
+      <p>
+        Names and years from my eBird life list. Photographs © Ritik Patni.
+        Illustrations: <a href={STICKER_CREDIT.url}>{STICKER_CREDIT.project}</a> by {STICKER_CREDIT.author}
+        ({STICKER_CREDIT.version}), <a href={STICKER_CREDIT.licenseUrl}>{STICKER_CREDIT.license}</a>.
+        They are AI illustrations, not identification references.
+      </p>
+    </footer>
+  </div>
+</BaseLayout>
+
+<script>
+  /* Progressive enhancement: without JS every species stays listed and the
+     controls stay hidden. */
+  function initBirds() {
+    const root = document.querySelector<HTMLElement>("[data-birds-root]");
+    if (!root || root.dataset.birdsReady) return;
+    root.dataset.birdsReady = "true";
+    const controls = root.querySelector<HTMLElement>("[data-birds-controls]")!;
+    const input = root.querySelector<HTMLInputElement>("[data-birds-search]")!;
+    const status = root.querySelector<HTMLElement>("[data-birds-status]")!;
+    const empty = root.querySelector<HTMLElement>("[data-birds-empty]")!;
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>("[data-birds-filter]")];
+    const items = [...root.querySelectorAll<HTMLElement>("[data-birds-item]")];
+    const sections = [...root.querySelectorAll<HTMLElement>("[data-birds-section]")];
+    let filter = "all";
+
+    const apply = () => {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      for (const item of items) {
+        const photo = item.dataset.photo === "true";
+        const match =
+          (!q || item.dataset.search!.includes(q)) &&
+          (filter === "all" || (filter === "photo") === photo);
+        item.hidden = !match;
+        if (match) shown++;
+      }
+      for (const section of sections) {
+        section.hidden = !section.querySelector("[data-birds-item]:not([hidden])");
+      }
+      empty.hidden = shown > 0;
+      status.textContent = `${shown} of ${items.length} species`;
+    };
+
+    buttons.forEach((button) =>
+      button.addEventListener("click", () => {
+        filter = button.dataset.birdsFilter!;
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+        apply();
+      }),
+    );
+    input.addEventListener("input", apply);
+    root.querySelector("[data-birds-reset]")!.addEventListener("click", () => {
+      input.value = "";
+      filter = "all";
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.birdsFilter === "all")));
+      apply();
+      input.focus();
+    });
+    controls.hidden = false;
+    apply();
+  }
+  initBirds();
+  document.addEventListener("astro:page-load", initBirds);
+</script>
