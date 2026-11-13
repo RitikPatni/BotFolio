@@ -1,5 +1,6 @@
 import { navigate } from "astro:transitions/client";
 import { createLightboxRenderer } from "./photographyLightbox.render";
+import { createLightboxZoom } from "./photographyLightbox.zoom";
 import {
   resolveElements,
   type GalleryDialogImage,
@@ -9,6 +10,14 @@ import {
    fling speed (px/ms) that commits a shorter one. */
 const SWIPE_DISTANCE = 56;
 const SWIPE_VELOCITY = 0.45;
+
+/* Two presses within this window (ms) and radius (px) are a double
+   click / tap, which toggles zoom; a lone press waits it out before
+   toggling the chrome. Pointer travel past MAX_CLICK_TRAVEL between press
+   and release was a pan, not a click. */
+const DOUBLE_PRESS_MS = 300;
+const DOUBLE_PRESS_RADIUS = 32;
+const MAX_CLICK_TRAVEL = 6;
 
 /* Bound once per page view: ClientRouter swaps pages without reloading this
    module, so init runs on every astro:page-load and tears down its window /
@@ -76,8 +85,22 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   const openStatusElement = root.querySelector<HTMLElement>(
     "[data-gallery-open-status]",
   );
+  const stageElement = root.querySelector<HTMLElement>("[data-gallery-stage]");
+  const zoomInButton = root.querySelector<HTMLButtonElement>("[data-gallery-zoom-in]");
+  const zoomOutButton = root.querySelector<HTMLButtonElement>("[data-gallery-zoom-out]");
   const lifecycle = new AbortController();
   const { signal } = lifecycle;
+
+  const zoom = stageElement
+    ? createLightboxZoom({
+        frame: frameElement,
+        stage: stageElement,
+        image: imageElement,
+        zoomInButton,
+        zoomOutButton,
+        signal,
+      })
+    : null;
 
   const clearGalleryLoading = (trigger: HTMLElement | null) => {
     trigger?.removeAttribute("aria-busy");
@@ -130,13 +153,19 @@ export function initPhotographyLightbox(): (() => void) | undefined {
      gallery, so closing steps back to where they came from. */
   let returnToReferrer = false;
 
-  const { renderImage } = createLightboxRenderer({
+  const { renderImage: renderFrame } = createLightboxRenderer({
     images,
     elements,
     state,
     onImageState: setGalleryImageState,
     onNavigate: (index) => goTo(index),
   });
+
+  /* Every frame change starts the new photo at 1x. */
+  const renderImage = (index: number) => {
+    zoom?.reset();
+    renderFrame(index);
+  };
 
   /* ─── Deep links: #<slug> on whichever page hosts the viewer ──── */
 
@@ -356,6 +385,27 @@ export function initPhotographyLightbox(): (() => void) | undefined {
     { signal },
   );
 
+  /* aria-disabled (not disabled) keeps focus on a button at its limit, so
+     the press itself has to check. */
+  zoomInButton?.addEventListener(
+    "click",
+    () => {
+      if (zoomInButton.getAttribute("aria-disabled") !== "true") {
+        zoom?.zoomIn();
+      }
+    },
+    { signal },
+  );
+  zoomOutButton?.addEventListener(
+    "click",
+    () => {
+      if (zoomOutButton.getAttribute("aria-disabled") !== "true") {
+        zoom?.zoomOut();
+      }
+    },
+    { signal },
+  );
+
   closeButton.addEventListener("click", () => dialog.close(), { signal });
   previousButton.addEventListener("click", () => move(-1), { signal });
   nextButton.addEventListener("click", () => move(1), { signal });
@@ -382,6 +432,9 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   let touchStartTime = 0;
   let dragAxis: "x" | "y" | null = null;
   let suppressClickUntil = 0;
+  /* Set once a second finger lands (a pinch) and held until every finger
+     lifts, so the finger left behind can't turn into a swipe. */
+  let multiTouch = false;
 
   const resetDrag = () => {
     imageElement.classList.remove("is-dragging");
@@ -393,6 +446,7 @@ export function initPhotographyLightbox(): (() => void) | undefined {
     "touchstart",
     (event) => {
       if (event.touches.length !== 1) {
+        multiTouch = true;
         resetDrag();
         return;
       }
@@ -407,7 +461,8 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   frameElement.addEventListener(
     "touchmove",
     (event) => {
-      if (event.touches.length !== 1) {
+      /* Zoomed in, one finger pans the photo (Panzoom) instead. */
+      if (event.touches.length !== 1 || multiTouch || zoom?.isZoomed()) {
         return;
       }
       const dx = event.touches[0].clientX - touchStartX;
@@ -428,7 +483,10 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   frameElement.addEventListener(
     "touchend",
     (event) => {
-      const wasDragging = dragAxis === "x";
+      const wasDragging = dragAxis === "x" && !multiTouch;
+      if (event.touches.length === 0) {
+        multiTouch = false;
+      }
       const dx = event.changedTouches[0].clientX - touchStartX;
       const velocity = Math.abs(dx) / Math.max(1, event.timeStamp - touchStartTime);
       resetDrag();
@@ -446,9 +504,39 @@ export function initPhotographyLightbox(): (() => void) | undefined {
     { passive: true, signal },
   );
 
-  frameElement.addEventListener("touchcancel", resetDrag, { passive: true, signal });
+  frameElement.addEventListener(
+    "touchcancel",
+    (event) => {
+      if (event.touches.length === 0) {
+        multiTouch = false;
+      }
+      resetDrag();
+    },
+    { passive: true, signal },
+  );
 
-  /* ─── Clicks: photo toggles chrome, bare backdrop closes ───────── */
+  /* ─── Clicks: photo toggles chrome, double press zooms, bare backdrop
+     closes ───────────────────────────────────────────────────────── */
+
+  let pressX = 0;
+  let pressY = 0;
+  let lastPress: { time: number; x: number; y: number } | null = null;
+  let pendingChromeToggle: number | undefined;
+
+  const cancelChromeToggle = () => {
+    window.clearTimeout(pendingChromeToggle);
+    pendingChromeToggle = undefined;
+  };
+
+  /* Capture: Panzoom stops pointerdown from bubbling past the stage. */
+  frameElement.addEventListener(
+    "pointerdown",
+    (event) => {
+      pressX = event.clientX;
+      pressY = event.clientY;
+    },
+    { capture: true, signal },
+  );
 
   lightboxShell.addEventListener(
     "click",
@@ -469,13 +557,63 @@ export function initPhotographyLightbox(): (() => void) | undefined {
         return;
       }
 
-      if (target === imageElement) {
-        setChromeVisibility(lightboxShell.dataset.uiVisible === "false");
+      const onPhoto = target === imageElement;
+      const onBackdrop =
+        target === stageElement ||
+        target === frameElement ||
+        target === lightboxShell;
+
+      if (!onPhoto && !onBackdrop) {
         return;
       }
 
-      if (target === frameElement || target === lightboxShell) {
-        dialog.close();
+      /* The press travelled: it panned the zoomed photo. */
+      if (
+        Math.hypot(event.clientX - pressX, event.clientY - pressY) >
+        MAX_CLICK_TRAVEL
+      ) {
+        lastPress = null;
+        return;
+      }
+
+      const isDoublePress =
+        lastPress !== null &&
+        event.timeStamp - lastPress.time < DOUBLE_PRESS_MS &&
+        Math.hypot(event.clientX - lastPress.x, event.clientY - lastPress.y) <
+          DOUBLE_PRESS_RADIUS;
+
+      if (isDoublePress && zoom) {
+        lastPress = null;
+        cancelChromeToggle();
+        zoom.toggleAt(event);
+        return;
+      }
+
+      lastPress = { time: event.timeStamp, x: event.clientX, y: event.clientY };
+
+      /* Zoomed in, the backdrop is part of the photo you're moving around,
+         so a stray press there must not close the viewer. */
+      if (onPhoto || zoom?.isZoomed()) {
+        cancelChromeToggle();
+        pendingChromeToggle = window.setTimeout(() => {
+          pendingChromeToggle = undefined;
+          setChromeVisibility(lightboxShell.dataset.uiVisible === "false");
+        }, zoom ? DOUBLE_PRESS_MS : 0);
+        return;
+      }
+
+      dialog.close();
+    },
+    { signal },
+  );
+
+  /* Esc while zoomed steps back to 1x first; the next Esc closes. */
+  dialog.addEventListener(
+    "cancel",
+    (event) => {
+      if (zoom?.isZoomed()) {
+        event.preventDefault();
+        zoom.reset({ animate: true });
       }
     },
     { signal },
@@ -485,6 +623,9 @@ export function initPhotographyLightbox(): (() => void) | undefined {
     "close",
     () => {
       resetDrag();
+      cancelChromeToggle();
+      lastPress = null;
+      zoom?.reset();
       setChromeVisibility(true);
       setMetadataVisibility(false);
       imageElement.removeAttribute("data-image-state");
@@ -590,6 +731,21 @@ export function initPhotographyLightbox(): (() => void) | undefined {
         event.preventDefault();
         fullscreenToggle.click();
       }
+
+      if (zoom && (event.key === "+" || event.key === "=")) {
+        event.preventDefault();
+        zoom.zoomIn();
+      }
+
+      if (zoom && event.key === "-") {
+        event.preventDefault();
+        zoom.zoomOut();
+      }
+
+      if (zoom && event.key === "0") {
+        event.preventDefault();
+        zoom.reset({ animate: true });
+      }
     },
     { signal },
   );
@@ -616,7 +772,9 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   }
 
   return () => {
+    cancelChromeToggle();
     lifecycle.abort();
+    zoom?.destroy();
     if (dialog.open) {
       ownsHistoryEntry = false;
       returnToReferrer = false;

@@ -57,10 +57,42 @@
 .photography__lightbox-frame {
   position: absolute;
   inset: 0;
+  /* Panzoom also sets these inline; here so the first paint matches. */
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* Stage: exactly the frame's box (no padding on the frame, so Panzoom's
+   focal-point and containment maths see the stage filling its parent).
+   It carries the zoom transform; the photo inside keeps its own transform
+   for the swipe drag. */
+.photography__lightbox-stage {
   display: grid;
   place-items: center;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: 100%;
   padding-block: var(--lb-top) var(--lb-bottom);
-  touch-action: pan-y pinch-zoom;
+  /* Panzoom's default 'move' cursor is cleared in the script; these say
+     what a press will do instead. */
+  @media (hover: hover) and (pointer: fine) {
+    .photography__lightbox-image {
+      cursor: zoom-in;
+    }
+
+    &.is-zoomed {
+      cursor: grab;
+
+      .photography__lightbox-image {
+        cursor: grab;
+      }
+
+      &:active,
+      &:active .photography__lightbox-image {
+        cursor: grabbing;
+      }
+    }
+  }
 }
 
 .photography__lightbox-image,
@@ -168,6 +200,21 @@
   }
 
   &[hidden] {
+    display: none;
+  }
+
+  /* aria-disabled, not disabled: a zoom button stays focusable at its
+     limit, so keyboard focus isn't dropped mid-press. */
+  &[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+/* Touch zooms with pinch and double-tap, so the buttons would only crowd
+   the top bar there. */
+@media (hover: none) and (pointer: coarse) {
+  .photography__lightbox-zoom {
     display: none;
   }
 }
