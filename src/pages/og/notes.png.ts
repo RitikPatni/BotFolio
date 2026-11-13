@@ -23,12 +23,12 @@ function svg(): string {
   <rect width="1200" height="630" fill="${PAPER}"/>
   <rect x="0" y="0" width="6" height="630" fill="${MOSS_DEEP}"/>
   <text x="64" y="86" font-family="Newsreader" font-size="30" font-weight="400" fill="${INK}">Ritik Patni</text>
-  <text x="1136" y="84" font-family="Plex Mono" font-size="19" font-weight="500" fill="${MUTED}" text-anchor="end" letter-spacing="3">NOTES</text>
+  <text x="1136" y="84" font-family="Newsreader" font-style="italic" font-size="24" fill="${MUTED}" text-anchor="end">Notes</text>
   <line x1="64" y1="112" x2="1136" y2="112" stroke="${INK}" stroke-width="1.5" opacity="0.75"/>
   <text x="60" y="330" font-family="Newsreader" font-size="140" font-weight="400" fill="${INK}" letter-spacing="-3">Notes</text>
   <rect x="64" y="384" width="120" height="5" fill="${MOSS}"/>
   <text x="64" y="470" font-family="Newsreader" font-size="34" fill="${MUTED}">${LEAD}</text>
-  <text x="64" y="606" font-family="Plex Mono" font-size="18" fill="${MUTED}" letter-spacing="2">RITIKPATNI.ME/BLOG</text>
+  <text x="64" y="606" font-family="Newsreader" font-style="italic" font-size="23" fill="${MUTED}">ritikpatni.me/blog</text>
 </svg>`;
 }
 

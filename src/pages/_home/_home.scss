@@ -73,8 +73,9 @@
 }
 
 .index-hero__count {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.94rem;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
 }
@@ -89,8 +90,9 @@
 
 .index-strip__label,
 .index-strip__more {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.9rem;
 }
 
 .index-strip__label {
@@ -155,25 +157,25 @@
   transition: outline-color var(--dur-base) var(--ease-soft);
 }
 
-/* Journal-style caption: the frame title, then one exposure line in mono.
+/* Journal-style caption: the frame title, then one italic exposure line.
    contain: inline-size keeps the caption to the frame's own width. */
 .index-strip__cap {
   display: block;
   contain: inline-size;
   margin-block-start: 0.55rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.9rem;
   line-height: 1.45;
-  letter-spacing: 0.02em;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
 
   b {
     display: block;
     font-family: var(--font-display);
+    font-style: normal;
     font-size: 0.95rem;
     font-weight: 500;
-    letter-spacing: 0;
     color: var(--text);
   }
 }
@@ -234,8 +236,9 @@
 
 /* Shared editorial section header: mono kicker + serif title on one left edge */
 .section-kicker {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.94rem;
   font-weight: 500;
   color: var(--accent-text);
   margin: 0 0 0.6rem;

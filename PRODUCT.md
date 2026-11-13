@@ -53,5 +53,5 @@ WCAG AA for all functional text: every text tier (text, muted, dim) clears 4.6:1
 
 ## Open Decisions
 
-- Body font: Geist today (with Newsreader for headings and IBM Plex Mono for metadata), but not a binding commitment (future type explorations allowed).
+- Type: Schibsted Grotesk for headings, body and UI, with Newsreader italic for metadata (dates, counts, EXIF, labels). Not a binding commitment (future type explorations allowed).
 - Token system: the Field Notes tokens in `src/styles/v2-tokens.scss` are incumbent authority, but not pinned as a frozen contract — evolution allowed with intent.

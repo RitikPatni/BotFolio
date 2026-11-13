@@ -172,8 +172,9 @@
   /* Lifetime pageviews line: hidden until the API returns a real total. */
   &__footer-views {
     margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
+    font-family: var(--font-meta);
+    font-style: italic;
+    font-size: 0.97rem;
     color: var(--text-dim);
     font-variant-numeric: tabular-nums;
   }
@@ -330,10 +331,10 @@ html[data-theme-switching] *::after {
   border-radius: 6px;
   background: transparent;
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.9rem;
   line-height: 1;
-  letter-spacing: 0.02em;
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;

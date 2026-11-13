@@ -71,13 +71,16 @@
   --fs-code: var(--font-size-1);
   --prose-max-width: 60ch;
   --accent: var(--accent-start);
-  /* Schibsted Grotesk = headings + body (newsprint grotesque), IBM Plex Mono =
-     UI accents (h3/h4, ledger index) + dates/labels. Mono-forward ledger. */
+  /* Schibsted Grotesk = headings, body and UI (newsprint grotesque).
+     Newsreader italic = the metadata voice: dates, counts, EXIF, labels,
+     like notes in a field journal. Always set it with font-style: italic.
+     --font-mono is the system stack, for code only (nothing downloaded). */
   --font-body: "Schibsted Grotesk Variable", "Schibsted Grotesk", "Helvetica Neue", system-ui, sans-serif;
   --font-display: "Schibsted Grotesk Variable", "Schibsted Grotesk", "Helvetica Neue", system-ui, sans-serif;
   --font-sans: var(--font-body);
-  --font-ui: var(--font-mono);
-  --font-mono: "IBM Plex Mono", monospace;
+  --font-ui: var(--font-body);
+  --font-meta: "Newsreader Variable", "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   --fs-subheading: 1.25rem;
   --font-weight-6: 500;
 }

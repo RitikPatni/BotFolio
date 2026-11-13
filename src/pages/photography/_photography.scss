@@ -22,9 +22,9 @@
     padding: 0.75rem 0;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0;
+    font-family: var(--font-meta);
+    font-style: italic;
+    font-size: 0.96rem;
   }
 
   &__index-total {
@@ -78,9 +78,9 @@
 
   &__meta {
     margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.04em;
+    font-family: var(--font-meta);
+    font-style: italic;
+    font-size: 0.9rem;
     color: var(--text-muted);
   }
 
@@ -138,16 +138,17 @@
   /* Caption: title, then the exposure line in mono (same as the home strip). */
   &__caption {
     margin-block-start: 0.55rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-family: var(--font-meta);
+    font-style: italic;
+    font-size: 0.9rem;
     line-height: 1.45;
-    letter-spacing: 0.02em;
     color: var(--text-muted);
   }
 
   &__caption-title {
     display: block;
     font-family: var(--font-display);
+    font-style: normal;
     font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0;

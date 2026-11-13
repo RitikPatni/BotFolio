@@ -3,9 +3,8 @@
    paint, and the main face is preloaded below. */
 import "@fontsource-variable/schibsted-grotesk/wght.css";
 import "@fontsource-variable/schibsted-grotesk/wght-italic.css";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
-import "@fontsource/ibm-plex-mono/600.css";
+/* Newsreader italic: the metadata voice (dates, counts, EXIF, labels). */
+import "@fontsource-variable/newsreader/opsz-italic.css";
 import schibstedLatinUrl from "@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2?url";
 import "../../styles/global.scss";
 import "./BaseLayout.scss";
@@ -28,7 +27,7 @@ const {
   title,
   description = SITE_CONFIG.defaultDescription,
   path = "/",
-  image = "/og/default.png",
+  image = "/og/default.png?v=2", // bump when the card design changes, so share caches refetch
   ogType = "website",
   noindex = false,
 } = Astro.props;

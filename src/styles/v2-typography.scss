@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Field Notes typography — Newsreader headings, Geist body + UI, IBM Plex
-   Mono metadata. Font tokens live in v2-tokens.scss; the heading weight /
+   Field Notes typography — Schibsted Grotesk headings, body + UI; Newsreader
+   italic metadata. Font tokens live in v2-tokens.scss; the heading weight /
    tracking that wins in the cascade lives in field-notes.scss.
    ========================================================================== */
 
@@ -54,13 +54,14 @@ li {
   color: var(--text);
 }
 
-/* Metadata layer — mono */
+/* Metadata layer — Newsreader italic */
 .page-hero__meta,
 .blog-card-date,
 figure figcaption,
 .slug-hero-meta {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-family: var(--font-meta);
+  font-style: italic;
+  font-size: 0.98rem;
   color: var(--text-dim);
 }
 
