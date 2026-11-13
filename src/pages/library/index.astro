@@ -104,7 +104,7 @@ const defaultBookFilter =
 import "./_library.scss";
 ---
 
-<BaseLayout title="Library | Ritik Patni" path="/library">
+<BaseLayout title={"Library\u2003Ritik Patni"} path="/library">
   <div class="library">
     <section class="library__hero page-hero page-hero--standard">
       <div class="page-hero__inner">
@@ -191,12 +191,12 @@ import "./_library.scss";
                     <div class="library__item-meta-block">
                       <p class="library__item-meta-primary">
                         {item.data.author || "Unknown author"}
-                        {item.data.language ? ` | ${item.data.language}` : ""}
+                        {item.data.language ? `\u2003${item.data.language}` : ""}
                       </p>
                       <p class="library__item-meta-secondary">
                         {formatDisplayDate(item.data.date)}
                         {item.data.published_year
-                          ? ` | Published ${item.data.published_year}`
+                          ? `\u2003Published ${item.data.published_year}`
                           : ""}
                       </p>
                     </div>
@@ -244,12 +244,12 @@ import "./_library.scss";
                   </h3>
                   <p class="library__meta library__meta--spaced">
                     {formatDisplayDate(item.data.date)}
-                    {" | "}
+                    {"\u2003"}
                     {item.meta.sourceLabel} ({item.meta.highlightCount})
                   </p>
                   <p class="library__note-meta">
                     {item.meta.author}
-                    {item.meta.language === "hindi" ? " | Hindi" : " | English"}
+                    {item.meta.language === "hindi" ? "\u2003Hindi" : "\u2003English"}
                   </p>
                   {item.meta.preview ? (
                     <p class="library__note-preview">{item.meta.preview}</p>

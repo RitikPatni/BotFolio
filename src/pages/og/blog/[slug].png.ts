@@ -59,7 +59,7 @@ function blogSvg(title: string, desc: string, date: string, readTime: string, sl
   // accent tick under the headline block
   const accentY = Math.min(500, linesTop + blockH + 34);
   const slugDisplay = slug.length > 46 ? `${slug.substring(0, 46)}...` : slug;
-  const meta = `${e(date)} | ${e(readTime)}`;
+  const meta = `${e(date)}\u2003${e(readTime)}`;
   const descFlat = desc.replace(/\s+/g, " ").trim();
   const descClean = descFlat.length > 58 ? `${descFlat.substring(0, 58)}...` : descFlat;
   return `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +68,7 @@ function blogSvg(title: string, desc: string, date: string, readTime: string, sl
   <rect x="0" y="0" width="6" height="630" fill="${MOSS_DEEP}"/>
   <!-- masthead -->
   <text x="64" y="86" font-family="Newsreader" font-size="30" font-weight="400" fill="${INK}">Ritik Patni</text>
-  <text x="1136" y="84" font-family="Newsreader" font-style="italic" font-size="24" fill="${MUTED}" text-anchor="end">${e(/^\d{4}-w\d+$/.test(slug) ? `Reading | Week ${slug.split("-w")[1] ?? ""}` : "Notes")}</text>
+  <text x="1136" y="84" font-family="Newsreader" font-style="italic" font-size="24" fill="${MUTED}" text-anchor="end">${e(/^\d{4}-w\d+$/.test(slug) ? `Reading\u2003Week ${slug.split("-w")[1] ?? ""}` : "Notes")}</text>
   <line x1="64" y1="112" x2="1136" y2="112" stroke="${INK}" stroke-width="1.5" opacity="0.75"/>
   <!-- headline -->
   ${lines

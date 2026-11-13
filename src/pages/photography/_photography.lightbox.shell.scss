@@ -378,7 +378,7 @@
 }
 
 /* Same wrap rule as components/ExposureLine.astro: lines break between
-   parts, and the separator in front of a part that starts a line is clipped. */
+   parts, and the spacer in front of a part that starts a line is clipped. */
 .photography__lightbox-caption-line {
   display: block;
   overflow: hidden;
@@ -391,7 +391,7 @@
 }
 
 .photography__lightbox-caption-part::before {
-  content: "|" / "";
+  content: "";
   display: inline-block;
   inline-size: 1.25em;
   text-align: center;

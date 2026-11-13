@@ -95,7 +95,7 @@ const totalImages = typedGallery.length;
 const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
 ---
 
-<BaseLayout title="Gallery | Ritik Patni" path="/photography">
+<BaseLayout title={"Gallery\u2003Ritik Patni"} path="/photography">
   <div class="photography" data-gallery-root>
     <section class="photography__hero page-hero page-hero--standard">
       <div class="page-hero__inner">
@@ -142,7 +142,7 @@ const galleryLightboxItemsJson = JSON.stringify(galleryLightboxItems);
                 {category.label}
               </h2>
               <p class="photography__meta">
-                {category.images.length} {category.images.length === 1 ? "frame" : "frames"} | {category.description}
+                {category.images.length} {category.images.length === 1 ? "frame" : "frames"}&emsp;{category.description}
               </p>
             </header>
 

@@ -1,6 +1,6 @@
 ---
-/* An exposure line ("f/6.3 | 1/1000s | ISO 2000") that wraps between
-   settings, never inside one, and never leaves a "|" dangling at a line
+/* An exposure line ("f/6.3  1/1000s  ISO 2000", em-space separated) that wraps between
+   settings, never inside one, and never leaves a gap dangling at a line
    edge. Every part carries its separator in a 1em slot to its left; the
    list is pulled left by that slot and clipped, so the separator in front of
    whichever part starts a line falls outside the clip. */
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const { value, class: className } = Astro.props;
-const parts = value.split(" | ");
+const parts = value.split("\u2003");
 ---
 
 <span class:list={["exposure-line", className]}>
@@ -35,8 +35,8 @@ const parts = value.split(" | ");
     white-space: nowrap;
 
     &::before {
-      /* Decorative: the empty alt keeps screen readers from saying "vertical line". */
-      content: "|" / "";
+      /* An empty spacer, not a glyph: parts sit apart by plain space. */
+      content: "";
       display: inline-block;
       inline-size: 1.25em;
       text-align: center;
