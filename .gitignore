@@ -21,3 +21,6 @@ wrangler.toml
 # local evidence artifacts
 /design/
 /.p1-evidence/
+
+# Local agent workspace (plans, skills)
+/.hermes/

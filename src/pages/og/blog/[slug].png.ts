@@ -11,14 +11,12 @@ const FONT_FILES = fs
   .filter((f) => f.endsWith(".ttf"))
   .map((f) => path.join(FONT_DIR, f));
 
-/* Field Notes palette — matches the site tokens (v2-tokens.scss) */
-const PAPER = "#f7f4ed"; // cream
-const CARD = "#fffdf8"; // raised paper
-const INK = "#1d1b16";
-const MOSS = "#5f7350";
-const MOSS_DEEP = "#46573a";
-const MOSS_WASH = "#c2cdb2";
-const MUTED = "#8a8371";
+/* Ledger palette — matches the site tokens (v2-tokens.scss) */
+const PAPER = "#eeefed"; // --bg
+const INK = "#18191a"; // --text
+const ACCENT = "#a8401e"; // --accent-start
+const ACCENT_DEEP = "#8a3216"; // --accent-end
+const MUTED = "#5b5f62"; // --text-dim
 
 const e = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -64,8 +62,8 @@ function blogSvg(title: string, desc: string, date: string, readTime: string, sl
   const descClean = descFlat.length > 58 ? `${descFlat.substring(0, 58)}...` : descFlat;
   return `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="630" fill="${PAPER}"/>
-  <!-- moss spine -->
-  <rect x="0" y="0" width="6" height="630" fill="${MOSS_DEEP}"/>
+  <!-- rust spine -->
+  <rect x="0" y="0" width="6" height="630" fill="${ACCENT_DEEP}"/>
   <!-- masthead -->
   <text x="64" y="86" font-family="Newsreader" font-size="30" font-weight="400" fill="${INK}">Ritik Patni</text>
   <text x="1136" y="84" font-family="Newsreader" font-style="italic" font-size="24" fill="${MUTED}" text-anchor="end">${e(/^\d{4}-w\d+$/.test(slug) ? `Reading list, week ${slug.split("-w")[1] ?? ""}` : "Notes")}</text>
@@ -77,12 +75,12 @@ function blogSvg(title: string, desc: string, date: string, readTime: string, sl
         `<text x="64" y="${linesTop + i * lineHeight}" font-family="Newsreader" font-size="${size}" font-weight="400" fill="${INK}" letter-spacing="-1.5">${e(l)}</text>`,
     )
     .join("\n  ")}
-  <!-- moss tick -->
-  <rect x="64" y="${accentY}" width="120" height="5" fill="${MOSS}"/>
+  <!-- rust tick -->
+  <rect x="64" y="${accentY}" width="120" height="5" fill="${ACCENT}"/>
   <!-- description -->
   <text x="64" y="560" font-family="Newsreader" font-size="25" fill="${MUTED}">${e(descClean)}</text>
   <!-- footer meta -->
-  <text x="1136" y="560" font-family="Newsreader" font-style="italic" font-size="25" fill="${MOSS_DEEP}" text-anchor="end">${meta}</text>
+  <text x="1136" y="560" font-family="Newsreader" font-style="italic" font-size="25" fill="${ACCENT_DEEP}" text-anchor="end">${meta}</text>
   <text x="64" y="606" font-family="Newsreader" font-style="italic" font-size="23" fill="${MUTED}">ritikpatni.me/blog/${e(slugDisplay)}</text>
 </svg>`;
 }

@@ -9,11 +9,11 @@ const FONT_FILES = fs
   .map((f) => path.join(FONT_DIR, f));
 
 /* Same card as the post OG images (og/blog/[slug].png.ts), for the /blog index. */
-const PAPER = "#f7f4ed";
-const INK = "#1d1b16";
-const MOSS = "#5f7350";
-const MOSS_DEEP = "#46573a";
-const MUTED = "#8a8371";
+const PAPER = "#eeefed"; // --bg
+const INK = "#18191a"; // --text
+const ACCENT = "#a8401e"; // --accent-start
+const ACCENT_DEEP = "#8a3216"; // --accent-end
+const MUTED = "#5b5f62"; // --text-dim
 
 /* Keep in sync with the hero lead in src/pages/blog/index.astro. */
 const LEAD = "Notes on frontend engineering, plus weekly reading lists.";
@@ -21,12 +21,12 @@ const LEAD = "Notes on frontend engineering, plus weekly reading lists.";
 function svg(): string {
   return `<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="630" fill="${PAPER}"/>
-  <rect x="0" y="0" width="6" height="630" fill="${MOSS_DEEP}"/>
+  <rect x="0" y="0" width="6" height="630" fill="${ACCENT_DEEP}"/>
   <text x="64" y="86" font-family="Newsreader" font-size="30" font-weight="400" fill="${INK}">Ritik Patni</text>
   <text x="1136" y="84" font-family="Newsreader" font-style="italic" font-size="24" fill="${MUTED}" text-anchor="end">Notes</text>
   <line x1="64" y1="112" x2="1136" y2="112" stroke="${INK}" stroke-width="1.5" opacity="0.75"/>
   <text x="60" y="330" font-family="Newsreader" font-size="140" font-weight="400" fill="${INK}" letter-spacing="-3">Notes</text>
-  <rect x="64" y="384" width="120" height="5" fill="${MOSS}"/>
+  <rect x="64" y="384" width="120" height="5" fill="${ACCENT}"/>
   <text x="64" y="470" font-family="Newsreader" font-size="34" fill="${MUTED}">${LEAD}</text>
   <text x="64" y="606" font-family="Newsreader" font-style="italic" font-size="23" fill="${MUTED}">ritikpatni.me/blog</text>
 </svg>`;
