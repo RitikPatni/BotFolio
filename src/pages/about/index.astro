@@ -46,6 +46,10 @@ import "./_about.scss";
       </ul>
 
       <div class="about__socials" aria-label="Social links">
+        {/* Cloudflare Email Obfuscation rewrites addresses to "[email protected]"
+            and only decodes them on a full page load, so they stay garbled after a
+            router navigation. email_off opts these links out. */}
+        <Fragment set:html="<!--email_off-->" />
         {
           SITE_CONFIG.socials.map((social) => {
             const isMailto = social.href.startsWith("mailto:");
@@ -67,6 +71,7 @@ import "./_about.scss";
             );
           })
         }
+        <Fragment set:html="<!--/email_off-->" />
       </div>
     </section>
   </div>
