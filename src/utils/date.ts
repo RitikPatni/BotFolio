@@ -19,5 +19,22 @@ const DISPLAY_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
   timeZone: "UTC",
 });
 
+/* en-GB abbreviates September as "Sept"; every other month is three letters. */
+const threeLetterMonths = (value: string) => value.replace("Sept", "Sep");
+
 export const formatDisplayDate = (value: DateInput) =>
-  DISPLAY_DATE_FORMATTER.format(toDate(value));
+  threeLetterMonths(DISPLAY_DATE_FORMATTER.format(toDate(value)));
+
+const DAY_MONTH_FORMATTER = new Intl.DateTimeFormat("en-GB", {
+  day: "2-digit",
+  month: "short",
+  timeZone: "UTC",
+});
+
+/* For lists already grouped under a year heading. */
+export const formatDayMonth = (value: DateInput) =>
+  threeLetterMonths(DAY_MONTH_FORMATTER.format(toDate(value)));
+
+/* Machine-readable date for <time datetime>. */
+export const isoDate = (value: DateInput) =>
+  toDate(value).toISOString().slice(0, 10);

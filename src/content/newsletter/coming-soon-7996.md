@@ -2,7 +2,7 @@
 title: "Coming soon"
 description: "Subscribe now"
 date: "2021-12-06"
-draft: false
+draft: true
 tags:
   - "newsletter"
   - "buttondown"

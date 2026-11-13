@@ -2,25 +2,41 @@
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { readingTimeMinutes } from "../../utils/readingTime";
-import { dateTimestamp, formatDisplayDate } from "../../utils/date";
+import { dateTimestamp, formatDayMonth, isoDate, toDate } from "../../utils/date";
 import { excerpt } from "../../utils/excerpt";
 import { slugOf } from "../../utils/slug";
+
+const GENERIC_READING_DESCRIPTION = "What I'm reading this week.";
+
+/* The weekly digest's links, by title: "Taking Back CSS-Tricks, ...". Site
+   names after " – " or " | " are dropped; the author follows each link. */
+const readingListSummary = (body: string) =>
+  [...body.matchAll(/^- \[([^\]]+)\]\(/gm)]
+    .map(([, title]) => title.split(/ [–|] /)[0].trim())
+    .filter((title) => !/^share on /i.test(title))
+    .join(", ");
 
 const blogPosts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .map((post) => {
     const words = post.body ?? "";
+    const isReadingList = post.data.tags.includes("weekly");
+    const description =
+      isReadingList && post.data.description === GENERIC_READING_DESCRIPTION
+        ? readingListSummary(words) || post.data.description
+        : post.data.description;
     return {
       slug: `/blog/${slugOf(post)}`,
       title: post.data.title,
-      description: excerpt(post.data.description),
+      description: excerpt(description),
       date: post.data.date,
       readingTime: readingTimeMinutes(words),
-      category: post.data.category || "blog",
+      category: isReadingList ? "reading" : "blog",
     };
   });
 
 const newsletterPosts = (await getCollection("newsletter"))
+  .filter((post) => !post.data.draft)
   .map((post) => {
     const words = post.body ?? "";
     return {
@@ -36,7 +52,20 @@ const newsletterPosts = (await getCollection("newsletter"))
 const posts = [...blogPosts, ...newsletterPosts]
   .sort((a, b) => dateTimestamp(b.date) - dateTimestamp(a.date));
 
-const categories = ["all", "blog", "newsletter"];
+const categories = ["all", "blog", "reading", "newsletter"];
+const categoryLabel: Record<string, string> = {
+  all: "All",
+  blog: "Blog",
+  reading: "Reading lists",
+  newsletter: "Newsletter",
+};
+/* Singular, for the label on each row. */
+const rowLabel: Record<string, string> = {
+  blog: "Blog",
+  reading: "Reading list",
+  newsletter: "Newsletter",
+};
+const pageDescription = "Notes on frontend engineering, plus weekly reading lists.";
 const requestedCategory = Astro.url.searchParams.get("category");
 const selectedCategory = categories.includes(requestedCategory ?? "")
   ? requestedCategory!
@@ -45,14 +74,26 @@ const visiblePosts =
   selectedCategory === "all"
     ? posts
     : posts.filter((post) => post.category === selectedCategory);
+
+/* Newest year first; posts are already sorted newest first. */
+const years = [...new Set(visiblePosts.map((post) => toDate(post.date).getUTCFullYear()))];
+const postsByYear = years.map((year) => ({
+  year,
+  posts: visiblePosts.filter((post) => toDate(post.date).getUTCFullYear() === year),
+}));
 import "./_blog.scss";
 ---
 
-<BaseLayout title="Notes · Ritik Patni" path="/blog">
+<BaseLayout
+  title="Notes · Ritik Patni"
+  description={pageDescription}
+  image="/og/notes.png"
+  path="/blog"
+>
   <section class="blog-hero page-hero page-hero--standard">
     <div class="blog-hero-content page-hero__inner">
       <h1 class="blog-hero-title page-hero__title">Notes</h1>
-      <p class="blog-hero-lead page-hero__lead">Clean notes on frontend engineering, systems, and photography.</p>
+      <p class="blog-hero-lead page-hero__lead">{pageDescription}</p>
     </div>
   </section>
 
@@ -65,33 +106,40 @@ import "./_blog.scss";
         class:list={["blog-filter-pill", { "is-active": selectedCategory === cat }]}
         aria-current={selectedCategory === cat ? "page" : undefined}
       >
-        {cat === "all" ? "All" : cat.charAt(0).toUpperCase() + cat.slice(1)}
+        {categoryLabel[cat]}
       </a>
     ))}
   </div>
   <p class="visually-hidden" role="status" aria-live="polite" data-blog-filter-status></p>
 
-  <!-- Blog list -->
-  <section class="blog-posts">
+  <!-- Notes list, grouped by year -->
+  <section class="blog-posts" aria-label="Posts">
     {
       visiblePosts.length === 0 ? (
         <p class="text-muted">No posts yet.</p>
       ) : (
-        <div class="blog-grid">
-          {visiblePosts.map((post, i) => (
-            <article
-              class={i === 0 ? "blog-card blog-card--featured card-link" : "blog-card card-link"}
-              data-blog-card-category={post.category}
-            >
-              <div class="blog-card-date">{formatDisplayDate(post.date)}</div>
-              <h2 class="blog-card-title"><a class="card-link__target" href={post.slug}>{post.title}</a></h2>
-              <p class="blog-card-desc">{post.description}</p>
-              <p class="blog-card-meta">{post.readingTime} min read</p>
-            </article>
-          ))}
-        </div>
+        postsByYear.map(({ year, posts: yearPosts }) => (
+          <section class="blog-year" data-blog-year aria-labelledby={`blog-year-${year}`}>
+            <h2 class="blog-year__title" id={`blog-year-${year}`}>{year}</h2>
+            <div class="blog-list">
+              {yearPosts.map((post) => (
+                <article class="blog-card blog-row card-link" data-blog-card-category={post.category}>
+                  <time class="blog-card-date" datetime={isoDate(post.date)}>{formatDayMonth(post.date)}</time>
+                  <div class="blog-row__body">
+                    <h3 class="blog-card-title"><a class="card-link__target" href={post.slug}>{post.title}</a></h3>
+                    {post.description && <p class="blog-card-desc">{post.description}</p>}
+                    <p class="blog-card-meta">
+                      {rowLabel[post.category] ?? "Blog"} · {post.readingTime} min read
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))
       )
     }
+    <p class="text-muted blog-empty" data-blog-empty hidden>No posts in this category yet.</p>
   </section>
 </BaseLayout>
 
@@ -100,6 +148,8 @@ import "./_blog.scss";
     const filters = [...document.querySelectorAll("[data-blog-filter]")];
     const cards = [...document.querySelectorAll("[data-blog-card-category]")];
     const status = document.querySelector("[data-blog-filter-status]");
+    const years = [...document.querySelectorAll("[data-blog-year]")];
+    const empty = document.querySelector("[data-blog-empty]");
     if (!filters.length || !cards.length) return;
 
     /* ClientRouter re-runs this inline script on every visit: drop the
@@ -114,7 +164,7 @@ import "./_blog.scss";
 
     /* announce: only for a visitor's own filter change, not the initial render. */
     const applyFilter = (category, updateUrl, announce = updateUrl) => {
-      const validCategory = ["all", "blog", "newsletter"].includes(category)
+      const validCategory = ["all", "blog", "reading", "newsletter"].includes(category)
         ? category
         : "all";
       const visibleCards = cards.filter(
@@ -125,11 +175,12 @@ import "./_blog.scss";
 
       cards.forEach((card) => {
         card.hidden = !visibleCards.includes(card);
-        card.classList.toggle(
-          "blog-card--featured",
-          visibleCards[0] === card,
-        );
       });
+      /* A year heading with nothing under it would read as an empty year. */
+      years.forEach((year) => {
+        year.hidden = !year.querySelector("[data-blog-card-category]:not([hidden])");
+      });
+      if (empty) empty.hidden = visibleCards.length > 0;
       filters.forEach((filter) => {
         const active = filter.dataset.blogFilter === validCategory;
         filter.classList.toggle("is-active", active);

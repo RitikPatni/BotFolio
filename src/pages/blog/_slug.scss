@@ -22,6 +22,16 @@
   }
 }
 
+/* Posts whose description repeats the opening sentence render no lead; drop
+   the hero's bottom padding so the title doesn't float above the text. */
+.slug-hero:not(:has(.slug-hero-lead)) {
+  padding-block-end: 0;
+
+  .slug-hero-title {
+    margin-block-end: 0;
+  }
+}
+
 /* Prose content: starts on the shared content edge (no inline padding of its
    own — the main container's gutter is the only inset). */
 .slug-prose {
