@@ -6,6 +6,8 @@ on:
       - "src/data/photography/**"
       - "src/assets/photography/**"
       - "scripts/validate-gallery.mjs"
+      - "scripts/install-gallery-hook.mjs"
+      - ".githooks/**"
       - "package.json"
       - ".github/workflows/gallery-qa.yml"
   push:
@@ -14,6 +16,8 @@ on:
       - "src/data/photography/**"
       - "src/assets/photography/**"
       - "scripts/validate-gallery.mjs"
+      - "scripts/install-gallery-hook.mjs"
+      - ".githooks/**"
       - "package.json"
       - ".github/workflows/gallery-qa.yml"
 

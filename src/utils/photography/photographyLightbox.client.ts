@@ -26,6 +26,15 @@ export function bindPhotographyLightbox() {
   });
 }
 
+/* The router numbers the history entries it creates (history.state.index,
+   0 for the first page of the visit). Above 0, the entry before this one is
+   another page on the site, e.g. the home strip that linked here. Read at
+   init, since this module only loads once /photography is reached. */
+const cameFromSitePage = () => {
+  const index = (window.history.state as { index?: unknown } | null)?.index;
+  return typeof index === "number" && index > 0;
+};
+
 export function initPhotographyLightbox(): (() => void) | undefined {
   const root = document.querySelector<HTMLElement>("[data-gallery-root]");
   const dataElement = document.getElementById("photographyGalleryData");
@@ -116,12 +125,17 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   /* True while the open frame owns a history entry we pushed, so closing
      steps back over it instead of leaving a dead #slug entry behind. */
   let ownsHistoryEntry = false;
+  /* True while the viewer was opened by a link from another page on the site
+     (e.g. a home-strip frame). The visitor came for one photo, not the whole
+     gallery, so closing steps back to where they came from. */
+  let returnToReferrer = false;
 
   const { renderImage } = createLightboxRenderer({
     images,
     elements,
     state,
     onImageState: setGalleryImageState,
+    onNavigate: (index) => goTo(index),
   });
 
   /* ─── Deep links: /photography#<slug> ─────────────────────────── */
@@ -129,31 +143,57 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   const slugIndex = new Map(images.map((image) => [image.slug, image.index]));
 
   const indexFromHash = () => {
-    const slug = decodeURIComponent(window.location.hash.slice(1));
+    let slug: string;
+    try {
+      slug = decodeURIComponent(window.location.hash.slice(1));
+    } catch {
+      /* Malformed escape (e.g. "#%"): not a frame, never a crash. */
+      return undefined;
+    }
     return slug ? slugIndex.get(slug) : undefined;
   };
 
   const frameHash = (index: number) => `#${images[index].slug}`;
 
-  /* Hash changes go through the router so its notion of the current URL stays
-     in sync; a raw pushState makes the next Back trigger a full page swap. */
+  /* Pushes go through the router so its notion of the current URL stays in
+     sync; a raw pushState makes the next Back trigger a full page swap.
+     Replaces keep the entry's existing state, which also covers entries the
+     browser made for a typed #fragment (state null), where the router's own
+     replace throws. */
   const writeFrameHash = (index: number, history: "push" | "replace") => {
     if (window.location.hash === frameHash(index)) {
+      return;
+    }
+    if (history === "replace") {
+      window.history.replaceState(
+        window.history.state,
+        "",
+        window.location.pathname + window.location.search + frameHash(index),
+      );
       return;
     }
     void navigate(frameHash(index), { history });
   };
 
-  const clearFrameHash = () => {
+  /* Returns true when it stepped back through history (async), so the
+     caller can wait for that to land before restoring focus. */
+  const clearFrameHash = (): boolean => {
+    if (returnToReferrer) {
+      returnToReferrer = false;
+      ownsHistoryEntry = false;
+      window.history.back();
+      return true;
+    }
+
     if (indexFromHash() === undefined) {
       ownsHistoryEntry = false;
-      return;
+      return false;
     }
 
     if (ownsHistoryEntry) {
       ownsHistoryEntry = false;
       window.history.back();
-      return;
+      return true;
     }
 
     window.history.replaceState(
@@ -161,6 +201,7 @@ export function initPhotographyLightbox(): (() => void) | undefined {
       "",
       window.location.pathname + window.location.search,
     );
+    return false;
   };
 
   /* ─── Scroll lock ─────────────────────────────────────────────── */
@@ -243,11 +284,13 @@ export function initPhotographyLightbox(): (() => void) | undefined {
     }
   };
 
+  const goTo = (index: number) => {
+    renderImage(index);
+    writeFrameHash(index, "replace");
+  };
+
   const move = (direction: number) => {
-    const nextIndex =
-      (state.activeIndex + direction + images.length) % images.length;
-    renderImage(nextIndex);
-    writeFrameHash(nextIndex, "replace");
+    goTo((state.activeIndex + direction + images.length) % images.length);
   };
 
   triggers.forEach((trigger) => {
@@ -401,7 +444,10 @@ export function initPhotographyLightbox(): (() => void) | undefined {
       }
 
       if (isMetadataVisible()) {
-        if (!metadataElement.contains(target) && !metadataToggle.contains(target)) {
+        /* composedPath, not contains(): tag buttons re-render on click, so
+           by the time this runs the target is already detached. */
+        const path = event.composedPath();
+        if (!path.includes(metadataElement) && !path.includes(metadataToggle)) {
           setMetadataVisibility(false);
         }
         return;
@@ -432,8 +478,30 @@ export function initPhotographyLightbox(): (() => void) | undefined {
         void document.exitFullscreen();
       }
 
-      clearFrameHash();
-      lastTrigger?.focus();
+      const leavingPage = returnToReferrer;
+      const focusTarget = triggerFor(state.activeIndex) ?? lastTrigger;
+      const steppedBack = clearFrameHash();
+
+      /* Return to the frame being viewed, not the one that opened the viewer.
+         Skipped when we're heading back to the referring page: focusing a
+         grid tile would scroll the gallery just before it swaps out. */
+      if (leavingPage) {
+        return;
+      }
+
+      /* After history.back() the router restores the scroll position saved
+         for the opener's entry, which would leave the focused tile off-screen
+         after paging; focus once that has landed. */
+      if (steppedBack) {
+        window.addEventListener(
+          "popstate",
+          () => requestAnimationFrame(() => focusTarget?.focus()),
+          { once: true, signal },
+        );
+        return;
+      }
+
+      focusTarget?.focus();
     },
     { signal },
   );
@@ -442,6 +510,10 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   window.addEventListener(
     "popstate",
     () => {
+      /* Any history move means we're no longer on the entry the referring
+         page pushed (Back already left, or a typed #fragment sits on top),
+         so a later close must not step back again. */
+      returnToReferrer = false;
       const index = indexFromHash();
 
       if (index === undefined) {
@@ -452,6 +524,13 @@ export function initPhotographyLightbox(): (() => void) | undefined {
         return;
       }
 
+      /* Only entries the router pushed carry state. A fragment the visitor
+         typed (state null) may sit on top of another frame entry, so stepping
+         back on close would reopen that frame; clear the hash instead.
+         Updated before the open-dialog branch: a fragment typed while the
+         viewer is open changes which entry we're on too. */
+      ownsHistoryEntry = window.history.state !== null;
+
       if (dialog.open) {
         if (index !== state.activeIndex) {
           renderImage(index);
@@ -459,7 +538,6 @@ export function initPhotographyLightbox(): (() => void) | undefined {
         return;
       }
 
-      ownsHistoryEntry = true;
       openDialog(index, null, "none");
     },
     { signal },
@@ -503,10 +581,16 @@ export function initPhotographyLightbox(): (() => void) | undefined {
   updateFullscreenButton();
   root.dataset.galleryReady = "true";
 
-  /* Landing on /photography#<slug>: swap the entry for the bare page and push
-     the frame on top, so Back closes the viewer rather than leaving the site. */
+  /* Landing on /photography#<slug> from another page on the site: open on the
+     entry the router already pushed, and let close / Back return there.
+     A fresh landing (shared link, new tab) has nowhere on-site to go back
+     to, so swap the entry for the bare page and push the frame on top:
+     Back closes the viewer rather than leaving the site. */
   const initialIndex = indexFromHash();
-  if (initialIndex !== undefined) {
+  if (initialIndex !== undefined && cameFromSitePage()) {
+    returnToReferrer = true;
+    openDialog(initialIndex, null, "none");
+  } else if (initialIndex !== undefined) {
     window.history.replaceState(
       window.history.state,
       "",
@@ -519,6 +603,7 @@ export function initPhotographyLightbox(): (() => void) | undefined {
     lifecycle.abort();
     if (dialog.open) {
       ownsHistoryEntry = false;
+      returnToReferrer = false;
       dialog.close();
     }
     unlockScroll();

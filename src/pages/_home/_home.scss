@@ -55,7 +55,9 @@
     display: inline-flex;
     align-items: baseline;
     gap: 0.6rem;
-    padding-block: 0.5rem; /* 44px tap height with the 1px rule */
+    padding-block: 0.5rem;
+    min-block-size: 2.75rem; /* 44px tap height; padding alone rounds to 43 */
+    box-sizing: border-box;
     border-bottom: 1px solid var(--line);
     font-family: var(--font-ui);
     font-size: 1rem;
@@ -111,6 +113,9 @@
   margin: calc(var(--strip-ink) * -1) 0 0 calc(var(--strip-ink) * -1);
   padding: var(--strip-ink) 3rem 0.75rem var(--strip-ink);
   scroll-padding-inline-start: var(--strip-ink);
+  /* Clear the 3rem right-edge fade so a keyboard-focused frame scrolls fully
+     into view instead of stopping under the mask. */
+  scroll-padding-inline-end: 3rem;
   list-style: none;
   overflow-x: auto;
   overscroll-behavior-x: contain;

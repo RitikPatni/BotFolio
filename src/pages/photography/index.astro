@@ -72,7 +72,9 @@ const createLightboxMetadata = (
     shutterSpeed: image.metadata?.shutterSpeed,
     iso: image.metadata?.iso ? String(image.metadata.iso) : undefined,
     category: categoryLabel,
-    resolution: `${asset.width} × ${asset.height}`,
+    /* images:optimize records the camera resolution before shrinking an
+       original; fall back to the file's own size. */
+    resolution: image.metadata?.resolution ?? `${asset.width} × ${asset.height}`,
   } satisfies GalleryLightboxMetadata;
 };
 

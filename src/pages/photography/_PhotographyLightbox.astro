@@ -33,6 +33,15 @@ const { galleryLightboxItemsJson } = Astro.props;
     ></div>
 
     <div class="photography__lightbox-frame" data-gallery-frame>
+      <img
+        class="photography__lightbox-placeholder"
+        data-gallery-placeholder
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+        draggable="false"
+        hidden
+      />
       <!-- impeccable-disable broken-image -- lightbox placeholder: src is set at runtime by the gallery script -->
       <img
         class="photography__lightbox-image"
