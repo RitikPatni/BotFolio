@@ -11,15 +11,7 @@ const dataRoot = path.join(repoRoot, "src", "data", "photography");
 const assetsRoot = path.join(repoRoot, "src", "assets", "photography");
 const manifestPath = path.join(dataRoot, "manifest.ts");
 
-const requiredJsonFiles = [
-  "birds-part-1.json",
-  "birds-part-2.json",
-  "wildlife.json",
-  "macro.json",
-];
-
-const optionalJsonFiles = ["landscape.json", "travel.json"];
-const jsonFiles = [...requiredJsonFiles, ...optionalJsonFiles];
+const imageExtRegex = /\.(jpg|jpeg|png|webp|avif|gif)$/i;
 
 const args = new Set(process.argv.slice(2));
 const strictMode = args.has("--strict") || args.has("--ci");
@@ -57,6 +49,32 @@ function warnGlobal(message) {
 
 function info(message) {
   infos.push(message);
+}
+
+/* The site renders exactly the JSON files manifest.ts imports, so that list
+   (not a hardcoded one) is what gets validated. */
+function parseManifestImports(tsContent) {
+  return [...tsContent.matchAll(/from\s+["']\.\/([^"']+\.json)["']/g)].map((m) => m[1]);
+}
+
+async function listImageFiles(dir, prefix = "") {
+  const out = [];
+  let dirents = [];
+  try {
+    dirents = await fs.readdir(dir, { withFileTypes: true });
+  } catch {
+    return out;
+  }
+  for (const d of dirents) {
+    const rel = prefix ? `${prefix}/${d.name}` : d.name;
+    if (d.isDirectory()) {
+      // eslint-disable-next-line no-await-in-loop
+      out.push(...(await listImageFiles(path.join(dir, d.name), rel)));
+    } else if (imageExtRegex.test(d.name)) {
+      out.push(rel);
+    }
+  }
+  return out;
 }
 
 function parseManifestCategories(tsContent) {
@@ -100,8 +118,23 @@ function computeCategoryBalanceSummary(categoryCounts, total) {
 async function main() {
   const manifestText = await fs.readFile(manifestPath, "utf8");
   const allowedCategories = parseManifestCategories(manifestText);
+  const jsonFiles = parseManifestImports(manifestText);
+
+  if (jsonFiles.length === 0) {
+    errors.push("manifest.ts: no ./*.json imports found (parser out of date?)");
+  }
+
+  /* A JSON file manifest.ts doesn't import passes every entry check and then
+     never renders (e.g. a new birds-part-3.json). */
+  for (const file of (await fs.readdir(dataRoot)).filter((f) => f.endsWith(".json")).sort()) {
+    if (!jsonFiles.includes(file)) {
+      errors.push(`${file}: not imported by manifest.ts, so none of its entries render`);
+    }
+  }
 
   const seenFilenames = new Map();
+  const seenSlugs = new Map();
+  const referencedAssets = new Set();
   const seenTitleByCategory = new Set();
   const categoryCounts = new Map();
 
@@ -113,11 +146,7 @@ async function main() {
     const fileExists = await exists(fullPath);
 
     if (!fileExists) {
-      if (requiredJsonFiles.includes(file)) {
-        errors.push(`${file}: required file missing`);
-      } else {
-        info(`${file}: optional file missing (skipped)`);
-      }
+      errors.push(`${file}: imported by manifest.ts but missing`);
       continue;
     }
 
@@ -137,7 +166,15 @@ async function main() {
         if (!(key in item)) err(file, i, `missing required field '${key}'`);
       }
 
-      const { filename, title, category, tags, alt, date, metadata } = item;
+      const { filename, title, category, tags, alt, date, metadata, rating } = item;
+
+      /* Rating drives ordering and the home strip picks the top frames;
+         an unrated entry silently sinks to the end of everything. */
+      if (rating === undefined) {
+        warn(file, i, "missing 'rating' (1-5); unrated frames sort last and never reach the home strip");
+      } else if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+        err(file, i, "rating must be an integer from 1 to 5");
+      }
 
       if (typeof filename !== "string" || !filename.trim()) {
         err(file, i, "filename must be a non-empty string");
@@ -149,6 +186,15 @@ async function main() {
           err(file, i, `duplicate filename also used in ${seenFilenames.get(filename)}`);
         } else {
           seenFilenames.set(filename, file);
+          /* The deep-link id (/photography#<slug>) is the filename without its
+             extension, so eagle.jpg + eagle.png collide even though the
+             filenames differ; the build throws on it. */
+          const slug = filename.replace(/\.[^.]+$/, "");
+          if (seenSlugs.has(slug)) {
+            err(file, i, `slug '${slug}' collides with ${seenSlugs.get(slug)} (deep links use the filename without extension)`);
+          } else {
+            seenSlugs.set(slug, `${filename} in ${file}`);
+          }
         }
       }
 
@@ -188,8 +234,8 @@ async function main() {
         if (!isObject(metadata)) {
           err(file, i, "metadata must be an object when present");
         } else {
+          /* Mirrors PhotoMetadata in src/data/photography/types.ts. */
           const knownMeta = [
-            "location",
             "camera",
             "lens",
             "focalLength",
@@ -206,6 +252,7 @@ async function main() {
       }
 
       if (typeof filename === "string" && typeof category === "string") {
+        referencedAssets.add(`${category}/${filename}`);
         const imagePath = path.join(assetsRoot, category, filename);
         // eslint-disable-next-line no-await-in-loop
         if (!(await exists(imagePath))) {
@@ -221,6 +268,14 @@ async function main() {
           seenTitleByCategory.add(key);
         }
       }
+    }
+  }
+
+  /* Orphans: image files no entry points at. They still ship in the repo
+     (and often mean an entry was renamed or a webp twin was left behind). */
+  for (const rel of (await listImageFiles(assetsRoot)).sort()) {
+    if (!referencedAssets.has(rel)) {
+      warnGlobal(`orphan asset: src/assets/photography/${rel} is not referenced by any entry`);
     }
   }
 

@@ -154,3 +154,25 @@ const posts = (await getCollection("blog"))
     </p>
   </section>
 </BaseLayout>
+
+<script>
+  /* Keyboard focus in the contact strip: Chrome won't scroll a partly visible
+     link any further, so a frame can sit under the right-edge fade. Align it
+     to the row's start, the same edge the scroll-snap points use; a "nearest"
+     scroll gets pulled back by proximity snapping. The row's scroll-padding
+     covers the fade. Delegated on document because this module runs once
+     across router page swaps. */
+  document.addEventListener("focusin", (event) => {
+    const link = (event.target as Element | null)?.closest?.(".index-strip__row a");
+    const row = link?.closest(".index-strip__row");
+    if (!(link instanceof HTMLElement) || !row || !link.matches(":focus-visible")) {
+      return;
+    }
+    const fade = parseFloat(getComputedStyle(row).scrollPaddingInlineEnd) || 0;
+    const linkBox = link.getBoundingClientRect();
+    const rowBox = row.getBoundingClientRect();
+    if (linkBox.left < rowBox.left || linkBox.right > rowBox.right - fade) {
+      link.scrollIntoView({ block: "nearest", inline: "start" });
+    }
+  });
+</script>

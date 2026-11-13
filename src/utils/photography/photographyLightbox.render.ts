@@ -13,6 +13,9 @@ type RenderContext = {
   elements: GalleryElements;
   state: LightboxRenderState;
   onImageState?: (state: "loading" | "loaded" | "error") => void;
+  /* Called when the viewer itself picks a frame (related photos), so the
+     owner can keep the URL hash in step. Falls back to a bare render. */
+  onNavigate?: (index: number) => void;
 };
 
 export function createLightboxRenderer({
@@ -20,6 +23,7 @@ export function createLightboxRenderer({
   elements,
   state,
   onImageState,
+  onNavigate,
 }: RenderContext) {
   const {
     imageElement,
@@ -80,7 +84,10 @@ export function createLightboxRenderer({
     if (Number.isNaN(date.getTime())) {
       return iso;
     }
+    /* Date-only ISO strings parse as UTC midnight; format in UTC too or
+       viewers west of Greenwich see the day before. */
     return date.toLocaleDateString("en-US", {
+      timeZone: "UTC",
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -198,7 +205,7 @@ export function createLightboxRenderer({
 
       button.append(image, label);
       button.addEventListener("click", () => {
-        renderImage(item.index);
+        (onNavigate ?? renderImage)(item.index);
       });
       relatedGridElement.append(button);
     });

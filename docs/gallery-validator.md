@@ -12,6 +12,10 @@ Runs a fast consistency check over photography manifests and image assets.
 - `date` format is `YYYY-MM-DD` (or empty string)
 - Image file exists at `src/assets/photography/<category>/<filename>`
 - Duplicate filename detection across all manifest files
+- Manifest parity: validates exactly the JSON files `src/data/photography/manifest.ts` imports, and errors on any `*.json` in that folder it doesn't import (those entries would never render)
+- Slug collisions: the deep-link id (`/photography#<slug>`) is the filename without its extension, so `eagle.jpg` + `eagle.png` is an error
+- `rating`: must be an integer 1–5; a missing rating is a warning (unrated frames sort last and never reach the home strip)
+- Orphan assets: image files under `src/assets/photography/` that no entry references are a warning
 - Category distribution summary (informational, with portfolio-intent-aware drift warning)
 
 ## Portfolio intent note
