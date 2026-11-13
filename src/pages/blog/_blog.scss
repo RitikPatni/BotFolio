@@ -21,6 +21,75 @@
   padding: 2rem 0 4rem;
 }
 
+/* Notes: one column, grouped by year. Each row is date | title + summary on
+   wide screens and stacks on phones. (.blog-grid below is still used by
+   /resources.) */
+.blog-year {
+  & + & {
+    margin-top: 3.5rem;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__title {
+    margin: 0 0 0.75rem;
+    font-size: var(--fs-h2);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.blog-list {
+  max-inline-size: 54rem;
+}
+
+.blog-row {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  column-gap: 2rem;
+  padding: 1.5rem 0;
+
+  &[hidden] {
+    display: none;
+  }
+
+  .blog-card-date {
+    margin: 0;
+    /* Sit on the title's first line: (title line box - date line box) / 2. */
+    padding-top: 0.3rem;
+  }
+
+  .blog-card-title {
+    font-size: 1.3rem;
+    text-wrap: pretty;
+  }
+
+  .blog-card-desc {
+    margin: 0;
+    max-inline-size: 62ch;
+  }
+
+  .blog-card-meta {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 40rem) {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.5rem;
+
+    .blog-card-date {
+      padding-top: 0;
+    }
+  }
+}
+
+.blog-empty[hidden] {
+  display: none;
+}
+
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
