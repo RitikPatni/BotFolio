@@ -258,6 +258,9 @@ export function createLightboxRenderer({
     currentRequest = requestToken;
     placeholderElement.hidden = true;
     placeholderElement.classList.remove("is-visible");
+    /* Drop the last frame's thumbnail so a slow load never shows it blurred
+       under the new frame's box. */
+    placeholderElement.removeAttribute("src");
     frameElement.style.setProperty("--lb-image-width", `${image.width}px`);
     frameElement.style.setProperty("--lb-image-ratio", `${image.width / image.height}`);
 

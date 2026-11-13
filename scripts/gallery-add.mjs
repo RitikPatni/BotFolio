@@ -15,14 +15,23 @@ const USAGE = `Usage: npm run gallery:add -- <category> <path/to/photo.jpg> --ti
 
 const kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
+const VALUE_FLAGS = new Set(["title", "alt", "tags", "rating", "date", "file"]);
+
 function parseArgs(argv) {
   const opts = { tags: [] };
   const positional = [];
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--dry-run") opts.dryRun = true;
-    else if (a.startsWith("--")) opts[a.slice(2)] = argv[++i];
-    else positional.push(a);
+    else if (a.startsWith("--")) {
+      /* An unknown flag must not swallow the next argument: a typo like
+         --dryrun would otherwise run the real write. */
+      if (!VALUE_FLAGS.has(a.slice(2))) {
+        console.error(`error: unknown option ${a}\n${USAGE}`);
+        process.exit(1);
+      }
+      opts[a.slice(2)] = argv[++i];
+    } else positional.push(a);
   }
   if (typeof opts.tags === "string") opts.tags = opts.tags.split(",").map((t) => t.trim()).filter(Boolean);
   return { ...opts, category: positional[0], photo: positional[1] };
@@ -39,13 +48,18 @@ function parseExif(buf) {
   const ifd = (offset) => {
     const out = {};
     for (let i = 0; i < dv.getUint16(start + offset, le); i++) {
-      const e = start + offset + 2 + i * 12;
-      const [tag, type, n] = [dv.getUint16(e, le), dv.getUint16(e + 2, le), dv.getUint32(e + 4, le)];
-      const off = (EXIF_SIZES[type] || 1) * n <= 4 ? e + 8 : start + dv.getUint32(e + 8, le);
-      if (type === 2) out[tag] = buf.toString("latin1", off, off + n).replace(/\0[\s\S]*$/, "");
-      else if (type === 3) out[tag] = dv.getUint16(off, le);
-      else if (type === 4) out[tag] = dv.getUint32(off, le);
-      else if (type === 5) out[tag] = [dv.getUint32(off, le), dv.getUint32(off + 4, le)];
+      /* One bad entry (truncated EXIF) skips that tag, not the whole read. */
+      try {
+        const e = start + offset + 2 + i * 12;
+        const [tag, type, n] = [dv.getUint16(e, le), dv.getUint16(e + 2, le), dv.getUint32(e + 4, le)];
+        const off = (EXIF_SIZES[type] || 1) * n <= 4 ? e + 8 : start + dv.getUint32(e + 8, le);
+        if (type === 2) out[tag] = buf.toString("latin1", off, off + n).replace(/\0[\s\S]*$/, "");
+        else if (type === 3) out[tag] = dv.getUint16(off, le);
+        else if (type === 4) out[tag] = dv.getUint32(off, le);
+        else if (type === 5) out[tag] = [dv.getUint32(off, le), dv.getUint32(off + 4, le)];
+      } catch {
+        break;
+      }
     }
     return out;
   };
@@ -56,7 +70,7 @@ function parseExif(buf) {
 function exifToFields(tags) {
   const ratio = (v) => (Array.isArray(v) && v[1] ? v[0] / v[1] : undefined);
   const meta = {};
-  const dt = tags[0x9003] ?? tags[0x0132] ?? "";
+  const dt = tags[0x9003]?.trim() || tags[0x0132]?.trim() || "";
   const date = /^\d{4}:\d{2}:\d{2}/.test(dt) ? dt.slice(0, 10).replace(/:/g, "-") : "";
   if (tags[0x0110]) meta.camera = String(tags[0x0110]).replace(/\s+/g, " ").trim();
   if (tags[0xa434]) meta.lens = String(tags[0xa434]).replace(/\s+/g, " ").trim();
@@ -65,7 +79,14 @@ function exifToFields(tags) {
   const fnum = ratio(tags[0x829d]);
   if (fnum) meta.aperture = `f/${Number(fnum.toFixed(1))}`;
   const exp = ratio(tags[0x829a]);
-  if (exp) meta.shutterSpeed = exp >= 1 ? `${Number(exp.toFixed(1))}s` : `1/${Math.round(1 / exp)}s`;
+  /* 1/N only when the exposure really is a unit fraction; 0.4s stays 0.4s. */
+  if (exp) {
+    const inverse = 1 / exp;
+    meta.shutterSpeed =
+      exp < 1 && Math.abs(inverse - Math.round(inverse)) < 0.05
+        ? `1/${Math.round(inverse)}s`
+        : `${Number(exp.toFixed(1))}s`;
+  }
   if (tags[0x8827] !== undefined) meta.iso = tags[0x8827];
   return { date, ...(Object.keys(meta).length ? { metadata: meta } : {}) };
 }
@@ -154,17 +175,29 @@ async function main() {
     return;
   }
 
+  /* Build the new JSON before touching disk; any failure after the copy
+     (unwritable JSON, failed validation) restores both files. */
   const originalJson = await fs.readFile(dataPath, "utf8");
-  await fs.mkdir(path.dirname(assetPath), { recursive: true });
-  await fs.copyFile(opts.photo, assetPath);
   const items = JSON.parse(originalJson);
   items.push(entry);
-  await fs.writeFile(dataPath, `${JSON.stringify(items, null, 2)}\n`);
+  const rollback = async () => {
+    await fs.writeFile(dataPath, originalJson).catch(() => {});
+    await fs.rm(assetPath, { force: true });
+  };
+
+  try {
+    await fs.mkdir(path.dirname(assetPath), { recursive: true });
+    await fs.copyFile(opts.photo, assetPath);
+    await fs.writeFile(dataPath, `${JSON.stringify(items, null, 2)}\n`);
+  } catch (error) {
+    await rollback();
+    console.error(`error: ${error.message}; rolled back the JSON change and the copied asset.`);
+    process.exit(1);
+  }
 
   if (spawnSync("node", [path.join(__dirname, "validate-gallery.mjs")], { stdio: "inherit" }).status !== 0) {
-    await fs.writeFile(dataPath, originalJson);
-    await fs.rm(assetPath);
-    console.error("Validation failed — rolled back the JSON change and the copied asset.");
+    await rollback();
+    console.error("Validation failed; rolled back the JSON change and the copied asset.");
     process.exit(1);
   }
   console.log(`Added ${filename} to ${dataFile} (${items.length} entries).`);

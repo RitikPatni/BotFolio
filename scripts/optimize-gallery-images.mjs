@@ -53,12 +53,13 @@ if (write) {
 
 const jsonFiles = (await fs.readdir(dataRoot)).filter((f) => f.endsWith(".json")).sort();
 let planned = 0;
+let resized = 0;
 let savedBytes = 0;
+let failed = 0;
 
 for (const file of jsonFiles) {
   const jsonPath = path.join(dataRoot, file);
   const entries = JSON.parse(await fs.readFile(jsonPath, "utf8"));
-  let fileChanged = false;
 
   for (const entry of entries) {
     const assetPath = path.join(assetsRoot, entry.category, entry.filename);
@@ -98,24 +99,31 @@ for (const file of jsonFiles) {
     else if (meta.format === "png") pipeline = pipeline.png({ compressionLevel: 9 });
 
     const tmpPath = `${assetPath}.tmp`;
-    await pipeline.toFile(tmpPath);
-    const after = (await fs.stat(tmpPath)).size;
-    if (after >= before) {
-      await fs.rm(tmpPath);
-      console.log(`  kept (no saving): ${label}`);
-      continue;
+    try {
+      await pipeline.toFile(tmpPath);
+      const after = (await fs.stat(tmpPath)).size;
+      if (after >= before) {
+        console.log(`  kept (no saving): ${label}`);
+        continue;
+      }
+
+      /* Record the camera resolution on disk before the original shrinks, so
+         an interrupted run (bad file, Ctrl-C, full disk) never loses it. */
+      if (!entry.metadata?.resolution) {
+        entry.metadata ??= {};
+        entry.metadata.resolution = `${width} × ${height}`;
+        await fs.writeFile(jsonPath, `${JSON.stringify(entries, null, 2)}\n`, "utf8");
+      }
+      await fs.rename(tmpPath, assetPath);
+      resized += 1;
+      savedBytes += before - after;
+      console.log(`  resized: ${label} → ${mb(after)}`);
+    } catch (error) {
+      failed += 1;
+      console.error(`  FAILED: ${label}: ${error.message}`);
+    } finally {
+      await fs.rm(tmpPath, { force: true });
     }
-    await fs.rename(tmpPath, assetPath);
-    savedBytes += before - after;
-
-    entry.metadata ??= {};
-    entry.metadata.resolution ??= `${width} × ${height}`;
-    fileChanged = true;
-    console.log(`  resized: ${label} → ${mb(after)}`);
-  }
-
-  if (fileChanged) {
-    await fs.writeFile(jsonPath, `${JSON.stringify(entries, null, 2)}\n`, "utf8");
   }
 }
 
@@ -126,5 +134,9 @@ if (!write) {
       : `\nNo originals exceed ${maxEdge}px.`,
   );
 } else {
-  console.log(`\nResized ${planned} original(s), saved ${mb(savedBytes)}. Run npm run gallery:validate next.`);
+  console.log(`\nResized ${resized} of ${planned} original(s), saved ${mb(savedBytes)}. Run npm run gallery:validate next.`);
+  if (failed) {
+    console.error(`${failed} file(s) failed; they were left untouched.`);
+    process.exitCode = 1;
+  }
 }
