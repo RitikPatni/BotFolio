@@ -108,15 +108,15 @@ typography:
   meta:
     fontFamily: "IBM Plex Mono, monospace"
     fontSize: "0.82rem"
-    letterSpacing: "0.08em"
+    letterSpacing: "0"
   count:
     fontFamily: "IBM Plex Mono, monospace"
     fontSize: "0.78rem"
-    letterSpacing: "0.06em"
+    letterSpacing: "0"
   label:
     fontFamily: "IBM Plex Mono, monospace"
     fontSize: "0.75rem"
-    letterSpacing: "0.1em"
+    letterSpacing: "0"
   index:
     fontFamily: "IBM Plex Mono, monospace"
     fontSize: "0.8rem"
@@ -291,22 +291,22 @@ Shared type sizes come from this ramp. The ramp tokens live in `v2-tokens.scss:4
 | Ledger | 1rem | 16px | Schibsted 400 | home ledger links |
 | Caption title | 0.95rem | 15.2px | Schibsted 500 | strip and gallery captions |
 | Nav | 0.875rem (0.8125rem at ≤48rem) | 14 / 13px | Schibsted 400 | header links |
-| Meta | 0.82rem base, +0.08em, uppercase, `--text-dim` | 12.8–13.6px | IBM Plex Mono | metadata layer (`v2-typography.scss`) |
-| Count | 0.78rem, +0.06em | 12.48px | IBM Plex Mono, tabular | ledger counts, section kickers |
+| Meta | 0.82rem base, no tracking, sentence case, `--text-dim` | 12.8–13.6px | IBM Plex Mono | metadata layer (`v2-typography.scss`) |
+| Count | 0.78rem, no tracking | 12.48px | IBM Plex Mono, tabular | ledger counts, section kickers |
 | Index | 0.8rem, no tracking, sentence case | 12.8px | IBM Plex Mono | the gallery section index (`_photography.scss`) |
 | Label / caption | **0.75rem** (the floor) | 12px | IBM Plex Mono | strip label, "Open the gallery →", exposure captions, nav "More →" hint |
 
 ### Tracking
 
-Tracking is a property of the mono caps layer only. There are four documented values, all in the typography frontmatter: `meta` +0.08em, `count` +0.06em, `label` +0.1em and `caption` +0.02em. Headings track negative (−0.01 to −0.022em).
+The site has no all-caps text, so mono labels don't need caps tracking. The only positive tracking is `caption` +0.02em on the mono exposure line. Headings track negative (−0.01 to −0.022em).
 - **Running text and nav rows get 0.** Body, prose, lede, ledger links and the gallery index never get positive tracking. In particular, they never get 0.05em or more (`L04`).
-- Positive tracking ≥ 0.05em is allowed only with `text-transform: uppercase` on a short mono label (meta, count, label, card badge).
+- Mono labels (meta, count, label, card badge, kicker) get no tracking either. Wide tracking only suited caps, and caps are gone.
 
 Rules:
 - **The One H2 Rule.** `h2` has a single size, `--fs-h2`. Route styles must not set an h2 font-size, line-height or weight.
 - **The Floor Rule.** Functional text is at least 0.75rem (12px). 0.75rem is a floor, not a default, and is reserved for mono labels and captions.
 - **The Voice Split.** Schibsted speaks and reads (titles, the statement, prose, nav, links). Plex Mono records (dates, counts, EXIF, labels). Don't set a date in Schibsted or a heading in mono.
-- **Case.** Headings, ledger, captions and the gallery index use sentence case. Only the mono label layer uppercases: the strip label, "Open the gallery →" and the metadata layer. EXIF lines are never uppercased, so "f/6.3" stays lowercase (`_photography.scss`, and the lightbox caption in `_photography.lightbox.shell.scss`; `T06`).
+- **Case.** Everything is sentence case, as written in the markup. No rule sets `text-transform: uppercase`: not kickers, labels, dates, badges, tags, the footer or the OG cards. All-caps eyebrows read as a stock website pattern, and the site doesn't use them. EXIF keeps its own case, so "f/6.3" stays lowercase (`T06`).
 - **Figures.** Ledger turns site-wide tabular figures off, because Schibsted's `tnum` widens punctuation (`field-notes.scss:33-35`). Counts, dates and captions set `font-variant-numeric: tabular-nums` explicitly.
 - **Italic** is the second voice. Use it only for the accent clause of the home statement, and never as decoration elsewhere.
 
@@ -347,7 +347,7 @@ Sources: `src/pages/_home/home.astro:26-124` and `src/pages/_home/_home.scss:1-1
    - a mono label, "Contact sheet · recent frames";
    - a row of the **8 most recent frames by date** (ties keep manifest order; `home.astro:42-50`), at one shared height and natural aspect ratios, 4px radius, all `loading="lazy"`. The height is `clamp(8.5rem, 22svh, 13rem)` (208px cap) on desktop and 11rem (176px) at ≤48rem (`C30`). The row scrolls and scroll-snaps inside the content column and fades at its right edge;
    - **Journal-style captions** under each frame: the frame title in Schibsted Grotesk 0.95rem/500, then one mono exposure line, `aperture · shutter · ISO`, taken from the frame's own EXIF. Missing fields are dropped, and a frame with no EXIF shows only its title (`home.astro:35-40`);
-   - **"Open the gallery →"**, the closing link under the row on the right, in the mono label style (uppercase via CSS; `_home.scss:171-182`).
+   - **"Open the gallery →"**, the closing link under the row on the right, in the mono label style, sentence case.
 4. The hero's **minimum** height is `100svh − --header-h` (`_home.scss:11`). It grows with its content: at 1440×900 it measures 922px against an 839px minimum, and at 390×844 it measures 841px against 783px. On both, the bottom of the strip (about 60–80px) falls below the fold (`G15`). Below the hero, "Latest posts" uses the shared section header: a mono rust kicker plus an h2 on the ramp.
 
 ### Gallery: the contact sheet
@@ -413,7 +413,7 @@ Schibsted Grotesk 1rem in `--text` with a 1px `--line` underline that turns `--a
 A natural-ratio image at 4px radius, with a transparent 1px outline at 3px offset that turns rust on hover. Keyboard focus shows the standard 2px ring. On the home strip it wraps the link, and in the gallery it wraps the whole figure, frame and caption together, through `.card-link` (`T09`). The caption is a Schibsted title plus a mono exposure line in `--text-muted`.
 
 ### Section header
-A mono uppercase kicker in `--accent-text` (0.78rem, +0.14em), then an h2 on the ramp, on the shared left edge.
+A sentence-case mono kicker in `--accent-text` (0.78rem, no tracking), then an h2 on the ramp, on the shared left edge.
 
 Kickers belong to sections below the hero only, such as home "Latest posts". **Page heroes have no eyebrow.** A hero is the H1 and its lede, plus `page-hero__meta` on detail pages. The impeccable fix round removed two hero eyebrow chips: the `/uses` "WORKBENCH / FIELD KIT" chip, which also carried a 2px left rule (the side-tab finding), and the 404 "404 · page not found" chip, which repeated the H1. Removal won over restyling because no other listing hero (`/blog`, `/coding`, `/photography`, `/library`) has one. Every listing hero now opens the same way (`L05`).
 
@@ -447,6 +447,7 @@ Every link and button shows a 2px `--accent` outline with a `--size-1` offset on
 - **Don't** make the header transparent, blurred, two-row or scroll-aware.
 - **Don't** box, left-rule, round or shadow a card, and don't put a left rule on a label or eyebrow.
 - **Don't** put an eyebrow chip above a page-hero H1.
-- **Don't** track running text or nav rows. Positive tracking of 0.05em or more is for uppercase mono labels only.
+- **Don't** set text in all caps (`text-transform: uppercase` or typed caps) for labels, kickers, eyebrows, dates or tags.
+- **Don't** track running text, nav rows or labels. The only positive tracking is the +0.02em exposure caption.
 - **Don't** let a gradient exceed a whisper, and never use gradient text.
 - **Don't** fabricate content, counts, testimonials or EXIF. The archive is real or it doesn't ship.

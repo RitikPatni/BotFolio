@@ -26,7 +26,7 @@ const showLead = Boolean(leadKey) && !stripMarkdown(post.body ?? "").startsWith(
 // OG cache-bust: the PNG endpoint URL changes whenever title/description/date change,
 // so platform embed caches (Discord, Twitter) refetch instead of serving a stale card.
 // OG_TEMPLATE changes when the card design itself changes (e.g. its typeface).
-const OG_TEMPLATE = "newsreader-1";
+const OG_TEMPLATE = "newsreader-2";
 const ogVersion = crypto
   .createHash("sha256")
   .update(`${OG_TEMPLATE}|${post.data.title}|${post.data.description}|${post.data.date}`)

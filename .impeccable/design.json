@@ -69,7 +69,7 @@
       },
       "label": {
         "displayName": "Label",
-        "purpose": "IBM Plex Mono: metadata 0.82rem uppercase +0.08em in --text-dim; counts 0.78rem +0.06em; labels 0.75rem +0.1em; EXIF captions 0.75rem +0.02em (the functional floor); gallery index 0.8rem sentence case, untracked."
+        "purpose": "IBM Plex Mono, sentence case, never uppercased: metadata 0.82rem in --text-dim; counts 0.78rem; labels 0.75rem; all untracked. EXIF captions 0.75rem +0.02em (the functional floor); gallery index 0.8rem, untracked."
       }
     },
     "shadows": [
@@ -160,8 +160,8 @@
       "kind": "card",
       "refersTo": "card",
       "description": "Flat list card: top hairline plus a top inset (padding: 1.5rem 0; list rows 1rem 0) and whitespace only; no box, radius, left rule or shadow. Clickable cards (.card-link): the whole card is the hit area; hover turns the top hairline rust (55% mix into --line) and adds a 14% rust wash, colour only, 0px movement; focus draws the 2px ring around the card.",
-      "html": "<article class=\"ds-card\"><div class=\"ds-card-date\">12 OCT 2026</div><h3>Title</h3><p>Whitespace and a top hairline do the structuring.</p></article>",
-      "css": ".ds-card { padding: 1.5rem 0; border-top: 1px solid rgba(24, 25, 26, 0.18); border-radius: 0; background: transparent; color: #18191a; } .ds-card:hover { border-top-color: color-mix(in srgb, #a8401e 55%, rgba(24, 25, 26, 0.18)); background: color-mix(in srgb, #efc9b8 14%, transparent); } .ds-card-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5b5f62; } .ds-card h3 { margin: 0.5rem 0; font-family: 'Schibsted Grotesk', 'Helvetica Neue', system-ui, sans-serif; font-weight: 400; letter-spacing: -0.01em; } .ds-card p { margin: 0; font-family: 'Schibsted Grotesk', 'Helvetica Neue', system-ui, sans-serif; line-height: 1.65; }"
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-date\">12 Oct 2026</div><h3>Title</h3><p>Whitespace and a top hairline do the structuring.</p></article>",
+      "css": ".ds-card { padding: 1.5rem 0; border-top: 1px solid rgba(24, 25, 26, 0.18); border-radius: 0; background: transparent; color: #18191a; } .ds-card:hover { border-top-color: color-mix(in srgb, #a8401e 55%, rgba(24, 25, 26, 0.18)); background: color-mix(in srgb, #efc9b8 14%, transparent); } .ds-card-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: #5b5f62; } .ds-card h3 { margin: 0.5rem 0; font-family: 'Schibsted Grotesk', 'Helvetica Neue', system-ui, sans-serif; font-weight: 400; letter-spacing: -0.01em; } .ds-card p { margin: 0; font-family: 'Schibsted Grotesk', 'Helvetica Neue', system-ui, sans-serif; line-height: 1.65; }"
     },
     {
       "name": "Contact-sheet Frame",
@@ -175,9 +175,9 @@
       "name": "Mono Label Link",
       "kind": "button",
       "refersTo": null,
-      "description": "Closing strip link (OPEN THE GALLERY →): mono 0.75rem uppercase, rust on hover.",
+      "description": "Closing strip link (Open the gallery →): mono 0.75rem sentence case, rust on hover.",
       "html": "<a class=\"ds-more\" href=\"#\">Open the gallery →</a>",
-      "css": ".ds-more { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #18191a; text-decoration: none; } .ds-more:hover { color: #8a3216; } .ds-more:focus-visible { outline: 2px solid #a8401e; outline-offset: 4px; }"
+      "css": ".ds-more { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #18191a; text-decoration: none; } .ds-more:hover { color: #8a3216; } .ds-more:focus-visible { outline: 2px solid #a8401e; outline-offset: 4px; }"
     },
     {
       "name": "Theme Toggle",
@@ -235,7 +235,7 @@
       },
       {
         "name": "The Tracking Rule",
-        "body": "Positive tracking >= 0.05em is only for uppercase mono labels (meta, count, label). Running text, nav rows and the gallery index are untracked.",
+        "body": "No all-caps text anywhere: no text-transform: uppercase on kickers, labels, dates, badges or tags. Running text, nav rows and mono labels are untracked; only the EXIF caption gets +0.02em.",
         "section": "typography"
       },
       {

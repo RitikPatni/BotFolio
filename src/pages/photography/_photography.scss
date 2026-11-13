@@ -141,15 +141,12 @@
   }
 
   /* Caption: title, then the exposure line in mono (same as the home strip). */
-  /* text-transform: none — the global `figure figcaption` metadata rule
-     uppercases, which would turn "f/6.3 · 1/2500s" into "F/6.3 · 1/2500S". */
   &__caption {
     margin-block-start: 0.55rem;
     font-family: var(--font-mono);
     font-size: 0.75rem;
     line-height: 1.45;
     letter-spacing: 0.02em;
-    text-transform: none;
     color: var(--text-muted);
   }
 
